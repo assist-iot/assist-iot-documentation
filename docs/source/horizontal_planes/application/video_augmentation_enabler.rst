@@ -40,10 +40,6 @@ Configuration options
 Developer guide
 ***************
 
-*****************
-How to contribute
-*****************
-
 ***************************
 Version control and release
 ***************************
