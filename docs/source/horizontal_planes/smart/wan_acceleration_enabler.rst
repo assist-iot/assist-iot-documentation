@@ -1,8 +1,8 @@
 .. _WAN acceleration enabler:
 
-############
+########################
 WAN acceleration enabler
-############
+########################
 
 .. contents::
   :local:
