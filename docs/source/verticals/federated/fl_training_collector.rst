@@ -1,8 +1,8 @@
 .. _FL training collector:
 
-############
+#####################
 FL training collector
-############
+#####################
 
 .. contents::
   :local:
