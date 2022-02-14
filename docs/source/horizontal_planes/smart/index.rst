@@ -1,5 +1,5 @@
 ###############################
-Smart Network and Control Plane
+Smart Network and Control  Plane
 ###############################
 
 .. toctree::
