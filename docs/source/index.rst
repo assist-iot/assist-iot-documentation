@@ -11,7 +11,7 @@ Wiki Template Guide
     :numbered:
     :maxdepth: 3
     
-    horizontal_planed/index.rst
+    horizontal_planes/index.rst
     verticals/index.rst
 
 Wiki template has its documentation hosted on Read the Docs.
