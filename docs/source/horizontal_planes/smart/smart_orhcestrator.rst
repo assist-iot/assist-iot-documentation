@@ -11,6 +11,7 @@ Smart Orchestrator
 ***************
 Introduction
 ***************
+This enabler facilitates the interaction of user interfaces and other enablers with the main components of the MANO framework, namely the Network Function Virtualisation Orchestrator (NFVO) and the Kubernetes clusters, exposing only the required inherent functionalities. In particular, this enabler will control the whole lifecycle of Containerised Functions, network and not-network related, from their instantiation to their termination, allowing their deployment in any k8s cluster available.
 
 ***************
 Features

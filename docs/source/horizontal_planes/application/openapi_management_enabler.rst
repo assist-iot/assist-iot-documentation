@@ -11,6 +11,7 @@ OpenAPI Management enabler
 ***************
 Introduction
 ***************
+The OpenAPI management enabler will be an API Manager that allows enablers that publish their APIs, to monitor the interfaces lifecycles and also make sure that needs of external third parties (including granted open callers), as well as applications that are using the APIs, are being met.
 
 ***************
 Features

@@ -11,6 +11,7 @@ SD-WAN enabler
 ***************
 Introduction
 ***************
+The objective of this enabler is to provide access between nodes from different sites based on SD-WAN technology.
 
 ***************
 Features

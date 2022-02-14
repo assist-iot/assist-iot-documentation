@@ -11,6 +11,7 @@ Tactile dashboard enabler
 ***************
 Introduction
 ***************
+The Tactile Dashboard enabler has the capability of representing data stored in the ASSIST-IoT pilots, through meaningful combined visualisations in real time. It also provides (aggregates and homogenises) all the User Interfaces for the configuration of the different ASSIST-IoT enablers, and associated components.
 
 ***************
 Features

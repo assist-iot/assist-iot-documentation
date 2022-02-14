@@ -11,6 +11,7 @@ Semantic Annotator enabler
 ***************
 Introduction
 ***************
+This enabler offers a syntactic transformation service, that annotates data in various formats and lifts it into RDF. Full list of formats is yet to be decided and the first version will support JSON.
 
 ***************
 Features

@@ -11,6 +11,7 @@ Localization Tag
 ************
 Introduction
 ************
+The ASSIST-IoT localisation tag is a Smart IoT device used for people localisation. This device has tag functionality, and it contains a buzzer and red LED to indicate to the person that he/she is in a restricted area.
 
 ********
 Features

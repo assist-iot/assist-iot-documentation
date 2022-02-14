@@ -11,6 +11,7 @@ Business KPI reporting enabler
 ***************
 Introduction
 ***************
+This enabler will illustrate valuable KPIs within Graphical User Interfaces embedded into the tactile dash-board. It will facilitate the visualisation and combination of charts, tables, maps, and other visualisation graphs in order to search for hidden insights.
 
 ***************
 Features

@@ -5,7 +5,7 @@ Smart Network and Control Plane
 .. toctree::
     :numbered:
     :maxdepth: 1
-    
+
     smart_orchestrator.rst
     sdn_controller.rst
     auto_configurable_network_enabler.rst
