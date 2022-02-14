@@ -1,8 +1,8 @@
-.. _Μanagement of services and enablers’ workflow:
+.. _Μanagement of services and enablers:
 
-#############################################
-Μanagement of services and enablers’ workflow
-#############################################
+###################################
+Μanagement of services and enablers
+###################################
 
 .. contents::
   :local:
