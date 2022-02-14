@@ -10,4 +10,4 @@ Self Enablers
     resource_provisioning_enabler.rst
     geo_localization_enabler.rst
     monitoring_and_notifying_enabler.rst
-    automated_configuration_enabler.rst	
+    automated_configuration_enabler.rst

@@ -11,4 +11,3 @@ Verticals' Enablers
     cybersecurity/index.rst
     dlt/index.rst
     manageability/index.rst
-

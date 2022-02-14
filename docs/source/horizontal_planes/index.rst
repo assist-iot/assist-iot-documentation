@@ -9,4 +9,4 @@ Horizontal Planes' Enablers
     device/index.rst
     smart/index.rst
     datamanagement/index.rst
-    application/index.rst 
+    application/index.rst
