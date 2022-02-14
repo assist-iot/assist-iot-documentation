@@ -1,8 +1,8 @@
 .. _Auto-configurable network enabler:
 
-############
+#################################
 Auto-configurable network enabler
-############
+#################################
 
 .. contents::
   :local:

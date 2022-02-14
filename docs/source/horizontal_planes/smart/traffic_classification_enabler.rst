@@ -1,8 +1,8 @@
 .. _Trafic classification enabler:
 
-############
+#############################
 Trafic classification enabler
-############
+#############################
 
 .. contents::
   :local:
