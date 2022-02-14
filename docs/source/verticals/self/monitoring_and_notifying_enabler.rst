@@ -11,6 +11,7 @@ Monitoring and Notifying enabler
 ***************
 Introduction
 ***************
+This enabler could be viewed as a general purpose by representing it as a combination of high-level monitoring module (which would allow to monitor devices, logs, etc.) and notifying module that could send custom messages to predefined system components.
 
 ***************
 Features

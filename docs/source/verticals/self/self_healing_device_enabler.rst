@@ -11,6 +11,7 @@ Self-healing device enabler
 ***************
 Introduction
 ***************
+Aims at providing to IoT devices with the capabilities of actively attempting to recover themselves from abnormal states, mainly divided in three categories: security (jamming, DoS), dependability (data corruption, network protocol violation), and long-term (HW’s end-of-life, HW unsupported ca-pabilities), based on a pre-established routines schedule.
 
 ***************
 Features

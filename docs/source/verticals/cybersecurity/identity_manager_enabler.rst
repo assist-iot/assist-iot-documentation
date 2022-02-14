@@ -11,6 +11,7 @@ Identity Manager enabler
 ***************
 Introduction
 ***************
+Using OAuth2 protocol, it will offer a federated identification service where service requester and provider will be able to establish a trusted relation without previously knowing each other. This way a secure identification process is completed without the service provider having received the re-quester credentials.
 
 ***************
 Features

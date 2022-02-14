@@ -11,6 +11,7 @@ Resource provisioning enabler
 ***************
 Introduction
 ***************
+This enabler will be able to horizontally scale (up or down) the resources devoted to a specific ena-bler (inside a node) in a dynamic fashion, based on time series inference and custom logic.
 
 ***************
 Features

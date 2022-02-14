@@ -11,6 +11,7 @@ Authorization_enabler
 ***************
 Introduction
 ***************
+Authorisation server offers a decision-making service based on XACML policies. It has different modules that interact and can be deployed independently such as, PEP (Policy Enforcement Point), PAP (Policy Administration Point), PIP (Policy Information Point) and PDP (Policy Decision Point).
 
 ***************
 Features

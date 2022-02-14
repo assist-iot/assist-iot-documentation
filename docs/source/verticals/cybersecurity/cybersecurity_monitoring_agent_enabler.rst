@@ -11,6 +11,7 @@ Cybersecurity Monitoring agent enabler
 ***************
 Introduction
 ***************
+Perform functions of an endpoint detection and response system, monitoring and collecting activity from end points that could indicate a threat. Security agent runs at a host-level, combining anomaly and signature-based technologies to detect intrusions or software misuse.
 
 ***************
 Features
