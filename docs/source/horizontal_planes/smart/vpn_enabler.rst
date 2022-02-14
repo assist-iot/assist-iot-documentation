@@ -11,7 +11,7 @@ VPN enabler
 ***************
 Introduction
 ***************
-This enabler will facilitate the access to a node or device from a different network to the site’s private net-work using a public network (e.g., the Internet) or a non-trusted private network.
+This enabler will facilitate the access to a node or device from a different network to the site’s private network using a public network (e.g., the Internet) or a non-trusted private network.
 
 ***************
 Features
