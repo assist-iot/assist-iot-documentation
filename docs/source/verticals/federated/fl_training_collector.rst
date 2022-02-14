@@ -1,7 +1,7 @@
-.. _Authorization_enablers:
+.. _FL training collector:
 
 ############
-Authorization_enablers
+FL training collector
 ############
 
 .. contents::
