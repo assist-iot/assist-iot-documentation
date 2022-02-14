@@ -6,6 +6,7 @@ Smart Network and Control Plane
     :numbered:
     :maxdepth: 1
 
+    vpn_enabler.rst
     smart_orchestrator.rst
     sdn_controller.rst
     auto_configurable_network_enabler.rst
@@ -13,4 +14,3 @@ Smart Network and Control Plane
     multi_link_enabler.rst
     sd_wan_enabler.rst
     wan_acceleration_enabler.rst
-    vpn_enabler.rst
