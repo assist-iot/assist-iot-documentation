@@ -1,6 +1,6 @@
-##########################
-Horizontal Planes Enablers
-##########################
+###########################
+Horizontal Planes' Enablers
+###########################
 
 .. toctree::
     :numbered:
