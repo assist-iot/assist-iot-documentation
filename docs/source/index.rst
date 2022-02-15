@@ -9,7 +9,7 @@ Wiki Template Guide
 
 .. toctree::
     :numbered:
-    :maxdepth: 2
+    :maxdepth: 3
     
     horizontal_planes/index.rst
     verticals/index.rst
