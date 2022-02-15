@@ -3,7 +3,6 @@ Federated machine learning enablers
 ***************************************
 
 .. toctree::
-    :numbered:
     :maxdepth: 1
 
     fl_orchestrator.rst

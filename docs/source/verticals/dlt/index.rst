@@ -3,7 +3,6 @@ DLT based enablers
 **********************
 
 .. toctree::
-    :numbered:
     :maxdepth: 1
     
     logging_and_auditing_enabler.rst

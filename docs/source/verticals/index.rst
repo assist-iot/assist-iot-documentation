@@ -3,7 +3,6 @@ Verticals' Enablers
 ###################
 
 .. toctree::
-    :numbered:
     :maxdepth: 2
     
     self/index.rst

@@ -3,7 +3,6 @@ Manageability
 *****************
 
 .. toctree::
-    :numbered:
     :maxdepth: 1
 
     registration_and_status_enabler.rst

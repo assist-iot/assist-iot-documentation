@@ -3,7 +3,6 @@ Horizontal Planes' Enablers
 ###########################
 
 .. toctree::
-    :numbered:
     :maxdepth: 2
     
     device/index.rst

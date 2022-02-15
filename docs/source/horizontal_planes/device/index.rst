@@ -3,7 +3,6 @@ Device and Edge Plane
 *************************
 
 .. toctree::
-    :numbered:
     :maxdepth: 1
 
     fall_arrest.rst

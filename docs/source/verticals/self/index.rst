@@ -3,7 +3,6 @@ Self Enablers
 *****************
 
 .. toctree::
-    :numbered:
     :maxdepth: 1
     
     self_healing_device_enabler.rst

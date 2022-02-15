@@ -3,7 +3,6 @@ Data management Plane
 *************************
 
 .. toctree::
-    :numbered:
     :maxdepth: 1
 
     semantic_repository_enabler.rst

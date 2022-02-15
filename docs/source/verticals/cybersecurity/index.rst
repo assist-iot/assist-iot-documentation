@@ -3,7 +3,6 @@ Cybersecurity Enablers
 **************************
 
 .. toctree::
-    :numbered:
     :maxdepth: 1
 
     authorization_enabler.rst

@@ -3,7 +3,6 @@ Smart Network and Control Plane
 ***********************************
 
 .. toctree::
-    :numbered:
     :maxdepth: 1
 
     smart_orchestrator.rst
