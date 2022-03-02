@@ -32,16 +32,20 @@ Prometheus is an open-source monitoring framework. It provides out-of-the-box mo
 *********************
 Place in architecture
 *********************
+Performance and Usage Diagnosis (PUD) enabler is located in the Application and Service layer of the ASSIST-IoT architecture that provides application logic, including data visualisation and user interaction services, data analytics capabilities, various kinds of data protection support, and data management logic. The PUD enabler is responsible to collect performance metrics from monitored targets. 
 
-Prometheus scrapes metrics from instrumented jobs. It stores all scraped samples locally and runs rules over this data to either aggregate and record new time series from existing data or generate alerts.
+.. image:: https://user-images.githubusercontent.com/100563908/156375733-78f4f855-139f-4c55-8241-d6052d15f783.PNG
 
 **Here is the high-level architecture of Prometheus.**
 
 .. image:: https://prometheus.io/assets/architecture.png
 
+Prometheus scrapes metrics from instrumented jobs. It stores all scraped samples locally and runs rules over this data to either aggregate and record new time series from existing data or generate alerts.
+
 Prometheus works well for recording any purely numeric time series. It fits both machine-centric monitoring as well as monitoring of highly dynamic service-oriented architectures. In a world of microservices, its support for multi-dimensional data collection and querying is a particular strength.
 
 Prometheus is designed for reliability, to be the system you go to during an outage to allow you to quickly diagnose problems. Each Prometheus server is standalone, not depending on network storage or other remote services. You can rely on it when other parts of your infrastructure are broken, and you do not need to setup extensive infrastructure to use it.
+
 ***************
 User guide
 ***************
