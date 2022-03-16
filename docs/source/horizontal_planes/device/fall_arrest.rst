@@ -19,10 +19,14 @@ Features
 *********************
 Place in architecture
 *********************
+The fall arrest device is part of the device and edge plane.
 
 **********
 User guide
 **********
+The battery of the fall arrest device has to be charged during non-working hours.
+The monitored assets needs to have a tag attached (e.g., in case of a worker, he/she has to wear a belt or helmet with it).
+Information about the correspondence between tag and asset must be noted, so they can be later on related. In case of a worker, information about whether it is connected to a belt or helmet should be noted as well.
 
 *************
 Prerequisites
