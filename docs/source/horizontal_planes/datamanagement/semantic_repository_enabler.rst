@@ -105,8 +105,31 @@ To give some context, in GitHub terms, a **namespace** would translate a
 user or a group. A **model** would be a repository, and a **model
 version** would be a branch or tag. This is just an example, of course.
 
-REST API
+Model versions
+--------------
+
+The Semantic Repository does not force a specific versioning scheme on
+your models. You can use for example Git branches and tags, plain
+numbers, or `Semantic Versioning <https://semver.org/>`__.
+
+The ``latest`` version tag is special – it is a pointer to the most
+recent version of the model, as set by the model’s owner. It must always
+be set manually. A model may have no ``latest`` pointer, and the pointer
+may lead to a non-existent version. Enforcing a specific style of use is
+up to the owner.
+
+The benefit of the ``latest`` tag is that it allows clients to easily
+retrieve the most recent version of the model (see the API user guide).
+
+Metadata
 --------
+
+Not implemented yet.
+
+
+
+User guide – REST API
+=====================
 
 The following is a brief guide to using the API in practice. The
 examples follow a basic use case of storing several `W3C
@@ -165,8 +188,8 @@ Response code Response body
 200           ``{"name": "w3c"}``
 ============= ===================
 
-Currently, there is no other in the namespace other than its name. We
-will change this shortly.
+Currently, there is no other information in the namespace other than its
+name.
 
 You can also list all namespaces in the repository:
 
@@ -194,9 +217,9 @@ described in detail in the `Browsing
 collections <#browsing-collections>`__ section below.
 
 **Note:** namespace name must meet the following criteria: - be at least
-3 characters, and at most 100 characters long - must only contain lower
-or upper letters of latin alphabet, digits, dashes (``-``), and
-underscores (``_``)
+3 characters, and at most 100 characters long - only contain lower or
+upper letters of latin alphabet, digits, dashes (``-``), and underscores
+(``_``)
 
 Step 2: create models
 ^^^^^^^^^^^^^^^^^^^^^
@@ -330,6 +353,68 @@ You can also retrieve a list of versions for the model (again,
      }
    }
 
+**Note:** version tags must meet the following criteria: - be at least 1
+and at most 100 characters long - only contain lower or upper letters of
+latin alphabet, digits, dashes (``-``), underscores (``_``), dots
+(``.``), and plus signs (``+``) - not start with one of the following
+characters: ``._-+`` - not be ``latest``, which is a reserved tag (see
+below)
+
+``latest`` pointer
+~~~~~~~~~~~~~~~~~~
+
+The ``latest`` version pointer can be set on a given model using a PATCH
+request:
+
+=================== ============================
+Request             Body
+=================== ============================
+``PATCH /w3c/sosa`` ``{"latestVersion": "1.0"}``
+=================== ============================
+
+============= ============================================
+Response code Body
+============= ============================================
+200           ``{"message": "Updated model 'w3c/sosa'."}``
+============= ============================================
+
+Now it can be used in GET requests instead of the explicit version. So,
+``GET /w3c/sosa/latest`` is equivalent to ``GET /w3c/sosa/1.0``.
+
+**Important:** to prevent accidental overwrites, **it is not possible to
+make POST, PATCH, or DELETE requests via the ``latest`` pointer**. Use
+the explicit version in the URL instead.
+
+The version pointer can also be set during model creation:
+
+================= ============================
+Request           Body
+================= ============================
+``POST /w3c/ssn`` ``{"latestVersion": "1.0"}``
+================= ============================
+
+============= ===========================================
+Response code Body
+============= ===========================================
+200           ``{"message": "Created model 'w3c/ssn'."}``
+============= ===========================================
+
+To change the pointer to a new value, simply make a PATCH request. To
+**unset** the pointer completely, use the special ``@unset`` value in a
+PATCH request:
+
+=================== ===============================
+Request             Body
+=================== ===============================
+``PATCH /w3c/sosa`` ``{"latestVersion": "@unset"}``
+=================== ===============================
+
+============= ============================================
+Response code Body
+============= ============================================
+200           ``{"message": "Updated model 'w3c/sosa'."}``
+============= ============================================
+
 Uploading content
 ~~~~~~~~~~~~~~~~~
 
@@ -366,7 +451,7 @@ can upload more content files for the model version in a similar manner.
 The Semantic Repository support multipart, streaming uploads and can
 handle files of any size this way.
 
-To see the available formats, do a ``GET /w3c/sosa/1.0`` request:
+To see the available formats, make a ``GET /w3c/sosa/1.0`` request:
 
 ::
 
@@ -395,6 +480,41 @@ Changing the default format
 
 Not implemented yet.
 
+Downloading the content
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Downloading the models is very straightforward. The most explicit way is
+to specify the namespace, model, version, and the desired format:
+
+``GET /w3c/sosa/1.0/content?format=text/turtle``
+
+You can also omit the ``format`` parameter to obtain the content in the
+default format:
+
+``GET /w3c/sosa/1.0/content``
+
+If you have set the ``latest`` tag for this model, you can use it
+instead of the explicit version, to fetch the most recent version of the
+model.
+
+There is also a second, shorter style of URLs for downloading content,
+with the ``/c`` prefix:
+
+1. ``GET /c/w3c/sosa/1.0/text/turtle``
+2. ``GET /c/w3c/sosa/latest/text/turtle``
+3. ``GET /c/w3c/sosa/1.0``
+4. ``GET /c/w3c/sosa/latest``
+5. ``GET /c/w3c/sosa``
+
+Assuming that the ``latest`` tag is set to version ``1.0`` and the
+default format is ``text/turtle``, all of the above requests will return
+the same result. Request 5 is simply a shorthand for “the latest version
+of this model, in the default format”, which should be sufficient for
+most applications.
+
+In all cases the response will be simply the stored file, with the
+appropriate Content-Type header.
+
 Deleting models and other objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -410,8 +530,10 @@ Meta endpoints
 
 TODO, partially implemented.
 
-Graphical user interface
-------------------------
+
+
+User guide – graphical user interface
+=====================================
 
 The GUI of the Semantic Repository is under development.
 
