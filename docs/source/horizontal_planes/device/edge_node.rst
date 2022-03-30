@@ -38,27 +38,34 @@ In case of making use of the ASSIST-IoT’s GWEN as edge node, 12V± 15% power s
 *************
 Prerequisites
 *************
+To be determined.
 
 ************
 Installation
 ************
+The GWEN needs to be mounted at a fixed point inside a buidling or car.
 
 *********************
 Configuration options
 *********************
+To be determined.
 
 ***************
 Developer guide
 ***************
+To be determined.
 
 ***************************
 Version control and release
 ***************************
+To be determined.
 
 *******
 License
 *******
+To be determined.
 
 ********************
 Notice(dependencies)
 ********************
+To be determined.
