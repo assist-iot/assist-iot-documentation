@@ -39,18 +39,22 @@ The localization processing enabler need to know which person is wearing which t
 Installation
 ************
 The localisation tag has to be mounted to a belt or to a helmet.
+
 *********************
 Configuration options
 *********************
 N/A
+
 ***************
 Developer guide
 ***************
 N/A
+
 ***************************
 Version control and release
 ***************************
 To be determined
+
 *******
 License
 *******
