@@ -88,12 +88,7 @@ Basic concepts
    content of a data model only to its specific version. The version can
    also have associated documentation pages and other metadata.
 -  **Content** – each model version can have many content files
-   attached, each in a different format. The format is recommended to
-   correspond to the `Media
-   Type <https://www.iana.org/assignments/media-types/media-types.xhtml>`__
-   of the file – this is to best support HTTP-based technologies, such
-   as Linked Data. However, you can always set the format to whatever
-   you like.
+   attached, each in a different format.
 
 **TODO: diagram of logical objects**
 
@@ -120,6 +115,23 @@ up to the owner.
 
 The benefit of the ``latest`` tag is that it allows clients to easily
 retrieve the most recent version of the model (see the API user guide).
+
+Content
+-------
+
+One model version can have multiple content files attached, each in a
+different format. The format is recommended to correspond to the `Media
+Type <https://www.iana.org/assignments/media-types/media-types.xhtml>`__
+of the file – this is to best support HTTP-based technologies, such as
+`Linked Data <https://www.w3.org/standards/semanticweb/data>`__.
+However, you can always set the format to whatever you like.
+
+The content for one model version *should* be immutable, i.e., you
+should avoid modifying the once-uploaded content for a specific version.
+This is so that clients can expect that the content for a given version
+will not change suddenly, introducing a backward-incompatible change. It
+is however *possible* to overwrite earlier-uploaded content, in case of
+a mistake, for example. See the API guide below for more details.
 
 Metadata
 --------
@@ -218,8 +230,8 @@ collections <#browsing-collections>`__ section below.
 
 **Note:** namespace name must meet the following criteria: - be at least
 3 characters, and at most 100 characters long - only contain lower or
-upper letters of latin alphabet, digits, dashes (``-``), and underscores
-(``_``)
+upper letters of the latin alphabet, digits, dashes (``-``), and
+underscores (``_``)
 
 Step 2: create models
 ^^^^^^^^^^^^^^^^^^^^^
@@ -291,8 +303,10 @@ will see a collection of models:
      "name": "w3c"
    }
 
-**Note:** model names must meet the same requirements as names for
-namespaces.
+**Note:** model names must meet the following criteria: - be at least 1
+and at most 100 characters long - only contain lower or upper letters of
+the latin alphabet, digits, dashes (``-``), and underscores (``_``) -
+not start with one of the following characters: ``_-``
 
 Step 3: create versions
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -355,7 +369,7 @@ You can also retrieve a list of versions for the model (again,
 
 **Note:** version tags must meet the following criteria: - be at least 1
 and at most 100 characters long - only contain lower or upper letters of
-latin alphabet, digits, dashes (``-``), underscores (``_``), dots
+the latin alphabet, digits, dashes (``-``), underscores (``_``), dots
 (``.``), and plus signs (``+``) - not start with one of the following
 characters: ``._-+`` - not be ``latest``, which is a reserved tag (see
 below)
@@ -474,6 +488,42 @@ In the response notice that: - ``defaultFormat`` has been set to
 format name. - ``contentType`` displays the content type of the uploaded
 file, which in this case is the same as format. - ``md5`` is the MD5
 checksum of the entire file. - ``size`` is the file’s size in bytes.
+
+Overwriting content
+^^^^^^^^^^^^^^^^^^^
+
+As noted in the `User guide <#user-guide>`__, the content for a specific
+version of a model *should* be immutable. So, if you try to repeat the
+request presented above, it will be rejected with an HTTP 400 error:
+
+::
+
+   {
+     "error": "Content in format 'text/turtle' already exists for this model version. If you want to update it, it is recommended to create a new version instead. If you really want to overwrite this content, retry the upload with the 'overwrite=1' query parameter."
+   }
+
+If you really want to overwrite this content (in case of a mistake, for
+example), add the ``overwrite=1`` parameter:
+
+=============================================================
+===============
+Request                                                       Body
+=============================================================
+===============
+``POST /w3c/sosa/1.0/content?format=text/turtle&overwrite=1`` content: (file)
+=============================================================
+===============
+
+Response:
+
+::
+
+   {
+     "message": "Uploaded content in format 'text/turtle' for model 'w3c/sosa/1.0'. Checksum: 5b844292b8402e448804f9c9f100d59e",
+     "warnings": [
+       "Overwrote an earlier version of the content."
+     ]
+   }
 
 Changing the default format
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
