@@ -74,9 +74,8 @@ This version of docker-compose file includes 3 services:
 - **mongo**. Deploys a `MongoDB <https://en.wikipedia.org/wiki/MongoDB>`__ instance used by the orchestrator to retrieve the list of existing models. Once the orchestrator is integrated with the repository, the list of models will be retrieved from this component. However, the MongoDB instance can be shared between these two components.
 - **mongo-seed-models**. Service developed to insert example models into MongoDB. Needed in development phase. Once the component is integrated with the rest of the elements, this service will not be necessary.
    
-***************
 Verification
-***************
+------------
 FL Orchestrator and the other enablers have been conceived as APIs that will have methods that interact with each other. Therefore, the best to verify their correct deployment and operation is to test these APIs.
 
 FL Orchestrator has a `Swagger <https://swagger.io/docs/specification/2-0/what-is-swagger/>`__ that allows to test all its methods. This swagger is deployed at the
@@ -94,9 +93,8 @@ Next picture depicts what has been explained in the previous paragraph. The area
 .. figure:: ./testing_swagger.png
    :alt: Testing models method of FL Orchestrator API
    
-*********************
 Building the Docker image
-*********************
+------------
 
 The different Docker images needed to be able to deploy all the services are defined / created in files called `Dockerfile <https://docs.docker.com/engine/reference/builder/>`__.
 
@@ -106,15 +104,15 @@ Next picture depicts the content of one of this Dockerfile.
 
 .. figure:: ./Dockerfile.PNG
    :alt: Dockerfile for building the image of the orchestrator
-*********************
+
+
 Deploying with Kubernetes and Helm3
-*********************
+------------
 
    **To be completed**
 
-*********************
 Verification the deployment
-*********************
+------------
 
    **To be completed**
 
