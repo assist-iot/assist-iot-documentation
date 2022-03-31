@@ -11,22 +11,20 @@ FL Orchestrator
 ***************
 Introduction
 ***************
-**FL Orchestrator** is one of the enablers developed in the context of
-the **FL Architecture** of the `ASSIST-IoT
-project <https://assist-iot.eu/>`__.
+**FL Orchestrator** is one of the enablers developed in the context of the **FL Architecture** of the `ASSIST-IoT project
 
-FL Orchestrator is responsible of specifying details of FL
-workflow(s)/pipeline(s). Among these details or features are:
 ***************
 Features
 ***************
--  FL job scheduling
--  Manage the FL life cycle
--  Selecting and delivering initial version(s) of the shared algorithm
--  Delivering the version(s) of modules used in various stages of the
-   process, such as training stopping criteria
--  Handling the different “error conditions” that may occur during the
-   FL process
+
+FL Orchestrator is responsible of specifying details of FL workflow(s)/pipeline(s). Among these details or features are:
+
+- FL job scheduling
+- Manage the FL life cycle
+- Selecting and delivering initial version(s) of the shared algorithm
+- Delivering the version(s) of modules used in various stages of the process, such as training stopping criteria
+- Handling the different “error conditions” that may occur during the FL process
+
 *********************
 Place in architecture
 *********************
