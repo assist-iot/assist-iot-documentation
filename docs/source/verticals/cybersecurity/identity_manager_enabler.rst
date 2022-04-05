@@ -75,13 +75,26 @@ Enabler is provided as a Helm chart. Refer to specific deployment instructions.
 Configuration options
 *********************
 
-TBD
+The IdM options for the rest API to connect are available in the **lib\config.py** file.
+
+::
+
+    remote_address: str = "keycloak"
+    remote_port: str = "8080"
+    remote_username: str = "admin"
+    remote_password: str = "xxxx"
+    remote_realm: str = "master"
+    remote_https: str = "no"
+
+    kc_api_token_url_pre: str = "/auth/realms/"
+    kc_api_token_url_post: str = "/protocol/openid-connect/token"
+    kc_api_serverinfo_url: str = "/auth/admin/serverinfo"
 
 ***************
 Developer guide
 ***************
 
-TBD
+Not applicable.
 
 ***************************
 Version control and release
