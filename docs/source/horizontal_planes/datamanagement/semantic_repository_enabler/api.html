@@ -206,6 +206,7 @@ font-style: italic;
   <li><a href="#getRoute2"><code><span class="http-method">get</span> /{namespace}/{model}/{version}</code></a></li>
   <li><a href="#getRoute3"><code><span class="http-method">get</span> /{namespace}</code></a></li>
   <li><a href="#getRoute4"><code><span class="http-method">get</span> /v</code></a></li>
+  <li><a href="#patchRoute"><code><span class="http-method">patch</span> /{namespace}/{model}</code></a></li>
   <li><a href="#postRoute"><code><span class="http-method">post</span> /{namespace}/{model}/{version}/content</code></a></li>
   <li><a href="#postRoute1"><code><span class="http-method">post</span> /{namespace}/{model}</code></a></li>
   <li><a href="#postRoute2"><code><span class="http-method">post</span> /{namespace}/{model}/{version}</code></a></li>
@@ -302,7 +303,7 @@ font-style: italic;
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">body <a href="#string">string</a> (optional)</div>
+      <div class="param">body <a href="#object">object</a> (optional)</div>
 
       <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
 
@@ -524,6 +525,7 @@ font-style: italic;
               "defaultFormat" : "defaultFormat"
             } ]
           },
+          "latestVersion" : "latestVersion",
           "name" : "name",
           "namespace" : "namespace"
         }, {
@@ -555,6 +557,7 @@ font-style: italic;
               "defaultFormat" : "defaultFormat"
             } ]
           },
+          "latestVersion" : "latestVersion",
           "name" : "name",
           "namespace" : "namespace"
         } ]
@@ -592,6 +595,7 @@ font-style: italic;
               "defaultFormat" : "defaultFormat"
             } ]
           },
+          "latestVersion" : "latestVersion",
           "name" : "name",
           "namespace" : "namespace"
         }, {
@@ -623,6 +627,7 @@ font-style: italic;
               "defaultFormat" : "defaultFormat"
             } ]
           },
+          "latestVersion" : "latestVersion",
           "name" : "name",
           "namespace" : "namespace"
         } ]
@@ -721,7 +726,7 @@ font-style: italic;
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">body <a href="#string">string</a> (optional)</div>
+      <div class="param">body <a href="#object">object</a> (optional)</div>
 
       <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
 
@@ -769,6 +774,7 @@ font-style: italic;
       "defaultFormat" : "defaultFormat"
     } ]
   },
+  "latestVersion" : "latestVersion",
   "name" : "name",
   "namespace" : "namespace"
 }</code></pre>
@@ -927,6 +933,7 @@ font-style: italic;
           "defaultFormat" : "defaultFormat"
         } ]
       },
+      "latestVersion" : "latestVersion",
       "name" : "name",
       "namespace" : "namespace"
     }, {
@@ -958,6 +965,7 @@ font-style: italic;
           "defaultFormat" : "defaultFormat"
         } ]
       },
+      "latestVersion" : "latestVersion",
       "name" : "name",
       "namespace" : "namespace"
     } ]
@@ -1022,6 +1030,73 @@ font-style: italic;
         <a href="#VersionResponse">VersionResponse</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="patchRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="patch"><code class="huge"><span class="http-method">patch</span> /{namespace}/{model}</code></pre></div>
+    <div class="method-summary">Update an existing model (<span class="nickname">patchRoute</span>)</div>
+    <div class="method-notes">Change one or more fields of a model in the repository.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ModelUpdateModel <a href="#ModelUpdateModel">ModelUpdateModel</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "warnings" : [ "warnings", "warnings" ],
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    success
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h4 class="field-label">400</h4>
+    invalid request body
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h4 class="field-label">404</h4>
+    model not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="postRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -1052,7 +1127,9 @@ font-style: italic;
     <div class="field-items">
       <div class="param">format (required)</div>
 
-      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Format tag of the content. This is recommended (but not required) to be the file's Media Type. If the format does not match the file's Media Type, a warning will be issued. default: null </div>
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Format tag of the content. This is recommended (but not required) to be the file's Media Type. If the format does not match the file's Media Type, a warning will be issued. default: null </div><div class="param">overwrite (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' when overwriting content that was uploaded earlier in the same format. Without this parameter the overwriting upload will be rejected with HTTP 400. default: null </div>
     </div>  <!-- field-items -->
 
     <h3 class="field-label">Form parameters</h3>
@@ -1112,10 +1189,15 @@ font-style: italic;
       <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div>
     </div>  <!-- field-items -->
 
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">body <a href="#string">string</a> (optional)</div>
+      <div class="param">ModelUpdateModel <a href="#ModelUpdateModel">ModelUpdateModel</a> (optional)</div>
 
       <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
 
@@ -1154,7 +1236,7 @@ font-style: italic;
     duplicate key error
         <a href="#ErrorResponse">ErrorResponse</a>
     <h4 class="field-label">400</h4>
-    invalid model name
+    invalid request body
         <a href="#ErrorResponse">ErrorResponse</a>
     <h4 class="field-label">404</h4>
     Namespace not found
@@ -1296,6 +1378,7 @@ font-style: italic;
   <ol>
     <li><a href="#ErrorResponse"><code>ErrorResponse</code> - </a></li>
     <li><a href="#ModelClientModel"><code>ModelClientModel</code> - </a></li>
+    <li><a href="#ModelUpdateModel"><code>ModelUpdateModel</code> - </a></li>
     <li><a href="#ModelVersionClientModel"><code>ModelVersionClientModel</code> - </a></li>
     <li><a href="#ModelVersionContext"><code>ModelVersionContext</code> - </a></li>
     <li><a href="#NamespaceClientModel"><code>NamespaceClientModel</code> - </a></li>
@@ -1323,6 +1406,14 @@ font-style: italic;
       <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">namespace </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">versions (optional)</div><div class="param-desc"><span class="param-type"><a href="#SetClientModelModelVersionClientModel">SetClientModelModelVersionClientModel</a></span>  </div>
+<div class="param">latestVersion (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ModelUpdateModel"><code>ModelUpdateModel</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">latestVersion (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
