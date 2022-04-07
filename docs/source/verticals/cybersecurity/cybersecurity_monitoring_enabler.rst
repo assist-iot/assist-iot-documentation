@@ -23,7 +23,7 @@ Features
 - File Integrity Monitoring.
 - Vulnerability Detection.
 - Configuration Assessment.
-- Insident Response.
+- Incident Response.
 - Regulatory Compliance.
 - Cloud Security Monitoring.
 - Containers Security.
