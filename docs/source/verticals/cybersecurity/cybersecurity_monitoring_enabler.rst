@@ -17,7 +17,7 @@ Provides security awareness and visibility and infrastructure monitoring. Having
 Features
 ***************
 
-- Security Analytics
+- Security Analytics.
 - Intrusion Detection.
 - Log Data Analysis.
 - File Integrity Monitoring.
@@ -27,6 +27,10 @@ Features
 - Regulatory Compliance.
 - Cloud Security Monitoring.
 - Containers Security.
+- Flexible integrations.
+- Process workflows.
+- Incident management.
+- Threat intelligence.
 
 *********************
 Place in architecture
@@ -108,11 +112,14 @@ Place in architecture
     shell running in a container, changes to persistent volumes or images, and other possible threats.
 
 
+- **Containers Security**
+
+
 ***************
 User guide
 ***************
 
-Cybersecurity monitoring **SIEM** server will implement a restful API to manage monitoring server basic configuration and cybersecurity agents connected.
+Cybersecurity monitoring **SIEM** (Security information and event management) server will implement a restful API to manage monitoring server basic configuration and cybersecurity agents connected.
 
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 | METHOD |                            ENDPOINT                              |          DESCRIPTION                                                   |
@@ -144,6 +151,8 @@ Cybersecurity monitoring **SIEM** server will implement a restful API to manage 
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 |  GET   | /manager/status                                                  | Return the status of the monitoring server                             |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+
+Cybersecurity monitoring **SOAR** (Security Orchestration and Automation Response) server will implement a restful API to manage monitoring server basic configuration and cybersecurity features.
 
 
 
@@ -189,19 +198,19 @@ Version 0.1. Under development.
 License
 ***************
 
-*The entire configuration, communication, preparation and start-up system owned by S21Sec.*
+*The entire configuration, communication, preparation and start-up system is owned by S21Sec.*
 
 - **Wazuh**  (License under GPLv2).
 
 -	**The Hive**  v-4.1.0-1  (License under GNU AGPLv3).
 
--	**Cassandra**  v-3.11  (License under Apache Version 2.0.)
+-	**Cassandra**  v-3.11  (License under Apache Version 2.0).
 
 -	**Cortex**  v-3.1.0-1  (License under GNU AGPLv3).
 
--	**Elasticsearch**  v-7.11.1  (License under Apache Version 2.0.)
+-	**Elasticsearch**  v-7.11.1  (License under Apache Version 2.0).
 
--	**Kibana**  v-7.11.1  (License under Elastic Version 2.0)
+-	**Kibana**  v-7.11.1  (License under Elastic Version 2.0).
 
 -	**MISP** v-2.4.134  (License under GNU AGPLv3).
 
