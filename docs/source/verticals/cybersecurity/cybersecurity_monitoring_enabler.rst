@@ -130,6 +130,11 @@ Place in architecture
     workflows, helping  security analysts collaborate around a security incident, providing alert, case, observable and other techniques used to increase the
     flexibility to the automated security process.
 
+
+- **Threat intelligence**
+
+    Cortex, with MISP allows security analysts and threat hunters to analyze and enrich observables (IP addresses, hashes, domains, etc) collected with the SIEM. 
+
 ***************
 User guide
 ***************
