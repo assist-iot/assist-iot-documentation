@@ -33,92 +33,118 @@ Place in architecture
 *********************
 
 
-*Security Analytics*
+- **Security Analytics**
 
-  Is used to collect, aggregate, index and analyze security data, helping organizations detect intrusions, threats and behavioral anomalies.
-  As cyber threats are becoming more sophisticated, real-time monitoring and security analysis are needed for fast threat detection and remediation.The server
-  component provides the security intelligence and performs data analysis.
-
-
-*Intrusion Detection*
-
-  Agents scan the monitored systems looking for malware, rootkits and suspicious anomalies. They can detect hidden files, cloaked processes or unregistered
-  network listeners, as well as inconsistencies in system call responses.
-  In addition to agent capabilities, the server component uses a signature-based approach to intrusion detection, using its regular expression engine to analyze
-  collected log data and look for indicators of compromise.
+    Is used to collect, aggregate, index and analyze security data, helping organizations detect intrusions, threats and behavioral anomalies.
+    As cyber threats are becoming more sophisticated, real-time monitoring and security analysis are needed for fast threat detection and remediation.The server
+    component provides the security intelligence and performs data analysis.
 
 
-*Log Data Analysis*
+- **Intrusion Detection**
 
-  Agents read operating system and application logs, and securely forward them to a central manager for rule-based analysis and storage.
-  The rules help the user to notice application or system errors, misconfigurations, attempted and/or successful malicious activities, policy violations, and other
-  security and operational issues.
-
-
-*File Integrity Monitoring*
-
-  It monitors the file system, identifying changes in content, permissions, ownership and attributes of files that need attention. It also natively identifies users
-  and applications used to create or modify files.
-  File integrity monitoring capabilities can be used in combination with threat intelligence to identify threats or compromised hosts. In addition, several regulatory
-  compliance standards, such as PCI DSS, require it.
+    Agents scan the monitored systems looking for malware, rootkits and suspicious anomalies. They can detect hidden files, cloaked processes or unregistered
+    network listeners, as well as inconsistencies in system call responses.
+    In addition to agent capabilities, the server component uses a signature-based approach to intrusion detection, using its regular expression engine to analyze
+    collected log data and look for indicators of compromise.
 
 
-*Vulnerability Detection*
+- **Log Data Analysis**
 
-  Agents pull software inventory data and send this information to the server, where it is correlated with continuously updated CVE (Common Vulnerabilities and
-  Exposure) databases, in order to identify well-known vulnerable software.
-  Automated vulnerability assessment helps the user to identify the weak spots of their critical assets and take action before being exploited by attackers.
+    Agents read operating system and application logs, and securely forward them to a central manager for rule-based analysis and storage.
+    The rules help the user to notice application or system errors, misconfigurations, attempted and/or successful malicious activities, policy violations, and other
+    security and operational issues.
 
 
-*Configuration Assessment*
+- **File Integrity Monitoring**
+
+    It monitors the file system, identifying changes in content, permissions, ownership and attributes of files that need attention. It also natively identifies users
+    and applications used to create or modify files.
+    File integrity monitoring capabilities can be used in combination with threat intelligence to identify threats or compromised hosts. In addition, several regulatory
+    compliance standards, such as PCI DSS, require it.
+
+
+- **Vulnerability Detection**
+
+    Agents pull software inventory data and send this information to the server, where it is correlated with continuously updated CVE (Common Vulnerabilities and
+    Exposure) databases, in order to identify well-known vulnerable software.
+    Automated vulnerability assessment helps the user to identify the weak spots of their critical assets and take action before being exploited by attackers.
+
+
+- **Configuration Assessment**
   
-  Monitoring system and application configuration settings to ensure they are compliant with your security policies, standards and/or hardening guides. Agents
-  perform periodic scans to detect applications that are known to be vulnerable, unpatched, or insecurely configured.
-  Additionally, configuration checks can be customized, tailoring them to properly align with your organization. Alerts include recommendations for better
-  configuration, references and mapping with regulatory compliance.
+    Monitoring system and application configuration settings to ensure they are compliant with your security policies, standards and/or hardening guides. Agents
+    perform periodic scans to detect applications that are known to be vulnerable, unpatched, or insecurely configured.
+    Additionally, configuration checks can be customized, tailoring them to properly align with your organization. Alerts include recommendations for better
+    configuration, references and mapping with regulatory compliance.
 
 
-*Insident Response*
+- **Insident Response**
 
-  Provides an active responses to perform various countermeasures to address active threats, such as blocking access to a system from the threat
-  source when certain criteria are met.
-  In addition, can be used to remotely run commands or system queries, identifying indicators of compromise (IOCs) and helping perform other live forensics or
-  incident response tasks.
-
-
-*Regulatory Compliance*
-
-  The necessary security controls to become compliant with industry standards and regulations. These features, combined with its scalability and
-  multi-platform support help organizations meet technical compliance requirements.
-  Provides reports and dashboards that can help with this and other regulations such as GDPR, NIST 800-53, GPG13, TSC SOC2, and HIPAA.
+    Provides an active responses to perform various countermeasures to address active threats, such as blocking access to a system from the threat
+    source when certain criteria are met.
+    In addition, can be used to remotely run commands or system queries, identifying indicators of compromise (IOCs) and helping perform other live forensics or
+    incident response tasks.
 
 
-*Cloud Security Monitoring*
+- **Regulatory Compliance**
 
-  Helps monitor cloud infrastructure at an API level, using integration modules that are able to pull security data from well known cloud providers like Amazon
-  AWS, Azure, or Google Cloud. In addition, provides rules to assess the configuration of your cloud environment, easily spotting weaknesses.
-  Furthermore, light-weight and multi-platform agents are commonly used to monitor cloud environments at the instance level.
+    The necessary security controls to become compliant with industry standards and regulations. These features, combined with its scalability and
+    multi-platform support help organizations meet technical compliance requirements.
+    Provides reports and dashboards that can help with this and other regulations such as GDPR, NIST 800-53, GPG13, TSC SOC2, and HIPAA.
 
 
-*Containers Security*
+- **Cloud Security Monitoring**
 
-  Security visibility into hosts and Docker containers, monitoring their behavior and detecting threats, vulnerabilities, and anomalies. The agent
-  has native integration with the Docker engine that allows users to monitor images, volumes, network configurations, and running containers.
-  Continuously collects and analyzes detailed runtime information. For example, alerting for containers running in privileged mode, vulnerable applications, a
-  shell running in a container, changes to persistent volumes or images, and other possible threats.
+    Helps monitor cloud infrastructure at an API level, using integration modules that are able to pull security data from well known cloud providers like Amazon
+    AWS, Azure, or Google Cloud. In addition, provides rules to assess the configuration of your cloud environment, easily spotting weaknesses.
+    Furthermore, light-weight and multi-platform agents are commonly used to monitor cloud environments at the instance level.
+
+
+- **Containers Security**
+
+    Security visibility into hosts and Docker containers, monitoring their behavior and detecting threats, vulnerabilities, and anomalies. The agent
+    has native integration with the Docker engine that allows users to monitor images, volumes, network configurations, and running containers.
+    Continuously collects and analyzes detailed runtime information. For example, alerting for containers running in privileged mode, vulnerable applications, a
+    shell running in a container, changes to persistent volumes or images, and other possible threats.
 
 
 ***************
 User guide
 ***************
 
-Manager server offers a Rest interface for agent communication. The url should include the resource, action and requester id. The response will include the decision to be implemented in the enforcer (Permit or Deny).
+Cybersecurity monitoring **SIEM** server will implement a restful API to manage monitoring server basic configuration and cybersecurity agents connected.
 
-+--------+------------------------------------------------------------------+-----------------------+---------------------+----------------------------------------------------------------------------------------------------------------------+
-| Method |             Endpoint                                             | Description           | Payload (if needed) | Response format                                                                                                      |
-+========+==================================================================+=======================+=====================+======================================================================================================================+
-|  GET   | /evaluate?resource=<domain>@<resource>&action=<action>&code=<id> | Evaluation request    |                     | { "retcode": "0", "resource":"<domain>@<res>", "action": <action>", "code": "<id>", "response": "Permit","msg": ""}  |
-+--------+------------------------------------------------------------------+-----------------------+---------------------+----------------------------------------------------------------------------------------------------------------------+
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| METHOD |                            ENDPOINT                              |          DESCRIPTION                                                   |
++========+==================================================================+========================================================================+
+|  PUT   | /active-response                                                 | Run an Active Response command on all agents or a list of them         |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  PUT   | /agents/restart                                                  | Restart all agents or a list of them                                   |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  PUT   | /agents/{agent_id}/restart                                       | Restart the specified agent                                            |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|        |                                                                  | Add an agent specifying its name, ID and IP. If an agent with          |
+|  POST  | /agents/insert                                                   | the same ID already exists, replace it using 'force' parameter         |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  POST  | /agents                                                          | Add a new agent with basic info                                        |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| DELETE | /agents                                                          | Delete all agents or a list of them based on optional criteria         |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | /agents                                                          | Obtain a list with information of the available agents                 |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  PUT   | /manager/restart                                                 | Restart the manager                                                    |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | /manager/stats                                                   | Return statistical information for the current or specified date       |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  PUT   | /manager/configuration                                           | Replace configuration with the data contained in the API request       |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | /manager/configuration                                           | Return enabler configuration used                                      |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | /manager/info                                                    | Basic information such as version, compilation date, installation path |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | /manager/status                                                  | Return the status of the monitoring server                             |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+
 
 
 ***************
@@ -165,31 +191,31 @@ License
 
 *The entire configuration, communication, preparation and start-up system owned by S21Sec.*
 
-- Wazuh Copyright (C) 2015-2022 Wazuh Inc. (License GPLv2).
+- **Wazuh**  (License under GPLv2).
 
--	The Hive 4.1.0-1 (latest) Open Source and free software released under the AGPL (Affero General Public License).
+-	**The Hive**  v-4.1.0-1  (License under GNU AGPLv3).
 
--	Cassandra 3.11 is licensed under Apache License Version 2.0.
+-	**Cassandra**  v-3.11  (License under Apache Version 2.0.)
 
--	Cortex 3.1.0-1 (latest) Open Source and free software released under the AGPL (Affero General Public License).
+-	**Cortex**  v-3.1.0-1  (License under GNU AGPLv3).
 
--	Elasticsearch 7.11.1 
+-	**Elasticsearch**  v-7.11.1  (License under Apache Version 2.0.)
 
--	Kibana 7.11.1
+-	**Kibana**  v-7.11.1  (License under Elastic Version 2.0)
 
--	MISP 2.4.134 (core-latest)
+-	**MISP** v-2.4.134  (License under GNU AGPLv3).
 
--	Mysql 8.0.22 (latest)
+-	**Mysql**  v-8.0.22  (License under GPLv2).
 
--	Redis 6.0.9 (latest)
+-	**Redis**  v-6.0.9  (Lincense The 3-Clause BSD License).
 
--	Shuffle 0.8.64
+-	**Shuffle**  v-0.8.64  (License under GNU AGPLv3).
 
--	Shuffle-Backend 0.8.64
+-	**Shuffle-Backend**  v-0.8.64  (License under GNU AGPLv3).
 
--	Shuffle-Database
+-	**Shuffle-Database**  (License under GNU AGPLv3).
 
--	Shuffle-Orborus 0.8.63
+-	**Shuffle-Orborus**  v-0.8.63  (License under GNU AGPLv3).
 
 
 ********************
