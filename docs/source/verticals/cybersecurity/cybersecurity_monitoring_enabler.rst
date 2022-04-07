@@ -123,6 +123,12 @@ Place in architecture
     Handle email header analysis, search SIEM for alerts on schedule, enrich ticket based on SIEM, ransomware eradication with EDR, malware Eradication from host,
     Block hash in EDR.
 
+
+- **Incident management**
+    The platform based on system that assists and automates incident response services that provide three key major capabilities among others, supporting analyst
+    workflows, helping  security analysts collaborate around a security incident, providing alert, case, observable and other techniques used to increase the
+    flexibility to the automated security process.
+
 ***************
 User guide
 ***************
