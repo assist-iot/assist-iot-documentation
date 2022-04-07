@@ -117,6 +117,12 @@ Place in architecture
     The entire SOAR system is created under different services which connect with API Keys between them and in turn can be consulted using python or bash scripting and very flexible to adapt into different eviroments.
     
 
+- **Process workflows**
+
+    These workflows are made using some of the frameworks, and are designed to help get started with the automation using your own tools.
+    Handle email header analysis, search SIEM for alerts on schedule, enrich ticket based on SIEM, ransomware eradication with EDR, malware Eradication from host,
+    Block hash in EDR.
+
 ***************
 User guide
 ***************
