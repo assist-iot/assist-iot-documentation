@@ -144,35 +144,77 @@ Cybersecurity monitoring **SIEM** (Security information and event management) se
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 | METHOD |                            ENDPOINT                              |          DESCRIPTION                                                   |
 +========+==================================================================+========================================================================+
-|  PUT   | /active-response                                                 | Run an Active Response command on all agents or a list of them         |
+|  PUT   | {SIEM}/active-response                                           | Run an Active Response command on all agents or a list of them         |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  PUT   | /agents/restart                                                  | Restart all agents or a list of them                                   |
+|  PUT   | {SIEM}/agents/restart                                            | Restart all agents or a list of them                                   |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  PUT   | /agents/{agent_id}/restart                                       | Restart the specified agent                                            |
+|  PUT   | {SIEM}/agents/{agent_id}/restart                                 | Restart the specified agent                                            |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 |        |                                                                  | Add an agent specifying its name, ID and IP. If an agent with          |
-|  POST  | /agents/insert                                                   | the same ID already exists, replace it using 'force' parameter         |
+|  POST  | {SIEM}/agents/insert                                             | the same ID already exists, replace it using 'force' parameter         |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  POST  | /agents                                                          | Add a new agent with basic info                                        |
+|  POST  | {SIEM}/agents                                                    | Add a new agent with basic info                                        |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-| DELETE | /agents                                                          | Delete all agents or a list of them based on optional criteria         |
+| DELETE | {SIEM}/agents                                                    | Delete all agents or a list of them based on optional criteria         |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | /agents                                                          | Obtain a list with information of the available agents                 |
+|  GET   | {SIEM}/agents                                                    | Obtain a list with information of the available agents                 |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  PUT   | /manager/restart                                                 | Restart the manager                                                    |
+|  PUT   | {SIEM}/manager/restart                                           | Restart the manager                                                    |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | /manager/stats                                                   | Return statistical information for the current or specified date       |
+|  GET   | {SIEM}/manager/stats                                             | Return statistical information for the current or specified date       |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  PUT   | /manager/configuration                                           | Replace configuration with the data contained in the API request       |
+|  PUT   | {SIEM}/manager/configuration                                     | Replace configuration with the data contained in the API request       |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | /manager/configuration                                           | Return enabler configuration used                                      |
+|  GET   | {SIEM}/manager/configuration                                     | Return enabler configuration used                                      |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | /manager/info                                                    | Basic information such as version, compilation date, installation path |
+|  GET   | {SIEM}/manager/info                                              | Basic information such as version, compilation date, installation path |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | /manager/status                                                  | Return the status of the monitoring server                             |
+|  GET   | {SIEM}/manager/status                                            | Return the status of the monitoring server                             |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 
-Cybersecurity monitoring **SOAR** (Security Orchestration and Automation Response) server will implement a restful API to manage monitoring server basic configuration and cybersecurity features.
+Cybersecurity monitoring **SOAR** (Security Orchestration and Automation Response) server will implement a restful API to manage monitoring server
+basic configuration and cybersecurity features.
+ 
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| METHOD |                            ENDPOINT                              |          DESCRIPTION                                                   |
++========+==================================================================+========================================================================+
+|  POST  | {thehive}/api/v1/login                                           | Authenticate an user and get session cookie                            |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  POST  | {thehive}/api/v1/organisation                                    | Create an organisation                                                 |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {thehive}/api/v0/profile                                         | List all user profiles                                                 |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  POST  | {thehive}/api/v0/profile                                         | Create a new profile                                                   |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {thehive}/api/v0/profile/{profile}                               | Get information of the given profile                                   |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| PATCH  | {thehive}/api/v0/profile/{profile}                               | Update profile                                                         |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| DELETE | {thehive}/api/v0/profile/{profile}                               | Remove the profile                                                     |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  POST  | {thehive}/api/v1/user                                            | Create a new user                                                      |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {thehive}/api/v1/user/current                                    | Show information of the current user                                   |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {thehive}/api/v1/user/{user}                                     | Show information of the given user                                     |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| PATCH  | {thehive}/api/v1/user/{user}                                     | Update information of the given user                                   |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| DELETE | {thehive}/api/v1/user/{user}/force                               | Remove an user                                                         |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  POST  | {thehive}/api/v1/user/{user}/password/set                        | Set the user password                                                  |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  POST  | {thehive}/api/v1/user/{user}/password/change                     | Change the user password                                               |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {thehive}/api/v1/user/{user}/key                                 | Get the user API key                                                   |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| DELETE | {thehive}/api/v1/user/{user}/key                                 | Remove the user API key                                                |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  POST  | {thehive}/api/v1/user/{user}/key/renew                           | Renew the user API key                                                 |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+
+
+
 
 
 
