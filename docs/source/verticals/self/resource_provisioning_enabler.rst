@@ -69,7 +69,7 @@ Other enablers must exist and be active and have their labels and CPU and memory
 ***************
 Installation
 ***************
-Enabler is provided as a Helm chart. Refer to specific deployment instructions.
+Enabler is provided as a Helm chart. Refer to specific deployment instructions.a
 
 *********************
 Configuration options
