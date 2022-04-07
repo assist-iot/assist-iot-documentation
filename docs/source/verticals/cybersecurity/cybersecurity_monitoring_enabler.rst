@@ -112,8 +112,10 @@ Place in architecture
     shell running in a container, changes to persistent volumes or images, and other possible threats.
 
 
-- **Containers Security**
+- **Flexible integrations**
 
+    The entire SOAR system is created under different services which connect with API Keys between them and in turn can be consulted using python or bash scripting and very flexible to adapt into different eviroments.
+    
 
 ***************
 User guide
