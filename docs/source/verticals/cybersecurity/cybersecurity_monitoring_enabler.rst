@@ -222,11 +222,19 @@ basic configuration and cybersecurity features.
 Prerequisites
 ***************
 
-There is a recomended hardware requeriments as follows:
+
+There is a recomended hardware requeriments for the SIEM is:
+
+- 2Cpu
+- 8Gb Ram
+- 1TB Storage
+
+and the recomended hardware requeriments for the SOAR as follows:
 
 - 2Cpu
 - 16Gb Ram
 - 1TB Storage
+
 
 The enabler is build to run in a K8S environment and the creation is prepared to be autonomous in such a working system.
 
@@ -236,7 +244,8 @@ The service consumer will be required to communicate with the server using the d
 Installation
 ***************
 
-Enabler is provided as a Helm chart. Refer to specific deployment instructions.
+Enabler is provided as a Helm chart, including requieremenst and enviroment.
+Refer to specific deployment instructions.
 
 *********************
 Configuration options
@@ -248,7 +257,7 @@ TBD
 Developer guide
 ***************
 
-TBD
+**Not applicable.**
 
 ***************************
 Version control and release
@@ -260,7 +269,7 @@ Version 0.1. Under development.
 License
 ***************
 
-*The entire configuration, communication, preparation and start-up system is owned by S21Sec.*
+*The entire configuration, communication, preparation and start-up system is owned by* **© Copyright - S21Sec, All rights reserved.**
 
 - **Wazuh**  (License under GPLv2).
 
@@ -293,4 +302,4 @@ License
 Notice(dependencies)
 ********************
 
-TBD
+**Not applicable.**
