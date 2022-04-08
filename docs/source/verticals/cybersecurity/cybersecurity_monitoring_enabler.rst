@@ -267,6 +267,7 @@ The configuration listed is for the SIEM, related to data volumes for the integr
     ├── thehive
     │   └── application.conf
     |       └── cortex → servers → auth → key
+                # cortex configuration
                 play.modules.enabled += org.thp.thehive.connector.cortex.CortexModule
                 cortex {
                   servers = [
@@ -275,7 +276,7 @@ The configuration listed is for the SIEM, related to data volumes for the integr
                       url = "http://cortex:9001"
                       auth {
                         type = "bearer"
-                        key = "Wfsc+3NVCki5xtuFFlvURDGkod5pPBGL"
+                        key = "Wfsc+3NVCki5xtuFFlvURDGkod5pPBGL"       # cortex API key
                       }
                      }
                   ]
@@ -283,14 +284,23 @@ The configuration listed is for the SIEM, related to data volumes for the integr
                   maxRetryOnError = 3
                   statusCheckInterval = 1 minute
                 }
-
-    |
-    ├── cortex
-    │   └── application.conf
-
-
-
-
+    |       └── cortex → servers → auth → key
+                # MISP configuration
+                play.modules.enabled += org.thp.thehive.connector.misp.MispModule
+                misp {
+                  interval: 5 min
+                  servers: [
+                    {
+                      name = "MISP THP"            # MISP name
+                      url = "https://misp/" # URL or MISP
+                      auth {
+                        type = key
+                        key = "w6RjLh7V9MVWA2yvgeurJWjwEAPkkn8d2L8K1qkW"        # MISP API key
+                      }
+                      wsConfig { ssl { loose { acceptAnyCertificate: true } } }
+                    }
+                  ]
+                }
 
 
 ***************
