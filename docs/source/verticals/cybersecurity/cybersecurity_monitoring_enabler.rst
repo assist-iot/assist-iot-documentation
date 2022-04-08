@@ -251,7 +251,7 @@ Refer to specific deployment instructions.
 Configuration options
 *********************
 
-TBD
+
 
 ***************
 Developer guide
