@@ -87,13 +87,20 @@ Enabler is provided as a Helm chart. Refer to specific deployment instructions.
 Configuration options
 *********************
 
-TBD
+The Authorization server options for the rest API to connect are available in the **lib\config.py** file.
+
+::
+
+    remote_address: str = "auth_server"
+    remote_port: str = "9000"
+    remote_username: str = "admin"
+    remote_password: str = "xxxx"
 
 ***************
 Developer guide
 ***************
 
-TBD
+Not applicable.
 
 ***************************
 Version control and release
@@ -115,4 +122,4 @@ Apache Tomcat is licensed under Apache License Version 2.0.
 Notice(dependencies)
 ********************
 
-TBD
+Not applicable.
