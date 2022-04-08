@@ -23,7 +23,7 @@ Place in architecture
 *********************
 When the administrator user enables the resources provisioning controller enabler it automatically starts working. It accesses the metrics and stores them in its internal database, performs the deep learning process and infers to create the horizontal objects pod autoscalers dynamically. All this with pre-set values in the initial configuration.
 
-.. image:: https://user-images.githubusercontent.com/47482673/162279229-29151eda-9246-45e3-b20e-3d8a9f3c340b.PNG
+.. image:: https://user-images.githubusercontent.com/100677511/162429686-7cd012c0-bd74-441b-a12d-0d7a4aae9d6a.png
 
 - **API REST**: Contains the logic necessary to make GET and POST calls to intervene with the system behaviour, change default values or collect information.
 - **Pod Resources Controller**: Performs the collection of metrics and is responsible for storing the values in 15-minute intervals.
