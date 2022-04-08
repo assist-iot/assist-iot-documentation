@@ -17,25 +17,6 @@ Provides security awareness and visibility and infrastructure monitoring. Having
 Features
 ***************
 
-- Security Analytics.
-- Intrusion Detection.
-- Log Data Analysis.
-- File Integrity Monitoring.
-- Vulnerability Detection.
-- Configuration Assessment.
-- Incident Response.
-- Regulatory Compliance.
-- Cloud Security Monitoring.
-- Containers Security.
-- Flexible integrations.
-- Process workflows.
-- Incident management.
-- Threat intelligence.
-
-*********************
-Place in architecture
-*********************
-
 
 - **Security Analytics**
 
@@ -135,6 +116,15 @@ Place in architecture
 
     Cortex, with MISP allows security analysts and threat hunters to analyze and enrich observables (IP addresses, hashes, domains, etc) collected with the SIEM. 
 
+*********************
+Place in architecture
+*********************
+.. image:: https://github.com/JMoretS21Sec/assist-iot-documentation/blob/master/docs/source/verticals/cybersecurity/PlaceInArchitecture_CyberSecurity.png
+   :width: 1200
+   :alt: "CyberSecurity"
+
+
+
 ***************
 User guide
 ***************
@@ -178,40 +168,41 @@ basic configuration and cybersecurity features.
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 | METHOD |                            ENDPOINT                              |          DESCRIPTION                                                   |
 +========+==================================================================+========================================================================+
-|  POST  | {thehive}/api/v1/login                                           | Authenticate an user and get session cookie                            |
+|  POST  | {SOAR}/api/v1/login                                              | Authenticate an user and get session cookie                            |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  POST  | {thehive}/api/v1/organisation                                    | Create an organisation                                                 |
+|  POST  | {SOAR}/api/v1/organisation                                       | Create an organisation                                                 |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {thehive}/api/v0/profile                                         | List all user profiles                                                 |
+|  GET   | {SOAR}/api/v0/profile                                            | List all user profiles                                                 |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  POST  | {thehive}/api/v0/profile                                         | Create a new profile                                                   |
+|  POST  | {SOAR}/api/v0/profile                                            | Create a new profile                                                   |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {thehive}/api/v0/profile/{profile}                               | Get information of the given profile                                   |
+|  GET   | {SOAR}/api/v0/profile/{profile}                                  | Get information of the given profile                                   |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-| PATCH  | {thehive}/api/v0/profile/{profile}                               | Update profile                                                         |
+| PATCH  | {SOAR}/api/v0/profile/{profile}                                  | Update profile                                                         |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-| DELETE | {thehive}/api/v0/profile/{profile}                               | Remove the profile                                                     |
+| DELETE | {SOAR}/api/v0/profile/{profile}                                  | Remove the profile                                                     |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  POST  | {thehive}/api/v1/user                                            | Create a new user                                                      |
+|  POST  | {SOAR}/api/v1/user                                               | Create a new user                                                      |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {thehive}/api/v1/user/current                                    | Show information of the current user                                   |
+|  GET   | {SOAR}/api/v1/user/current                                       | Show information of the current user                                   |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {thehive}/api/v1/user/{user}                                     | Show information of the given user                                     |
+|  GET   | {SOAR}/api/v1/user/{user}                                        | Show information of the given user                                     |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-| PATCH  | {thehive}/api/v1/user/{user}                                     | Update information of the given user                                   |
+| PATCH  | {SOAR}/api/v1/user/{user}                                        | Update information of the given user                                   |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-| DELETE | {thehive}/api/v1/user/{user}/force                               | Remove an user                                                         |
+| DELETE | {SOAR}/api/v1/user/{user}/force                                  | Remove an user                                                         |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  POST  | {thehive}/api/v1/user/{user}/password/set                        | Set the user password                                                  |
+|  POST  | {SOAR}/api/v1/user/{user}/password/set                           | Set the user password                                                  |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  POST  | {thehive}/api/v1/user/{user}/password/change                     | Change the user password                                               |
+|  POST  | {SOAR}/api/v1/user/{user}/password/change                        | Change the user password                                               |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {thehive}/api/v1/user/{user}/key                                 | Get the user API key                                                   |
+|  GET   | {SOAR}/api/v1/user/{user}/key                                    | Get the user API key                                                   |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-| DELETE | {thehive}/api/v1/user/{user}/key                                 | Remove the user API key                                                |
+| DELETE | {SOAR}/api/v1/user/{user}/key                                    | Remove the user API key                                                |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  POST  | {thehive}/api/v1/user/{user}/key/renew                           | Renew the user API key                                                 |
+|  POST  | {SOAR}/api/v1/user/{user}/key/renew                              | Renew the user API key                                                 |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+
 
 
 
@@ -223,17 +214,17 @@ Prerequisites
 ***************
 
 
-There is a recomended hardware requeriments for the SIEM is:
+There is a recomended hardware requeriments for the SIEM:
 
-- 2Cpu
-- 8Gb Ram
-- 1TB Storage
+- 2CPU
+- 8Gb RAM
+- 1TB SSD
 
 and the recomended hardware requeriments for the SOAR as follows:
 
-- 2Cpu
-- 16Gb Ram
-- 1TB Storage
+- 2CPU
+- 16GB RAM
+- 1TB SSD
 
 
 The enabler is build to run in a K8S environment and the creation is prepared to be autonomous in such a working system.
@@ -251,7 +242,12 @@ Refer to specific deployment instructions.
 Configuration options
 *********************
 
+::
 
+
+
+
+  
 
 ***************
 Developer guide
