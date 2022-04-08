@@ -204,11 +204,6 @@ basic configuration and cybersecurity features.
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 
 
-
-
-
-
-
 ***************
 Prerequisites
 ***************
@@ -242,12 +237,61 @@ Refer to specific deployment instructions.
 Configuration options
 *********************
 
+The configuration listed is for the SIEM, related to data volumes for the integration to the webhooks and placing the source code or executable.
+
+**Add this to ossec.conf configuration: attached to ossec_etc volume for manage the webhook and integrations**
+
+
 ::
 
+    └── ossec_integrations:
+      └── custom-shuffle
+      |     - handler for custom-shuffle.py
+      └── custom-shuffle.py
+      |     - integration code for the automation response with the workflow
+
+    
+::
+
+    ossec_etc:
+      <integration>
+        <name>custom-shuffle</name>
+        <hook_url>http://<IP>:<PORT>/<REPLACE FOR THE WEBHOOK URL></hook_url>
+        <level>3</level>
+        <alert_format>json</alert_format>
+      </integration>
+
+::
+
+    Add the cortex API into thehive application.conf
+    ├── thehive
+    │   └── application.conf
+    |       └── cortex → servers → auth → key
+                play.modules.enabled += org.thp.thehive.connector.cortex.CortexModule
+                cortex {
+                  servers = [
+                    {
+                      name = local
+                      url = "http://cortex:9001"
+                      auth {
+                        type = "bearer"
+                        key = "Wfsc+3NVCki5xtuFFlvURDGkod5pPBGL"
+                      }
+                     }
+                  ]
+                  refreshDelay = 5 seconds
+                  maxRetryOnError = 3
+                  statusCheckInterval = 1 minute
+                }
+
+    |
+    ├── cortex
+    │   └── application.conf
 
 
 
-  
+
+
 
 ***************
 Developer guide
