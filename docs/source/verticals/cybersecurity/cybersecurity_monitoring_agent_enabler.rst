@@ -86,7 +86,8 @@ All agent modules have different purposes and settings. Here is a brief descript
 *********************
 Place in architecture
 *********************
-.. image:: https://github.com/JMoretS21Sec/assist-iot-documentation/blob/master/docs/source/verticals/cybersecurity/PlaceInArchitecture_CyberSecurity.png
+
+.. figure:: ./PlaceInArchitecture_CyberSecurity.png
    :width: 1200
    :alt: "CyberSecurity"
 
