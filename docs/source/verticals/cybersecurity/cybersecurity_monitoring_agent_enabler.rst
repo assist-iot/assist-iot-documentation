@@ -96,13 +96,10 @@ Place in architecture
 User guide
 ***************
 
-Cybersecurity monitoring **SIEM** (Security information and event management) server will implement a restful API to manage monitoring server basic configuration and cybersecurity agents connected.
 
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 | METHOD |                            ENDPOINT                              |          DESCRIPTION                                                   |
 +========+==================================================================+========================================================================+
-|  PUT   | {SIEM}/active-response                                           | Run an Active Response command on all agents or a list of them         |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 |  PUT   | {SIEM}/agents/restart                                            | Restart all agents or a list of them                                   |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 |  PUT   | {SIEM}/agents/{agent_id}/restart                                 | Restart the specified agent                                            |
@@ -116,20 +113,6 @@ Cybersecurity monitoring **SIEM** (Security information and event management) se
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 |  GET   | {SIEM}/agents                                                    | Obtain a list with information of the available agents                 |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  PUT   | {SIEM}/manager/restart                                           | Restart the manager                                                    |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {SIEM}/manager/stats                                             | Return statistical information for the current or specified date       |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  PUT   | {SIEM}/manager/configuration                                     | Replace configuration with the data contained in the API request       |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {SIEM}/manager/configuration                                     | Return enabler configuration used                                      |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {SIEM}/manager/info                                              | Basic information such as version, compilation date, installation path |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {SIEM}/manager/status                                            | Return the status of the monitoring server                             |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-
-
 
 
 ***************
@@ -138,8 +121,10 @@ Prerequisites
 
 
 There is a recomended hardware requeriments for the Agent:
-1CPU
-35MB RAM
+
+- 1CPU
+ 
+- 35MB RAM
 
 The enabler is build to run in a K8S environment and the creation is prepared to be autonomous in such a working system.
 
@@ -156,6 +141,43 @@ Refer to specific deployment instructions.
 Configuration options
 *********************
 
+
++------------------------------------------------------------------+------------------------------------------------------------------------+
+|                            OPTION                                |          DESCRIPTION                                                   |
++==================================================================+========================================================================+
+| WAZUH_MANAGER                                                    | Specifies the manager IP address or hostname. In case you want to      |
+|                                                                  | specify multiple managers, you can add them separated by commas.       |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_MANAGER_PORT                                               | Specifies the manager’s connection port.                               |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_PROTOCOL                                                   | Sets the communication protocol between the manager and the agent.     |
+|                                                                  | Accepts UDP and TCP. Default is TCP.                                   |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_SERVER                                        | Specifies the Wazuh registration server, used for the agent            |
+|                                                                  | registration. If empty, the value set in WAZUH_MANAGER will be used.   |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_PORT                                          | Specifies the port used by the Wazuh registration server.              |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_PASSWORD                                      | Sets the Wazuh registration server. See agent-auth options.            |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_KEEP_ALIVE_INTERVAL                                        | Sets the time between agent checks for manager connection.             |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_TIME_RECONNECT                                             | Sets the time interval for the agent to reconnect with the Wazuh       |
+|                                                                  | manager when connectivity is lost.                                     |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_CA                                            | Host SSL validation need of Certificate of Authority.                  |
+|                                                                  | This option specifies the CA path.                                     |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_CERTIFICATE                                   | The SSL agent verification needs a CA signed certificate and the       |
+|                                                                  | respective key. This option specifies the certificate path.            |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_KEY                                           | Specifies the key path completing the required variables with          |
+|                                                                  | WAZUH_REGISTRATION_CERTIFICATE for the SSL agent verification process. |
++------------------------------------------------------------------+------------------------------------------------------------------------+	
+| WAZUH_AGENT_NAME                                                 | Designates the agent’s name. By default it will be the computer name.  |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_AGENT_GROUP                                                | Assigns the agent to one or more existing groups (separated by commas).|
++------------------------------------------------------------------+------------------------------------------------------------------------+
 
 
 ***************
@@ -177,30 +199,6 @@ License
 *The entire configuration, communication, preparation and start-up system is owned by* **© Copyright - S21Sec, All rights reserved.**
 
 - **Wazuh**  (License under GPLv2).
-
--	**The Hive**  v-4.1.0-1  (License under GNU AGPLv3).
-
--	**Cassandra**  v-3.11  (License under Apache Version 2.0).
-
--	**Cortex**  v-3.1.0-1  (License under GNU AGPLv3).
-
--	**Elasticsearch**  v-7.11.1  (License under Apache Version 2.0).
-
--	**Kibana**  v-7.11.1  (License under Elastic Version 2.0).
-
--	**MISP** v-2.4.134  (License under GNU AGPLv3).
-
--	**Mysql**  v-8.0.22  (License under GPLv2).
-
--	**Redis**  v-6.0.9  (Lincense The 3-Clause BSD License).
-
--	**Shuffle**  v-0.8.64  (License under GNU AGPLv3).
-
--	**Shuffle-Backend**  v-0.8.64  (License under GNU AGPLv3).
-
--	**Shuffle-Database**  (License under GNU AGPLv3).
-
--	**Shuffle-Orborus**  v-0.8.63  (License under GNU AGPLv3).
 
 
 ********************
