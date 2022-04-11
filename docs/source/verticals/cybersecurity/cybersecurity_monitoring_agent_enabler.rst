@@ -200,30 +200,6 @@ License
 
 - **Wazuh**  (License under GPLv2).
 
--	**The Hive**  v-4.1.0-1  (License under GNU AGPLv3).
-
--	**Cassandra**  v-3.11  (License under Apache Version 2.0).
-
--	**Cortex**  v-3.1.0-1  (License under GNU AGPLv3).
-
--	**Elasticsearch**  v-7.11.1  (License under Apache Version 2.0).
-
--	**Kibana**  v-7.11.1  (License under Elastic Version 2.0).
-
--	**MISP** v-2.4.134  (License under GNU AGPLv3).
-
--	**Mysql**  v-8.0.22  (License under GPLv2).
-
--	**Redis**  v-6.0.9  (Lincense The 3-Clause BSD License).
-
--	**Shuffle**  v-0.8.64  (License under GNU AGPLv3).
-
--	**Shuffle-Backend**  v-0.8.64  (License under GNU AGPLv3).
-
--	**Shuffle-Database**  (License under GNU AGPLv3).
-
--	**Shuffle-Orborus**  v-0.8.63  (License under GNU AGPLv3).
-
 
 ********************
 Notice(dependencies)
