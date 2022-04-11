@@ -17,38 +17,194 @@ Perform functions of an endpoint detection and response system, monitoring and c
 Features
 ***************
 
+
+All agent modules have different purposes and settings. Here is a brief description of what they do:
+
+
+- **Log collector:**
+
+    This agent component can read flat log files and Windows events, collecting operating system and application log messages. It does support XPath filters for
+    Windows events and recognizes multi-line formats (e.g. Linux Audit logs). It can also enrich JSON events with additional metadata.
+
+
+- **Command execution:**
+
+    Agents can run authorized commands periodically, collecting their output and reporting it back to the Wazuh server for further analysis. This module can be used to
+    meet different purposes (e.g. monitoring hard disk space left, getting a list of last logged in users, etc.).
+
+
+- **File integrity monitoring (FIM):**
+
+
+    This module monitors the file system, reporting when files are created, deleted, or modified. It keeps track of file attributes, permissions, ownership, and
+    content. When an event occurs, it captures who, what, and when details in real time. Additionally, this module builds and maintains a database with the state of
+    the monitored files, allowing queries to be run remotely.
+
+
+- **Security configuration assessment (SCA):**
+
+
+    This component provides continuous configuration assessment, utilizing out-of-the-box checks based on the Center of Internet Security (CIS) benchmarks. Users can
+    also create their own SCA checks to monitor and enforce their security policies.
+
+
+- **System inventory:**
+
+    This agent module periodically runs scans, collecting inventory data such as operating system version, network interfaces, running processes, installed
+    applications, and a list of open ports. Scan results are stored into local SQLite databases that can be queried remotely.
+
+
+- **Malware detection:**
+
+    Using a non-signature based approach, this component is capable of detecting anomalies and possible presence of rootkits. Monitoring system calls, it looks for
+    hidden processes, hidden files, and hidden ports.
+
+
+- **Active response:**
+
+    This module runs automatic actions when threats are detected. Among other things, it can block a network connection, stop a running process, or delete a malicious
+    file. Custom responses can also be created by users when necessary (e.g. run a binary in a sandbox, capture a network connection traffic, scan a file with an
+    antivirus, etc.).
+
+
+- **Containers security monitoring:**
+
+    This agent module is integrated with the Docker Engine API in order to monitor changes in a containerized environment. For example, it detects changes to container
+    images, network configuration, or data volumes. Besides, it alerts on containers running in privileged mode and on users executing commands in a running container.
+
+
+- **Cloud security monitoring:**
+
+
+    This component monitors cloud providers such as Amazon AWS, Microsoft Azure, or Google GCP. It natively communicates with their APIs. It is capable of detecting
+    changes to the cloud infrastructure (e.g. a new user is created, a security group is modified, a cloud instance is stopped, etc.), and collecting cloud services
+    log data (e.g. AWS Cloudtrail, AWS Macie, AWS GuardDuty, Azure Active Directory, etc.)
+
+
+
+
 *********************
 Place in architecture
 *********************
+.. image:: https://github.com/JMoretS21Sec/assist-iot-documentation/blob/master/docs/source/verticals/cybersecurity/PlaceInArchitecture_CyberSecurity.png
+   :width: 1200
+   :alt: "CyberSecurity"
+
+
 
 ***************
 User guide
 ***************
 
+Cybersecurity monitoring **SIEM** (Security information and event management) server will implement a restful API to manage monitoring server basic configuration and cybersecurity agents connected.
+
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| METHOD |                            ENDPOINT                              |          DESCRIPTION                                                   |
++========+==================================================================+========================================================================+
+|  PUT   | {SIEM}/active-response                                           | Run an Active Response command on all agents or a list of them         |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  PUT   | {SIEM}/agents/restart                                            | Restart all agents or a list of them                                   |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  PUT   | {SIEM}/agents/{agent_id}/restart                                 | Restart the specified agent                                            |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|        |                                                                  | Add an agent specifying its name, ID and IP. If an agent with          |
+|  POST  | {SIEM}/agents/insert                                             | the same ID already exists, replace it using 'force' parameter         |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  POST  | {SIEM}/agents                                                    | Add a new agent with basic info                                        |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+| DELETE | {SIEM}/agents                                                    | Delete all agents or a list of them based on optional criteria         |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {SIEM}/agents                                                    | Obtain a list with information of the available agents                 |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  PUT   | {SIEM}/manager/restart                                           | Restart the manager                                                    |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {SIEM}/manager/stats                                             | Return statistical information for the current or specified date       |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  PUT   | {SIEM}/manager/configuration                                     | Replace configuration with the data contained in the API request       |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {SIEM}/manager/configuration                                     | Return enabler configuration used                                      |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {SIEM}/manager/info                                              | Basic information such as version, compilation date, installation path |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+|  GET   | {SIEM}/manager/status                                            | Return the status of the monitoring server                             |
++--------+------------------------------------------------------------------+------------------------------------------------------------------------+
+
+
+
+
 ***************
 Prerequisites
 ***************
+
+
+There is a recomended hardware requeriments for the Agent:
+1CPU
+35MB RAM
+
+The enabler is build to run in a K8S environment and the creation is prepared to be autonomous in such a working system.
+
+The service consumer will be required to communicate with the server using the described Rest API interface, and also all the communications between enablers will be provided by K8S API.
 
 ***************
 Installation
 ***************
 
+Enabler is provided as a Helm chart, including requieremenst and enviroment.
+Refer to specific deployment instructions.
+
 *********************
 Configuration options
 *********************
+
+
 
 ***************
 Developer guide
 ***************
 
+**Not applicable.**
+
 ***************************
 Version control and release
 ***************************
+
+Version 0.1. Under development.
 
 ***************
 License
 ***************
 
+*The entire configuration, communication, preparation and start-up system is owned by* **© Copyright - S21Sec, All rights reserved.**
+
+- **Wazuh**  (License under GPLv2).
+
+-	**The Hive**  v-4.1.0-1  (License under GNU AGPLv3).
+
+-	**Cassandra**  v-3.11  (License under Apache Version 2.0).
+
+-	**Cortex**  v-3.1.0-1  (License under GNU AGPLv3).
+
+-	**Elasticsearch**  v-7.11.1  (License under Apache Version 2.0).
+
+-	**Kibana**  v-7.11.1  (License under Elastic Version 2.0).
+
+-	**MISP** v-2.4.134  (License under GNU AGPLv3).
+
+-	**Mysql**  v-8.0.22  (License under GPLv2).
+
+-	**Redis**  v-6.0.9  (Lincense The 3-Clause BSD License).
+
+-	**Shuffle**  v-0.8.64  (License under GNU AGPLv3).
+
+-	**Shuffle-Backend**  v-0.8.64  (License under GNU AGPLv3).
+
+-	**Shuffle-Database**  (License under GNU AGPLv3).
+
+-	**Shuffle-Orborus**  v-0.8.63  (License under GNU AGPLv3).
+
+
 ********************
 Notice(dependencies)
 ********************
+
+**Not applicable.**

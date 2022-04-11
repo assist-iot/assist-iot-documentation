@@ -16,6 +16,7 @@ The ASSIST-IoT localisation tag is a Smart IoT device used for indoor people loc
 ********
 Features
 ********
+Localisation accuracy is better than 50cm.
 
 *********************
 Place in architecture
@@ -32,27 +33,34 @@ Information about the correspondence between tag and asset must be noted, so the
 *************
 Prerequisites
 *************
+The localization processing enabler need to know which person is wearing which tag.
 
 ************
 Installation
 ************
+The localisation tag has to be mounted to a belt or to a helmet.
 
 *********************
 Configuration options
 *********************
+N/A
 
 ***************
 Developer guide
 ***************
+N/A
 
 ***************************
 Version control and release
 ***************************
+To be determined
 
 *******
 License
 *******
+N/A
 
 ********************
 Notice(dependencies)
 ********************
+N/A

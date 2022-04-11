@@ -12,9 +12,11 @@ Fall Arrest Device
 Introduction
 ************
 The ASSIST-IoT fall arrest device is a localisation tag with an Inertial Measurement Unit (IMU) and a push button. The push button is used by the person wearing the tag, to indicate that this person is in an emergency situation and needs immediate help. The fall arrest device uses the IMU to determine if the person has fallen or not. If an emergency situation is detected, a message is transmitted to the anchors immediately. An enabler can pick up this message and act accordingly.
+
 ********
 Features
 ********
+Localisation accuracy is better than 50cm.
 
 *********************
 Place in architecture
@@ -31,27 +33,34 @@ Information about the correspondence between tag and asset must be noted, so the
 *************
 Prerequisites
 *************
+The localization processing enabler need to know which person is wearing which fall arrest device.
 
 ************
 Installation
 ************
+The fall arrest device has to be mounted to a belt or to a helmet.
 
 *********************
 Configuration options
 *********************
+N/A
 
 ***************
 Developer guide
 ***************
+N/A
 
 ***************************
 Version control and release
 ***************************
+To be determined.
 
 *******
 License
 *******
+N/A
 
 ********************
 Notice(dependencies)
 ********************
+N/A
