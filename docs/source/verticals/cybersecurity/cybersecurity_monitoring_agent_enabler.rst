@@ -96,13 +96,10 @@ Place in architecture
 User guide
 ***************
 
-Cybersecurity monitoring **SIEM** (Security information and event management) server will implement a restful API to manage monitoring server basic configuration and cybersecurity agents connected.
 
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 | METHOD |                            ENDPOINT                              |          DESCRIPTION                                                   |
 +========+==================================================================+========================================================================+
-|  PUT   | {SIEM}/active-response                                           | Run an Active Response command on all agents or a list of them         |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 |  PUT   | {SIEM}/agents/restart                                            | Restart all agents or a list of them                                   |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 |  PUT   | {SIEM}/agents/{agent_id}/restart                                 | Restart the specified agent                                            |
@@ -116,20 +113,6 @@ Cybersecurity monitoring **SIEM** (Security information and event management) se
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
 |  GET   | {SIEM}/agents                                                    | Obtain a list with information of the available agents                 |
 +--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  PUT   | {SIEM}/manager/restart                                           | Restart the manager                                                    |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {SIEM}/manager/stats                                             | Return statistical information for the current or specified date       |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  PUT   | {SIEM}/manager/configuration                                     | Replace configuration with the data contained in the API request       |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {SIEM}/manager/configuration                                     | Return enabler configuration used                                      |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {SIEM}/manager/info                                              | Basic information such as version, compilation date, installation path |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-|  GET   | {SIEM}/manager/status                                            | Return the status of the monitoring server                             |
-+--------+------------------------------------------------------------------+------------------------------------------------------------------------+
-
-
 
 
 ***************
@@ -138,8 +121,9 @@ Prerequisites
 
 
 There is a recomended hardware requeriments for the Agent:
-1CPU
-35MB RAM
+
+  - 1CPU
+  - 35MB RAM
 
 The enabler is build to run in a K8S environment and the creation is prepared to be autonomous in such a working system.
 
