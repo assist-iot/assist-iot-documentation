@@ -122,8 +122,9 @@ Prerequisites
 
 There is a recomended hardware requeriments for the Agent:
 
-  - 1CPU
-  - 35MB RAM
+- 1CPU
+ 
+- 35MB RAM
 
 The enabler is build to run in a K8S environment and the creation is prepared to be autonomous in such a working system.
 
