@@ -142,6 +142,43 @@ Configuration options
 *********************
 
 
++------------------------------------------------------------------+------------------------------------------------------------------------+
+|                            OPTION                                |          DESCRIPTION                                                   |
++==================================================================+========================================================================+
+| WAZUH_MANAGER                                                    | Specifies the manager IP address or hostname. In case you want to      |
+|                                                                  | specify multiple managers, you can add them separated by commas.       |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_MANAGER_PORT                                               | Specifies the manager’s connection port.                               |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_PROTOCOL                                                   | Sets the communication protocol between the manager and the agent.     |
+|                                                                  | Accepts UDP and TCP. Default is TCP.                                   |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_SERVER                                        | Specifies the Wazuh registration server, used for the agent            |
+|                                                                  | registration. If empty, the value set in WAZUH_MANAGER will be used.   |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_PORT                                          | Specifies the port used by the Wazuh registration server.              |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_PASSWORD                                      | Sets the Wazuh registration server. See agent-auth options.            |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_KEEP_ALIVE_INTERVAL                                        | Sets the time between agent checks for manager connection.             |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_TIME_RECONNECT                                             | Sets the time interval for the agent to reconnect with the Wazuh       |
+|                                                                  | manager when connectivity is lost.                                     |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_CA                                            | Host SSL validation need of Certificate of Authority.                  |
+|                                                                  | This option specifies the CA path.                                     |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_CERTIFICATE                                   | The SSL agent verification needs a CA signed certificate and the       |
+|                                                                  | respective key. This option specifies the certificate path.            |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_REGISTRATION_KEY                                           | Specifies the key path completing the required variables with          |
+|                                                                  | WAZUH_REGISTRATION_CERTIFICATE for the SSL agent verification process. |
++------------------------------------------------------------------+------------------------------------------------------------------------+	
+| WAZUH_AGENT_NAME                                                 | Designates the agent’s name. By default it will be the computer name.  |
++------------------------------------------------------------------+------------------------------------------------------------------------+
+| WAZUH_AGENT_GROUP                                                | Assigns the agent to one or more existing groups (separated by commas).|
++------------------------------------------------------------------+------------------------------------------------------------------------+
+
 
 ***************
 Developer guide
