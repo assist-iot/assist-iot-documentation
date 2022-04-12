@@ -133,6 +133,10 @@ will not change suddenly, introducing a backward-incompatible change. It
 is however *possible* to overwrite earlier-uploaded content, in case of
 a mistake, for example. See the API guide below for more details.
 
+You can specify the default format to use when retrieving the content,
+when no preferences were specified. See the API guide below for more
+details.
+
 Metadata
 --------
 
@@ -528,7 +532,65 @@ Response:
 Changing the default format
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Not implemented yet.
+The ``defaultFormat`` field of a model version indicates which content
+format will be used, if no other preferences are specified. It is set
+automatically to the first content format that is uploaded to the model
+version, but can also be changed later.
+
+Changing the ``defaultFormat`` field is done with a PATCH request:
+
+======================= ============================================
+Request                 Body
+======================= ============================================
+``PATCH /w3c/sosa/1.0`` ``{"defaultFormat": "application/json+ld"}``
+======================= ============================================
+
+============= ==========================================================
+Response code Body
+============= ==========================================================
+200           ``{"message": "Updated model version 'w3c/sosa/1.0.0'."}``
+============= ==========================================================
+
+Now when you request ``GET /w3c/sosa/1.0/content`` (or any of the
+equivalent forms shown above), the Repository will attempt to retrieve
+content in the ``application/json+ld`` format.
+
+Note that the Semantic Repository does not check whether the set default
+format is actually present in the model version. In case it is not, you
+will receive a 404 error when trying to retrieve the content.
+
+The default format can also be set during model version creation:
+
+===================== ============================================
+Request               Body
+===================== ============================================
+``POST /w3c/ssn/1.0`` ``{"defaultFormat": "application/json+ld"}``
+===================== ============================================
+
+============= =======================================================
+Response code Body
+============= =======================================================
+200           ``{"message": "Created model version 'w3c/ssn/1.0'."}``
+============= =======================================================
+
+If you set the default format during model version creation, the first
+uploaded content will not overwrite this setting.
+
+To change the default format to a new value, simply make a PATCH
+request. To **unset** the default format completely, use the special
+``@unset`` value in a PATCH request:
+
+======================= ===============================
+Request                 Body
+======================= ===============================
+``PATCH /w3c/sosa/1.0`` ``{"defaultFormat": "@unset"}``
+======================= ===============================
+
+============= ========================================================
+Response code Body
+============= ========================================================
+200           ``{"message": "Updated model version 'w3c/sosa/1.0'."}``
+============= ========================================================
 
 Downloading the content
 ^^^^^^^^^^^^^^^^^^^^^^^

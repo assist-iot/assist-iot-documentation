@@ -207,6 +207,7 @@ font-style: italic;
   <li><a href="#getRoute3"><code><span class="http-method">get</span> /{namespace}</code></a></li>
   <li><a href="#getRoute4"><code><span class="http-method">get</span> /v</code></a></li>
   <li><a href="#patchRoute"><code><span class="http-method">patch</span> /{namespace}/{model}</code></a></li>
+  <li><a href="#patchRoute1"><code><span class="http-method">patch</span> /{namespace}/{model}/{version}</code></a></li>
   <li><a href="#postRoute"><code><span class="http-method">post</span> /{namespace}/{model}/{version}/content</code></a></li>
   <li><a href="#postRoute1"><code><span class="http-method">post</span> /{namespace}/{model}</code></a></li>
   <li><a href="#postRoute2"><code><span class="http-method">post</span> /{namespace}/{model}/{version}</code></a></li>
@@ -1097,6 +1098,75 @@ font-style: italic;
         <a href="#ErrorResponse">ErrorResponse</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="patchRoute1"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="patch"><code class="huge"><span class="http-method">patch</span> /{namespace}/{model}/{version}</code></pre></div>
+    <div class="method-summary">Update an existing model version (<span class="nickname">patchRoute1</span>)</div>
+    <div class="method-notes">Change one or more fields of a specific version of a model in the repository.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div><div class="param">version (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Version tag default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ModelVersionUpdateModel <a href="#ModelVersionUpdateModel">ModelVersionUpdateModel</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "warnings" : [ "warnings", "warnings" ],
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    success
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h4 class="field-label">400</h4>
+    invalid request body
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h4 class="field-label">404</h4>
+    model version not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="postRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -1261,10 +1331,15 @@ font-style: italic;
       <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Version tag default: null </div>
     </div>  <!-- field-items -->
 
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">ModelVersionContext <a href="#ModelVersionContext">ModelVersionContext</a> (optional)</div>
+      <div class="param">ModelVersionUpdateModel <a href="#ModelVersionUpdateModel">ModelVersionUpdateModel</a> (optional)</div>
 
       <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
 
@@ -1303,7 +1378,7 @@ font-style: italic;
     duplicate key error
         <a href="#ErrorResponse">ErrorResponse</a>
     <h4 class="field-label">400</h4>
-    invalid version tag
+    invalid request body
         <a href="#ErrorResponse">ErrorResponse</a>
     <h4 class="field-label">404</h4>
     Namespace or model not found
@@ -1381,6 +1456,7 @@ font-style: italic;
     <li><a href="#ModelUpdateModel"><code>ModelUpdateModel</code> - </a></li>
     <li><a href="#ModelVersionClientModel"><code>ModelVersionClientModel</code> - </a></li>
     <li><a href="#ModelVersionContext"><code>ModelVersionContext</code> - </a></li>
+    <li><a href="#ModelVersionUpdateModel"><code>ModelVersionUpdateModel</code> - </a></li>
     <li><a href="#NamespaceClientModel"><code>NamespaceClientModel</code> - </a></li>
     <li><a href="#OptionString"><code>OptionString</code> - </a></li>
     <li><a href="#RootInfoClientModel"><code>RootInfoClientModel</code> - </a></li>
@@ -1414,6 +1490,7 @@ font-style: italic;
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">latestVersion (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">mongoUpdates </div><div class="param-desc"><span class="param-type"><a href="#object">array[Object]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1434,6 +1511,14 @@ font-style: italic;
       <div class="param">ns </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">model (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">version (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ModelVersionUpdateModel"><code>ModelVersionUpdateModel</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">defaultFormat (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">mongoUpdates </div><div class="param-desc"><span class="param-type"><a href="#object">array[Object]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
