@@ -18,42 +18,50 @@ Authorization server offers a decision-making service based on XACML policies. I
 Features
 ***************
 
-- PAP. Edit and publish policy
-- PIP. Serve context information
-- PEP. Validate identity and request validation
-- PDP. Make decision and launch related actions
+- **PAP -> Edit and publish policy.**
+    
+  Policy Administration Point offers a web interface to edit the policy and publish it in XACML format to the location where the PDP will use it.
+
+  -	Present a web interface to build a policy
+  -	Transform to XACML and place it in the PDPs repository
+
+
+- **PIP -> Serve context information.**
+  
+  Policy Information Point presents a Rest interface to publish context data to be used by the PDP when resolving the decision. It will also offer another interface
+  (Rest and web) to add data.
+
+  -	Present an interface to add data to the storage
+  -	Serve context information in a Rest interface
+  
+  
+- **PEP -> Validate identity and request validation.**
+  
+  Policy Enforcement Point is the responsible of requesting a decision to the PDP.
+
+  -	Validate identity against third party IS
+  -	Launch request to PDP
+  
+ 
+- **PDP -> Make decision and launch related actions.**
+
+  Policy Decision Point is the module responsible of making the actual decision based on the context information compiled and the policy available.
+
+  -	Receive a who / what / where question in a Rest interface for validation
+  -	Obtain context information from external sources
+  -	Build a request compiling all the available data
+  -	Validate against the policy
+  -	Return Permit or Deny response
+  -	Launch related post decision actions
+
 
 *********************
 Place in architecture
 *********************
+.. figure:: ./PlaceInArchitecture_CyberSecurity.png
+   :width: 1200
+   :alt: "CyberSecurity"
 
-PEP
-  Policy Enforcement Point is the responsible of requesting a decision to the PDP.
-
--	Validate identity against third party IS
--	Launch request to PDP
-
-PAP
-  Policy Administration Point offers a web interface to edit the policy and publish it in XACML format to the location where the PDP will use it.
-
--	Present a web interface to build a policy
--	Transform to XACML and place it in the PDPs repository
-
-PIP
-  Policy Information Point presents a Rest interface to publish context data to be used by the PDP when resolving the decision. It will also offer another interface (Rest and web) to add data.
-
--	Present an interface to add data to the storage
--	Serve context information in a Rest interface
-
-PDP
-  Policy Decision Point is the module responsible of making the actual decision based on the context information compiled and the policy available.
-
--	Receive a who / what / where question in a Rest interface for validation
--	Obtain context information from external sources
--	Build a request compiling all the available data
--	Validate against the policy
--	Return Permit or Deny response
--	Launch related post decision actions
 
 ***************
 User guide

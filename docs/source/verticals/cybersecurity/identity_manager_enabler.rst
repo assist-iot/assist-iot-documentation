@@ -17,23 +17,34 @@ Using OAuth2 protocol, it will offer a federated identification service where se
 Features
 ***************
 
-Identity Management enabler will store user credentials and data. Using OAuth2 protocol, it will offer a federated identification service where service requester and provider will be able to establish a trusted relation without previously knowing each other.
+- Identity Management enabler will store user credentials and data. Using OAuth2 protocol, it will offer a federated identification service where service requester
+  and provider will be able to establish a trusted relation without previously knowing each other.
+
+
+- When a requester asks for a service, the provider will redirect the request to a third-party identity server, known by both parties, so the requester can identify
+  itself and obtain a session token. The service provider will ask the identity server to validate the token and provide data about the requester.
+  This way a secure identification process is completed without the service provider having received the requester credentials.
+
+
+- Identity Manager enabler admin 
+  Contains the user or entities credentials store and data. It will offer a OpenId/OAuth2 interface. 
+
+
+- Identity Manager enabler authentication 
+  Offers will offer a OpenId/OAuth2 interface and validates agains the locla or user db. 
+
+
+- Local user db 
+  Contains the user or entities credentials store and data. 
+
 
 *********************
 Place in architecture
 *********************
+.. figure:: ./PlaceInArchitecture_CyberSecurity.png
+   :width: 1200
+   :alt: "CyberSecurity"
 
-When a requester asks for a service, the provider will redirect the request to a third-party identity server, known by both parties, so the requester can identify itself and obtain a session token. The service provider will ask the identity server to validate the token and provide data about the requester.
-This way a secure identification process is completed without the service provider having received the requester credentials.
-
-Identity Manager enabler admin 
-  Contains the user or entities credentials store and data. It will offer a OpenId/OAuth2 interface 
-
-Identity Manager enabler authentication 
-  Offers will offer a OpenId/OAuth2 interface and validates agains the locla or user db. 
-
-Local user db 
-  Contains the user or entities credentials store and data. 
 
 ***************
 User guide
@@ -114,4 +125,4 @@ RestEnabler module is propriety of S21Sec.
 Notice(dependencies)
 ********************
 
-TBD
+Not applicable.
