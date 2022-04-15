@@ -218,7 +218,7 @@ Request URL Request body
 ============= =============
 Response code Response body
 ============= =============
-============= =============
+
 
 \| 200 \|
 
@@ -227,6 +227,8 @@ Response code Response body
    <pre>{<br>&emsp;"namespaces": { <br>&emsp;&emsp;"items": [{"name": "w3c"}] <br>&emsp;&emsp;"totalCount": 1 <br>&emsp;} <br>}</pre>
 
 \|
+
+============= =============
 
 A collection of namespaces is returned. Browsing such collections is
 described in detail in the `Browsing
