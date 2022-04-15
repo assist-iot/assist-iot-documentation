@@ -11,7 +11,7 @@ FL Orchestrator
 ***************
 Introduction
 ***************
-**FL Orchestrator** is one of the enablers developed in the context of the **FL Architecture** of the `ASSIST-IoT project
+**FL Orchestrator** is one of the enablers developed in the context of the **FL Architecture** of the `ASSIST-IoT project.
 
 ***************
 Features

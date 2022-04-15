@@ -8,8 +8,6 @@ FL Training Collector enabler
   :local:
   :depth: 1
 
-[[*TOC*]]
-
 Introduction
 ============
 

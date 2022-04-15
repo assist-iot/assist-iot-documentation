@@ -8,7 +8,6 @@ FL Repository enabler
   :local:
   :depth: 1
 
-[[*TOC*]]
 
 Introduction
 ============
