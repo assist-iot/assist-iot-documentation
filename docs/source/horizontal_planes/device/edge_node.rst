@@ -1,8 +1,8 @@
-.. _Edge Node:
+.. _GWEN:
 
-#########
-Edge Node
-#########
+####
+GWEN
+####
 
 .. contents::
   :local:
