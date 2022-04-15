@@ -8,14 +8,7 @@ Semantic Annotation Enabler
   :local:
   :depth: 1
 
-Home
-====
-
-ASSIST-IoT Semantic Annotation Enabler Repository Enabler.
-
-
-
-introduction
+Introduction
 ============
 
 This enabler offers a service of syntactic transformation of JSON, CSV
@@ -35,28 +28,28 @@ with persistent annotation channels.
 
 
 
-features
+Features
 ========
 
 Features
 
 
 
-place in architecture
+Place in architecture
 =====================
 
 Place in architecture
 
 
 
-user guide
+User guide
 ==========
 
 User guide
 
 
 
-prerequisites
+Prerequisites
 =============
 
 The Semantic Annotator Enabler has no particular requirements to run,
@@ -65,7 +58,7 @@ but practical usage requires familiarity with the
 
 
 
-installation
+Installation
 ============
 
 Current version requires `docker <https://www.docker.com/>`__ and
@@ -95,7 +88,7 @@ future.
 
 
 
-configuration
+Configuration
 =============
 
 Currently configuration of the enabler is limited to setting environment
@@ -104,7 +97,7 @@ may be configured there.
 
 
 
-developer guide
+Developer guide
 ===============
 
 The Semantic Annotator Enabler is a combination of software written in
@@ -128,7 +121,7 @@ files.
 
 
 
-version control and releases
+Version control and releases
 ============================
 
 0.25 (Mar 2022) - added documentation and examples 0.20 (Mar 2022) -
@@ -136,7 +129,7 @@ added GUI editor 0.10 (Feb 2022) - initial release with REST API
 
 
 
-license
+License
 =======
 
 The Semantic Annotator is licensed under the Apache License, Version 2.0
@@ -153,7 +146,7 @@ License <https://mit-license.org/>`__
 
 
 
-notice (dependencies)
+Notice (dependencies)
 =====================
 
 The Semantic Annotator Enabler is packaged to be available for use
