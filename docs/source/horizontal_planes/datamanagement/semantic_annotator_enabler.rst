@@ -15,7 +15,7 @@ ASSIST-IoT Semantic Annotation Enabler Repository Enabler.
 
 
 
-introduction
+Introduction
 ============
 
 This enabler offers a service of syntactic transformation of JSON, CSV
@@ -35,7 +35,7 @@ with persistent annotation channels.
 
 
 
-features
+Features
 ========
 
 Streaming Annotation Enabler has the following main feaures:
@@ -54,7 +54,7 @@ In short, the annotator lifts data to RDF in batch or streaming fashion.
 
 
 
-place in architecture
+Place in architecture
 =====================
 
 The Semantic Annotation Enabler is part of the Data Management Plane of
@@ -75,7 +75,7 @@ models and formats.
 
 
 
-user guide
+User guide
 ==========
 
 Batch translation is offered as REST API, that can be tried out with a
@@ -129,7 +129,7 @@ annotations of data can remain unchanged.
 
 
 
-prerequisites
+Prerequisites
 =============
 
 The Semantic Annotator Enabler has no particular requirements to run,
@@ -138,7 +138,7 @@ but practical usage requires familiarity with the
 
 
 
-installation
+Installation
 ============
 
 Current version requires `docker <https://www.docker.com/>`__ and
@@ -168,7 +168,7 @@ future.
 
 
 
-configuration
+Configuration
 =============
 
 Currently configuration of the enabler is limited to setting environment
@@ -177,7 +177,7 @@ may be configured there.
 
 
 
-developer guide
+Developer guide
 ===============
 
 The Semantic Annotator Enabler is a combination of software written in
@@ -201,7 +201,7 @@ files.
 
 
 
-version control and releases
+Version control and releases
 ============================
 
 0.25 (Mar 2022) - added documentation and examples 0.20 (Mar 2022) -
@@ -209,7 +209,7 @@ added GUI editor 0.10 (Feb 2022) - initial release with REST API
 
 
 
-license
+License
 =======
 
 The Semantic Annotator is licensed under the Apache License, Version 2.0
@@ -226,7 +226,7 @@ License <https://mit-license.org/>`__
 
 
 
-notice (dependencies)
+Notice (dependencies)
 =====================
 
 The Semantic Annotator Enabler is packaged to be available for use
