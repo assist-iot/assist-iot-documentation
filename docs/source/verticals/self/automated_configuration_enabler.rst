@@ -8,8 +8,6 @@ Automated Configuration enabler
   :local:
   :depth: 1
 
-Automated configuration_enabler
-===============================
 
 Introduction
 ------------
