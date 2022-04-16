@@ -8,7 +8,7 @@ Semantic Repository enabler
   :local:
   :depth: 1
 
-Documentation for the Semantic Repository enabler of ASSIST-IoT.
+Semantic Repository enabler of ASSIST-IoT.
 
 
 
@@ -66,7 +66,11 @@ Documentation
 Place in architecture
 =====================
 
-TBD
+The Semantic Repository is located in the Data management plane of the
+ASSIST-IoT architecture. It serves as a versioned and namespaced central
+repository of data models and other files. It has few limitations with
+regard to the content it can store, thus it can be used for diverse data
+storage-related scenarios.
 
 
 
@@ -79,7 +83,7 @@ stored data models. There is also a graphical user interface for
 performing most of the same tasks.
 
 Basic concepts
---------------
+~~~~~~~~~~~~~~
 
 -  **Namespace** – a top-level “group” in the repository, which can host
    any number of models.
@@ -90,8 +94,6 @@ Basic concepts
 -  **Content** – each model version can have many content files
    attached, each in a different format.
 
-**TODO: diagram of logical objects**
-
 There are few restrictions on how you can use these concepts to build
 your repository. For example, it is possible to upload files of
 arbitrary size and format.
@@ -101,7 +103,7 @@ user or a group. A **model** would be a repository, and a **model
 version** would be a branch or tag. This is just an example, of course.
 
 Model versions
---------------
+~~~~~~~~~~~~~~
 
 The Semantic Repository does not force a specific versioning scheme on
 your models. You can use for example Git branches and tags, plain
@@ -117,7 +119,7 @@ The benefit of the ``latest`` tag is that it allows clients to easily
 retrieve the most recent version of the model (see the API user guide).
 
 Content
--------
+~~~~~~~
 
 One model version can have multiple content files attached, each in a
 different format. The format is recommended to correspond to the `Media
@@ -138,7 +140,7 @@ when no preferences were specified. See the API guide below for more
 details.
 
 Metadata
---------
+~~~~~~~~
 
 Not implemented yet.
 
@@ -215,18 +217,14 @@ Request URL Request body
 ``GET /``   –
 =========== ============
 
-============= =============
-Response code Response body
-============= =============
-============= =============
+Response:
 
-\| 200 \|
+::
 
-.. raw:: html
-
-   <pre>{<br>&emsp;"namespaces": { <br>&emsp;&emsp;"items": [{"name": "w3c"}] <br>&emsp;&emsp;"totalCount": 1 <br>&emsp;} <br>}</pre>
-
-\|
+   {
+     "items": [{"name": "w3c"}],
+     "totalCount": 1 
+   }
 
 A collection of namespaces is returned. Browsing such collections is
 described in detail in the `Browsing
@@ -340,16 +338,16 @@ Request               Body
 ``GET /w3c/sosa/1.0`` –
 ===================== ====
 
-+------------------------------------------------------+---------------+
-| Response code                                        | Body          |
-+======================================================+===============+
-| 200                                                  | ``{"formats": |
-|                                                      |  {}, "model": |
-|                                                      |  "sosa", "nam |
-|                                                      | espace": "w3c |
-|                                                      | ", "version": |
-|                                                      |  "1.0"}``     |
-+------------------------------------------------------+---------------+
+Response:
+
+::
+
+   {
+     "formats": {},
+     "model": "sosa", 
+     "namespace": "w3c", 
+     "version": "1.0"
+   }
 
 You can also retrieve a list of versions for the model (again,
 ``GET /w3c/sosa``):
@@ -630,17 +628,18 @@ appropriate Content-Type header.
 Deleting models and other objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-TODO, partially implemented.
+Only partially implemented in this version. Will be implemented in the
+next release.
 
 Browsing collections
 ~~~~~~~~~~~~~~~~~~~~
 
-Not implemented yet.
+Will be implemented in the next release.
 
 Meta endpoints
 ~~~~~~~~~~~~~~
 
-TODO, partially implemented.
+Will be implemented in the next release.
 
 
 
@@ -668,7 +667,8 @@ There are currently no prerequisites for installing this enabler.
 Installation
 ============
 
-The installation procedure for this enabler is under development.
+The installation procedure for this enabler is under development and
+will be documented in the next release.
 
 
 
@@ -689,14 +689,20 @@ framework <https://akka.io/>`__. The information about the managed
 objects is stored in `MongoDB <https://www.mongodb.com/>`__ and the
 files are stored in `MinIO <https://min.io/>`__ (S3-compatible storage).
 
-TODO: architecture diagram, when finalized
+Semantic Repository’s architecture (note that it is not fully
+implemented yet):
+
+.. figure:: semantic_repository_enabler/uploads/b2b352b50cd1c96694d34a6d7c447c9f/image.png
+   :alt: Enabler architecture
+
+   Enabler architecture
 
 
 
 Version control and releases
 ============================
 
-TODO
+Version 0.1. Under development.
 
 
 
