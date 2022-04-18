@@ -8,6 +8,13 @@ Semantic Annotation Enabler
   :local:
   :depth: 1
 
+Home
+====
+
+ASSIST-IoT Semantic Annotation Enabler Repository Enabler.
+
+
+
 Introduction
 ============
 
@@ -31,21 +38,94 @@ with persistent annotation channels.
 Features
 ========
 
-Features
+Streaming Annotation Enabler has the following main feaures:
+
+-  Configurable annotation from JSON, XML and CSV into RDF using the RML
+   language
+-  Batch annotation via a stateless REST API
+-  Streaming annotation through persistent, configurable annotation
+   channels
+
+In short, the annotator lifts data to RDF in batch or streaming fashion.
+|SemAnn_flow|
+
+.. |SemAnn_flow| figure:: semantic_annotation_enabler/uploads/images/SemAnn_base_flow.png
+
 
 
 
 Place in architecture
 =====================
 
-Place in architecture
+The Semantic Annotation Enabler is part of the Data Management Plane of
+ASSIST-IoT.
+
+The core functionality is designed to be integrated into a pipeline
+before the Semantic Translation enabler, which requires the use of RDF.
+Semantic annotation lifts data to RDF, which can then be translated into
+different ontologies. Configuration files for annotation (in RML format)
+can optionally be shared in the Semantic Repository, provided, that they
+do not contain any sensitive or confidential information about used data
+models and formats.
+
+.. figure:: semantic_annotation_enabler/uploads/images/SemanticTriple.png
+   :alt: SemAnn_place_in_architecture
+
+   SemAnn_place_in_architecture
 
 
 
 User guide
 ==========
 
-User guide
+Batch translation is offered as REST API, that can be tried out with a
+simple example on a Swagger page. By default the Swagger Web GUI is
+served on port 4000:
+
+.. figure:: semantic_annotation_enabler/uploads/images/RMLMapper_Web_API.png
+   :alt: RMLMapper_Web_API
+
+   RMLMapper_Web_API
+
+Additionally, an editor for authoring files in
+`RML <https://rml.io/specs/rml/>`__ and
+`YARRML <https://rml.io/yarrrml/spec/>`__ formats is available (by
+default on port 5000):
+
+.. figure:: semantic_annotation_enabler/uploads/images/Matey.png
+   :alt: Matey GUI
+
+   Matey GUI
+
+The GUI is connected to the batch annotation component served at the
+/execute endpoint. This allows the users of the GUI editor to apply RML
+files to some test data and validate, that the results are correct.
+
+The GUI editor can be used to write annotations in the
+`YARRML <https://rml.io/yarrrml/spec/>`__ format, which is more readable
+and more succinct, than RML. The GUI editor can translate YARRML into
+RML. Note, that YARRML is not used directly by other components, so
+translation into RML is required for the annotation files to be used by
+the enabler. Support for YARRML is limited to the GUI editor and
+included for the sake of convenience.
+
+Current streaming capability is offered through Apache Flink (by default
+on port 8081). Detailed usage instructions can be found
+`here <https://github.com/RMLio/RMLStreamer/blob/development/docker/README.md#3-deploy-rmlstreamer-using-the-flink-web-interface>`__.
+Because of performance concerns, high resource usage, difficult
+configuration and complicated deployment, Flink support will be removed
+in the final version. Instead, a custom component for streaming with
+Apache Kafka is being developed.
+
+The streaming component in the final version will use
+`CARML <https://github.com/carml/carml>`__ (RML extension), which has
+the same syntax as RML, but requires different definition of data
+source. RML is designed primarily for persisted data sources, such as
+flat files. CARML extends RML to support messages passing through a
+stream. Consequently, annotation configuration for batch annotation must
+be slightly modified, before being used in streaming translation. The
+modification involves only description of the data source. The actual
+annotations of data can remain unchanged.
 
 
 
