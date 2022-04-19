@@ -662,9 +662,6 @@ The REST API reference can be accessed through the following link:
 
     semantic_repository_enabler/rest_api_reference.rst
 
-.. raw:: html
-   :file: semantic_repository_enabler/api.html
-
 
 *************
 Prerequisites
