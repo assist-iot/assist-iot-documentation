@@ -16,12 +16,20 @@ The ASSIST-IoT localisation tag is a Smart IoT device used for indoor people loc
 ********
 Features
 ********
-Localisation accuracy is better than 50cm.
+The localization tag has a Push button and an IMU sensor (Inertia Measurement Unit). When a worker as part detects a dangerous situation, the button can be pushed to alert the system that a dangerous situation has been detected. The IMU is added for future use. The IMU can be used to detect if there is movement or not. 
+
+Another feature provided by the Localization Tag is that the localisation accuracy is better than 50cm.
+
+Here is also the block schemantic diagram of the device:
+
+.. image:: tag.png
 
 *********************
 Place in architecture
 *********************
-The localisation tag is part of the device and edge plane.
+The fall arrest device is part of the device and edge plane and more specifacially the place of the device in the ASSIST-IoT architecture can be viewed in the following picture:
+
+.. image:: place_in_architecture.png
 
 **********
 User guide
@@ -33,7 +41,7 @@ Information about the correspondence between tag and asset must be noted, so the
 *************
 Prerequisites
 *************
-The localization processing enabler need to know which person is wearing which tag.
+The fall localization tag determines its position relative to fixed anchors. This position is transmitted to the localization processing enabler. This enabler gathers the position of several fall arrest devices and needs to know which person is wearing which tag.
 
 ************
 Installation
@@ -53,7 +61,7 @@ N/A
 ***************************
 Version control and release
 ***************************
-To be determined
+The version control and release will be determined once the device is formally released. 
 
 *******
 License
