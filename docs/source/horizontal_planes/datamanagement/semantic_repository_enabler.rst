@@ -655,9 +655,12 @@ The GUI of the Semantic Repository is under development.
 ******************
 REST API reference
 ******************
-The REST API reference can be accessed through the following link_.
+The REST API reference can be accessed through the following link:
 
-.. _link: file: semantic_repository_enabler/api.html
+.. toctree::
+    :maxdepth: 1
+
+    semantic_repository_enabler/rest_api_reference.rst
 
 .. raw:: html
    :file: semantic_repository_enabler/api.html
