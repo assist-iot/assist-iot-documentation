@@ -658,8 +658,8 @@ REST API reference
 The REST API reference can be accessed through the following link:
 
 .. toctree::
-    :maxdepth: 1
-
+    :titlesonly:
+    
     semantic_repository_enabler/rest_api_reference.rst
 
 
