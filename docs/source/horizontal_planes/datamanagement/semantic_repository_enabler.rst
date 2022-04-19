@@ -176,8 +176,7 @@ It generally does not matter whether a URL ends with a slash or not.
 Creating and retrieving models
 ******************************
 
-Step 1: create a namespace
-""""""""""""""""""""""""""
+**Step 1: create a namespace**
 
 First, we will need to create a namespace for your models. We will name
 it ``w3c``.
@@ -237,8 +236,8 @@ collections <#browsing-collections>`__ section below.
 upper letters of the latin alphabet, digits, dashes (``-``), and
 underscores (``_``)
 
-Step 2: create models
-"""""""""""""""""""""
+
+**Step 2: create models**
 
 In this example we will create two models: ``sosa`` and ``ssn``,
 corresponding to `two well-known IoT
@@ -312,8 +311,8 @@ and at most 100 characters long - only contain lower or upper letters of
 the latin alphabet, digits, dashes (``-``), and underscores (``_``) -
 not start with one of the following characters: ``_-``
 
-Step 3: create versions
-"""""""""""""""""""""""
+
+**Step 3: create versions**
 
 You cannot upload content to a model directly. First, you must
 explicitly create a specific version of the model and work with that.
@@ -378,8 +377,8 @@ the latin alphabet, digits, dashes (``-``), underscores (``_``), dots
 characters: ``._-+`` - not be ``latest``, which is a reserved tag (see
 below)
 
-``latest`` pointer
-""""""""""""""""""
+
+``latest`` **pointer**
 
 The ``latest`` version pointer can be set on a given model using a PATCH
 request:
@@ -659,7 +658,7 @@ The REST API reference can be accessed through the following link:
 
 .. toctree::
     :titlesonly:
-    
+
     semantic_repository_enabler/rest_api_reference.rst
 
 
