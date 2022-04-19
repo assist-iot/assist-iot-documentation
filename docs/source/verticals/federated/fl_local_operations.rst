@@ -8,7 +8,6 @@ FL Local Operations enabler
   :local:
   :depth: 1
 
-[[*TOC*]]
 
 Introduction
 ============

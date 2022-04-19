@@ -16,12 +16,22 @@ The ASSIST-IoT fall arrest device is a localisation tag with an Inertial Measure
 ********
 Features
 ********
-Localisation accuracy is better than 50cm.
+The Fall arrest device supports the following features:
+
+- It is a smart device that can provide localisation accuracy better than 50cm. 
+
+- It has an internal IMU (Inertia Measurment Unit) and can be used to detect a fall.
+
+Here is also the block schemantic diagram of the fall arrest device:
+
+.. image:: fall_detector.png
 
 *********************
 Place in architecture
 *********************
-The fall arrest device is part of the device and edge plane.
+The fall arrest device is part of the device and edge plane and more specifacially the place of the device in the ASSIST-IoT architecture can be viewed in the following picture:
+
+.. image:: place_in_architecture.png
 
 **********
 User guide
@@ -33,7 +43,7 @@ Information about the correspondence between tag and asset must be noted, so the
 *************
 Prerequisites
 *************
-The localization processing enabler need to know which person is wearing which fall arrest device.
+The fall arrest device determines its position relative to fixed anchors. This position is transmitted to the localization processing enabler. This enabler gathers the position of several fall arrest devices and needs to know which person is wearing which fall arrest device.
 
 ************
 Installation
@@ -53,7 +63,7 @@ N/A
 ***************************
 Version control and release
 ***************************
-To be determined.
+The version control and release will be determined once the device is formally released.
 
 *******
 License
