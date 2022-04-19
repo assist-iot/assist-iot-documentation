@@ -12,8 +12,9 @@ Documentation for the Semantic Repository enabler of ASSIST-IoT.
 
 
 
+***************
 Introduction
-============
+***************
 
 This enabler offers a “nexus” for data models, ontologies, and other
 files, that can be uploaded in different file formats, and served to
@@ -27,16 +28,16 @@ scalability, and resiliency. It should be able to scale up and down to
 meet the specific use case.
 
 
-
+***************
 Features
-========
+***************
 
 The enabler is in active development. Most features listed below are not
 implemented yet. Marked in **bold** are those that are already
 functioning.
 
 Storing data models
-~~~~~~~~~~~~~~~~~~~
+###################
 
 -  **Storage of any type of data model, both textual and binary.**
 -  **Ability to provide multiple formats of one data model, depending on
@@ -46,7 +47,7 @@ Storing data models
 -  Granular and easy-to-use access control.
 
 Metadata
-~~~~~~~~
+########
 
 -  Tracking provenance information (creation/modification dates,
    authors).
@@ -54,7 +55,7 @@ Metadata
 -  Metadata searching and sorting.
 
 Documentation
-~~~~~~~~~~~~~
+#############
 
 -  Support for Markdown/ASCIIDOC manual documentation pages.
 -  Automatic documentation generation for some data model types.
@@ -62,9 +63,9 @@ Documentation
    generation modules.
 
 
-
+*********************
 Place in architecture
-=====================
+*********************
 
 The Semantic Repository is located in the Data management plane of the
 ASSIST-IoT architecture. It serves as a versioned and namespaced central
@@ -73,17 +74,20 @@ regard to the content it can store, thus it can be used for diverse data
 storage-related scenarios.
 
 
-
+**********
 User guide
-==========
+**********
 
 The Semantic Repository enabler exposes a single REST API endpoint for
 both manipulating the repository’s contents, as well as for retrieving
 stored data models. There is also a graphical user interface for
 performing most of the same tasks.
 
+General Information
+###################
+
 Basic concepts
-~~~~~~~~~~~~~~
+**************
 
 -  **Namespace** – a top-level “group” in the repository, which can host
    any number of models.
@@ -102,7 +106,7 @@ user or a group. A **model** would be a repository, and a **model
 version** would be a branch or tag. This is just an example, of course.
 
 Model versions
-~~~~~~~~~~~~~~
+**************
 
 The Semantic Repository does not force a specific versioning scheme on
 your models. You can use for example Git branches and tags, plain
@@ -118,7 +122,7 @@ The benefit of the ``latest`` tag is that it allows clients to easily
 retrieve the most recent version of the model (see the API user guide).
 
 Content
-~~~~~~~
+*******
 
 One model version can have multiple content files attached, each in a
 different format. The format is recommended to correspond to the `Media
@@ -139,14 +143,13 @@ when no preferences were specified. See the API guide below for more
 details.
 
 Metadata
-~~~~~~~~
+********
 
 Not implemented yet.
 
 
-
-User guide – REST API
-=====================
+REST API
+########
 
 The following is a brief guide to using the API in practice. The
 examples follow a basic use case of storing several `W3C
@@ -156,7 +159,7 @@ The full specification of the REST API can be found in the `REST API
 reference <#rest-api-reference>`__ section.
 
 General information
-~~~~~~~~~~~~~~~~~~~
+*******************
 
 The API follows a very simple structure of
 /{namespace}/{model}/{model_version}. In general, ``POST`` creates a new
@@ -171,10 +174,10 @@ reference <#rest-api-reference>`__ section.
 It generally does not matter whether a URL ends with a slash or not.
 
 Creating and retrieving models
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+******************************
 
 Step 1: create a namespace
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""
 
 First, we will need to create a namespace for your models. We will name
 it ``w3c``.
@@ -235,7 +238,7 @@ upper letters of the latin alphabet, digits, dashes (``-``), and
 underscores (``_``)
 
 Step 2: create models
-^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""
 
 In this example we will create two models: ``sosa`` and ``ssn``,
 corresponding to `two well-known IoT
@@ -310,7 +313,7 @@ the latin alphabet, digits, dashes (``-``), and underscores (``_``) -
 not start with one of the following characters: ``_-``
 
 Step 3: create versions
-^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""
 
 You cannot upload content to a model directly. First, you must
 explicitly create a specific version of the model and work with that.
@@ -376,7 +379,7 @@ characters: ``._-+`` - not be ``latest``, which is a reserved tag (see
 below)
 
 ``latest`` pointer
-~~~~~~~~~~~~~~~~~~
+""""""""""""""""""
 
 The ``latest`` version pointer can be set on a given model using a PATCH
 request:
@@ -431,7 +434,7 @@ Response code Body
 ============= ============================================
 
 Uploading content
-~~~~~~~~~~~~~~~~~
+*****************
 
 In the following examples we will focus on uploading and retrieving
 content for the ``/w3c/sosa/1.0`` model version we have created in the
@@ -491,7 +494,7 @@ file, which in this case is the same as format. - ``md5`` is the MD5
 checksum of the entire file. - ``size`` is the file’s size in bytes.
 
 Overwriting content
-^^^^^^^^^^^^^^^^^^^
+*******************
 
 As noted in the `User guide <#user-guide>`__, the content for a specific
 version of a model *should* be immutable. So, if you try to repeat the
@@ -527,7 +530,7 @@ Response:
    }
 
 Changing the default format
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+***************************
 
 The ``defaultFormat`` field of a model version indicates which content
 format will be used, if no other preferences are specified. It is set
@@ -590,7 +593,7 @@ Response code Body
 ============= ========================================================
 
 Downloading the content
-^^^^^^^^^^^^^^^^^^^^^^^
+***********************
 
 Downloading the models is very straightforward. The most explicit way is
 to specify the namespace, model, version, and the desired format:
@@ -625,63 +628,60 @@ In all cases the response will be simply the stored file, with the
 appropriate Content-Type header.
 
 Deleting models and other objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*********************************
 
 Only partially implemented in this version. Will be implemented in the
 next release.
 
 Browsing collections
-~~~~~~~~~~~~~~~~~~~~
+********************
 
 Will be implemented in the next release.
 
 Meta endpoints
-~~~~~~~~~~~~~~
+**************
 
 Will be implemented in the next release.
 
 
 
-User guide – graphical user interface
-=====================================
+Graphical User Interface
+########################
 
 The GUI of the Semantic Repository is under development.
 
 
 
+******************
 REST API reference
-==================
-
+******************
 .. raw:: html
    :file: semantic_repository_enabler/api.html
 
 
+*************
 Prerequisites
-=============
-
+*************
 There are currently no prerequisites for installing this enabler.
 
 
-
+************
 Installation
-============
-
+************
 The installation procedure for this enabler is under development and
 will be documented in the next release.
 
 
-
+*************
 Configuration
-=============
-
+*************
 This enabler currently does not have any configuration settings. They
 will be added later.
 
 
-
+***************
 Developer guide
-===============
-
+***************
 The Semantic Repository is written in `Scala
 3 <https://www.scala-lang.org/>`__, using the `Akka
 framework <https://akka.io/>`__. The information about the managed
@@ -697,17 +697,15 @@ implemented yet):
    Enabler architecture
 
 
-
-Version control and releases
-============================
-
+***************************
+Version control and release
+***************************
 Version 0.1. Under development.
 
 
-
+*******
 License
-=======
-
+*******
 The Semantic Repository is licensed under the **Apache License, Version
 2.0** (the “License”).
 
@@ -715,10 +713,9 @@ You may obtain a copy of the License at:
 http://www.apache.org/licenses/LICENSE-2.0
 
 
-
+*********************
 Notice (dependencies)
-=====================
-
+*********************
 Dependency list and licensing information will be provided before the
 first major release.
 
