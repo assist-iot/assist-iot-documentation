@@ -43,7 +43,7 @@ As it can be see, the main structure is the following:
 *********************
 Place in architecture
 *********************
-
+The Long Term data Storage enabler is part of the Data Management Plane of ASSIST-IoT. The Data Management plane encompasses any process, in which data is processed to deliver features concerning data interoperability, annotation, security, acquisition, provenance, aggregation, fusion, etc. This enabler serve as a secure and resilient storage of any ASSIST-IoT deployment.
 ***************
 User guide
 ***************
