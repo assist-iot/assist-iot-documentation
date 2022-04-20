@@ -13,7 +13,7 @@ Introduction
 ***************
 The role of the Long-Term Storage Enabler is to serve as a secure and resilient storage, offering different storage sizes and individual storage space for other enablers (which could request back when they are being initialising in Kubernetes pods). Therefore, it is considered as one of the ASSIST-IoT enablers envisioned to be deployed on the cloud rather than the edge. Next figure depicts the high-level overview of the LTSE components.
 
-.. figure:: ./LTSE_architecture.png
+.. figure:: ./LTSE_Architecture.png
    :alt: LTSE Architecture
 
 As it can be seen, it will be mainly formed by three components:
@@ -29,7 +29,7 @@ Features
 ***************
 The following image illustrates the different frameworks used for the implementation of the three main LTSE components.
 
-.. figure:: ./LTSE_Chart.PNG
+.. figure:: ./LTSE_components.png
    :alt: LTSE components
 
 As it can be see, the main structure is the following:
