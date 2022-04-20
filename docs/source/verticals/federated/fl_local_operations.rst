@@ -193,7 +193,8 @@ envisioned as being downloaded from the FL Repository enabler.
 Privacy
 ^^^^^^^
 
-Privacy component will be described and developed at a later date.
+The component is not yet implemented and the description will be
+provided in the next release of the documentation.
 
 Technologies
 ~~~~~~~~~~~~
