@@ -132,15 +132,14 @@ Prerequisities
 ==============
 
 The main prerequisities are the installation of Docker and
-docker-compose. The following links provide information on how to
-install Docker and docker-compose. These prerequisites are necessary in
-case of running the enabler as a container (Docker). However, it is also
-possible to run the component independently. In this case, it’s
-mandatory to have Python installed on the machine where the enabler will
-be executed. At least version 3.8 is recommended (this is the version of
-the Python image being used). It is also necessary to install some
-additional libraries or packages. These additional packages can be seen
-in the requirements.txt file (inside the application folder).
+docker-compose. These prerequisites are necessary in case of running the
+enabler as a container (Docker). However, it is also possible to run the
+component independently. In this case, it’s mandatory to have Python
+installed on the machine where the enabler will be executed. At least
+version 3.8 is recommended (this is the version of the Python image
+being used). It is also necessary to install some additional libraries
+or packages. These additional packages can be seen in the
+requirements.txt file (inside the application folder).
 
 Installation
 ============
