@@ -128,16 +128,25 @@ Collector and FL Local Operations.
 |                 |                      | specific name and version   |
 +-----------------+----------------------+-----------------------------+
 
-Prerequisites
-=============
+Prerequisities
+==============
 
-If run from source code then required libraries are in the file
-requirement.txt. If run in a container there are no prerequisites.
+The main prerequisities are the installation of Docker and
+docker-compose. The following links provide information on how to
+install Docker and docker-compose. These prerequisites are necessary in
+case of running the enabler as a container (Docker). However, it is also
+possible to run the component independently. In this case, it’s
+mandatory to have Python installed on the machine where the enabler will
+be executed. At least version 3.8 is recommended (this is the version of
+the Python image being used). It is also necessary to install some
+additional libraries or packages. These additional packages can be seen
+in the requirements.txt file (inside the application folder).
 
 Installation
 ============
 
-The installation procedure for this enabler is under development.
+The installation procedure for this enabler is under development and
+will be provided once the release of the enabler is completed.
 
 Configuration options
 =====================
@@ -148,10 +157,10 @@ Developer guide
 ===============
 
 Components
-----------
+~~~~~~~~~~
 
 ML Algorithms Libraries
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 These libraries will be used by local nodes to instantiate local
 processes. The way that libraries (modules) will be stored will be
@@ -162,14 +171,14 @@ modules, appropriate ML library modules are to be downloaded to the
 local node, installed and used to complete model training.
 
 FL Collectors
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 As described in the FL Training Collector enabler, different Federated
 averaging algorithms can be applied to combine local results. This
 component of the FL repository will store them.
 
 ML Model Libraries
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 The repository will also persist ML trained models. These models can be
 conceptualized in two “scenarios”.
@@ -184,7 +193,7 @@ conceptualized in two “scenarios”.
    common to all nodes.
 
 Auxiliary
-~~~~~~~~~
+^^^^^^^^^
 
 Any other modules that may be needed to instantiate FL can be also
 stored in the FL Repository. Among them possible modules related to
@@ -192,15 +201,15 @@ process verification, error handling, stopping criteria, authorization,
 belong to this category.
 
 Local communication
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 Communication between external entities and the enabler.
 
 Technologies
-------------
+~~~~~~~~~~~~
 
 RDF
-~~~
+^^^
 
 W3C Resource Description Framework Description (RDF) is a standard for
 representing information on the Web designed as a data model for
@@ -209,27 +218,27 @@ will provide flexible and adaptable model for ML algorithms metadata or
 any auxiliary data. Components: ML Algorithms library, Auxiliary
 
 FedML
-~~~~~
+^^^^^
 
 Research library and benchmark for Federated ML containing federated
 algorithms and optimizers. Components: FL Collectors, Auxiliary
 
 Python
-~~~~~~
+^^^^^^
 
 Python is an interpreted high-level general-purpose programming language
 with a set of libraries. Very popular for data analysis and ML
 applications. Component: Local communication
 
 FastAPI
-~~~~~~~
+^^^^^^^
 
 A popular web microframework written in Python, FastAPI is known for
 being both robust and high performing. It is based on OpenAPI
 (previously Swagger) standards. Component: Local communication
 
 MongoDB
-~~~~~~~
+^^^^^^^
 
 MongoDB is a source-available cross-platform document-oriented database
 program. Classified as a NoSQL database program. Component: ML Models
@@ -238,7 +247,8 @@ Libraries, Auxiliary
 Version control and release
 ===========================
 
-TBD
+Version control and release details will be provided in the next release
+of the documentation.
 
 Licence
 =======
