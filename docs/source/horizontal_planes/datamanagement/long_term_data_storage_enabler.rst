@@ -44,9 +44,30 @@ As it can be see, the main structure is the following:
 Place in architecture
 *********************
 The Long Term data Storage enabler is part of the Data Management Plane of ASSIST-IoT. The Data Management plane encompasses any process, in which data is processed to deliver features concerning data interoperability, annotation, security, acquisition, provenance, aggregation, fusion, etc. This enabler serve as a secure and resilient storage of any ASSIST-IoT deployment.
+
 ***************
 User guide
 ***************
+REST API endpoints
+*******************
++--------+-----------------+-----------------------------------------------------------------------+---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| Method | Endpoint        | Description                                                           | Payload (if needed)                         | Response format                                                                                                               |
++========+=================+=======================================================================+=============================================+===============================================================================================================================+
+| GET    | /info           | Get information of the WireGuard network interface                    |                                             | WireGuard output command in plain text                                                                                        |
++--------+-----------------+-----------------------------------------------------------------------+---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| GET    | /info/conf      | Get the configuration file of the WireGuard network interface         |                                             | WireGuard configuration file in plain text                                                                                    |
++--------+-----------------+-----------------------------------------------------------------------+---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| GET    | /keys           | Obtain the public, private and pre-shared keys to create a new client |                                             | {"public":String, "private":String, "preshared":String}                                                                       |
++--------+-----------------+-----------------------------------------------------------------------+---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| POST   | /client         | Create a new client                                                   | {"publicKey":String, "presharedKey":String} | {"serverPublicKey":String, "serverIP":String, "serverPort":Integer, "clientIP":String, "allowedIPs":String, "message":String} |
++--------+-----------------+-----------------------------------------------------------------------+---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| DELETE | /client         | Delete a client                                                       | {"publicKey":String}                        |                                                                                                                               |
++--------+-----------------+-----------------------------------------------------------------------+---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| PUT    | /client/enable  | Enable a client                                                       | {"publicKey":String}                        |                                                                                                                               |
++--------+-----------------+-----------------------------------------------------------------------+---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| PUT    | /client/disable | Disable a client                                                      | {"publicKey":String}                        |                                                                                                                               |
++--------+-----------------+-----------------------------------------------------------------------+---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+
+
 
 ***************
 Prerequisites
@@ -55,6 +76,7 @@ Prerequisites
 ***************
 Installation
 ***************
+The enabler is provided as a Helm chart.
 
 *********************
 Configuration options
@@ -67,11 +89,17 @@ Developer guide
 ***************************
 Version control and release
 ***************************
+- Version 1.0. - Currently LTSE does not communicate with Cybersecurity enablers. In addition, API is only able to create DBs and tables, but the rest of API functionalities are still not supported
+
+- Improvements and new functionalities will be added in future versions.
+
 
 ***************
 License
 ***************
+TBD
 
 ********************
 Notice(dependencies)
 ********************
+TBD
