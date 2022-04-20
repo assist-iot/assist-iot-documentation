@@ -70,12 +70,10 @@ REST API endpoints
 | GET     | /nosql/index/<indexname>/_doc/                       | Retrieves the specified json document <_id> from the indexname of the ltse nosql cluster.                                                                                          | _id                  |                  |
 +---------+------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+------------------+
 
-
 ***************
 Prerequisites
 ***************
-
-
+TBD
 
 ***************
 Installation
@@ -85,10 +83,12 @@ The enabler is provided as a Helm chart.
 *********************
 Configuration options
 *********************
+TBD
 
 ***************
 Developer guide
 ***************
+TBD
 
 ***************************
 Version control and release
@@ -96,7 +96,6 @@ Version control and release
 - Version 1.0. - Currently LTSE does not communicate with Cybersecurity enablers. In addition, API is only able to create DBs and tables, but the rest of API functionalities are still not supported
 
 - Improvements and new functionalities will be added in future versions.
-
 
 ***************
 License
