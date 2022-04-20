@@ -62,16 +62,25 @@ Local Operations during model trainings.
 |                 |                      | identifier id               |
 +-----------------+----------------------+-----------------------------+
 
-Prerequisites
-=============
+Prerequisities
+==============
 
-If run from source code then required libraries are in the file
-requirement.txt. If run in a container there are no prerequisites.
+The main prerequisities are the installation of Docker and
+docker-compose. The following links provide information on how to
+install Docker and docker-compose. These prerequisites are necessary in
+case of running the enabler as a container (Docker). However, it is also
+possible to run the component independently. In this case, it’s
+mandatory to have Python installed on the machine where the enabler will
+be executed. At least version 3.8 is recommended (this is the version of
+the Python image being used). It is also necessary to install some
+additional libraries or packages. These additional packages can be seen
+in the requirements.txt file (inside the application folder).
 
 Installation
 ============
 
-The installation procedure for this enabler is under development.
+The installation procedure for this enabler is under development and
+will be provided once the release of the enabler is completed.
 
 Configuration options
 =====================
@@ -98,10 +107,10 @@ Developer guide
 ===============
 
 Components
-----------
+~~~~~~~~~~
 
 FLTC I/O
-~~~~~~~~
+^^^^^^^^
 
 Provides a REST API to allow the input and output communication to and
 from the FL Training Collector enabler. On the one hand it is
@@ -113,7 +122,7 @@ are designed so that it can conceptually deal with situations in which
 more complex topologies are used.
 
 FLTC Combiner
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 This component will receive “suggestions” from a certain number
 (possibly all) local nodes and combine them to generate an updated FL
@@ -122,30 +131,30 @@ solutions for e.g., logistic regression models, decision-tree models, or
 even neural network models.
 
 Technologies
-------------
+~~~~~~~~~~~~
 
 FedML
-~~~~~
+^^^^^
 
 Research library and benchmark for Federated ML containing federated
 algorithms and optimizers.
 
 Python
-~~~~~~
+^^^^^^
 
 Python is an interpreted high-level general-purpose programming language
 with a set of libraries. Very popular for data analysis and ML
 applications.
 
 FastAPI
-~~~~~~~
+^^^^^^^
 
 A popular web microframework written in Python, FastAPI is known for
 being both robust and high performing. It is based on OpenAPI
 (previously Swagger) standards.
 
 Flower
-~~~~~~
+^^^^^^
 
 A federated learning framework designed to work with a large number of
 clients. It is both compatible with a variety of ML frameworks and
@@ -154,7 +163,8 @@ supports a wide range of devices.
 Version control and release
 ===========================
 
-TBD
+Version control and release details will be provided in the next release
+of the documentation.
 
 Licence
 =======
