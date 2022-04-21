@@ -140,6 +140,7 @@ noSQL cluster (Elasticsearch helm chart configuration)
 
 
 
+
 SQL server (PostgreSQL helm chart configuration)
 *******************
 
