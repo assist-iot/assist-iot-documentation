@@ -27,7 +27,7 @@ As it can be seen, it will be mainly formed by three components:
 ***************
 Features
 ***************
-The following image illustrates the different frameworks used for the implementation of the three main LTSE components.
+The LTSE is constructed as a Helm chart, formed by different subcharts. The following image illustrates the different frameworks/charts used for the instantiation of the LTSE components.
 
 .. figure:: ./LTSE_components.png
    :alt: LTSE components
@@ -48,6 +48,8 @@ The Long Term data Storage enabler is part of the Data Management Plane of ASSIS
 ***************
 User guide
 ***************
+The entry point to the LTSE is by the LTSE Gateway. The currently supported REST API endpoints are listed below:
+
 REST API endpoints
 *******************
 +---------+------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+------------------+
@@ -100,6 +102,14 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 
     **Tip**: List all releases using ``helm list``
 
+Verification / Visualization
+*******************
+In order to properly understand the LTSE deployment, you can install two separte IDE clients for each of the storage services of the LTSE, as well as an API client. The following applicaitons are proposed:
+
+- **Kibana**: It provides visualization capabilities on top of the content indexed on an Elasticsearch cluster (i.e., LTSE noSQL cluster).  `Kibana Helm Chart <https://github.com/elastic/helm-charts/tree/main/kibana>`__  
+- **pgAdmin**: The most popular and feature rich Open Source administration and development platform for PostgreSQL (i.e., LTSE SQL server).  `Helm Chart for pgAdmin <https://github.com/cetic/helm-pgadmin>`__  
+- **Postman**: an API platform for testing APIs (i.e., LTSE gateway). `Postman API client <https://learning.postman.com/docs/getting-started/installation-and-updates/>`__  
+
 Uninstalling the Chart
 *******************
 To uninstall/delete the ``my-ltse`` deployment:
@@ -123,7 +133,79 @@ Configuration options
 ***************
 Developer guide
 ***************
-TBD
+The following options are supported for each subchart. See values.yaml for more detailed documentation and examples:
+
+noSQL cluster (Elasticsearch helm chart configuration)
+*******************
+
+
+
+SQL server (PostgreSQL helm chart configuration)
+*******************
+
+
+
+SQL API (PostgREST helm chart configuration) 
+*******************
+
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| Parameter                       | Description                                                 | Default               |
++=================================+=============================================================+=======================+
+| ``replicaCount``                | Number of replicas                                          | 1                     |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``image.repository``            | The image to run                                            | postgrest/postgrest   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``image.tag``                   | The image tag to pull                                       | v5.2.0                |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``image.pullPolicy``            |                                                             | IfNotPresent          |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``nameOverride``                |                                                             | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``fullnameOverride``            |                                                             | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``service.type``                | Type of Service                                             | ClusterIP             |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``service.port``                | Port for kubernetes service                                 | 80                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``service.annotations``         | Annotations to add to the service                           | {}                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``ingress.hosts``               | PostGREST Ingress host names                                | []                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``ingress.tls``                 | PostGREST Ingress TLS configuration (YAML)                  | []                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``resources``                   | CPU/Memory resource requests/limits                         | {}                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``nodeSelector``                | Settings for nodeselector                                   | {}                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``tolerations``                 | Settings for toleration                                     | []                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``affinity``                    | Settings for affinity                                       | {}                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.db_uri``            | PostgreSQL connection                                       | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.db_schema``         | Database schema to expose                                   | public                |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.db_pool``           | Number of connections to keep open                          | 100                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.server_host``       | Where to bind the PostgREST web server                      | *4                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.server_port``       | The port to bind the web server                             | 3000                  |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.server_proxy_uri``  | Overrides the base URL                                      | n/a`                  |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.jwt_secret``        | The secret or JSON Web Key (JWK) used to decode JWT tokens  | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.secret_is_base64``  |                                                             | false                 |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.jwt_aud``           |                                                             | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.max_rows``          | A hard limit to the number of rows PostgREST will fetch     | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.pre_request``       | A schema-qualified stored procedure                         | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.role_claim_key``    |                                                             | .role                 |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+
 
 ***************************
 Version control and release
