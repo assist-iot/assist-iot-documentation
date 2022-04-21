@@ -17,6 +17,9 @@ All valuable for log and time-series analytics or Key Performance Indicators (KP
 Features
 ***************
 The following figure presents the architectural diagram of video augmentation enabler and inside components.
+
+.. figure:: ./BusinessKPI.png
+   :alt: Business KPI reporting enabler
  
 As it can be seen, it will be mainly formed by four components:
 
