@@ -76,6 +76,11 @@ Prerequisites
 - Kubernetes 1.19+
 - Helm 3.2.0+
 - PV provisioner support in the underlying infrastructure
+- Minimum cluster requirements include the following to run this chart with default settings. All of these settings are configurable:
+
+  - Three Kubernetes nodes to respect the default "hard" affinity settings
+  - 1GB of RAM for the JVM heap
+
 
 ***************
 Installation
@@ -88,6 +93,10 @@ The enabler is provided as a Helm chart. To install the chart with the release n
 ``helm install my-ltse ltse``
 
 The command deploys PostgreSQL on the Kubernetes cluster in the default configuration. The Parameters section lists the parameters that can be configured during installation.
+
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
+
+``helm install my-ltse -f values.yaml ltse``
 
     **Tip**: List all releases using ``helm list``
 
@@ -108,7 +117,8 @@ To delete the PVC's associated with ``my-ltse``:
 *********************
 Configuration options
 *********************
-TBD
+- The chart deploys a StatefulSet and by default will do an automated rolling update of your cluster. It does this by waiting for the cluster health to become green after each instance is updated. 
+- It is important to verify that the JVM heap size in ``esJavaOpts`` and to set the CPU/Memory ``resources`` to something suitable for your cluster.
 
 ***************
 Developer guide
