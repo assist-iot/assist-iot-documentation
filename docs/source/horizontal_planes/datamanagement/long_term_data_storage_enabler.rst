@@ -27,7 +27,7 @@ As it can be seen, it will be mainly formed by three components:
 ***************
 Features
 ***************
-The following image illustrates the different frameworks used for the implementation of the three main LTSE components.
+The LTSE is constructed as a Helm chart, formed by different subcharts. The following image illustrates the different frameworks/charts used for the instantiation of the LTSE components.
 
 .. figure:: ./LTSE_components.png
    :alt: LTSE components
@@ -48,6 +48,8 @@ The Long Term data Storage enabler is part of the Data Management Plane of ASSIS
 ***************
 User guide
 ***************
+The entry point to the LTSE is by the LTSE Gateway. The currently supported REST API endpoints are listed below:
+
 REST API endpoints
 *******************
 +---------+------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+------------------+
@@ -73,22 +75,188 @@ REST API endpoints
 ***************
 Prerequisites
 ***************
-TBD
+- Kubernetes 1.19+
+- Helm 3.2.0+
+- PV provisioner support in the underlying infrastructure
+- Minimum cluster requirements include the following to run this chart with default settings. All of these settings are configurable:
+
+  - Three Kubernetes nodes to respect the default "hard" affinity settings
+  - 1GB of RAM for the JVM heap
+
 
 ***************
 Installation
 ***************
-The enabler is provided as a Helm chart.
+
+Installing the chart
+*******************
+The enabler is provided as a Helm chart. To install the chart with the release name ``my-ltse``:
+
+``helm install my-ltse ltse``
+
+The command deploys PostgreSQL on the Kubernetes cluster in the default configuration. The Parameters section lists the parameters that can be configured during installation.
+
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
+
+``helm install my-ltse -f values.yaml ltse``
+
+    **Tip**: List all releases using ``helm list``
+
+Verification / Visualization
+*******************
+In order to properly understand the LTSE deployment, you can install two separte IDE clients for each of the storage services of the LTSE, as well as an API client. The following applicaitons are proposed:
+
+- **Kibana**: It provides visualization capabilities on top of the content indexed on an Elasticsearch cluster (i.e., LTSE noSQL cluster).  `Kibana Helm Chart <https://github.com/elastic/helm-charts/tree/main/kibana>`__  
+- **pgAdmin**: The most popular and feature rich Open Source administration and development platform for PostgreSQL (i.e., LTSE SQL server).  `Helm Chart for pgAdmin <https://github.com/cetic/helm-pgadmin>`__  
+- **Postman**: an API platform for testing APIs (i.e., LTSE gateway). `Postman API client <https://learning.postman.com/docs/getting-started/installation-and-updates/>`__  
+
+Uninstalling the Chart
+*******************
+To uninstall/delete the ``my-ltse`` deployment:
+
+``helm delete my-ltse``
+
+The command removes all the Kubernetes components but PVC's associated with the chart and deletes the release.
+
+To delete the PVC's associated with ``my-ltse``:
+
+``kubectl delete pvc -l release=my-ltse``
+
+    **Note**: Deleting the PVC's will delete postgresql data as well. Please be cautious before doing it.
 
 *********************
 Configuration options
 *********************
-TBD
+- The chart deploys a StatefulSet and by default will do an automated rolling update of your cluster. It does this by waiting for the cluster health to become green after each instance is updated. 
+- It is important to verify that the JVM heap size in ``esJavaOpts`` and to set the CPU/Memory ``resources`` to something suitable for your cluster.
 
 ***************
 Developer guide
 ***************
-TBD
+The following options are supported for each subchart. See values.yaml for more detailed documentation and examples:
+
+noSQL cluster (Elasticsearch helm chart configuration)
+*******************
+
+
+
+SQL server (PostgreSQL helm chart configuration)
+*******************
+
+Global parameters
+##############
+
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+| Name                                            | Description                                                                                | Value   |
++=================================================+============================================================================================+=========+
+| ``global.imageRegistry``                        | Global Docker image registry                                                               | ""      |
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+| ``global.imagePullSecrets``                     | Global Docker registry secret names as an array                                            | []      |
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+| ``global.storageClass``                         | Global StorageClass for Persistent Volume(s)                                               | ""      |
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+| ``global.postgresql.auth.postgresPassword``     | Password for the "postgres" admin user (overrides auth.postgresPassword)                   | ""      |
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+| ``global.postgresql.auth.username``             | Name for a custom user to create (overrides auth.username)                                 | ""      |
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+| ``global.postgresql.auth.password``             | Password for the custom user to create (overrides auth.password)                           | ""      |
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+| ``global.postgresql.auth.database``             | Name for a custom database to create (overrides auth.database)                             | ""      |
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+| ``global.postgresql.auth.existingSecret``       | Name of existing secret to use for PostgreSQL credentials (overrides auth.existingSecret)  | ""      |
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+| ``global.postgresql.service.ports.postgresql``  | PostgreSQL service port (overrides service.ports.postgresql)                               | ""      |
++-------------------------------------------------+--------------------------------------------------------------------------------------------+---------+
+
+Common parameters
+##############
+
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| Name                        | Description                                                                                   | Value           |
++=============================+===============================================================================================+=================+
+| ``kubeVersion``             | Override Kubernetes version                                                                   | ""              |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| ``nameOverride``            | String to partially override common.names.fullname template (will maintain the release name)  | ""              |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| ``fullnameOverride``        | String to fully override common.names.fullname template                                       | ""              |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| ``clusterDomain``           | Kubernetes Cluster Domain                                                                     | cluster.local   |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| ``extraDeploy``             | Array of extra objects to deploy with the release (evaluated as a template)                   | []              |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| ``commonLabels``            | Add labels to all the deployed resources                                                      | {}              |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| ``commonAnnotations``       | Add annotations to all the deployed resources                                                 | {}              |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| ``diagnosticMode.enabled``  | Enable diagnostic mode (all probes will be disabled and the command will be overridden)       | false           |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| ``diagnosticMode.command``  | Command to override all containers in the statefulset                                         | ["sleep"]       |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+| ``diagnosticMode.args``     | Args to override all containers in the statefulset                                            | ["infinity"]    |
++-----------------------------+-----------------------------------------------------------------------------------------------+-----------------+
+
+
+SQL API (PostgREST helm chart configuration) 
+*******************
+
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| Parameter                       | Description                                                 | Default               |
++=================================+=============================================================+=======================+
+| ``replicaCount``                | Number of replicas                                          | 1                     |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``image.repository``            | The image to run                                            | postgrest/postgrest   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``image.tag``                   | The image tag to pull                                       | v5.2.0                |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``image.pullPolicy``            |                                                             | IfNotPresent          |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``nameOverride``                |                                                             | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``fullnameOverride``            |                                                             | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``service.type``                | Type of Service                                             | ClusterIP             |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``service.port``                | Port for kubernetes service                                 | 80                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``service.annotations``         | Annotations to add to the service                           | {}                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``ingress.hosts``               | PostGREST Ingress host names                                | []                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``ingress.tls``                 | PostGREST Ingress TLS configuration (YAML)                  | []                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``resources``                   | CPU/Memory resource requests/limits                         | {}                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``nodeSelector``                | Settings for nodeselector                                   | {}                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``tolerations``                 | Settings for toleration                                     | []                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``affinity``                    | Settings for affinity                                       | {}                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.db_uri``            | PostgreSQL connection                                       | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.db_schema``         | Database schema to expose                                   | public                |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.db_pool``           | Number of connections to keep open                          | 100                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.server_host``       | Where to bind the PostgREST web server                      | *4                    |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.server_port``       | The port to bind the web server                             | 3000                  |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.server_proxy_uri``  | Overrides the base URL                                      | n/a`                  |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.jwt_secret``        | The secret or JSON Web Key (JWK) used to decode JWT tokens  | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.secret_is_base64``  |                                                             | false                 |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.jwt_aud``           |                                                             | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.max_rows``          | A hard limit to the number of rows PostgREST will fetch     | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.pre_request``       | A schema-qualified stored procedure                         | n/a                   |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+| ``postgrest.role_claim_key``    |                                                             | .role                 |
++---------------------------------+-------------------------------------------------------------+-----------------------+
+
 
 ***************************
 Version control and release
