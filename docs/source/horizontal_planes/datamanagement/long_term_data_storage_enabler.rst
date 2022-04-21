@@ -73,12 +73,37 @@ REST API endpoints
 ***************
 Prerequisites
 ***************
-TBD
+- Kubernetes 1.19+
+- Helm 3.2.0+
+- PV provisioner support in the underlying infrastructure
 
 ***************
 Installation
 ***************
-The enabler is provided as a Helm chart.
+
+Installing the chart
+*******************
+The enabler is provided as a Helm chart. To install the chart with the release name ``my-ltse``:
+
+``helm install my-ltse ltse``
+
+The command deploys PostgreSQL on the Kubernetes cluster in the default configuration. The Parameters section lists the parameters that can be configured during installation.
+
+    **Tip**: List all releases using ``helm list``
+
+Uninstalling the Chart
+*******************
+To uninstall/delete the ``my-ltse`` deployment:
+
+``helm delete my-ltse``
+
+The command removes all the Kubernetes components but PVC's associated with the chart and deletes the release.
+
+To delete the PVC's associated with ``my-ltse``:
+
+``kubectl delete pvc -l release=my-ltse``
+
+    **Note**: Deleting the PVC's will delete postgresql data as well. Please be cautious before doing it.
 
 *********************
 Configuration options
