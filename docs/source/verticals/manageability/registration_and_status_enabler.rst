@@ -27,6 +27,7 @@ The Enabler for registration and status of enablers is part of the vertical plan
 
 .. figure:: ./dashboard-manageability-architecture.png
    :alt: Dashboard architecture
+   :align: center
 
 ***************
 User guide
@@ -43,6 +44,7 @@ The enabler shows a table with the deployed enablers and some information: ID, n
 
 .. figure:: ./enablers.png
    :alt: Devices management user interface
+   :align: center
 
 To deploy a new enabler, click on the *Add a new enabler* button and a form will appear. There are two options to deploy a new enabler: 
 
@@ -55,16 +57,19 @@ of the *values.yaml* file of the enabler Helm chart. In future versions, the cha
 
 .. figure:: ./enabler_form.png
    :alt: Deploy a new enabler
+   :align: center
 
 A deployed enabler cannot be deleted until it has been terminated. To terminate a deployed enabler, click on the *Terminate enabler* button of the selected enabler and confirm the action in the dialog.
 
 .. figure:: ./enabler_terminate.png
    :alt: Terminate a deployed enabler
+   :align: center
 
 To delete a terminated enabler, click on the *Delete enabler* button of the selected enabler and confirm the action in the dialog.
 
 .. figure:: ./enabler_delete.png
    :alt: Delete a terminated enabler
+   :align: center
 
 ***************
 Prerequisites
@@ -79,7 +84,7 @@ This enabler is part of the Tactile dashboard enabler, so see the installation s
 *********************
 Configuration options
 *********************
-TBD
+Not applicable.
 
 ***************
 Developer guide
@@ -95,9 +100,10 @@ Version 0.1. Under development.
 ***************
 License
 ***************
-TBD
+The licenses of internal code are under analysis. The code is developed using open source technologies (Vue.js, Spring framework, ...) and PUI9, a framework that is property of
+Prodevelop. For more information about PUI9 licenses, read the `Tactile dashboard enabler entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/application/tactile_dashboard_enabler.html>`_
 
 ********************
 Notice(dependencies)
 ********************
-TBD
+This enabler depends on the Smart Orchestrator enabler and it's part of the Tactile dashboard enabler.

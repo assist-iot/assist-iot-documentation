@@ -68,12 +68,12 @@ Enabler is provided as a Helm chart. Refer to specific deployment instructions.
 *********************
 Configuration options
 *********************
-TBD
+Not applicable.
 
 ***************
 Developer guide
 ***************
-TBD
+Not applicable.
 
 ***************************
 Version control and release
@@ -83,9 +83,9 @@ Version 0.1. Under development.
 ***************
 License
 ***************
-TBD
+The licenses of internal code are under analysis. Once assessed, an open source one will be selected (likely Apache 2.0).
 
 ********************
 Notice(dependencies)
 ********************
-TBD
+This enabler does not depend on any other.

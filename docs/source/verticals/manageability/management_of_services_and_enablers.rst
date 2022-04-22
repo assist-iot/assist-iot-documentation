@@ -25,7 +25,8 @@ Place in architecture
 The Management of services and enablers' workflow enabler is part of the vertical plane manageability enablers. Moreover, this enabler is a user interface that is part of the Tactile dashboard enabler.
 
 .. figure:: ./dashboard-manageability-architecture.png
-   :alt: Dashboard architecture
+  :alt: Dashboard architecture
+  :align: center
 
 ***************
 User guide
@@ -51,24 +52,24 @@ This enabler will be part of the Tactile dashboard enabler, so see the installat
 *********************
 Configuration options
 *********************
-TBD
+Not applicable.
 
 ***************
 Developer guide
 ***************
-TBD
+Not Applicable.
 
 ***************************
 Version control and release
 ***************************
-Early development stage.
+Not Applicable. Any version has been released yet, the enabler is in an early development stage.
 
 ***************
 License
 ***************
-TBD
+Not Applicable. Any code or binary has been released yet.
 
 ********************
 Notice(dependencies)
 ********************
-TBD
+This enabler will depend on the Smart Orchestrator enabler and will be part of the Tactile dashboard enabler.
