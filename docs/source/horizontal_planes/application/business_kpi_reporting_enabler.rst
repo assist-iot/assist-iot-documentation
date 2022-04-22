@@ -11,7 +11,9 @@ Business KPI reporting enabler
 ***************
 Introduction
 ***************
-All valuable for log and time-series analytics or Key Performance Indicators (KPIs) desired by the end-user should be available for representation in graphs, charts, pies, etc. The Business KPI enabler will allow to embed them as User Interfaces (UIs) within the tactile dashboard. It will facilitate the visualization and combination of charts, tables, and other visualization graphs in order to search for hidden insights. The enabler is composed of a server component containing the business logic engine, accompanied with a UI component that defines the graphical UI that users interact with, and a Command Line Interface (CLI) tool especially designed for developers.
+All valuable for log and time-series analytics or Key Performance Indicators (KPIs) desired by the end-user should be available for representation in graphs, charts, pies, etc. The Business KPI enabler will allow to embed them as User Interfaces (UIs) within the tactile dashboard. It will facilitate the visualization and combination of charts, tables, and other visualization graphs in order to search for hidden insights. 
+
+The enabler is a simplified version of `Kibana <https://www.elastic.co/kibana/>`__ . Therefore, it follows the similar architecture. To sum up, it is composed of a server component containing the business logic engine, accompanied with a UI component that defines the graphical UI that users interact with, and a Command Line Interface (CLI) tool especially designed for developers.
 
 ***************
 Features
@@ -38,16 +40,64 @@ Business KPI reporting enabler is located in the Application and Service layer o
 User guide
 ***************
 
+REST API endpoints
+*******************
+The currently supported REST API endpoints are listed below:
+
++---------+--------------------------------+------------------------------------------------------+----------------------+------------------+
+| Method  | Endpoint                       | Description                                          | Payload (if needed)  | Response format  |
++=========+================================+======================================================+======================+==================+
+| POST    | /api/spaces/                   | Create a Business KPI space_name                     | <space_name>         |                  |
++---------+--------------------------------+------------------------------------------------------+----------------------+------------------+
+| GET     | /api/spaces/                   | Retrieve a Business KPI space_name                   | <space_name>         |                  |
++---------+--------------------------------+------------------------------------------------------+----------------------+------------------+
+| DELETE  | /api/spaces/                   | Delete a Business KPI space_name                     | <space_name>         |                  |
++---------+--------------------------------+------------------------------------------------------+----------------------+------------------+
+| POST    | /api/data_views/               | Create a data view with a custom title (JSON file)   | <data_view>          |                  |
++---------+--------------------------------+------------------------------------------------------+----------------------+------------------+
+| POST    | /api/saved_objects/data-view/  | Update <my-view> data view (JSON file)               | <my-view>            |                  |
++---------+--------------------------------+------------------------------------------------------+----------------------+------------------+
+| GET     | /api/data_views/data_view/     | Retrieve the data view <my-view>                     | <my-view>            |                  |
++---------+--------------------------------+------------------------------------------------------+----------------------+------------------+
+| DELETE  | /api/data_views/data_view/     | Delete a data view <my-view>                         | <my-view>            |                  |
++---------+--------------------------------+------------------------------------------------------+----------------------+------------------+
+
+
 ***************
 Prerequisites
 ***************
 
 - Kubernetes >= 1.14
 - Helm >= 2.17.0
+- `ElasticSearch Helm chart <https://artifacthub.io/packages/helm/elastic/elasticsearch>`__ 
 
 ***************
 Installation
 ***************
+
+Installing the chart
+*******************
+The enabler is provided as a Helm chart. To install the chart with the release name ``my-BKPI``:
+
+``helm install my-BKPI BKPI``
+
+The command deploys a Kibana helm chart on the Kubernetes cluster in the default configuration. The Configuration section lists the parameters that can be configured during installation.
+
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
+
+``helm install my-BKPI -f values.yaml BKPI``
+
+
+
+Verification / Visualization
+*******************
+List all releases using ``helm list``
+
+Uninstalling the Chart
+*******************
+To uninstall/delete the ``my-BKPI`` deployment:
+
+``helm delete my-BKPI``
 
 *********************
 Configuration options
@@ -60,11 +110,14 @@ Developer guide
 ***************************
 Version control and release
 ***************************
+Version 1.0
 
 ***************
 License
 ***************
+Elastic License and Server Side Public License (SSPL)
 
 ********************
 Notice(dependencies)
 ********************
+Not applicable
