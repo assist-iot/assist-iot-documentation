@@ -11,19 +11,19 @@ VPN enabler
 ***************
 Introduction
 ***************
-This enabler will facilitate the access to a node or device from a different network to the site’s private network using a public network (e.g., the Internet) or a non-trusted private network.
+This enabler will facilitate the access to a node or device from a different network to the site's private network using a public network (e.g., the Internet) or a non-trusted private network.
 
 ***************
 Features
 ***************
-This enabler act as a VPN server that allows client connections to the created VPN network and, if allowed, to the host machine network. For that reason, this enabler can allow the connection 
+This enabler act as a VPN server (based on WireGuard VPN) that allows client connections to the created VPN network and, if allowed, to the host machine network. For that reason, this enabler can allow the connection 
 to a Kubernetes node machine and its private network from a machine allocated in a different private network.
 Furthermore, a REST API is included to facilitate the administration of the VPN network.
 
 NOTE1: At this moment, the enabler persists the data in a MongoDB database, which also is included in the Helm chart. When the LTSE enabler is ready, the information will be persisted in it.
 
 NOTE2: At this point in time, this enabler is limited to one replica in each Kubernetes deployment and cannot be auto scaled due to its specific functionalities. If there are more than one replica, each pod will act as an independent VPN 
-because each pod will have its own WireGuard network interface at the container level which won’t be synchronized among them. For example, a new client will only be created or deleted in one pod.
+because each pod will have its own WireGuard network interface at the container level which won't be synchronized among them. For example, a new client will only be created or deleted in one pod.
 
 NOTE3: At this moment, to connect two host machines directly using a VPN (for instance, to add it as a remote k8s cluster/node via VPN), it is recommended to use a VPN without using the containerised version. 
 Instructions for this use case will be provided.
@@ -33,13 +33,18 @@ Place in architecture
 *********************
 The VPN enabler is located in the Smart Network and Control plane of the ASSIST-IoT architecture.
 
-.. figure:: ./vpn-enabler-architecture.PNG
-   :alt: VPN enabler architecture
+.. figure:: ./vpn_place.png
+  :alt: VPN enabler overall architecture
+  :align: center
 
 The enabler is composed of two elements:
 
+- **VPN Server**: the core of the VPN, the clients will connect to this component.
 - **API REST**: an API REST is provided to manage the VPN clients (create, delete, enable and disable) and to obtain information about the VPN network and its clients.
-- **WireGuard**: the core of the VPN, the clients will connect to this component.
+
+.. figure:: ./vpn-enabler-architecture.png
+  :alt: VPN enabler architecture
+  :align: center
 
 ***************
 User guide
@@ -189,8 +194,10 @@ In Linux, set these sysctl values:
 
   ::
 
-    sysctl net.ipv4.ip_forward=1
-    sysctl net.ipv4.conf.all.src_valid_mark=1
+    sysctl -w net.ipv4.ip_forward=1
+    sysctl -w net.ipv4.conf.all.src_valid_mark=1
+
+Or edit these values in the */etc/sysctl.conf* file.
 
 ***************
 Installation
@@ -278,9 +285,11 @@ Version 1.0. Improvements and new functionalities will be added in future versio
 ***************
 License
 ***************
-TBD
+The licenses of internal code are under analysis. Once assessed, an open source one will be selected (likely Apache 2.0).
 
 ********************
 Notice(dependencies)
 ********************
-TBD
+In next releases, this enabler will depend on the Long-Term Storage Enabler to persist the data.
+
+Furthermore, the VPN enabler uses WireGuard. The Wireguard's Linux kernel components are released under the GPLv2 license, as is the Linux kernel itself.

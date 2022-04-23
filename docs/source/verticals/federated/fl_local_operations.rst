@@ -95,13 +95,21 @@ Training Collector during model trainings.
 Prerequisites
 =============
 
-If run from source code then required libraries are in the file
-requirement.txt. If run in a container there are no prerequisites.
+The main prerequisities are the installation of Docker and
+docker-compose. These prerequisites are necessary in case of running the
+enabler as a container (Docker). However, it is also possible to run the
+component independently. In this case, it’s mandatory to have Python
+installed on the machine where the enabler will be executed. At least
+version 3.8 is recommended (this is the version of the Python image
+being used). It is also necessary to install some additional libraries
+or packages. These additional packages can be seen in the
+requirements.txt file (inside the application folder).
 
 Installation
 ============
 
-The installation procedure for this enabler is under development.
+The installation procedure for this enabler is under development and
+will be provided once the release of the enabler is completed.
 
 Configuration options
 =====================
@@ -183,7 +191,8 @@ envisioned as being downloaded from the FL Repository enabler.
 Privacy
 ~~~~~~~
 
-TBD
+The component is not yet implemented and the description will be
+provided in the next release of the documentation.
 
 Technologies
 ------------
@@ -254,7 +263,8 @@ being both robust and high performing. It is based on OpenAPI
 Version control and release
 ===========================
 
-TBD
+Version control and release details will be provided in the next release
+of the documentation.
 
 Licence
 =======
