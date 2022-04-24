@@ -104,7 +104,10 @@ Two modes are currently supported for the inference engine:
 
 ``python training/plot_object_detection_saved_model_video.py``
 
-An extract of the dataset of the project, as well as the outputs of the trained model are shown in Figure 22.
+An extract of the dataset used in the custom ASSIST-IoT object recognitio project, as well as the current outputs of the trained model are shown in the next figure.
+
+.. figure:: ./VA_Example.png
+   :alt: Video Augmentation example
 
 
 REST API endpoints
@@ -131,6 +134,14 @@ The following prerequisites are needed before the installation:
 
 - For building and running docker images it is needed to install `Docker <https://docs.docker.com/get-started/>`__. 
 
+In addition, the following requirements from Tensorflow 2 Object Detection API tutorial should be supported:
+
+- **OS:** Windows, Linux
+- **Python:** >= 3.x
+- **TensorFlow:** 2.5.0
+- **CUDA Toolkit:** 11.2
+- **CuDNN:** 8.1.0
+- **Anaconda:** Python 3.8 (Optional)
 
     **Note:** The Video Augmentation enabler is encapsulated in the form of a Docker image. It has not been encapsulated as a Helm chart yet. Hence, it cannot be integrated within a K8s cluster yet. 
 
@@ -155,21 +166,28 @@ This will install all the Python dependencies of FastAPI and Tensorflow, as well
 *********************
 Configuration options
 *********************
+Not applicable
 
 ***************
 Developer guide
 ***************
+Please refer to official `TensorFlow 2 Object Detection API tutorial <https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/index.html>`__ and `OpenCV documentation <https://docs.opencv.org/3.0-last-rst/doc/py_tutorials/py_gui/py_video_display/py_video_display.html>`__  guides to get started.
 
 ***************************
 Version control and release
 ***************************
+- Version 1.0 notes:
+
+  - All the components are already implemented, except for the API, which is still at a 20% of its development
+  - Only some set of pre-trained models are supported. The integration of the Video Augmentation enabler with the FL repository has been postponed for the second term of the project
+  - The Video Augmentation enabler is already encapsulated in the form of a Docker, but it is still not able to be deployed over a Kubernetes cluster, and no helm chart has been generated
 
 ***************
 License
 ***************
-
 Apache License Version 2.0
 
 ********************
 Notice(dependencies)
 ********************
+Not applicable.
