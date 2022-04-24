@@ -40,6 +40,79 @@ Business KPI reporting enabler is located in the Application and Service layer o
 User guide
 ***************
 
+    **Note**: This user guide follows the `Quick start guide <https://www.elastic.co/guide/en/kibana/current/get-started.html>`__  from Kibana documentation page.
+
+Set up the installation
+*******************
+Go to the Instalattion section
+
+Add sample data
+*******************
+Sample data sets come with sample visualizations, dashboards, and more to help you explore Business KPI enabler before you ingest or add your own data.
+
+- On the home page, click **Add data**.
+
+.. figure:: ./BusinessKPI.png
+   :alt: Business KPI reporting enabler
+
+
+Explore the data
+*******************
+Discover displays the data in an interactive histogram that shows the distribution of data, or documents, over time, and a table that lists the fields for each document that matches the data view. To view a subset of the documents, you can apply filters to the data, and customize the table to display only the fields you want to explore.
+
+- Open the main menu, then click **Discover**.
+- Change the time filter to e.g., **Last 7 days**.
+
+.. figure:: ./BusinessKPI.png
+   :alt: Business KPI reporting enabler
+
+- To explore a specific filtered data, you can use of the `KQL <https://www.elastic.co/guide/en/kibana/current/kuery-query.html>`__ search field:
+
+``products.taxless_price >= 60 and category : Women's Clothing``
+
+.. figure:: ./BusinessKPI.png
+   :alt: Business KPI reporting enabler
+   
+- To view only the data categories that contain a specific filtered data, hover over the **category** field, then click **+**.
+
+.. figure:: ./BusinessKPI.png
+   :alt: Business KPI reporting enabler
+   
+View and analyze the data
+*******************
+
+A dashboard is a collection of panels that you can use to view and analyze the data. Panels contain visualizations, interactive controls, text, and more.
+
+- Open the main menu, then click **Dashboard**.
+
+.. figure:: ./BusinessKPI.png
+   :alt: Business KPI reporting enabler
+   
+Create a visualization panel
+*******************
+Create a treemap panel that shows additional context information (such as top sales regions and manufacturers), then add the panel to the dashboard.
+
+- In the toolbar, click **Edit**.
+- On the dashboard, click **Create visualization**.
+- In the drag-and-drop visualization editor, open the **Visualization type** dropdown, then select **Treemap**.
+- Click **save and return**.
+
+.. figure:: ./BusinessKPI.png
+   :alt: Business KPI reporting enabler
+
+Filter the data
+*******************
+To view a subset of the data, you can apply filters to the dashboard panels. Apply a filter to view e.g., women’s clothing data generated on a specific day from a specific manufacturer.
+
+- Click **Add filter**.
+- From the **Field dropdown**, select filtered parameter.
+- From the **Operator dropdown**, select **is**.
+- From the **Value dropdown**, select the desired value.
+- Click **Save**.
+
+.. figure:: ./BusinessKPI.png
+   :alt: Business KPI reporting enabler
+
 REST API endpoints
 *******************
 The currently supported REST API endpoints are listed below:
