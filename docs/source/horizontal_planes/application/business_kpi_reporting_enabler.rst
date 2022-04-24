@@ -40,6 +40,7 @@ Business KPI reporting enabler is located in the Application and Service layer o
 User guide
 ***************
 
+
     **Note**: This user guide follows the `Quick start guide <https://www.elastic.co/guide/en/kibana/current/get-started.html>`__  from Kibana documentation page.
 
 Set up the installation
@@ -112,6 +113,8 @@ To view a subset of the data, you can apply filters to the dashboard panels. App
 
 .. figure:: ./BKPI_interact.png
    :alt: Filter data
+
+=======
 
 REST API endpoints
 *******************
