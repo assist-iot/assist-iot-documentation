@@ -52,8 +52,8 @@ Sample data sets come with sample visualizations, dashboards, and more to help y
 
 - On the home page, click **Add data**.
 
-.. figure:: ./BusinessKPI.png
-   :alt: Business KPI reporting enabler
+.. figure:: ./BKPI_add_data.png
+   :alt: Add data
 
 
 Explore the data
@@ -63,20 +63,20 @@ Discover displays the data in an interactive histogram that shows the distributi
 - Open the main menu, then click **Discover**.
 - Change the time filter to e.g., **Last 7 days**.
 
-.. figure:: ./BusinessKPI.png
-   :alt: Business KPI reporting enabler
+.. figure:: ./BKPI_discover_data_1.png
+   :alt: Explore data 1
 
 - To explore a specific filtered data, you can use of the `KQL <https://www.elastic.co/guide/en/kibana/current/kuery-query.html>`__ search field:
 
 ``products.taxless_price >= 60 and category : Women's Clothing``
 
-.. figure:: ./BusinessKPI.png
-   :alt: Business KPI reporting enabler
+.. figure:: ./BKPI_discover_data_2.png
+   :alt: Explore data 2
    
 - To view only the data categories that contain a specific filtered data, hover over the **category** field, then click **+**.
 
-.. figure:: ./BusinessKPI.png
-   :alt: Business KPI reporting enabler
+.. figure:: ./BKPI_discover_data_3.png
+   :alt: Explore data 3
    
 View and analyze the data
 *******************
@@ -85,8 +85,8 @@ A dashboard is a collection of panels that you can use to view and analyze the d
 
 - Open the main menu, then click **Dashboard**.
 
-.. figure:: ./BusinessKPI.png
-   :alt: Business KPI reporting enabler
+.. figure:: ./BKPI_view_data.png
+   :alt: View data
    
 Create a visualization panel
 *******************
@@ -97,8 +97,8 @@ Create a treemap panel that shows additional context information (such as top sa
 - In the drag-and-drop visualization editor, open the **Visualization type** dropdown, then select **Treemap**.
 - Click **save and return**.
 
-.. figure:: ./BusinessKPI.png
-   :alt: Business KPI reporting enabler
+.. figure:: ./BKPI_panel.png
+   :alt: Business KPI panel
 
 Filter the data
 *******************
@@ -110,8 +110,8 @@ To view a subset of the data, you can apply filters to the dashboard panels. App
 - From the **Value dropdown**, select the desired value.
 - Click **Save**.
 
-.. figure:: ./BusinessKPI.png
-   :alt: Business KPI reporting enabler
+.. figure:: ./BKPI_interact.png
+   :alt: Filter data
 
 REST API endpoints
 *******************
