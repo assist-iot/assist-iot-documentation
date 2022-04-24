@@ -47,11 +47,69 @@ Video Augmentation enabler is located in the Application and Service layer of th
 ***************
 User guide
 ***************
+The main objective of the Video Augmentation enabler is to on help with object recognition with visual guidelines highlighting the trained objects over which the user wants to detect. The process can be split in four parts.
+
+Data collection
+***************
+Although there are several pre-trained models available online, the custom scenario of a user will probably differ with respect to these general models. FOr instance, a pre-trained model may be able to detect eggs but it will definitely not differentiate between good and bad eggs because it has never been taught to do so. Therefore, the first part is related with the collection of images/videos from similar scenarios. In the example above, the user needs to get lots of images of good and bad eggs and train a custom detection model.
+
+The data can be collected from different sources:
+
+1. Publicly available open labelled datasets like `ImageNet <https://www.kaggle.com/c/imagenet-object-localization-challenge/overview/description>`__, `COCO <https://cocodataset.org/#home>`__, or `Google Open Images <https://storage.googleapis.com/openimages/web/index.html>`__
+2. Scraping the web
+3. Taking photographs
+
+Data annotation
+***************
+The second part is related with the annotation of the collected images. Annotated images are used in several verticals as it helps AI models to facilitate machine recognition through computer vision technology. With the help of computer vision technology, one can easily recognize and detect various objects. 
+
+There are several techniques used for annotating the images (e.g., Semantic Segmentation, Polygon Annotation, Bounding Box, Landmarking, 3D Cuboid, and others). For ASSIST-IoT custom projects, the open-source Linux-based the bounding box software `LabelImg <https://github.com/tzutalin/labelImg>`__ has been used. It is written in Python and uses Qt IDE for its graphical interface. The annotations are saved as XML files in PASCAL VOC format (same format as ImageNet), and is also supported in YOLO and CreateML formats.
+
+Moldel training
+***************
+The third part uses makes use of both Tensorflow Object Detection 2, and OpenCV frameworks. For the time being, several ML models from the pre-trained `TensorFlow 2 Zoo Detection library <https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md>`__ have been tested. 
+
+Before training the model it is needed to create tensorflow records from the images and annotations. To do that you should execute the following `Tensorflow scripts <https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html#create-tensorflow-records>`__:
+
+``python generate_tfrecord.py -x /home/tensorflow/workspace/training/images/train -l ``
+``/home/tensorflow/workspace/training/annotations/label_map.pbtxt -o ``
+``/home/tensorflow/workspace/training/annotations/train.record``
+
+``python generate_tfrecord.py -x /home/tensorflow/workspace/training/images/test -l``
+``/home/tensorflow/workspace/training/annotations/label_map.pbtxt -o``
+``/home/tensorflow/workspace/training/annotations/test.record``
+
+The best results have been obtained with the ssd_resnet50_v1_fpn_640x640_coco17_tpu-8. Therefore, this is the model used by default, but you can download other models from the `TensorFlow 2 Zoo Detection library <https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md>`__
+
+``python training/model_main_tf2.py --model_dir=training/models/my_ssd_resnet50_v1_fpn --``
+``pipeline_config_path=training/models/my_ssd_resnet50_v1_fpn/pipeline.config``
+
+Model evaluation / Inference
+***************
+Finally, the new trained model should be evaluated against new inputs. The term inference refers to the process of executing an ML model in order to make predictions based on novel input data. To perform an inference, the user must run it through an interpreter. 
+
+For exporting the previous trained model, the user can run the following command:
+
+``python training/exporter_main_v2.py --input_type image_tensor --pipeline_config_path``
+``./training/models/my_ssd_resnet50_v1_fpn/pipeline.config --trained_checkpoint_dir ./training/models/my_ssd_resnet50_v1_fpn/ --output_directory``
+``./training/exported-models/my_model``
+
+Two modes are currently supported for the inference engine:
+
+- For detecting objects in images using previous trained model. It is needed to define the IMAGE_PATHS value in the .py file:
+
+``python training/plot_object_detection_saved_model.py``
+
+- For detecting objects in video using previous trained model. It is needed to define the VIDEO_PATH value in the .py file:
+
+``python training/plot_object_detection_saved_model_video.py``
+
+An extract of the dataset of the project, as well as the outputs of the trained model are shown in Figure 22.
+
 
 REST API endpoints
 ***************
-
-The currently supported REST API endpoints are listed below:
+The third, and fourth part of process can be performed by communicating with the supported REST API endpoints listed below:
 
 +---------+-----------------------+--------------------------------------------------------------------------------------------------------------------------+------------------------+------------------+
 | Method  | Endpoint              | Description                                                                                                              | Payload (if needed)    | Response format  |
@@ -69,9 +127,30 @@ The currently supported REST API endpoints are listed below:
 Prerequisites
 ***************
 
+The following prerequisites are needed before the installation:
+
+- For building and running docker images it is needed to install `Docker <https://docs.docker.com/get-started/>`__. 
+
+
+    **Note:** The Video Augmentation enabler is encapsulated in the form of a Docker image. It has not been encapsulated as a Helm chart yet. Hence, it cannot be integrated within a K8s cluster yet. 
+
 ***************
 Installation
 ***************
+
+- Download project or clone from git repository
+- Locate your images and annotations for training in *workspace/training/images/train*
+- Locate your images and annotations for testing/evaluation in *workspace/training/images/test*
+
+- Modify the *workspace/training/annotations/label_map.pbtxt* file to add your labels (if you do not know how to do that, take a look at the `official Tensorflow documentation <https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html#create-label-map>`__. 
+
+- Create image named 'od'
+``docker build -t od .``
+
+- Start image ``'od'`` publishing API in port 8000 and creating an interactive bash shell in the new container
+``docker run -p 8000:8000 -it od``
+
+This will install all the Python dependencies of FastAPI and Tensorflow, as well as the required libraries of OpenCV
 
 *********************
 Configuration options
