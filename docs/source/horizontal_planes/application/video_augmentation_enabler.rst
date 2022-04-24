@@ -190,4 +190,4 @@ Apache License Version 2.0
 ********************
 Notice(dependencies)
 ********************
-Not applicable.
+Not applicable
