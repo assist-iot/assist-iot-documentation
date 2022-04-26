@@ -31,7 +31,7 @@ The user guide will be determined after the release of the enabler.
 ***************
 Prerequisites
 ***************
- Hyperledger Fabric 2.2, Hyperledger Fabric CA 1.4
+Hyperledger Fabric 2.2, Hyperledger Fabric CA 1.4
 
 ***************
 Installation

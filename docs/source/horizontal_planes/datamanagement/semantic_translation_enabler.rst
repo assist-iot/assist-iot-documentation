@@ -215,8 +215,7 @@ mind that:
 
 Place in architecture
 =====================
-
-TBD
+Will be determined after the release of the enabler.
 
 
 
@@ -1464,8 +1463,7 @@ Produces
 
 Version control and releases
 ============================
-
-TBD
+Will be determined after the release of the enabler.
 
 
 

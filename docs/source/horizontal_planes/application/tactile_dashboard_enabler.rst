@@ -156,33 +156,29 @@ In addition, the framework and petstore project has the **.editorconfig** file:
 
 Building Tactile dashboard Docker image
 *********************
-
-    TBD
+Will be determined after the release of the enabler.
     
 Running Tactile dashboard Docker image
 *********************
-
-    TBD
+Will be determined after the release of the enabler.Will be determined after the release of the enabler.
     
 Building Tactile dashboard Helm Chart
 *********************
-
-    TBD
+Will be determined after the release of the enabler.
     
 Deploying Tactile dashboard Helm chart
 *********************
-
-    TBD
+Will be determined after the release of the enabler.
     
 *********************
 Configuration options
 *********************
-Not applicable
+Will be determined after the release of the enabler.
 
 ***************
 Developer guide
 ***************
-Not applicable
+Will be determined after the release of the enabler.
 
 Basic structure
 *********************
@@ -225,7 +221,7 @@ Run the application
 ***************************
 Version control and release
 ***************************
-Not applicable
+Will be determined after the release of the enabler.
 
 ***************
 License
@@ -235,4 +231,4 @@ Apache License Version 2.0
 ********************
 Notice(dependencies)
 ********************
-    **NOTE:** It should be noticed that the tactile dashboard is a general GUI generation framework based on PRO own PUI9 framework. 
+**NOTE:** It should be noticed that the tactile dashboard is a general GUI generation framework based on PRO own PUI9 framework. 

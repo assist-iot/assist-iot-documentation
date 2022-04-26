@@ -268,9 +268,9 @@ Version control and release
 ***************
 License
 ***************
-TBD
+Will be determined after the release of the enabler.
 
 ********************
 Notice(dependencies)
 ********************
-TBD
+Will be determined after the release of the enabler.

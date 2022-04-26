@@ -32,7 +32,7 @@ The user guide will be determined after the release of the enabler.
 ***************
 Prerequisites
 ***************
- Hyperledger Fabric 2.2, Hyperledger Fabric CA 1.4
+Hyperledger Fabric 2.2, Hyperledger Fabric CA 1.4
 
 ***************
 Installation
@@ -58,7 +58,7 @@ Gitlab will be used as a version control and release tool.
 ***************
 License
 ***************
- To be determined.
+Will be determined after the release of the enabler.
 
 ********************
 Notice(dependencies)

@@ -107,8 +107,7 @@ The Authorization server options for the rest API to connect are available in th
 ***************
 Developer guide
 ***************
-
-Not applicable.
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
@@ -129,5 +128,4 @@ Apache Tomcat is licensed under Apache License Version 2.0.
 ********************
 Notice(dependencies)
 ********************
-
-Not applicable.
+Will be determined after the release of the enabler.

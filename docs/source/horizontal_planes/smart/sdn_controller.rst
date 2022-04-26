@@ -99,10 +99,12 @@ To deploy the Helm chart locally:
 *********************
 Configuration options
 *********************
+Will be determined after the release of the enabler.
 
 ***************
 Developer guide
 ***************
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release

@@ -37,7 +37,7 @@ architecture. In particular, it belongs to the building block related to VNFs, s
 (i) for provisioning private networks over public ones, jointly with the SD-WAN enabler, and
 (ii) for supporting VNFs chaining (containerised, thus CNFs).
 
-.. figure:: ./wan_acc_place.PNG  
+.. figure:: ./wan_acc_place.png  
    :alt: Place of the WAN Acceleration enabler within the Smart Network and Control Plance architecture
    :align: center
    
@@ -47,7 +47,7 @@ The following diagram aims at describing the global operation of the SD-WAN arch
 including the SD-WAN enabler and instances of the WAN Acceleration enabler (each of them composed by an SD-WAN
 custom k8s controller and an SD-WAN CNF).
 
-.. figure:: ./global_sdwan.PNG
+.. figure:: ./global_sdwan.png
    :alt: SD-WAN overall architecture
    :align: center
    
@@ -65,7 +65,7 @@ As aforementioned, the enabler is composed of two main elements, as one can see 
 - **CRD Controller**: Component that will receive API calls from the K8s API of the cluster to configure the CNF component.
 - **SD-WAN CNF**: The CNF will embed functions to setup aspects such related to IPSec, firewalling, DNS, DHCP and WAN link management, exposing an API to be controlled/queried.
 
-.. figure:: ./wan_acc_arch.PNG  
+.. figure:: ./wan_acc_arch.png  
    :alt: WAN Acceleration enabler architecture
    :align: center
 
@@ -120,17 +120,17 @@ The exposed port for accessing the API will be one of the available options.
 ***************
 Developer guide
 ***************
-Not Applicable.
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
 ***************************
-Not Applicable. Any version has been released yet.
+Will be determined after the release of the enabler.
 
 ***************
 License
 ***************
-Not Applicable. Any code or binary has been released yet.
+Will be determined after the release of the enabler..
 
 *********************
 Notice (dependencies)

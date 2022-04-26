@@ -55,7 +55,7 @@ In case of making use of the ASSIST-IoT’s GWEN as edge node, 12V± 15% power s
 *************
 Prerequisites
 *************
-The version control and release will be determined once the device is formally released. 
+Will be determined after the release of the enabler.
 
 ************
 Installation
@@ -65,24 +65,24 @@ The GWEN needs to be mounted at a fixed point inside a buidling or car.
 *********************
 Configuration options
 *********************
-The version control and release will be determined once the device is formally released. 
+Will be determined after the release of the enabler. 
 
 ***************
 Developer guide
 ***************
-The version control and release will be determined once the device is formally released. 
+Will be determined after the release of the enabler. 
 
 ***************************
 Version control and release
 ***************************
-The version control and release will be determined once the device is formally released. 
+Will be determined after the release of the enabler. 
 
 *******
 License
 *******
-The version control and release will be determined once the device is formally released. 
+Will be determined after the release of the enabler. 
 
 ********************
 Notice(dependencies)
 ********************
-The version control and release will be determined once the device is formally released. 
+Will be determined after the release of the enabler. 

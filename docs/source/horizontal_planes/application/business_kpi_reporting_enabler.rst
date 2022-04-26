@@ -39,9 +39,7 @@ Business KPI reporting enabler is located in the Application and Service layer o
 ***************
 User guide
 ***************
-
-
-    **Note**: This user guide follows the `Quick start guide <https://www.elastic.co/guide/en/kibana/current/get-started.html>`__  from Kibana documentation page.
+**Note**: This user guide follows the `Quick start guide <https://www.elastic.co/guide/en/kibana/current/get-started.html>`__  from Kibana documentation page.
 
 Set up the installation
 *******************
@@ -279,4 +277,4 @@ Elastic License and Server Side Public License (SSPL)
 ********************
 Notice(dependencies)
 ********************
-Not applicable
+Will be determined after the release of the enabler.

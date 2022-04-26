@@ -126,7 +126,7 @@ This enabler is part of the Tactile dashboard enabler, so see the installation s
 *********************
 Configuration options
 *********************
-Not applicable.
+Will be determined after the release of the enabler.
 
 ***************
 Developer guide

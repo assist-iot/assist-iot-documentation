@@ -26,7 +26,7 @@ The location tracking enabler is part of the device and edge plane.
 ***************
 User guide
 ***************
-To be determined.
+Will be determined after the release of the enabler.
 
 ***************
 Prerequisites
@@ -36,29 +36,29 @@ The localisation tracking enabler knows wich tag or fall arrest device is used b
 ***************
 Installation
 ***************
-To be determined.
+Will be determined after the release of the enabler.
 
 *********************
 Configuration options
 *********************
-N/A
+Will be determined after the release of the enabler.
 
 ***************
 Developer guide
 ***************
-N/A
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
 ***************************
-To be determined
+Will be determined after the release of the enabler.
 
 ***************
 License
 ***************
-N/A
+Will be determined after the release of the enabler.
 
 ********************
 Notice(dependencies)
 ********************
-N/A
+Will be determined after the release of the enabler.

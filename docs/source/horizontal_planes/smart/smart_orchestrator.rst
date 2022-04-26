@@ -113,7 +113,7 @@ any option can be set up before its deployment.
 ***************
 Developer guide
 ***************
-Not applicable.
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release

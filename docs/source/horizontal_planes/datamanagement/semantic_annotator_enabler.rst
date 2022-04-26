@@ -8,12 +8,6 @@ Semantic Annotation Enabler
   :local:
   :depth: 1
 
-Home
-====
-
-ASSIST-IoT Semantic Annotation Enabler Repository Enabler.
-
-
 
 Introduction
 ============

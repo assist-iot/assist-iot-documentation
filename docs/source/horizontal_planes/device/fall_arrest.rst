@@ -53,12 +53,12 @@ The fall arrest device has to be mounted to a belt or to a helmet.
 *********************
 Configuration options
 *********************
-N/A
+Will be determined after the release of the enabler.
 
 ***************
 Developer guide
 ***************
-N/A
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
@@ -68,9 +68,9 @@ The version control and release will be determined once the device is formally r
 *******
 License
 *******
-N/A
+Will be determined after the release of the enabler.
 
 ********************
 Notice(dependencies)
 ********************
-N/A
+Will be determined after the release of the enabler.

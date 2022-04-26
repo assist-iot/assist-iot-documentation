@@ -52,22 +52,22 @@ This enabler will be part of the Tactile dashboard enabler, so see the installat
 *********************
 Configuration options
 *********************
-Not applicable.
+Will be determined after the release of the enabler.
 
 ***************
 Developer guide
 ***************
-Not Applicable.
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
 ***************************
-Not Applicable. Any version has been released yet, the enabler is in an early development stage.
+Will be determined after the release of the enabler.
 
 ***************
 License
 ***************
-Not Applicable. Any code or binary has been released yet.
+Will be determined after the release of the enabler.
 
 ********************
 Notice(dependencies)

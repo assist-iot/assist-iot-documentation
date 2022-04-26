@@ -104,8 +104,7 @@ The IdM options for the rest API to connect are available in the **lib\config.py
 ***************
 Developer guide
 ***************
-
-Not applicable.
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
@@ -124,5 +123,4 @@ RestEnabler module is propriety of S21Sec.
 ********************
 Notice(dependencies)
 ********************
-
-Not applicable.
+Will be determined after the release of the enabler.

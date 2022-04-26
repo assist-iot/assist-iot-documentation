@@ -8,11 +8,10 @@ Automated Configuration enabler
   :local:
   :depth: 1
 
-Automated configuration_enabler
-===============================
 
+***************
 Introduction
-------------
+***************
 
 Automated Configuration Enabler keeps heterogenous devices and services
 synchronised with their configurations. User can update configuration
@@ -20,8 +19,9 @@ and define fallback configurations in case of errors. Self-\* component
 will be responsible for reacting to changing environment and updating
 configura-tion as necessary
 
+***************
 Features
---------
+***************
 
 Automated configuration
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -40,16 +40,19 @@ Connection of heterogenous devices
 -  Various devices, groups of devices, services and other enablers will
    have uniform API to communicate with the Enabler.
 
+*********************
 Place in architecture
----------------------
+*********************
+Will be determined after the release of the enabler.
 
+***************
 User guide
-----------
+***************
+Will be determined after the release of the enabler.
 
-TBD
-
+***************
 Prerequisites
--------------
+***************
 
 Scala
 ~~~~~
@@ -107,30 +110,31 @@ REST (Enabler’s API)
 Currently it is decided as project-wide standard. REST is overall a web
 standard.
 
+***************
 Installation
-------------
+***************
+Will be determined after the release of the enabler.
 
-TBD
-
+*********************
 Configuration options
----------------------
+*********************
+Will be determined after the release of the enabler.
 
-TBD
-
+***************
 Developer guide
----------------
+***************
+Will be determined after the release of the enabler.
 
-TBD
-
+***************************
 Version control and release
----------------------------
+***************************
 
 We will use gitlab as version control and release tooling.
 
+***************
 License
--------
-
-TBD
+***************
+Will be determined after the release of the enabler.
 
 
 

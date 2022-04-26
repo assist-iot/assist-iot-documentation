@@ -184,8 +184,7 @@ Configuration options
 ***************
 Developer guide
 ***************
-
-**Not applicable.**
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
@@ -205,5 +204,4 @@ License
 ********************
 Notice(dependencies)
 ********************
-
-**Not applicable.**
+Will be determined after the release of the enabler.

@@ -38,8 +38,7 @@ It is in the centre of the image. It is the core element of the architecture and
 ***************
 User guide
 ***************
-
-   **To be completed**
+Will be determined after the release of the enabler.
 
 ***************
 Prerequisites
@@ -108,25 +107,21 @@ Next picture depicts the content of one of this Dockerfile.
 
 Deploying with Kubernetes and Helm3
 ------------
-
-   **To be completed**
+Will be determined after the release of the enabler.
 
 Verification the deployment
 ------------
-
-   **To be completed**
+Will be determined after the release of the enabler.
 
 *********************
 Configuration options
 *********************
-
-   **To be completed**
+Will be determined after the release of the enabler.
 
 ***************
 Developer guide
 ***************
-
-   **To be completed**
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
@@ -184,11 +179,9 @@ The table of this section it is a software release overview of the different ele
 ***************
 License
 ***************
-
-   **To be completed**
+Will be determined after the release of the enabler.
 
 ********************
 Notice(dependencies)
 ********************
-
-   **To be completed**
+Will be determined after the release of the enabler.

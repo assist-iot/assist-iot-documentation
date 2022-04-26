@@ -51,24 +51,24 @@ The localisation tag has to be mounted to a belt or to a helmet.
 *********************
 Configuration options
 *********************
-N/A
+Will be determined after the release of the enabler.
 
 ***************
 Developer guide
 ***************
-N/A
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
 ***************************
-The version control and release will be determined once the device is formally released. 
+Will be determined after the release of the enabler.
 
 *******
 License
 *******
-N/A
+Will be determined after the release of the enabler.
 
 ********************
 Notice(dependencies)
 ********************
-N/A
+Will be determined after the release of the enabler.

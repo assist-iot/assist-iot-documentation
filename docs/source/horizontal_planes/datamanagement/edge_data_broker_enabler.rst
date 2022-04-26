@@ -458,19 +458,22 @@ The following table lists the configurable parameters of the chart and their def
 |                      | cluster              |                      |
 +----------------------+----------------------+----------------------+
 
-***************
+****************
 Developer guide
-***************
+****************
+Will be determined after the release of the enabler.
 
-
-***************************
+****************************
 Version control and release
-***************************
+****************************
+Will be determined after the release of the enabler.
 
-***************
+****************
 License
-***************
+****************
+Will be determined after the release of the enabler.
 
 ********************
 Notice(dependencies)
 ********************
+Will be determined after the release of the enabler.

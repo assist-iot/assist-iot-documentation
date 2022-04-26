@@ -31,7 +31,7 @@ It is element of Smart Network and Control Plane.
 ***************
 User guide
 ***************
-under development
+Will be determined after the release of the enabler.
 
 ***************
 Prerequisites
@@ -41,22 +41,22 @@ Installed SDN controller.
 ***************
 Installation
 ***************
-under development
+Will be determined after the release of the enabler.
 
 *********************
 Configuration options
 *********************
-under development
+Will be determined after the release of the enabler.
 
 ***************
 Developer guide
 ***************
-under development
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
 ***************************
-under development
+Will be determined after the release of the enabler.
 
 ***************
 License

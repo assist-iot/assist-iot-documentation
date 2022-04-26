@@ -34,7 +34,7 @@ The SD-WAN enabler is located in the Smart Network and Control plane of the ASSI
 architecture. In particular, it belongs to the building block related to self-contained networks,
 which are the ones used for provisioning private networks over public ones.
 
-.. figure:: ./sdwan_place.PNG 
+.. figure:: ./sdwan_place.png 
    :alt: Place of the SD-WAN enabler within the Smart Network and Control Plance architecture
    :align: center
    
@@ -65,7 +65,7 @@ Particularly, the SD-WAN enabler is composed of four main elements, as one can s
 - **Database**: Stores key information regarding managed clusters, hubs, overlays, IP ranges, etc.
 - **Etcd**: Internal metadata database used to exchange configuration between the controller and rsync component.
 
-.. figure:: ./sdwan_arch.PNG 
+.. figure:: ./sdwan_arch.png 
    :alt: SD-WAN enabler architecture
    :align: center
 
@@ -119,17 +119,17 @@ as the needed configurations for having execution rights over the involved K8s A
 ***************
 Developer guide
 ***************
-Not Applicable.
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
 ***************************
-Not Applicable. Any version has been released yet.
+Will be determined after the release of the enabler.
 
 ***************
 License
 ***************
-Not Applicable. Any code or binary has been released yet.
+Will be determined after the release of the enabler.
 
 *********************
 Notice (dependencies)
