@@ -38,7 +38,9 @@ It is in the centre of the image. It is the core element of the architecture and
 ***************
 User guide
 ***************
-Will be determined after the release of the enabler.
+In order to manage the training of the models in a simple way, an interface has been developed to start the training rounds of the different models available in the FL Repository.
+
+This is how it looks like:
 
 ***************
 Prerequisites
