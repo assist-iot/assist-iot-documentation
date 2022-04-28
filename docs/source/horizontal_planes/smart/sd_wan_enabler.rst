@@ -45,7 +45,7 @@ The following diagram aims at describing the global operation of the SD-WAN arch
 including the SD-WAN enabler and instances of WAN Acceleration enabler (each of them composed by an SD-WAN
 custom k8s controller and an SD-WAN CNF).
 
-.. figure:: ./global_sdwan.PNG
+.. figure:: ./global_sdwan.png
    :alt: SD-WAN overall architecture
    :align: center
    
