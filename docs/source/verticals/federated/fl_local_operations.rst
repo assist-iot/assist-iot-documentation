@@ -60,6 +60,12 @@ that together enable to deploy a federated learning environment.
 Functionally, it operates on scalability and manageability verticals in
 the Assist-IoT architecture.
 
+More specifically the following figure depicts the place of the enabler in the ASSIST-IoT achitecture:
+
+.. figure:: ./FL_Local_Operations.png
+   :alt: Semantic Diagram of Fl Local Operations Enabler
+   :align: center
+
 User guide
 ==========
 

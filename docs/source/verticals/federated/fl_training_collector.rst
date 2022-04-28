@@ -36,6 +36,13 @@ that together enable to deploy a federated learning environment.
 Functionally, it operates on scalability and manageability verticals in
 the Assist-IoT architecture.
 
+More specifically the following figure depicts the place of the enabler in the ASSIST-IoT achitecture:
+
+.. figure:: ./FL_Training_Collector.png
+   :alt: Semantic Diagram of Fl Training Collector Enabler
+   :align: center
+
+
 User guide
 ==========
 

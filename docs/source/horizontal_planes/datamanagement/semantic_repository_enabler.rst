@@ -8,9 +8,6 @@ Semantic Repository enabler
   :local:
   :depth: 1
 
-Documentation for the Semantic Repository enabler of ASSIST-IoT.
-
-
 
 ***************
 Introduction
@@ -634,19 +631,17 @@ next release.
 
 Browsing collections
 ********************
+Will be determined after the release of the enabler.
 
-Will be implemented in the next release.
 
 Meta endpoints
 **************
-
-Will be implemented in the next release.
+Will be determined after the release of the enabler.
 
 
 
 Graphical User Interface
 ########################
-
 The GUI of the Semantic Repository is under development.
 
 
@@ -671,8 +666,7 @@ There are currently no prerequisites for installing this enabler.
 ************
 Installation
 ************
-The installation procedure for this enabler is under development and
-will be documented in the next release.
+Will be determined after the release of the enabler.
 
 
 *************
