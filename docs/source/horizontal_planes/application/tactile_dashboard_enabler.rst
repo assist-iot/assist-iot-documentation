@@ -134,25 +134,20 @@ The following configuration (settings.json) is used for code formatting:
 
 In addition, the framework and petstore project has the **.editorconfig** file:
 
-``root = true``
+.. code-block:: java
 
-``[*]``
-
-``# Change these settings to your own preference``
-
-``indent_style = tab``
-
-``indent_size = 4``
-
-``# We recommend you to keep these unchanged``
-
-``end_of_line = lf``
-
-``charset = utf-8``
-
-``trim_trailing_whitespace = true``
-
-``insert_final_newline = true``
+  root = true
+  [*]
+ 
+  # Change these settings to your own preference
+  indent_style = tab
+  indent_size = 4
+ 
+  # We recommend you to keep these unchanged
+  end_of_line = lf
+  charset = utf-8
+  trim_trailing_whitespace = true
+  insert_final_newline = true
 
 Building Tactile dashboard Docker image
 *********************
