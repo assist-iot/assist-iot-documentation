@@ -480,6 +480,14 @@ font-style: italic;
 
 
 
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">page (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of the page of namespaces to be displayed (1-based). Defaults to 1. default: null format: int32</div><div class="param">page_size (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of namespaces to display per page. default: null format: int32</div>
+    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -494,9 +502,15 @@ font-style: italic;
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
   "namespaces" : {
+    "pageSize" : 5,
+    "inViewCount" : 6,
+    "page" : 1,
     "totalCount" : 0,
     "items" : [ {
       "models" : {
+        "pageSize" : 5,
+        "inViewCount" : 6,
+        "page" : 1,
         "totalCount" : 0,
         "items" : [ {
           "metadata" : {
@@ -506,6 +520,9 @@ font-style: italic;
             }
           },
           "versions" : {
+            "pageSize" : 5,
+            "inViewCount" : 1,
+            "page" : 5,
             "totalCount" : 6,
             "items" : [ {
               "metadata" : {
@@ -556,6 +573,9 @@ font-style: italic;
             }
           },
           "versions" : {
+            "pageSize" : 5,
+            "inViewCount" : 1,
+            "page" : 5,
             "totalCount" : 6,
             "items" : [ {
               "metadata" : {
@@ -609,6 +629,9 @@ font-style: italic;
       "name" : "name"
     }, {
       "models" : {
+        "pageSize" : 5,
+        "inViewCount" : 6,
+        "page" : 1,
         "totalCount" : 0,
         "items" : [ {
           "metadata" : {
@@ -618,6 +641,9 @@ font-style: italic;
             }
           },
           "versions" : {
+            "pageSize" : 5,
+            "inViewCount" : 1,
+            "page" : 5,
             "totalCount" : 6,
             "items" : [ {
               "metadata" : {
@@ -668,6 +694,9 @@ font-style: italic;
             }
           },
           "versions" : {
+            "pageSize" : 5,
+            "inViewCount" : 1,
+            "page" : 5,
             "totalCount" : 6,
             "items" : [ {
               "metadata" : {
@@ -819,6 +848,14 @@ font-style: italic;
     </div>  <!-- field-items -->
 
 
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">page (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of the page of model versions to be displayed (1-based). Defaults to 1. default: null format: int32</div><div class="param">page_size (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of model versions to display per page. default: null format: int32</div>
+    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -839,6 +876,9 @@ font-style: italic;
     }
   },
   "versions" : {
+    "pageSize" : 5,
+    "inViewCount" : 1,
+    "page" : 5,
     "totalCount" : 6,
     "items" : [ {
       "metadata" : {
@@ -999,6 +1039,14 @@ font-style: italic;
     </div>  <!-- field-items -->
 
 
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">page (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of the page of models to be displayed (1-based). Defaults to 1. default: null format: int32</div><div class="param">page_size (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of models to display per page. default: null format: int32</div>
+    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -1013,6 +1061,9 @@ font-style: italic;
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
   "models" : {
+    "pageSize" : 5,
+    "inViewCount" : 6,
+    "page" : 1,
     "totalCount" : 0,
     "items" : [ {
       "metadata" : {
@@ -1022,6 +1073,9 @@ font-style: italic;
         }
       },
       "versions" : {
+        "pageSize" : 5,
+        "inViewCount" : 1,
+        "page" : 5,
         "totalCount" : 6,
         "items" : [ {
           "metadata" : {
@@ -1072,6 +1126,9 @@ font-style: italic;
         }
       },
       "versions" : {
+        "pageSize" : 5,
+        "inViewCount" : 1,
+        "page" : 5,
         "totalCount" : 6,
         "items" : [ {
           "metadata" : {
@@ -1802,7 +1859,10 @@ font-style: italic;
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">items </div><div class="param-desc"><span class="param-type"><a href="#ModelClientModel">array[ModelClientModel]</a></span>  </div>
-<div class="param">totalCount </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">totalCount </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">inViewCount </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">page </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">pageSize </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1810,7 +1870,10 @@ font-style: italic;
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">items </div><div class="param-desc"><span class="param-type"><a href="#ModelVersionClientModel">array[ModelVersionClientModel]</a></span>  </div>
-<div class="param">totalCount </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">totalCount </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">inViewCount </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">page </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">pageSize </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1818,7 +1881,10 @@ font-style: italic;
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">items </div><div class="param-desc"><span class="param-type"><a href="#NamespaceClientModel">array[NamespaceClientModel]</a></span>  </div>
-<div class="param">totalCount </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">totalCount </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">inViewCount </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">page </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">pageSize </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
