@@ -208,6 +208,7 @@ font-style: italic;
   <li><a href="#getRoute4"><code><span class="http-method">get</span> /v</code></a></li>
   <li><a href="#patchRoute"><code><span class="http-method">patch</span> /{namespace}/{model}</code></a></li>
   <li><a href="#patchRoute1"><code><span class="http-method">patch</span> /{namespace}/{model}/{version}</code></a></li>
+  <li><a href="#patchRoute2"><code><span class="http-method">patch</span> /{namespace}</code></a></li>
   <li><a href="#postRoute"><code><span class="http-method">post</span> /{namespace}/{model}/{version}/content</code></a></li>
   <li><a href="#postRoute1"><code><span class="http-method">post</span> /{namespace}/{model}</code></a></li>
   <li><a href="#postRoute2"><code><span class="http-method">post</span> /{namespace}/{model}/{version}</code></a></li>
@@ -425,7 +426,7 @@ font-style: italic;
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">body <a href="#string">string</a> (optional)</div>
+      <div class="param">body <a href="#object">object</a> (optional)</div>
 
       <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
 
@@ -498,9 +499,21 @@ font-style: italic;
       "models" : {
         "totalCount" : 0,
         "items" : [ {
+          "metadata" : {
+            "key" : {
+              "left" : true,
+              "right" : true
+            }
+          },
           "versions" : {
             "totalCount" : 6,
             "items" : [ {
+              "metadata" : {
+                "key" : {
+                  "left" : true,
+                  "right" : true
+                }
+              },
               "formats" : {
                 "key" : {
                   "size" : 0,
@@ -513,6 +526,12 @@ font-style: italic;
               "version" : "version",
               "defaultFormat" : "defaultFormat"
             }, {
+              "metadata" : {
+                "key" : {
+                  "left" : true,
+                  "right" : true
+                }
+              },
               "formats" : {
                 "key" : {
                   "size" : 0,
@@ -530,9 +549,21 @@ font-style: italic;
           "name" : "name",
           "namespace" : "namespace"
         }, {
+          "metadata" : {
+            "key" : {
+              "left" : true,
+              "right" : true
+            }
+          },
           "versions" : {
             "totalCount" : 6,
             "items" : [ {
+              "metadata" : {
+                "key" : {
+                  "left" : true,
+                  "right" : true
+                }
+              },
               "formats" : {
                 "key" : {
                   "size" : 0,
@@ -545,6 +576,12 @@ font-style: italic;
               "version" : "version",
               "defaultFormat" : "defaultFormat"
             }, {
+              "metadata" : {
+                "key" : {
+                  "left" : true,
+                  "right" : true
+                }
+              },
               "formats" : {
                 "key" : {
                   "size" : 0,
@@ -563,14 +600,32 @@ font-style: italic;
           "namespace" : "namespace"
         } ]
       },
+      "metadata" : {
+        "key" : {
+          "left" : true,
+          "right" : true
+        }
+      },
       "name" : "name"
     }, {
       "models" : {
         "totalCount" : 0,
         "items" : [ {
+          "metadata" : {
+            "key" : {
+              "left" : true,
+              "right" : true
+            }
+          },
           "versions" : {
             "totalCount" : 6,
             "items" : [ {
+              "metadata" : {
+                "key" : {
+                  "left" : true,
+                  "right" : true
+                }
+              },
               "formats" : {
                 "key" : {
                   "size" : 0,
@@ -583,6 +638,12 @@ font-style: italic;
               "version" : "version",
               "defaultFormat" : "defaultFormat"
             }, {
+              "metadata" : {
+                "key" : {
+                  "left" : true,
+                  "right" : true
+                }
+              },
               "formats" : {
                 "key" : {
                   "size" : 0,
@@ -600,9 +661,21 @@ font-style: italic;
           "name" : "name",
           "namespace" : "namespace"
         }, {
+          "metadata" : {
+            "key" : {
+              "left" : true,
+              "right" : true
+            }
+          },
           "versions" : {
             "totalCount" : 6,
             "items" : [ {
+              "metadata" : {
+                "key" : {
+                  "left" : true,
+                  "right" : true
+                }
+              },
               "formats" : {
                 "key" : {
                   "size" : 0,
@@ -615,6 +688,12 @@ font-style: italic;
               "version" : "version",
               "defaultFormat" : "defaultFormat"
             }, {
+              "metadata" : {
+                "key" : {
+                  "left" : true,
+                  "right" : true
+                }
+              },
               "formats" : {
                 "key" : {
                   "size" : 0,
@@ -632,6 +711,12 @@ font-style: italic;
           "name" : "name",
           "namespace" : "namespace"
         } ]
+      },
+      "metadata" : {
+        "key" : {
+          "left" : true,
+          "right" : true
+        }
       },
       "name" : "name"
     } ]
@@ -747,9 +832,21 @@ font-style: italic;
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
+  "metadata" : {
+    "key" : {
+      "left" : true,
+      "right" : true
+    }
+  },
   "versions" : {
     "totalCount" : 6,
     "items" : [ {
+      "metadata" : {
+        "key" : {
+          "left" : true,
+          "right" : true
+        }
+      },
       "formats" : {
         "key" : {
           "size" : 0,
@@ -762,6 +859,12 @@ font-style: italic;
       "version" : "version",
       "defaultFormat" : "defaultFormat"
     }, {
+      "metadata" : {
+        "key" : {
+          "left" : true,
+          "right" : true
+        }
+      },
       "formats" : {
         "key" : {
           "size" : 0,
@@ -837,6 +940,12 @@ font-style: italic;
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
+  "metadata" : {
+    "key" : {
+      "left" : true,
+      "right" : true
+    }
+  },
   "formats" : {
     "key" : {
       "size" : 0,
@@ -883,7 +992,7 @@ font-style: italic;
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">body <a href="#string">string</a> (optional)</div>
+      <div class="param">body <a href="#object">object</a> (optional)</div>
 
       <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
 
@@ -906,9 +1015,21 @@ font-style: italic;
   "models" : {
     "totalCount" : 0,
     "items" : [ {
+      "metadata" : {
+        "key" : {
+          "left" : true,
+          "right" : true
+        }
+      },
       "versions" : {
         "totalCount" : 6,
         "items" : [ {
+          "metadata" : {
+            "key" : {
+              "left" : true,
+              "right" : true
+            }
+          },
           "formats" : {
             "key" : {
               "size" : 0,
@@ -921,6 +1042,12 @@ font-style: italic;
           "version" : "version",
           "defaultFormat" : "defaultFormat"
         }, {
+          "metadata" : {
+            "key" : {
+              "left" : true,
+              "right" : true
+            }
+          },
           "formats" : {
             "key" : {
               "size" : 0,
@@ -938,9 +1065,21 @@ font-style: italic;
       "name" : "name",
       "namespace" : "namespace"
     }, {
+      "metadata" : {
+        "key" : {
+          "left" : true,
+          "right" : true
+        }
+      },
       "versions" : {
         "totalCount" : 6,
         "items" : [ {
+          "metadata" : {
+            "key" : {
+              "left" : true,
+              "right" : true
+            }
+          },
           "formats" : {
             "key" : {
               "size" : 0,
@@ -953,6 +1092,12 @@ font-style: italic;
           "version" : "version",
           "defaultFormat" : "defaultFormat"
         }, {
+          "metadata" : {
+            "key" : {
+              "left" : true,
+              "right" : true
+            }
+          },
           "formats" : {
             "key" : {
               "size" : 0,
@@ -970,6 +1115,12 @@ font-style: italic;
       "name" : "name",
       "namespace" : "namespace"
     } ]
+  },
+  "metadata" : {
+    "key" : {
+      "left" : true,
+      "right" : true
+    }
   },
   "name" : "name"
 }</code></pre>
@@ -1164,6 +1315,71 @@ font-style: italic;
         <a href="#ErrorResponse">ErrorResponse</a>
     <h4 class="field-label">404</h4>
     model version not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="patchRoute2"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="patch"><code class="huge"><span class="http-method">patch</span> /{namespace}</code></pre></div>
+    <div class="method-summary">Update an existing namespace (<span class="nickname">patchRoute2</span>)</div>
+    <div class="method-notes">Change one or more fields of a namespace in the repository.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">NamespaceUpdateModel <a href="#NamespaceUpdateModel">NamespaceUpdateModel</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "warnings" : [ "warnings", "warnings" ],
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    success
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h4 class="field-label">400</h4>
+    invalid request body
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h4 class="field-label">404</h4>
+    namespace not found
         <a href="#ErrorResponse">ErrorResponse</a>
   </div> <!-- method -->
   <hr/>
@@ -1399,10 +1615,15 @@ font-style: italic;
       <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div>
     </div>  <!-- field-items -->
 
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">body <a href="#string">string</a> (optional)</div>
+      <div class="param">NamespaceUpdateModel <a href="#NamespaceUpdateModel">NamespaceUpdateModel</a> (optional)</div>
 
       <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
 
@@ -1451,13 +1672,16 @@ font-style: italic;
 
   <h3>Table of Contents</h3>
   <ol>
+    <li><a href="#EitherStringSeqString"><code>EitherStringSeqString</code> - </a></li>
     <li><a href="#ErrorResponse"><code>ErrorResponse</code> - </a></li>
+    <li><a href="#MetadataUpdateModel"><code>MetadataUpdateModel</code> - </a></li>
     <li><a href="#ModelClientModel"><code>ModelClientModel</code> - </a></li>
     <li><a href="#ModelUpdateModel"><code>ModelUpdateModel</code> - </a></li>
     <li><a href="#ModelVersionClientModel"><code>ModelVersionClientModel</code> - </a></li>
     <li><a href="#ModelVersionContext"><code>ModelVersionContext</code> - </a></li>
     <li><a href="#ModelVersionUpdateModel"><code>ModelVersionUpdateModel</code> - </a></li>
     <li><a href="#NamespaceClientModel"><code>NamespaceClientModel</code> - </a></li>
+    <li><a href="#NamespaceUpdateModel"><code>NamespaceUpdateModel</code> - </a></li>
     <li><a href="#OptionString"><code>OptionString</code> - </a></li>
     <li><a href="#RootInfoClientModel"><code>RootInfoClientModel</code> - </a></li>
     <li><a href="#SetClientModelModelClientModel"><code>SetClientModelModelClientModel</code> - </a></li>
@@ -1469,10 +1693,26 @@ font-style: italic;
   </ol>
 
   <div class="model">
+    <h3><a name="EitherStringSeqString"><code>EitherStringSeqString</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">left (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">right (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3><a name="ErrorResponse"><code>ErrorResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">error </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MetadataUpdateModel"><code>MetadataUpdateModel</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">value </div><div class="param-desc"><span class="param-type"><a href="#object">map[String, Object]</a></span>  </div>
+<div class="param">mongoUpdates </div><div class="param-desc"><span class="param-type"><a href="#object">array[Object]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1483,6 +1723,7 @@ font-style: italic;
 <div class="param">namespace </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">versions (optional)</div><div class="param-desc"><span class="param-type"><a href="#SetClientModelModelVersionClientModel">SetClientModelModelVersionClientModel</a></span>  </div>
 <div class="param">latestVersion (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#EitherStringSeqString">map[String, EitherStringSeqString]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1490,7 +1731,8 @@ font-style: italic;
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">latestVersion (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">mongoUpdates </div><div class="param-desc"><span class="param-type"><a href="#object">array[Object]</a></span>  </div>
+<div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#MetadataUpdateModel">MetadataUpdateModel</a></span>  </div>
+<div class="param">mongoUpdates (optional)</div><div class="param-desc"><span class="param-type"><a href="#object">array[Object]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1502,6 +1744,7 @@ font-style: italic;
 <div class="param">namespace </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">formats (optional)</div><div class="param-desc"><span class="param-type"><a href="#StoredFileClientModel">map[String, StoredFileClientModel]</a></span>  </div>
 <div class="param">defaultFormat (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#EitherStringSeqString">map[String, EitherStringSeqString]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1518,7 +1761,8 @@ font-style: italic;
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">defaultFormat (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">mongoUpdates </div><div class="param-desc"><span class="param-type"><a href="#object">array[Object]</a></span>  </div>
+<div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#MetadataUpdateModel">MetadataUpdateModel</a></span>  </div>
+<div class="param">mongoUpdates (optional)</div><div class="param-desc"><span class="param-type"><a href="#object">array[Object]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1527,6 +1771,15 @@ font-style: italic;
     <div class="field-items">
       <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">models (optional)</div><div class="param-desc"><span class="param-type"><a href="#SetClientModelModelClientModel">SetClientModelModelClientModel</a></span>  </div>
+<div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#EitherStringSeqString">map[String, EitherStringSeqString]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="NamespaceUpdateModel"><code>NamespaceUpdateModel</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#MetadataUpdateModel">MetadataUpdateModel</a></span>  </div>
+<div class="param">mongoUpdates (optional)</div><div class="param-desc"><span class="param-type"><a href="#object">array[Object]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
