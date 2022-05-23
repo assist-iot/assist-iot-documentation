@@ -142,7 +142,41 @@ details.
 Metadata
 ~~~~~~~~
 
-Not implemented yet.
+You can attach arbitrary metadata to namespaces, models, and model
+versions. This metadata can serve a multitude of applications such as
+dependency tracking, additional provenance information (e.g., author
+email, license), indicating the source Git branch, etc.
+
+Each entity (that is, a namespace, model, or model version) can have a
+number of metadata keys. Each key can have either a single textual value
+or several values (an array).
+
+For example, if you want to indicate the authorship of a model version
+and its source Git branch, its metadata could look like: - author: -
+``Rob`` - ``Bob`` - branch: ``rob-bob-branch``
+
+Or, in JSON:
+
+::
+
+   "metadata": {
+     "author": ["Rob", "Bob"],
+     "branch": "rob-bob-branch"
+   }
+
+This metadata can be filtered and sorted when browsing collections of
+entities. **TBD NOT IMPLEMENTED YET**
+
+Refer to the API guide below for usage instructions.
+
+Limits
+^^^^^^
+
+By default, the Semantic Repository limits the amount of metadata that
+can be stored per entity. These default limits can be changed (see:
+Configuration). - Maximum number of keys per entity: **64** - Maximum
+number of values per one metadata key: **32** - Maximum length in
+characters of an individual metadata value: **1024**
 
 
 
@@ -200,11 +234,11 @@ Request URL  Request body
 ``GET /w3c`` –
 ============ ============
 
-============= ===================
+============= ========================
 Response code Response body
-============= ===================
-200           ``{"name": "w3c"}``
-============= ===================
+============= ========================
+200           ``{"namespace": "w3c"}``
+============= ========================
 
 Currently, there is no other information in the namespace other than its
 name.
@@ -222,7 +256,7 @@ Response:
 ::
 
    {
-     "items": [{"name": "w3c"}],
+     "items": [{"namespace": "w3c"}],
      "totalCount": 1 
    }
 
@@ -277,11 +311,11 @@ Request           Body
 ``GET /w3c/sosa`` –
 ================= ====
 
-============= ========================================
+============= =========================================
 Response code Body
-============= ========================================
-200           ``{"namespace": "w3c", "name": "sosa"}``
-============= ========================================
+============= =========================================
+200           ``{"namespace": "w3c", "model": "sosa"}``
+============= =========================================
 
 When you again examine the contents of the namespace (``GET /w3c``), you
 will see a collection of models:
@@ -292,17 +326,17 @@ will see a collection of models:
      "models": {
        "items": [
          {
-           "name": "sosa",
+           "model": "sosa",
            "namespace": "w3c"
          },
          {
-           "name": "ssn",
+           "model": "ssn",
            "namespace": "w3c"
          }
        ],
        "totalCount": 2
      },
-     "name": "w3c"
+     "namespace": "w3c"
    }
 
 **Note:** model names must meet the following criteria: - be at least 1
@@ -355,7 +389,7 @@ You can also retrieve a list of versions for the model (again,
 ::
 
    {
-     "name": "sosa",
+     "model": "sosa",
      "namespace": "w3c",
      "versions": {
        "items": [
@@ -625,6 +659,71 @@ most applications.
 In all cases the response will be simply the stored file, with the
 appropriate Content-Type header.
 
+Attaching metadata
+~~~~~~~~~~~~~~~~~~
+
+As described in the User guide, you can attach arbitrary metadata to any
+entity (namespace, model, model version). The API is identical for each
+of those cases, the only difference is in the URL.
+
+You can attach metadata when creating an entity via a POST request. For
+example, if we wanted to create a new model in the ``w3c`` namespace:
+
+Request: ``POST /w3c/dcat`` Body:
+
+::
+
+   {
+     "metadata": {
+       "namespace": "https://www.w3.org/ns/dcat#",
+       "external-docs": "https://www.w3.org/TR/vocab-dcat/",
+       "editors": [
+         "Riccardo Albertoni",
+         "David Browning",
+         "et al."
+       ]
+     }
+   }
+
+This request will create a new model with this metadata attached. The
+metadata can be later modified, as explained below.
+
+To examine the created model:
+
+================= ====
+Request           Body
+================= ====
+``GET /w3c/dcat`` –
+================= ====
+
+Response:
+
+::
+
+   {
+     "metadata": {
+       "editors": [
+         "Riccardo Albertoni",
+         "David Browning",
+         "et al."
+       ],
+       "external-docs": "https://www.w3.org/TR/vocab-dcat/",
+       "namespace": "https://www.w3.org/ns/dcat#"
+     },
+     "model": "dcat",
+     "namespace": "w3c",
+     (...)
+   }
+
+**Note:** metadata keys must meet the following criteria: - be at least
+1 and at most 100 characters long - only contain lower or upper letters
+of the latin alphabet, digits, dashes (``-``), and underscores (``_``)
+
+Values of the keys can be any strings (as long as they fit into the
+length limit, 1024 characters by default) or arrays of such strings.
+Values cannot be the exact string ``@unset``, which is a reserved
+keyword. No other types of values (e.g., numeric, null…) are supported.
+
 Deleting models and other objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -688,7 +787,8 @@ file.
 Settings
 ~~~~~~~~
 
-TODO
+Temporarily, the only documentation of the settings is in the
+configuration file itself.
 
 Dependencies
 ~~~~~~~~~~~~
