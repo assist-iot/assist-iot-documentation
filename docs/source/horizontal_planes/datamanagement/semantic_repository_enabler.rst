@@ -675,8 +675,34 @@ will be documented in the next release.
 Configuration
 =============
 
-This enabler currently does not have any configuration settings. They
-will be added later.
+Currently, there are no “nicely” packaged facilities for configuring the
+enabler. However, for development and testing purposes, the available
+configuration settings are documented below.
+
+Semantic Repository Core
+------------------------
+
+The main JVM application is configured using the ``application.conf``
+file.
+
+Settings
+~~~~~~~~
+
+TODO
+
+Dependencies
+~~~~~~~~~~~~
+
+In the file, you can configure the libraries that Semantic Repository
+uses, such as Akka. This way you can for example modify the size of the
+thread pool. **These settings are generally only meant for advanced
+users**, so proceed with caution. Please refer to the documentation of:
+-
+`Akka <https://doc.akka.io/docs/akka/current/general/configuration.html>`__
+- `Akka
+HTTP <https://doc.akka.io/docs/akka-http/current/configuration.html>`__
+- `Akka
+Streams <https://doc.akka.io/docs/akka/current/general/stream/stream-configuration.html>`__
 
 
 
