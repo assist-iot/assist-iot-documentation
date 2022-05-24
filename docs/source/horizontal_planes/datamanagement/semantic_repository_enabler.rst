@@ -256,8 +256,11 @@ Response:
 ::
 
    {
+     "inViewCount": 1,
      "items": [{"namespace": "w3c"}],
-     "totalCount": 1 
+     "page": 1,
+     "pageSize": 20,
+     "totalCount": 1
    }
 
 A collection of namespaces is returned. Browsing such collections is
@@ -324,6 +327,7 @@ will see a collection of models:
 
    {
      "models": {
+       "inViewCount": 2,
        "items": [
          {
            "model": "sosa",
@@ -334,10 +338,16 @@ will see a collection of models:
            "namespace": "w3c"
          }
        ],
+       "page": 1,
+       "pageSize": 20,
        "totalCount": 2
      },
      "namespace": "w3c"
    }
+
+Some additional information is also returned, such as ``page`` and
+``totalCount``. These are described in detail in the `Browsing
+collections section <#browsing-collections>`__.
 
 **Note:** model names must meet the following criteria: - be at least 1
 and at most 100 characters long - only contain lower or upper letters of
@@ -392,6 +402,7 @@ You can also retrieve a list of versions for the model (again,
      "model": "sosa",
      "namespace": "w3c",
      "versions": {
+       "inViewCount": 1,
        "items": [
          {
            "model": "sosa",
@@ -399,6 +410,8 @@ You can also retrieve a list of versions for the model (again,
            "version": "1.0"
          }
        ],
+       "page": 1,
+       "pageSize": 20,
        "totalCount": 1
      }
    }
@@ -675,7 +688,7 @@ Request: ``POST /w3c/dcat`` Body:
 
    {
      "metadata": {
-       "namespace": "https://www.w3.org/ns/dcat#",
+       "rdf-namespace": "https://www.w3.org/ns/dcat#",
        "external-docs": "https://www.w3.org/TR/vocab-dcat/",
        "editors": [
          "Riccardo Albertoni",
@@ -708,7 +721,7 @@ Response:
          "et al."
        ],
        "external-docs": "https://www.w3.org/TR/vocab-dcat/",
-       "namespace": "https://www.w3.org/ns/dcat#"
+       "rdf-namespace": "https://www.w3.org/ns/dcat#"
      },
      "model": "dcat",
      "namespace": "w3c",
@@ -724,6 +737,72 @@ length limit, 1024 characters by default) or arrays of such strings.
 Values cannot be the exact string ``@unset``, which is a reserved
 keyword. No other types of values (e.g., numeric, null…) are supported.
 
+**Note:** the process of attaching metadata to namespaces and model
+versions is identical and the same limitations apply.
+
+Modifying metadata
+~~~~~~~~~~~~~~~~~~
+
+The metadata can be modified using PATCH requests with a very similar
+syntax to the POST requests described above. There are three possible
+operations that can be performed with each individual key in a request:
+- Keep it unchanged. To do that, simply don’t include the key in the
+request. - Set it to a new value. For that, just specify it along with
+its new value, just like in a POST request. - Remove the key. This is
+done by setting it to the reserved ``@unset`` keyword.
+
+**Note:** individual array elements cannot be modified. You can only
+change or remove entire keys.
+
+In this example we will modify the previously created ``w3c/dcat``
+model. We (1) remove the ``editors`` key (2) add the ``git-repo`` key
+(3) change the value of ``external-docs`` to an array. The other keys
+will remain unchanged.
+
+Request: ``PATCH /w3c/dcat`` Body:
+
+::
+
+   {
+     "metadata": {
+       "editors": "@unset",
+       "git-repo": "https://github.com/w3c/dxwg/",
+       "external-docs": [
+         "https://www.w3.org/TR/vocab-dcat/",
+         "https://w3c.github.io/dxwg/dcat-implementation-report/"
+       ]    
+     }
+   }
+
+To examine the modified model:
+
+================= ====
+Request           Body
+================= ====
+``GET /w3c/dcat`` –
+================= ====
+
+Response:
+
+::
+
+   {
+     "metadata": {
+       "external-docs": [
+         "https://www.w3.org/TR/vocab-dcat/",
+         "https://w3c.github.io/dxwg/dcat-implementation-report/"
+       ],
+       "rdf-namespace": "https://www.w3.org/ns/dcat#",
+       "git-repo": "https://github.com/w3c/dxwg/"
+     },
+     "model": "dcat",
+     "namespace": "w3c",
+     (...)
+   }
+
+**Note:** the process of modifying metadata of namespaces and model
+versions is identical and the same limitations apply.
+
 Deleting models and other objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -733,7 +812,73 @@ next release.
 Browsing collections
 ~~~~~~~~~~~~~~~~~~~~
 
-Will be implemented in the next release.
+The API supports browsing through long lists of namespaces, models, and
+model versions. The mechanism is identical in all three cases and is
+based on two query parameters: - ``page`` – 1-based number of the page
+to display. - ``page_size`` – (optional) number of items to display per
+page, 20 by default. This parameter is subject to a configurable limit,
+set to 50 by default.
+
+In the following example, let’s assume that we have namespace
+``example`` with 20 models named from ``01`` to ``20``. To display the
+third page of the list of models in this namespace, while showing 4
+items per page:
+
+=================================== ====
+Request                             Body
+=================================== ====
+``GET /example?page=3&page_size=4`` –
+=================================== ====
+
+Response:
+
+::
+
+   {
+     "models": {
+       "inViewCount": 4,
+       "items": [
+         {
+           "model": "09",
+           "namespace": "example"
+         },
+         {
+           "model": "10",
+           "namespace": "example"
+         },
+         {
+           "model": "11",
+           "namespace": "example"
+         },
+         {
+           "model": "12",
+           "namespace": "example"
+         }
+       ],
+       "page": 3,
+       "pageSize": 4,
+       "totalCount": 20
+     },
+     "namespace": "example"
+   }
+
+The ``models`` key provides the following information: - ``items`` –
+list of models on this page. - ``inViewCount`` – number of items
+currently displayed. Always lower or equal to ``pageSize``. -
+``totalCount`` – number of all items in this collection, given the
+currently set filters. - ``pageSize`` – maximum number of items that can
+be displayed on the page. - ``page`` – current page number (1-based).
+
+**Note:** if you request a page number for which there are no results,
+an empty set will be returned.
+
+Browsing collections of namespaces and model versions is performed
+identically.
+
+Filtering and sorting collections
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**TBD**
 
 Meta endpoints
 ~~~~~~~~~~~~~~
