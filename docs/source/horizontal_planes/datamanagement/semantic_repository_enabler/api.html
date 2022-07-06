@@ -248,7 +248,9 @@ font-style: italic;
     <div class="field-items">
       <div class="param">format (required)</div>
 
-      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Format tag of the content. default: null </div>
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Format tag of the content. default: null </div><div class="param">force (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' to really perform the deletion. This is to prevent accidental deletions. default: null </div>
     </div>  <!-- field-items -->
 
 
@@ -279,7 +281,7 @@ font-style: italic;
     success
         <a href="#SuccessResponse">SuccessResponse</a>
     <h4 class="field-label">400</h4>
-    invalid format tag
+    'force' parameter was not specified
         <a href="#ErrorResponse">ErrorResponse</a>
     <h4 class="field-label">404</h4>
     content not found
@@ -312,67 +314,12 @@ font-style: italic;
     </div>  <!-- field-items -->
 
 
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#SuccessResponse">SuccessResponse</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "warnings" : [ "warnings", "warnings" ],
-  "message" : "message"
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    success
-        <a href="#SuccessResponse">SuccessResponse</a>
-    <h4 class="field-label">404</h4>
-    model not found
-        <a href="#ErrorResponse">ErrorResponse</a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="deleteRoute2"/>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /{namespace}/{model}/{version}</code></pre></div>
-    <div class="method-summary">Delete a model version (<span class="nickname">deleteRoute2</span>)</div>
-    <div class="method-notes">Delete a specific version of a model in the repository. This is only possible if the model version is empty, i.e., all associated content and documentation pages were already deleted.</div>
-
-    <h3 class="field-label">Path parameters</h3>
+    <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">namespace (required)</div>
+      <div class="param">force (required)</div>
 
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
-
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div><div class="param">version (required)</div>
-
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Version tag default: null </div>
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' to really perform the deletion. This is to prevent accidental deletions. default: null </div>
     </div>  <!-- field-items -->
-
-
-    <h3 class="field-label">Request body</h3>
-    <div class="field-items">
-      <div class="param">ModelVersionContext <a href="#ModelVersionContext">ModelVersionContext</a> (optional)</div>
-
-      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
-
-    </div>  <!-- field-items -->
-
-
 
 
     <h3 class="field-label">Return type</h3>
@@ -405,7 +352,77 @@ font-style: italic;
     model not found
         <a href="#ErrorResponse">ErrorResponse</a>
     <h4 class="field-label">400</h4>
-    model version is not empty
+    'force' parameter was not specified
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteRoute2"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /{namespace}/{model}/{version}</code></pre></div>
+    <div class="method-summary">Delete a model version (<span class="nickname">deleteRoute2</span>)</div>
+    <div class="method-notes">Delete a specific version of a model in the repository. This is only possible if the model version is empty, i.e., all associated content and documentation pages were already deleted.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div><div class="param">version (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Version tag default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ModelVersionContext <a href="#ModelVersionContext">ModelVersionContext</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">force (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' to really perform the deletion. This is to prevent accidental deletions. default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "warnings" : [ "warnings", "warnings" ],
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    success
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h4 class="field-label">404</h4>
+    model not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h4 class="field-label">400</h4>
+    'force' parameter was not specified
         <a href="#ErrorResponse">ErrorResponse</a>
   </div> <!-- method -->
   <hr/>
@@ -433,6 +450,12 @@ font-style: italic;
     </div>  <!-- field-items -->
 
 
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">force (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' to really perform the deletion. This is to prevent accidental deletions. default: null </div>
+    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -465,7 +488,7 @@ font-style: italic;
     Namespace not found
         <a href="#ErrorResponse">ErrorResponse</a>
     <h4 class="field-label">400</h4>
-    Namespace is not empty
+    'force' parameter was not specified
         <a href="#ErrorResponse">ErrorResponse</a>
   </div> <!-- method -->
   <hr/>

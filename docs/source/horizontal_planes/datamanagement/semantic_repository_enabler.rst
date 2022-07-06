@@ -165,7 +165,7 @@ Or, in JSON:
    }
 
 This metadata can be filtered and sorted when browsing collections of
-entities. **TBD NOT IMPLEMENTED YET**
+entities.
 
 Refer to the API guide below for usage instructions.
 
@@ -806,8 +806,45 @@ versions is identical and the same limitations apply.
 Deleting models and other objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Only partially implemented in this version. Will be implemented in the
-next release.
+Namespaces, models, model versions, and contents can be permanently
+deleted from the repository. The rules and the interface are identical
+on all cases: - The entity must be “empty”, that is, must have no child
+entities. For example, to delete a namespace, all its models must be
+deleted beforehand. - To delete the entity, simply use the URL path you
+would for a GET request, but use the DELETE method instead. -
+Additionally, you must provide the ``force=1`` query parameter to the
+request. This is to avoid accidental deletions.
+
+For example, to delete a (previously emptied of any versions) model
+``/w3c/dcat``:
+
+============================ ====
+Request                      Body
+============================ ====
+``DELETE /w3c/dcat?force=1`` –
+============================ ====
+
+Another example: deleting a specific content of a model version:
+
+=========================================================== ====
+Request                                                     Body
+=========================================================== ====
+``DELETE /w3c/sosa/1.0/content?format=text/turtle&force=1`` –
+=========================================================== ====
+
+**Note 1: deleting things from the Repository is discouraged**, do so
+only in exceptional circumstances (e.g., a mistake). The contents of the
+Repository should be mostly immutable.
+
+**Note 2:** when deleting model versions you cannot use the ``latest``
+version pointer. Similarly, when deleting content, you cannot rely on
+the default format. You must always explicitly define the format and the
+version to be deleted.
+
+**Note 3:** when deleting the target of the ``latest`` version pointer,
+or the content in the default format, this may result in broken
+references. Make sure to set the version pointer and the default format
+to a valid value afterwards.
 
 Browsing collections
 ~~~~~~~~~~~~~~~~~~~~
@@ -878,7 +915,67 @@ identically.
 Filtering and sorting collections
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**TBD**
+All collections that support paging (as described above) can be sorted
+and filtered. There is support for filtering by one field at a time
+(ascending or descending). An unlimited number of filters can be used –
+all will be joined with the AND operator. The sort & filter parameters
+can be freely combined with paging parameters.
+
+The following fields can be sorted and filtered: - Namespace collection
+(``/``): ``namespace``, ``metadata.*`` - Model collection (``/{ns}``):
+``model``, ``latestVersion``, ``metadata.*`` - Model version collection
+(``/{ns}/{model}``): ``version``, ``defaultFormat``, ``metadata.*``
+
+The ``metadata.*`` field indicates it is possible to sort or filter by
+any of the metadata properties. For example, to sort by metadata field
+``source`` simple use the ``metadata.source`` field specifier.
+
+Filtering
+^^^^^^^^^
+
+It is possible to filter for the exact value of one or more fields. Each
+filter is specified with a query parameter in the form of
+``f.{fieldName}={value}``, where ``fieldName`` corresponds to one of the
+filter-able fields in this collection, as described above.
+
+For example, to search for models that have the latest version set to
+``1.0.0`` and their ``source`` metadata field is ``internal``:
+
+================================================================= ====
+Request                                                           Body
+================================================================= ====
+``GET /example?f.latestVersion=1.0.0&f.metadata.source=internal`` –
+================================================================= ====
+
+**Note 1:** metadata fields can have multiple values. A filter on such a
+field will be satisfied if at least one value is equal to the filter
+value.
+
+**Note 2:** a filter will not be satisfied if a given field is not
+present in the object.
+
+Sorting
+^^^^^^^
+
+Only one field can be sorted at a time, ascending or descending. Sorting
+is operated using two query parameters: ``sort_by={fieldName}`` and
+``order={ascending|descending}``. The order parameter is optional and
+set to ``ascending`` by default.
+
+For example, to sort namespaces by their name, in descending order:
+
+============================================ ====
+Request                                      Body
+============================================ ====
+``GET /?sort_by=namespace&order=descending`` –
+============================================ ====
+
+**Note 1:** sorting is applied after filtering, but before paging. This
+allows you to freely browse filtered and sorted collections.
+
+**Note 2:** the sort order is undefined for items that don’t contain the
+sorted field. This is especially relevant for sorting with metadata
+fields.
 
 Meta endpoints
 ~~~~~~~~~~~~~~
