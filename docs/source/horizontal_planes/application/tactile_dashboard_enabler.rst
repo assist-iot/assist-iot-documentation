@@ -88,6 +88,16 @@ At development level the main dependencies are:
 ***************
 Installation
 ***************
+
+    
+*********************
+Configuration options
+*********************
+Will be determined after the release of the enabler.
+
+***************
+Developer guide
+***************
 PUI9 client is a front-end solution for implementing single-page application (SPA) data management interfaces. It is based on the progressive javascript framework Vue.js and uses the Vuetify user interface kit.
 
 Install Node.js and NPM
@@ -151,29 +161,146 @@ In addition, the framework and petstore project has the **.editorconfig** file:
 
 Building Tactile dashboard Docker image
 *********************
-Will be determined after the release of the enabler.
+All the resources needed for building the image are located within ``dashboard.client``, ``docker`` folder,  such as the DockerFile, config fies and required scripts.
+
+The image is built over a nginx image, which acts as reverse proxy for the demanded requests from ``dashboard.back``.
+
+During the Docker build command, two environment variables needed for the java frontend-backend commuication are declared:
+
+-  ``DASHBOARD_HOST_NAME`` -> Nombre del contenedor del dashboard.back, por defecto: ``back-dashboard-svc``
+-  ``DASHBOARD_HOST_PORT`` -> Puerto expuesto del contendor, por defecto ``8080``.
+
+For building the image, the following commands should be executed in the shell.
+
+.. code:: bash
+
+   cd dashboard.client
+
+   ## Build image
+   docker build -t pui9_dashboard-client:latest -f ./docker/Dockerfile .
+
+where ``pui9_dashboard-client:latest`` is the image name, and ``latest`` refers to the version to be installed (in this case, last version).
+
+For running a container with the built image:
+
+.. code:: bash
+
+   ## Run container
+   docker run -d --name pui9_dashboard-client-container -p 80:80 pui9_dashboard-client:latest
+
+**DEPENDENCIES**
+~~~~~~~~~~~~~~~~
+
+-  ``pui9_dashboard-back`` Image based on Apache Tomcat 9 with the RestAPI that exposes the services for ``pui9_dashboard-client``
+-  ``postgres:14`` Image based on postgres:14 with default initialisation for ``pui9_dashboard-back``
+
+Other commands:
+
+.. code:: bash
+
+   # Start container
+   docker start pui9_dashboard-client-container
+
+   #Stop container
+   docker stop pui9_dashboard-client-container
+
+**MINIKUBE**
+~~~~~~~~~~~~
+
+If you have already deployed a local minikube for testing, it is possible to add the image to minikue repo by running:
+
+.. code:: bash
+
+   cd dashboard.client
+   eval $(minikube docker-env)
+   docker run -d --name pui9_dashboard-client-container -p 80:80 pui9_dashboard-client:latest
+
+To double check that the image has been properly built and it is allocated within the local minikube repo:
+
+.. code:: bash
+
+   minikube ssh
+   docker images | grep pui9
+
+Links: -
+https://stackoverflow.com/questions/42564058/how-to-use-local-docker-images-with-minikube
     
 Running Tactile dashboard Docker image
 *********************
-Will be determined after the release of the enabler.Will be determined after the release of the enabler.
-    
+From the root of the project you can build an instance of the Dashboard with docker compose.
+
+.. code:: bash
+
+   # Starts the related containers in the docker-compose file
+   docker compose up -d
+
+Other commands
+
+.. code:: bash
+
+   # Stop the related containers
+   docker compose stop
+
+   # Start the related containers, once they have been stopped
+   docker compose start
+
+   # Delete the related containers
+   docker compose down
+
+Deploy with kuberntes without helm chart file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Create configmap for database initialization
+
+.. code:: bash
+
+   cd k8s-deployment
+   kubectl create configmap pg-init-db --from-file=../postgres/assistiot.sql
+
+.. code:: bash
+
+   #From k8s-deployment folder
+   kubectl apply -f .  
+   
 Building Tactile dashboard Helm Chart
 *********************
-Will be determined after the release of the enabler.
-    
+For building the tactile dashboard Helm Chart the helm-chart generator script of the project enablers is needed: https://gitlab.assist-iot.eu/wp6/t6.3/helm-chart-generator and just following the instructions the Helm Chart is created. Once a default chart has been created, any associated file can be modified for personal configuration.
+
+In addition, the following scripts have been added -
+``files/docker-entrypoint-init.d/db.sql`` SQL script for Postgres DB inialisation for dashboard-pui9 -
+``templates/backdashboard/initialization-configmap.yaml`` Transforms the previous SQL script in a config map that should be added to the corresponsding initialisation postgres container.
+
+References links: -
+https://github.com/helm/charts/blob/master/stable/postgresql/templates/initialization-configmap.yaml
+
 Deploying Tactile dashboard Helm chart
 *********************
-Will be determined after the release of the enabler.
-    
-*********************
-Configuration options
-*********************
-Will be determined after the release of the enabler.
+For properly running the tactile dashboard as a Helm Chart, additional dependant enablers are needed:
 
-***************
-Developer guide
-***************
-Will be determined after the release of the enabler.
+1. LTSE. https://gitlab.assist-iot.eu/wp4/data-mgmt/ltse
+2. Business KPI enabler
+   https://gitlab.assist-iot.eu/wp4/applications/business-kpi-enabler/-/tree/main/
+
+Given that the previous prerequisites are up and running, the tactile dashboard Helm Chart can be easily deploy with the following command:
+
+.. code:: bash
+
+   cd helm-chart
+   helm install dashboard-pui9 .
+
+Other commands
+
+.. code:: bash
+
+   # Get all release
+   helm list
+
+   #Delete release
+   helm uninstall <name-release>
+
+   #Delete all release
+   helm ls --all --short | xargs -L1 helm delete
+
+Suggested applications: - https://k9scli.io/
 
 Basic structure
 *********************
