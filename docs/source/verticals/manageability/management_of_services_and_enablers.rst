@@ -1,7 +1,7 @@
-.. _Μanagement of services and enablers' workflow:
+.. _Management of services and enablers' workflow:
 
 #############################################
-Μanagement of services and enablers' workflow
+Management of services and enablers' workflow
 #############################################
 
 .. contents::

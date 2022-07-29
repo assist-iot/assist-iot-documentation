@@ -20,13 +20,16 @@ This enabler act as a VPN server (based on WireGuard VPN) that allows client con
 to a Kubernetes node machine and its private network from a machine allocated in a different private network.
 Furthermore, a REST API is included to facilitate the administration of the VPN network.
 
-NOTE1: At this moment, the enabler persists the data in a MongoDB database, which also is included in the Helm chart. When the LTSE enabler is ready, the information will be persisted in it.
+.. note:: 
+  In this development stage, the enabler persists the data in a MongoDB database, which also is included in the Helm chart. When the LTSE enabler is ready, the information will be persisted in it.
 
-NOTE2: At this point in time, this enabler is limited to one replica in each Kubernetes deployment and cannot be auto scaled due to its specific functionalities. If there are more than one replica, each pod will act as an independent VPN 
-because each pod will have its own WireGuard network interface at the container level which won't be synchronized among them. For example, a new client will only be created or deleted in one pod.
+.. note:: 
+  At this point in time, this enabler is limited to one replica in each Kubernetes deployment and cannot be auto scaled due to its specific functionalities. If there are more than one replica, each pod will act as an independent VPN 
+  because each pod will have its own WireGuard network interface at the container level which won't be synchronized among them. For example, a new client will only be created or deleted in one pod.
 
-NOTE3: At this moment, to connect two host machines directly using a VPN (for instance, to add it as a remote k8s cluster/node via VPN), it is recommended to use a VPN without using the containerised version. 
-Instructions for this use case will be provided.
+.. note:: 
+  At this moment, to connect two host machines directly using a VPN (for instance, to add it as a remote k8s cluster/node via VPN), it is recommended to use a VPN without using the containerised version. 
+  Instructions for this use case will be provided.
 
 *********************
 Place in architecture
@@ -139,6 +142,11 @@ Response example:
     AllowedIPs = 0.0.0.0/0,::/0
     Endpoint = 192.168.1.67:51820
     PersistentKeepalive = 25
+
+
+.. note:: 
+  The *AllowedIPs* field must be filled by the user depending on the behaviour that expects from the VPN. A value of *0.0.0.0/0,::/0* will redirect all the traffic (including the internet) through the VPN, 
+  . Specifying a subnetwork (e.g. 10.1.243.0/24), only the traffic with a destination inside this subnetwork will be sent via the VPN.
 
 4. Connect to the VPN using a WireGuard client program. The instructions are provided in the *Connect to the VPN* subsection.
 
@@ -263,6 +271,10 @@ Template
   PostDown = iptables -D FORWARD -i <wg_network_interface> -j ACCEPT; iptables -t nat -D POSTROUTING -o <host_network_interface> -j MASQUERADE
   ListenPort = <wg_udp_port>
   PrivateKey = <wg_private_key>
+
+
+.. note:: 
+  The *iptables* rules will be updated in next releases to bring new configurations and use cases for the VPN.
 
 Example
 -------

@@ -34,23 +34,37 @@ User guide
 ***************
 This enabler is included in the Tactile Dashboard of the project, so a logged user with the right permissions can access to it by clicking its menu entry.
 
-+--------+----------+-------------------------------+---------------------+-----------------+
-| Method | Endpoint | Description                   | Payload (if needed) | Response format |
-+========+==========+===============================+=====================+=================+
-| GET    | /enabler | Enabler view of the dashboard |                     | Web page        |
-+--------+----------+-------------------------------+---------------------+-----------------+
++--------+-----------------+---------------------------------------------+---------------------+-----------------+
+| Method | Endpoint        | Description                                 | Payload (if needed) | Response format |
++========+=================+=============================================+=====================+=================+
+| GET    | /enabler        | Enabler view of the dashboard               |                     | Web page        |
++--------+-----------------+---------------------------------------------+---------------------+-----------------+
+| GET    | /helmrepository | Helm chart repository view of the dashboard |                     | Web page        |
++--------+-----------------+---------------------------------------------+---------------------+-----------------+
 
+
+Enablers
+*********************
 The enabler shows a table with the deployed enablers and some information: ID, name, operational status, detailed status and creation date.
 
 .. figure:: ./enablers.png
    :alt: Devices management user interface
    :align: center
 
-To deploy a new enabler, click on the *Add a new enabler* button and a form will appear. There are two options to deploy a new enabler: 
+
+To **deploy a new enabler**, click on the *Add a new enabler* button and a form will appear. There are two options to deploy a new enabler: 
 
 - **Select manually the K8s where will be deployed**: uncheck the *Auto scheduler* checkbox and select a cluster.
 - **Use the Auto scheduler functionality of the Smart Orchestrator**: check the *Auto scheduler* checkbox and select a *Placement policy*. For more infomation about these policies,
-  see the Smart Orchestrator entry.
+  see the `Smart Orchestrator entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/smart/smart_orchestrator.html>`_.
+
+In order to select the enabler to deploy, first select a Helm chart repository from the list. Then a selectable will appear containing all the enablers of the selected repository. 
+Select the desired enabler and, finally, choose a version from another selectable that will appear containing the available versions of the chosen enabler.
+
+.. figure:: ./enabler_form_repository.png
+   :alt: Select the enabler from a repository
+   :align: center
+
 
 The deployment of the new enabler can be configured by filling the *Additional parameters* box with a raw JSON object. The values included in this JSON object will replace the default values 
 of the *values.yaml* file of the enabler Helm chart. In future versions, the challenge is to customize this form for each enabler, including all the customizable parameters in a user-friendly way.
@@ -59,17 +73,43 @@ of the *values.yaml* file of the enabler Helm chart. In future versions, the cha
    :alt: Deploy a new enabler
    :align: center
 
-A deployed enabler cannot be deleted until it has been terminated. To terminate a deployed enabler, click on the *Terminate enabler* button of the selected enabler and confirm the action in the dialog.
+
+A deployed enabler cannot be deleted until it has been terminated. To **terminate a deployed enabler**, click on the *Terminate enabler* button of the selected enabler and confirm the action in the dialog.
 
 .. figure:: ./enabler_terminate.png
    :alt: Terminate a deployed enabler
    :align: center
 
-To delete a terminated enabler, click on the *Delete enabler* button of the selected enabler and confirm the action in the dialog.
+To **delete a terminated enabler**, click on the *Delete enabler* button of the selected enabler and confirm the action in the dialog.
 
 .. figure:: ./enabler_delete.png
    :alt: Delete a terminated enabler
    :align: center
+
+
+Helm chart repositories
+************************
+The enabler shows a table with the registered Helm chart repositories and some information: ID, name, description, URL, status and creation date. 
+This registered repositories will be listed in the *Add a new enabler* form.
+
+.. figure:: ./helm_repositories.png
+   :alt: Helm chart repositories user interface
+   :align: center
+
+
+To **register a new Helm chart repository**, click on the *Add a new repository* button and a form will appear.
+
+.. figure:: ./repository_form.png
+   :alt: Register a new Helm chart repository
+   :align: center
+
+
+To **delete a repository**, click on the *Delete repository* button of the selected repository and confirm the action in the dialog.
+
+.. figure:: ./repository_delete.png
+   :alt: Delete a registered Helm chart repository
+   :align: center
+
 
 ***************
 Prerequisites
@@ -94,7 +134,7 @@ For more information, read the `Tactile dashboard enabler entry <https://assist-
 ***************************
 Version control and release
 ***************************
-Version 0.1. Under development.
+Version 0.2.0. Under development.
 
 ***************
 License
