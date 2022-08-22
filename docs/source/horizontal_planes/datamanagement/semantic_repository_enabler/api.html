@@ -196,6 +196,7 @@ font-style: italic;
   <div class="method-summary"></div>
   <h4><a href="#Default">Default</a></h4>
   <ul>
+  <li><a href="#deleteDocsRoute"><code><span class="http-method">delete</span> /{namespace}/{model}/{version}/doc</code></a></li>
   <li><a href="#deleteRoute"><code><span class="http-method">delete</span> /{namespace}/{model}/{version}/content</code></a></li>
   <li><a href="#deleteRoute1"><code><span class="http-method">delete</span> /{namespace}/{model}</code></a></li>
   <li><a href="#deleteRoute2"><code><span class="http-method">delete</span> /{namespace}/{model}/{version}</code></a></li>
@@ -206,18 +207,92 @@ font-style: italic;
   <li><a href="#getRoute2"><code><span class="http-method">get</span> /{namespace}/{model}/{version}</code></a></li>
   <li><a href="#getRoute3"><code><span class="http-method">get</span> /{namespace}</code></a></li>
   <li><a href="#getRoute4"><code><span class="http-method">get</span> /v</code></a></li>
-  <li><a href="#metaGetRoute"><code><span class="http-method">get</span> /dc</code></a></li>
+  <li><a href="#metaGetRoute"><code><span class="http-method">get</span> /dg</code></a></li>
   <li><a href="#patchRoute"><code><span class="http-method">patch</span> /{namespace}/{model}</code></a></li>
   <li><a href="#patchRoute1"><code><span class="http-method">patch</span> /{namespace}/{model}/{version}</code></a></li>
   <li><a href="#patchRoute2"><code><span class="http-method">patch</span> /{namespace}</code></a></li>
+  <li><a href="#postModelJobRoute"><code><span class="http-method">post</span> /{namespace}/{model}/{version}/doc_gen</code></a></li>
   <li><a href="#postRoute"><code><span class="http-method">post</span> /{namespace}/{model}/{version}/content</code></a></li>
   <li><a href="#postRoute1"><code><span class="http-method">post</span> /{namespace}/{model}</code></a></li>
   <li><a href="#postRoute2"><code><span class="http-method">post</span> /{namespace}/{model}/{version}</code></a></li>
   <li><a href="#postRoute3"><code><span class="http-method">post</span> /{namespace}</code></a></li>
-  <li><a href="#sandboxServeDocsRoute"><code><span class="http-method">get</span> /dc/{job_id}/content/{file}</code></a></li>
+  <li><a href="#postSandboxJobRoute"><code><span class="http-method">post</span> /dg</code></a></li>
+  <li><a href="#sandboxGetStatusRoute"><code><span class="http-method">get</span> /dg/{job_id}</code></a></li>
+  <li><a href="#serveModelDocsRoute"><code><span class="http-method">get</span> /{namespace}/{model}/{version}/doc/{file}</code></a></li>
+  <li><a href="#serveSandboxDocsRoute"><code><span class="http-method">get</span> /dg/{job_id}/content/{file}</code></a></li>
   </ul>
 
   <h1><a name="Default">Default</a></h1>
+  <div class="method"><a name="deleteDocsRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /{namespace}/{model}/{version}/doc</code></pre></div>
+    <div class="method-summary">Delete a model version's documentation (<span class="nickname">deleteDocsRoute</span>)</div>
+    <div class="method-notes">Delete all documentation for a specific version of a model in the repository.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div><div class="param">version (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Version tag default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#object">object</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">force (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' to really perform the deletion. This is to prevent accidental deletions. default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "warnings" : [ "warnings", "warnings" ],
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    success
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h4 class="field-label">400</h4>
+    'force' parameter was not specified
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h4 class="field-label">404</h4>
+    documentation not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="deleteRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -569,6 +644,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -587,6 +670,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -614,6 +705,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -632,6 +731,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -670,6 +777,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -688,6 +803,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -715,6 +838,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -733,6 +864,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -784,6 +923,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -802,6 +949,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -829,6 +984,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -847,6 +1010,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -885,6 +1056,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -903,6 +1082,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -930,6 +1117,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -948,6 +1143,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -996,6 +1199,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1014,6 +1225,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1041,6 +1260,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1059,6 +1286,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1097,6 +1332,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1115,6 +1358,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1142,6 +1393,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1160,6 +1419,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1211,6 +1478,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1229,6 +1504,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1256,6 +1539,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1274,6 +1565,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1312,6 +1611,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1330,6 +1637,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1357,6 +1672,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1375,6 +1698,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1430,6 +1761,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1448,6 +1787,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1475,6 +1822,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1493,6 +1848,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1531,6 +1894,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1549,6 +1920,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1576,6 +1955,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1594,6 +1981,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1645,6 +2040,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1663,6 +2066,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1690,6 +2101,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1708,6 +2127,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1746,6 +2173,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1764,6 +2199,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1791,6 +2234,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1809,6 +2260,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1857,6 +2316,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1875,6 +2342,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1902,6 +2377,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1920,6 +2403,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -1958,6 +2449,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -1976,6 +2475,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -2003,6 +2510,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -2021,6 +2536,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -2072,6 +2595,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -2090,6 +2621,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -2117,6 +2656,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -2135,6 +2682,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -2173,6 +2728,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -2191,6 +2754,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -2218,6 +2789,14 @@ font-style: italic;
                   "md5" : "md5"
                 }
               },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
+              },
               "namespace" : "namespace",
               "name" : "name",
               "model" : "model",
@@ -2236,6 +2815,14 @@ font-style: italic;
                   "contentType" : "contentType",
                   "md5" : "md5"
                 }
+              },
+              "documentation" : {
+                "jobId" : "jobId",
+                "plugin" : "plugin",
+                "ended" : "ended",
+                "started" : "started",
+                "error" : "error",
+                "status" : "status"
               },
               "namespace" : "namespace",
               "name" : "name",
@@ -2404,6 +2991,14 @@ font-style: italic;
           "md5" : "md5"
         }
       },
+      "documentation" : {
+        "jobId" : "jobId",
+        "plugin" : "plugin",
+        "ended" : "ended",
+        "started" : "started",
+        "error" : "error",
+        "status" : "status"
+      },
       "namespace" : "namespace",
       "name" : "name",
       "model" : "model",
@@ -2422,6 +3017,14 @@ font-style: italic;
           "contentType" : "contentType",
           "md5" : "md5"
         }
+      },
+      "documentation" : {
+        "jobId" : "jobId",
+        "plugin" : "plugin",
+        "ended" : "ended",
+        "started" : "started",
+        "error" : "error",
+        "status" : "status"
       },
       "namespace" : "namespace",
       "name" : "name",
@@ -2449,6 +3052,14 @@ font-style: italic;
           "md5" : "md5"
         }
       },
+      "documentation" : {
+        "jobId" : "jobId",
+        "plugin" : "plugin",
+        "ended" : "ended",
+        "started" : "started",
+        "error" : "error",
+        "status" : "status"
+      },
       "namespace" : "namespace",
       "name" : "name",
       "model" : "model",
@@ -2467,6 +3078,14 @@ font-style: italic;
           "contentType" : "contentType",
           "md5" : "md5"
         }
+      },
+      "documentation" : {
+        "jobId" : "jobId",
+        "plugin" : "plugin",
+        "ended" : "ended",
+        "started" : "started",
+        "error" : "error",
+        "status" : "status"
       },
       "namespace" : "namespace",
       "name" : "name",
@@ -2550,6 +3169,14 @@ font-style: italic;
       "contentType" : "contentType",
       "md5" : "md5"
     }
+  },
+  "documentation" : {
+    "jobId" : "jobId",
+    "plugin" : "plugin",
+    "ended" : "ended",
+    "started" : "started",
+    "error" : "error",
+    "status" : "status"
   },
   "namespace" : "namespace",
   "name" : "name",
@@ -2656,6 +3283,14 @@ font-style: italic;
               "md5" : "md5"
             }
           },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
+          },
           "namespace" : "namespace",
           "name" : "name",
           "model" : "model",
@@ -2674,6 +3309,14 @@ font-style: italic;
               "contentType" : "contentType",
               "md5" : "md5"
             }
+          },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
           },
           "namespace" : "namespace",
           "name" : "name",
@@ -2701,6 +3344,14 @@ font-style: italic;
               "md5" : "md5"
             }
           },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
+          },
           "namespace" : "namespace",
           "name" : "name",
           "model" : "model",
@@ -2719,6 +3370,14 @@ font-style: italic;
               "contentType" : "contentType",
               "md5" : "md5"
             }
+          },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
           },
           "namespace" : "namespace",
           "name" : "name",
@@ -2757,6 +3416,14 @@ font-style: italic;
               "md5" : "md5"
             }
           },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
+          },
           "namespace" : "namespace",
           "name" : "name",
           "model" : "model",
@@ -2775,6 +3442,14 @@ font-style: italic;
               "contentType" : "contentType",
               "md5" : "md5"
             }
+          },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
           },
           "namespace" : "namespace",
           "name" : "name",
@@ -2802,6 +3477,14 @@ font-style: italic;
               "md5" : "md5"
             }
           },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
+          },
           "namespace" : "namespace",
           "name" : "name",
           "model" : "model",
@@ -2820,6 +3503,14 @@ font-style: italic;
               "contentType" : "contentType",
               "md5" : "md5"
             }
+          },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
           },
           "namespace" : "namespace",
           "name" : "name",
@@ -2871,6 +3562,14 @@ font-style: italic;
               "md5" : "md5"
             }
           },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
+          },
           "namespace" : "namespace",
           "name" : "name",
           "model" : "model",
@@ -2889,6 +3588,14 @@ font-style: italic;
               "contentType" : "contentType",
               "md5" : "md5"
             }
+          },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
           },
           "namespace" : "namespace",
           "name" : "name",
@@ -2916,6 +3623,14 @@ font-style: italic;
               "md5" : "md5"
             }
           },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
+          },
           "namespace" : "namespace",
           "name" : "name",
           "model" : "model",
@@ -2934,6 +3649,14 @@ font-style: italic;
               "contentType" : "contentType",
               "md5" : "md5"
             }
+          },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
           },
           "namespace" : "namespace",
           "name" : "name",
@@ -2972,6 +3695,14 @@ font-style: italic;
               "md5" : "md5"
             }
           },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
+          },
           "namespace" : "namespace",
           "name" : "name",
           "model" : "model",
@@ -2990,6 +3721,14 @@ font-style: italic;
               "contentType" : "contentType",
               "md5" : "md5"
             }
+          },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
           },
           "namespace" : "namespace",
           "name" : "name",
@@ -3017,6 +3756,14 @@ font-style: italic;
               "md5" : "md5"
             }
           },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
+          },
           "namespace" : "namespace",
           "name" : "name",
           "model" : "model",
@@ -3035,6 +3782,14 @@ font-style: italic;
               "contentType" : "contentType",
               "md5" : "md5"
             }
+          },
+          "documentation" : {
+            "jobId" : "jobId",
+            "plugin" : "plugin",
+            "ended" : "ended",
+            "started" : "started",
+            "error" : "error",
+            "status" : "status"
           },
           "namespace" : "namespace",
           "name" : "name",
@@ -3113,7 +3868,7 @@ font-style: italic;
   <div class="method"><a name="metaGetRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /dc</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /dg</code></pre></div>
     <div class="method-summary">Get the metadata about documentation plugins (<span class="nickname">metaGetRoute</span>)</div>
     <div class="method-notes">Returns information about documentation generation plugins available in this instance of the Semantic Repository</div>
 
@@ -3353,6 +4108,74 @@ font-style: italic;
         <a href="#ErrorResponse">ErrorResponse</a>
     <h4 class="field-label">404</h4>
     namespace not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postModelJobRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /{namespace}/{model}/{version}/doc_gen</code></pre></div>
+    <div class="method-summary">Submit a documentation job for a model version (<span class="nickname">postModelJobRoute</span>)</div>
+    <div class="method-notes">Submits a new version of the model version's documentation. On submission, the documentation generation job is added to the queue.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div><div class="param">version (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Version tag default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>multipart/form-data</code></li>
+    </ul>
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+      <div class="param">content (required)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "warnings" : [ "warnings", "warnings" ],
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    success
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h4 class="field-label">400</h4>
+    bad upload content
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h4 class="field-label">404</h4>
+    Model version not found
         <a href="#ErrorResponse">ErrorResponse</a>
   </div> <!-- method -->
   <hr/>
@@ -3639,11 +4462,179 @@ font-style: italic;
         <a href="#ErrorResponse">ErrorResponse</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="sandboxServeDocsRoute"/>
+  <div class="method"><a name="postSandboxJobRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /dc/{job_id}/content/{file}</code></pre></div>
-    <div class="method-summary">Get the generated documentation (<span class="nickname">sandboxServeDocsRoute</span>)</div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /dg</code></pre></div>
+    <div class="method-summary">Submit a sandbox documentation job (<span class="nickname">postSandboxJobRoute</span>)</div>
+    <div class="method-notes">Submits to the queue a new sandbox documentation generation job. On submission, the user is given a unique job id that can be later used to retrieve the job's status and the generated files.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>multipart/form-data</code></li>
+    </ul>
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+      <div class="param">content (required)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "warnings" : [ "warnings", "warnings" ],
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    success
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h4 class="field-label">400</h4>
+    bad upload content
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="sandboxGetStatusRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /dg/{job_id}</code></pre></div>
+    <div class="method-summary">Get the status of a sandbox documentation job (<span class="nickname">sandboxGetStatusRoute</span>)</div>
+    <div class="method-notes">Returns the status and detailed information on a sandbox documentation generation job, which was previously submitted.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">job_id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Documentation generation job ID default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#string">string</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#DocumentationJobClientModel">DocumentationJobClientModel</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "jobId" : "jobId",
+  "plugin" : "plugin",
+  "ended" : "ended",
+  "started" : "started",
+  "error" : "error",
+  "status" : "status"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Documentation job status
+        <a href="#DocumentationJobClientModel">DocumentationJobClientModel</a>
+    <h4 class="field-label">404</h4>
+    documentation job not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="serveModelDocsRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /{namespace}/{model}/{version}/doc/{file}</code></pre></div>
+    <div class="method-summary">Get the generated documentation for a model version (<span class="nickname">serveModelDocsRoute</span>)</div>
+    <div class="method-notes">Returns the generated documentation files for a specific model version</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div><div class="param">version (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Version tag default: null </div><div class="param">file (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; File path (relative to the root of the generated documentation) default: index.html </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#string">string</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Content found
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Content not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="serveSandboxDocsRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /dg/{job_id}/content/{file}</code></pre></div>
+    <div class="method-summary">Get the generated documentation (<span class="nickname">serveSandboxDocsRoute</span>)</div>
     <div class="method-notes">Returns the generated documentation files for a specific sandbox job</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -3695,6 +4686,7 @@ font-style: italic;
   <ol>
     <li><a href="#DocMetaClientModel"><code>DocMetaClientModel</code> - </a></li>
     <li><a href="#DocPluginClientModel"><code>DocPluginClientModel</code> - </a></li>
+    <li><a href="#DocumentationJobClientModel"><code>DocumentationJobClientModel</code> - </a></li>
     <li><a href="#EitherStringSeqString"><code>EitherStringSeqString</code> - </a></li>
     <li><a href="#ErrorResponse"><code>ErrorResponse</code> - </a></li>
     <li><a href="#MetadataUpdateModel"><code>MetadataUpdateModel</code> - </a></li>
@@ -3728,6 +4720,18 @@ font-style: italic;
     <div class="field-items">
       <div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">allowedFileExtensions </div><div class="param-desc"><span class="param-type"><a href="#string">set[String]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="DocumentationJobClientModel"><code>DocumentationJobClientModel</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">jobId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">plugin </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">started </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">ended (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">error (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -3785,6 +4789,7 @@ font-style: italic;
 <div class="param">formats (optional)</div><div class="param-desc"><span class="param-type"><a href="#StoredFileClientModel">map[String, StoredFileClientModel]</a></span>  </div>
 <div class="param">defaultFormat (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#EitherStringSeqString">map[String, EitherStringSeqString]</a></span>  </div>
+<div class="param">documentation (optional)</div><div class="param-desc"><span class="param-type"><a href="#DocumentationJobClientModel">DocumentationJobClientModel</a></span>  </div>
 <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
