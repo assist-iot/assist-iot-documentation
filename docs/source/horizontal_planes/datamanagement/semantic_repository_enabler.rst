@@ -178,6 +178,96 @@ Configuration). - Maximum number of keys per entity: **64** - Maximum
 number of values per one metadata key: **32** - Maximum length in
 characters of an individual metadata value: **1024**
 
+Documentation
+~~~~~~~~~~~~~
+
+To each model version you can attach documentation pages that, for
+example, help explain users how to use the various fields in your data
+model. Currently, the documentation must be uploaded in the form of
+Markdown or reStructuredText source files. It also possible to attach
+images to the documentation pages.
+
+The documentation pages are generated from a given markup format with
+the use of a *documentation plugin*. Currently, Semantic Repository
+offers the following plugins: - ``markdown`` for text formatted in
+`vanilla Markdown <https://daringfireball.net/projects/markdown/>`__;
+accepted file extensions: ``.md``, ``.markdown`` - ``gfm`` for text in
+`GitHub-flavored Markdown <https://github.github.com/gfm/>`__; accepted
+file extensions: ``.md``, ``.markdown`` - ``rst`` for text in the
+`reStructuredText <https://docutils.sourceforge.io/rst.html>`__ format;
+accepted file extensions: ``.rst``
+
+The documentation can be attached to a model version, but it is also
+possible to test the behavior of the documentation generator in the
+*sandbox*. Please refer to the REST API and the graphical interface
+guides below for more information on how to upload and access
+documentation.
+
+File structure
+^^^^^^^^^^^^^^
+
+Multiple files can be uploaded as one *documentation set*, either in the
+form of separate files or compressed (accepted are ``.tar``,
+``.tar.gz``, and ``.tgz`` archives). Each documentation set must have at
+least one source markup file for the home page, named ``README.md``,
+``README.markdown``, or ``README.rst`` (depending on the source format).
+All markup files will be compiled to human-readable HTML pages with
+built-in navigation. The home page will be served under ``/``
+(documentation root) and ``/index.html``. The other pages will simply
+have their extension changed to ``.html``, so for an input file named
+``extra.md``, a page named ``/extra.html`` will be produced.
+
+The uploaded files can include subdirectories and additional image
+files. When referencing images and other pages, please use relative
+paths (e.g., ``img/image.png``).
+
+**Example**
+
+When given the following input file structure:
+
+::
+
+   /
+   |- README.md
+   |- api.md
+   |- image1.png
+   |- extra/
+   |  |- image2.png
+   |  |- extra.md
+
+This output file structure will be produced:
+
+::
+
+   /
+   |- index.html
+   |- api.html
+   |- image1.png
+   |- extra/
+   |  |- image2.png
+   |  |- extra.html
+
+-  To embed ``image1.png`` into ``README.md`` use:
+   ``![Alternate text](image1.png)``
+-  To embed ``extra/image2.png`` into ``README.md`` use:
+   ``![Alternate text](extra/image2.png)``
+-  To embed ``image1.png`` into ``extra/extra.md`` use:
+   ``![Alternate text](../image1.png)``
+-  To link from ``README.md`` to ``extra.md`` use:
+   ``[Link text](extra/extra)``
+
+.. _limits-1:
+
+Limits
+^^^^^^
+
+By default, the Semantic Repository places limits on the uploaded
+documentation. These default limits can be changed (see: Configuration).
+- Maximum number of files in a documentation set: **50** - Maximum total
+size of files in a documentation set: **4MB** - Time after which
+documentation in the sandbox expires and cannot be accessed anymore:
+**24 hours**
+
 
 
 User guide – REST API
@@ -388,8 +478,8 @@ Response:
 
    {
      "formats": {},
-     "model": "sosa", 
-     "namespace": "w3c", 
+     "model": "sosa",
+     "namespace": "w3c",
      "version": "1.0"
    }
 
@@ -770,7 +860,7 @@ Request: ``PATCH /w3c/dcat`` Body:
        "external-docs": [
          "https://www.w3.org/TR/vocab-dcat/",
          "https://w3c.github.io/dxwg/dcat-implementation-report/"
-       ]    
+       ]
      }
    }
 
@@ -977,10 +1067,151 @@ allows you to freely browse filtered and sorted collections.
 sorted field. This is especially relevant for sorting with metadata
 fields.
 
+Documentation
+~~~~~~~~~~~~~
+
+The Semantic Repository can store and serve generated documentation
+pages – see the user guide for details on the available formats and
+modes of operation. This functionality can be accessed via two
+endpoints: - Documentation per model version:
+``/{namespace}/{model}/{version}/doc`` - Documentation sandbox: ``/dg``
+
+In the following sections, it is explained how to upload new
+documentation jobs, monitor their status, and retrieve the generated
+documentation pages.
+
+Documentation sandbox
+^^^^^^^^^^^^^^^^^^^^^
+
+To create a new documentation generation job in the sandbox using the
+``markdown`` plugin:
+
+============================ ===============
+Request                      Body
+============================ ===============
+``POST /dg?plugin=markdown`` content: (file)
+============================ ===============
+
+Here, the ``content`` body field can be one or more files to be
+processed. In response you will receive an acknowledgement with your
+job’s unique identifier in the ``handle`` field. You will need this ID
+for further requests:
+
+::
+
+   TODO DocJobStarted
+
+The job has now been added to the queue and will be processed
+asynchronously. You can check the job’s status by making a GET request
+to ``/dg/{job_id}``. In our example:
+
+=================== ====
+Request             Body
+=================== ====
+``GET /dg/TODO ID`` –
+=================== ====
+
+The status of the job will be returned:
+
+::
+
+   TODO DocJobInfo
+
+A documentation job can be in one of three states (the ``status``
+field): - ``Started`` – the job has been enqueued and is either waiting
+in line, or being processed. - ``Success`` – the job has finished
+successfully, and the generated documentation can be accessed. -
+``Failed`` – the job has ended with an error. The ``error`` field
+provides additional detail as to the cause of the problem.
+
+After the job has been finished successfully, you can access the
+generated files at ``/dg/{job_id/doc/`` - ``GET /dg/{job_id}/doc``
+redirects to ``GET /dg/{job_id}/doc/`` - ``GET /dg/{job_id}/doc/``
+returns the content of the home page of the documentation
+(``index.html``) - ``GET /dg/{job_id}/doc/{file_path}`` return the
+content of the file under the given path.
+
+Documentation for model versions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The process for adding documentation to model versions is very similar.
+To add documentation to model version ``/w3c/sosa/1.0``:
+
+============================================== ===============
+Request                                        Body
+============================================== ===============
+``POST /w3c/sosa/1.0/doc_gen?plugin=markdown`` content: (file)
+============================================== ===============
+
+Response:
+
+::
+
+   TODO
+
+The returned job handle is not a unique ID, but rather the model
+version’s name. To check the status of the job, simply retrieve the
+details of the model version:
+
+===================== ====
+Request               Body
+===================== ====
+``GET /w3c/sosa/1.0`` –
+===================== ====
+
+This will return:
+
+::
+
+   TODO modelversion + docs
+
+The generated documentation is available under
+``GET /{namespace}/{model}/{version}/doc`` and is served in the same
+manner as with sandbox jobs.
+
+**Note:** when overwriting the documentation for a model version, it is
+necessary to include the ``overwrite=1`` query parameter. Otherwise, the
+request will be rejected.
+
+It is also possible to delete the documentation for a model version. To
+do this, simply call ``DELETE /{namespace}/{model}/{version}/doc`` with
+the ``force=1`` parameter:
+
+==================================== ====
+Request                              Body
+==================================== ====
+``DELETE /w3c/sosa/1.0/doc?force=1`` –
+==================================== ====
+
+Response:
+
+::
+
+   TODO
+
+Documentation plugins info
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is possible to list the installed documentation plugins and their
+supported file extensions, with the ``/dg`` endpoint:
+
+=========== ====
+Request     Body
+=========== ====
+``GET /dg`` –
+=========== ====
+
+Response:
+
+::
+
+   TODO
+
 Meta endpoints
 ~~~~~~~~~~~~~~
 
-Will be implemented in the next release.
+Will be implemented in the next release. TODO: health, doc plugins,
+version, Swagger.
 
 
 
