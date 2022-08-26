@@ -343,7 +343,7 @@ Request URL Request body
 
 Response:
 
-::
+.. code:: json
 
    {
      "inViewCount": 1,
@@ -413,7 +413,7 @@ Response code Body
 When you again examine the contents of the namespace (``GET /w3c``), you
 will see a collection of models:
 
-::
+.. code:: json
 
    {
      "models": {
@@ -474,7 +474,7 @@ Request               Body
 
 Response:
 
-::
+.. code:: json
 
    {
      "formats": {},
@@ -486,7 +486,7 @@ Response:
 You can also retrieve a list of versions for the model (again,
 ``GET /w3c/sosa``):
 
-::
+.. code:: json
 
    {
      "model": "sosa",
@@ -588,7 +588,7 @@ file you want to upload.
 
 In response you will get:
 
-::
+.. code:: json
 
    {
        "message": "Uploaded content in format 'text/turtle' for model 'w3c/sosa/1.0'. Checksum: 5b844292b8402e448804f9c9f100d59e",
@@ -606,7 +606,7 @@ handle files of any size this way.
 
 To see the available formats, make a ``GET /w3c/sosa/1.0`` request:
 
-::
+.. code:: json
 
    {
      "defaultFormat": "text/turtle",
@@ -635,7 +635,7 @@ As noted in the `User guide <#user-guide>`__, the content for a specific
 version of a model *should* be immutable. So, if you try to repeat the
 request presented above, it will be rejected with an HTTP 400 error:
 
-::
+.. code:: json
 
    {
      "error": "Content in format 'text/turtle' already exists for this model version. If you want to update it, it is recommended to create a new version instead. If you really want to overwrite this content, retry the upload with the 'overwrite=1' query parameter."
@@ -655,7 +655,7 @@ Request                                                       Body
 
 Response:
 
-::
+.. code:: json
 
    {
      "message": "Uploaded content in format 'text/turtle' for model 'w3c/sosa/1.0'. Checksum: 5b844292b8402e448804f9c9f100d59e",
@@ -774,7 +774,7 @@ example, if we wanted to create a new model in the ``w3c`` namespace:
 
 Request: ``POST /w3c/dcat`` Body:
 
-::
+.. code:: json
 
    {
      "metadata": {
@@ -801,7 +801,7 @@ Request           Body
 
 Response:
 
-::
+.. code:: json
 
    {
      "metadata": {
@@ -851,7 +851,7 @@ will remain unchanged.
 
 Request: ``PATCH /w3c/dcat`` Body:
 
-::
+.. code:: json
 
    {
      "metadata": {
@@ -874,7 +874,7 @@ Request           Body
 
 Response:
 
-::
+.. code:: json
 
    {
      "metadata": {
@@ -959,7 +959,7 @@ Request                             Body
 
 Response:
 
-::
+.. code:: json
 
    {
      "models": {
@@ -1097,25 +1097,35 @@ processed. In response you will receive an acknowledgement with your
 job’s unique identifier in the ``handle`` field. You will need this ID
 for further requests:
 
-::
+.. code:: json
 
-   TODO DocJobStarted
+   {
+     "handle": "de61582b-fe42-4447-8555-4d1c736466bd",
+     "message": "Compilation started.",
+     "plugin": "markdown"
+   }
 
 The job has now been added to the queue and will be processed
 asynchronously. You can check the job’s status by making a GET request
 to ``/dg/{job_id}``. In our example:
 
-=================== ====
-Request             Body
-=================== ====
-``GET /dg/TODO ID`` –
-=================== ====
+================================================ ====
+Request                                          Body
+================================================ ====
+``GET /dg/de61582b-fe42-4447-8555-4d1c736466bd`` –
+================================================ ====
 
 The status of the job will be returned:
 
-::
+.. code:: json
 
-   TODO DocJobInfo
+   {
+     "ended": "2022-08-26T12:48:01",
+     "jobId": "de61582b-fe42-4447-8555-4d1c736466bd",
+     "plugin": "markdown",
+     "started": "2022-08-26T12:48:00",
+     "status": "Success"
+   }
 
 A documentation job can be in one of three states (the ``status``
 field): - ``Started`` – the job has been enqueued and is either waiting
@@ -1145,9 +1155,13 @@ Request                                        Body
 
 Response:
 
-::
+.. code:: json
 
-   TODO
+   {
+     "handle": "w3c/sosa/1.0",
+     "message": "Compilation started.",
+     "plugin": "markdown"
+   }
 
 The returned job handle is not a unique ID, but rather the model
 version’s name. To check the status of the job, simply retrieve the
@@ -1161,9 +1175,21 @@ Request               Body
 
 This will return:
 
-::
+.. code:: json
 
-   TODO modelversion + docs
+   {
+     "documentation": {
+       "ended": "2022-08-26T12:49:33",
+       "jobId": "9c37e741-349b-4353-8c71-8fab3c58d34e",
+       "plugin": "markdown",
+       "started": "2022-08-26T12:49:33",
+       "status": "Success"
+     },
+     "formats": {},
+     "model": "sosa",
+     "namespace": "w3c",
+     "version": "1.0"
+   }
 
 The generated documentation is available under
 ``GET /{namespace}/{model}/{version}/doc`` and is served in the same
@@ -1185,9 +1211,11 @@ Request                              Body
 
 Response:
 
-::
+.. code:: json
 
-   TODO
+   {
+     "message": "Deleted documentation for model version 'w3c/sosa/1.0'."
+   }
 
 Documentation plugins info
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1203,9 +1231,24 @@ Request     Body
 
 Response:
 
-::
+.. code:: json
 
-   TODO
+   {
+     "enabledPlugins": {
+       "markdown": {
+         "allowedFileExtensions": ["webp", "png", "gif", "md", "markdown", "jpg", "svg", "jpeg", "bmp"],
+         "description": "Markdown (vanilla)"
+       },
+       "gfm": {
+         "allowedFileExtensions": ["webp", "png", "gif", "md", "markdown", "jpg", "svg", "jpeg", "bmp"],
+         "description": "GitHub-flavored Markdown"
+       },
+       "rst": {
+         "allowedFileExtensions": ["webp", "png", "jpg", "svg", "jpeg", "bmp", "gif", "rst"],
+         "description": "reStructuredText"
+       }
+     }
+   }
 
 Meta endpoints
 ~~~~~~~~~~~~~~
