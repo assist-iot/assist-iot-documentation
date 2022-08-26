@@ -4137,6 +4137,12 @@ font-style: italic;
 
 
 
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">overwrite (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' when overwriting documentation that was uploaded earlier to the same model version. Without this parameter an overwriting upload will be rejected with HTTP 400. default: null </div>
+    </div>  <!-- field-items -->
 
     <h3 class="field-label">Form parameters</h3>
     <div class="field-items">
@@ -4211,7 +4217,7 @@ font-style: italic;
 
       <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Format tag of the content. This is recommended (but not required) to be the file's Media Type. If the format does not match the file's Media Type, a warning will be issued. default: null </div><div class="param">overwrite (optional)</div>
 
-      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' when overwriting content that was uploaded earlier in the same format. Without this parameter the overwriting upload will be rejected with HTTP 400. default: null </div>
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' when overwriting content that was uploaded earlier in the same format. Without this parameter an overwriting upload will be rejected with HTTP 400. default: null </div>
     </div>  <!-- field-items -->
 
     <h3 class="field-label">Form parameters</h3>
