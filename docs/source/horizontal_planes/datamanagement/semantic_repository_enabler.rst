@@ -628,6 +628,12 @@ format name. - ``contentType`` displays the content type of the uploaded
 file, which in this case is the same as format. - ``md5`` is the MD5
 checksum of the entire file. - ``size`` is the file’s size in bytes.
 
+**Note:** format names must meet the following criteria: - be at least 1
+and at most 100 characters long - only contain lower or upper letters of
+the latin alphabet, digits, dashes (``-``), underscores (``_``), dots
+(``.``), and plus signs (``+``) - not start with one of the following
+characters: ``._-+``
+
 Overwriting content
 ^^^^^^^^^^^^^^^^^^^
 
