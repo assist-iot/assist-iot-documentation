@@ -1291,6 +1291,15 @@ Installation
 The installation procedure for this enabler is under development and
 will be documented in the next release.
 
+Demo database
+~~~~~~~~~~~~~
+
+The Semantic Repository comes with a script that can set up an example
+database for you to get started. This is especially useful if you want
+to try out the Repository’s features or integrate it with another
+service. You will find the script and an appropriate ``README`` file in
+the ``demo`` directory.
+
 
 
 Configuration
