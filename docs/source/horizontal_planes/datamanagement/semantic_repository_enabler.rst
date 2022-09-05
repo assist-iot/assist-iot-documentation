@@ -1291,6 +1291,49 @@ Installation
 The installation procedure for this enabler is under development and
 will be documented in the next release.
 
+Development docker-compose stack
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To simplify development and integration with the Semantic Repository, a
+simple docker-compose stack is provided. To use it, you will have to
+first pull the Docker image of the core application from the registry,
+or build it locally (see section below). Make sure that the
+``docker-compose.yml`` file has the right container image tag set (by
+default, it’s ``assistiot/semantic-repository``).
+
+To deploy the stack, simply run:
+
+.. code:: shell
+
+   docker-compose up -d
+
+You can also deploy only the services in the stack (MongoDB and minIO)
+and run the Semantic Repository on localhost. This is especially useful
+when you want to debug the application, or quickly iterate on it. To do
+this: - In the ``docker-compose.yml`` file uncomment the line
+``# MONGODB_ADVERTISED_HOSTNAME: localhost`` - Run
+``docker-compose up -d mongo-primary minio`` - Run the Semantic
+Repository on localhost. It should connect to the containerized
+services.
+
+Local Docker image build
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+In general, it is easier to just pull the ready image from the container
+registry, but if you need to build the container by yourself, it is also
+possible.
+
+First, check the Scala version used by your branch. You can find this in
+the ``build.sbt`` file in the line that looks like
+``scalaVersion := "3.1.3"``. Here we assume Scala version 3.1.3, replace
+that in your commands as needed.
+
+.. code:: shell
+
+   sbt assembly
+   mv target/scala-3.1.3/semantic-repository-assembly.jar .
+   docker build -t assistiot/semantic-repository .
+
 Demo database
 ~~~~~~~~~~~~~
 
@@ -1353,6 +1396,13 @@ implemented yet):
    :alt: Enabler architecture
 
    Enabler architecture
+
+Running a dev deployment
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+See the page `Installation <installation>`__, section *Development
+docker-compose stack* for details on how to deploy the Semantic
+Repository locally for development purposes.
 
 
 
