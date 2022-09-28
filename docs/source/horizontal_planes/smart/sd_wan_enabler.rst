@@ -1,6 +1,6 @@
 .. _SD-WAN enabler:
 
-.. figure:: ./images/assist-IoT-logo.png 
+.. figure:: ./images/sd_wan_enabler/assist-IoT-logo.png 
 
 ##############
 SD-WAN enabler
@@ -35,7 +35,7 @@ The SD-WAN enabler is located in the Smart Network and Control plane of the ASSI
 architecture. In particular, it belongs to the building block related to self-contained networks,
 which are the ones used for provisioning private networks over public ones.
 
-.. figure:: ./images/sdwan_place.png 
+.. figure:: ./images/sd_wan_enabler/sdwan_place.png 
    :alt: Place of the SD-WAN enabler within the Smart Network and Control Plance architecture
    :align: center
    
@@ -46,7 +46,7 @@ The following diagram aims at describing the global operation of the SD-WAN arch
 including the SD-WAN enabler and instances of WAN Acceleration enabler (each of them composed by an SD-WAN
 custom k8s controller and an SD-WAN CNF).
 
-.. figure:: ./images/global_sdwan2.png
+.. figure:: ./images/sd_wan_enabler/global_sdwan2.png
    :alt: SD-WAN overall architecture
    :align: center
    
@@ -66,7 +66,7 @@ Particularly, the SD-WAN enabler is composed of four main elements, as one can s
 - **Database**: Stores key information regarding managed clusters, hubs, overlays, IP ranges, etc.
 - **Etcd**: Internal metadata database used to exchange configuration between the controller and rsync component.
 
-.. figure:: ./images/sdwan_arch.png 
+.. figure:: ./images/sd_wan_enabler/sdwan_arch.png 
    :alt: SD-WAN enabler architecture
    :align: center
 
@@ -78,7 +78,7 @@ User guide
 
 REST API endpoints
 *******************
-The API has not been implemented yet, in the following table are presented the expected endpoints:
+In the following table are presented the endpoint ready to use:
 
 +---------------------+-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
 | Method              | Endpoint                                | Description                                                                                                                                     |
