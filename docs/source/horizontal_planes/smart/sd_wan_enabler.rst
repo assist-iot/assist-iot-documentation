@@ -46,7 +46,7 @@ The following diagram aims at describing the global operation of the SD-WAN arch
 including the SD-WAN enabler and instances of WAN Acceleration enabler (each of them composed by an SD-WAN
 custom k8s controller and an SD-WAN CNF).
 
-.. figure:: ./images/sd_wan_enabler/global_sdwan2.png
+.. figure:: ./images/sd_wan_enabler/global_sdwan.png
    :alt: SD-WAN overall architecture
    :align: center
    
@@ -104,11 +104,11 @@ In the following table are presented the endpoint ready to use:
 Prerequisites
 ***************
 In this case, the enabler required some CNI plugins for K8s:
-- Calico.
-- Multus daemonset.
-- OVN daemonset.
-- OVN networks.
-- Cert manager to manage connection between networks.
+* Calico.
+* Multus daemonset.
+* OVN daemonset.
+* OVN networks.
+* Cert manager to manage connection between networks.
 
 In addition, the enabler will require provisioning the *kubeconfig* files of the clusters to manage and  information about the involved certificates. 
 All the clusters will needed to contain the wan-acceleration enabler to agregate correctly.
