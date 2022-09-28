@@ -1,5 +1,7 @@
 .. _WAN acceleration enabler:
 
+.. figure:: ./images/sd_wan_enabler/assist-IoT-logo.png 
+
 ########################
 WAN acceleration enabler
 ########################
