@@ -104,6 +104,7 @@ In the following table are presented the endpoint ready to use:
 Prerequisites
 ***************
 In this case, the enabler required some CNI plugins for K8s:
+
 * Calico.
 * Multus daemonset.
 * OVN daemonset.
