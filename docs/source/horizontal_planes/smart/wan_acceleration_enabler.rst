@@ -18,13 +18,10 @@ introduce optimisation features such as traffic prioritisation.
 ***************
 Features
 ***************
-This enabler will be in charge of implementing features to support multiple WAN 
-links, firewalling, tunnelling setups and traffic control, including traffic 
-shaping. Depending on its configuration (via the SD-WAN enabler), it can act as:
+This enabler will be in charge of implementing features to support multiple WAN links, firewalling, tunnelling setups and traffic control, including traffic  shaping. Depending on its configuration (via the SD-WAN enabler), it can act as:
 
 - An SD-WAN Edge component, present in each K8s cluster, with a dedicated K8s controller and a Containerised Network function (CNF) through which traffic goes through it. The CNF will embed functions to setup aspects such related to IPSec, firewalling, DNS, DHCP and WAN link management, whereas a Custom Definition Resource (CRD) controller contains all the sub-controllers to create, query and configure these features.
 - A SD-WAN hub, which will act as a middleware among clusters and/or between them and the Internet, enabling the introduction of additional CNFs related to security, filtering, traffic shaping, etc. Once the basic features are implemented, the incorporation of additional ones (as CNFs) will be evaluated.
-
 
 .. note:: 
   This enabler is stil under develoment, being subject to modifications of its scope.
@@ -37,7 +34,7 @@ architecture. In particular, it belongs to the building block related to VNFs, s
 (i) for provisioning private networks over public ones, jointly with the SD-WAN enabler, and
 (ii) for supporting VNFs chaining (containerised, thus CNFs).
 
-.. figure:: ./wan_acc_place.png  
+.. figure:: ./images/wan_acceleration_enabler/wan_acc_place.png  
    :alt: Place of the WAN Acceleration enabler within the Smart Network and Control Plance architecture
    :align: center
    
@@ -47,7 +44,7 @@ The following diagram aims at describing the global operation of the SD-WAN arch
 including the SD-WAN enabler and instances of the WAN Acceleration enabler (each of them composed by an SD-WAN
 custom k8s controller and an SD-WAN CNF).
 
-.. figure:: ./global_sdwan.png
+.. figure:: ./images/sd_wan_enabler/global_sdwan.png
    :alt: SD-WAN overall architecture
    :align: center
    
@@ -65,7 +62,7 @@ As aforementioned, the enabler is composed of two main elements, as one can see 
 - **CRD Controller**: Component that will receive API calls from the K8s API of the cluster to configure the CNF component.
 - **SD-WAN CNF**: The CNF will embed functions to setup aspects such related to IPSec, firewalling, DNS, DHCP and WAN link management, exposing an API to be controlled/queried.
 
-.. figure:: ./wan_acc_arch.png  
+.. figure:: ./images/wan_acceleration_enabler/wan_acc_arch.png  
    :alt: WAN Acceleration enabler architecture
    :align: center
 
@@ -103,13 +100,22 @@ The API has not been implemented yet, in the following table are presented the e
 ***************
 Prerequisites
 ***************
-An analysis of the prerequisites is still under develoment. 
+In this case, the enabler required some CNI plugins for K8s:
+
+* Calico.
+* Multus daemonset.
+* OVN daemonset.
+* OVN networks.
+* Cert manager to manage connection between networks.
+
+In addition, the enabler will require provisioning the *kubeconfig* files of the clusters to manage and  information about the involved certificates.
 
 ***************
 Installation
 ***************
-Any Helm chart, dedicated K8s manifests or Docker compose file for deploying the enabler
-has been developed yet, as it is still under development.
+Prerrequisites are available to install in shell bash script named "kubernetes.sh". Rest of installation are done implemented by k8s manifests. In future releases, the installation will be by helm charts.
+
+Steps of installation are avaible in gitlab repository.
 
 *********************
 Configuration options
@@ -125,7 +131,7 @@ Will be determined after the release of the enabler.
 ***************************
 Version control and release
 ***************************
-Will be determined after the release of the enabler.
+1.0.
 
 ***************
 License

@@ -102,21 +102,12 @@ In the following table are presented the endpoint ready to use:
 ***************
 Prerequisites
 ***************
-In this case, the enabler required some CNI plugins for K8s:
-
-* Calico.
-* Multus daemonset.
-* OVN daemonset.
-* OVN networks.
-* Cert manager to manage connection between networks.
-
-In addition, the enabler will require provisioning the *kubeconfig* files of the clusters to manage and  information about the involved certificates. 
-All the clusters will needed to contain the wan-acceleration enabler to agregate correctly.
+Prerrequisites are available to install in shell bash script named "kubernetes.sh" available in "wan-acceleration" gitlab repository.
 
 ***************
 Installation
 ***************
-Prerrequisites are available to install in shell bash script named "kubernetes.sh". Rest of installation are done implemented by k8s manifests. In future releases, the installation will be by helm charts.
+The installation are done implemented by k8s manifests. In future releases, the installation will be by helm charts.
 
 Steps of installation are avaible in gitlab repository.
 
@@ -124,8 +115,7 @@ Steps of installation are avaible in gitlab repository.
 Configuration options
 *********************
 An analysis of the configurations to be modifiable by a user is under assessment.
-The exposed port for accessing the API will be one of the available options, as well
-as the needed configurations for having execution rights over the involved K8s API endpoints.
+The exposed port for accessing the API will be one of the available options, as well as the needed configurations for having execution rights over the involved K8s API endpoints.
 
 ***************
 Developer guide
