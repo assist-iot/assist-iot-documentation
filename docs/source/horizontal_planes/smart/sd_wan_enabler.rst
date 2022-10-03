@@ -119,7 +119,7 @@ Expected scenarios
 
 In this scenario, both sites have static public IP address and setup a tunnel between sites. After the tunnel is established, the clients within the site should be able to ping the clients on the other side through the tunnel. The tunnel is authenticated through pre-shared key.
 
-.. figure:: ./images/sd_wan_enabler/sdwan_scenario1.png
+.. figure:: ./images/sd_wan_enabler/sdwan_scenario1.PNG
    :alt: SD-WAN Scenario A
    :align: center
 
@@ -127,7 +127,7 @@ In this scenario, both sites have static public IP address and setup a tunnel be
 
 * Scenario B: Edge to traffic hub tunnel where inter micro-service communication across edges that attached to same traffic hub.
 
-.. figure:: ./images/sd_wan_enabler/sdwan_scenario2.png
+.. figure:: ./images/sd_wan_enabler/sdwan_scenario2.PNG
    :alt: SD-WAN Scenario B
    :align: center
 
