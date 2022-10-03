@@ -112,6 +112,34 @@ The installation are done implemented by k8s manifests. In future releases, the 
 Steps of installation are avaible in gitlab repository.
 
 *********************
+Expected scenarios
+*********************
+
+* Scenario A: Site-to-Site tunnel with static public IP address
+
+In this scenario, both sites have static public IP address and setup a tunnel between sites. After the tunnel is established, the clients within the site should be able to ping the clients on the other side through the tunnel. The tunnel is authenticated through pre-shared key.
+
+.. figure:: ./images/sd_wan_enabler/sdwan_scenario1.png
+   :alt: SD-WAN Scenario A
+   :align: center
+
+   SD-WAN Scenario A
+
+* Scenario B: Edge to traffic hub tunnel where inter micro-service communication across edges that attached to same traffic hub.
+
+.. figure:: ./images/sd_wan_enabler/sdwan_scenario2.png
+   :alt: SD-WAN Scenario B
+   :align: center
+
+   SD-WAN Scenario B
+
+1. Two Edge clusters have exactly the same POD IP Subnets.
+2. They don't have any static public IP address.
+3. They don't have any static domain name.
+4. An application is deployed where one micro-service is client, placed in edge1.  Second micro-service is server placed in edge2.  They can be sleep, nginx.
+5. Proof is that Edge1 sleep (via curl) should be table to talk to nginx in the edge2.
+
+*********************
 Configuration options
 *********************
 An analysis of the configurations to be modifiable by a user is under assessment.
