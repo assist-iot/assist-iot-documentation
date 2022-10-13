@@ -54,6 +54,8 @@ Features
   -	Return Permit or Deny response
   -	Launch related post decision actions
 
+PIP
+  Policy Information Point presents a Rest interface to publish context data to be used by the PDP when resolving the decision. It will also offer another interface (Rest and web) to add data.
 
 *********************
 Place in architecture
@@ -62,6 +64,15 @@ Place in architecture
    :width: 1200
    :alt: "CyberSecurity"
 
+PDP
+  Policy Decision Point is the module responsible of making the actual decision based on the context information compiled and the policy available.
+
+-	Receive a who / what / where question in a Rest interface for validation
+-	Obtain context information from external sources
+-	Build a request compiling all the available data
+-	Validate against the policy
+-	Return Permit or Deny response
+-	Launch related post decision actions
 
 ***************
 User guide
