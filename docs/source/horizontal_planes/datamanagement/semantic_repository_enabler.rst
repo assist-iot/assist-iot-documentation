@@ -1106,7 +1106,7 @@ for further requests:
 .. code:: json
 
    {
-     "handle": "de61582b-fe42-4447-8555-4d1c736466bd",
+     "handle": "638b357c5a6298307ca53fb8",
      "message": "Compilation started.",
      "plugin": "markdown"
    }
@@ -1115,11 +1115,11 @@ The job has now been added to the queue and will be processed
 asynchronously. You can check the job’s status by making a GET request
 to ``/dg/{job_id}``. In our example:
 
-================================================ ====
-Request                                          Body
-================================================ ====
-``GET /dg/de61582b-fe42-4447-8555-4d1c736466bd`` –
-================================================ ====
+==================================== ====
+Request                              Body
+==================================== ====
+``GET /dg/638b357c5a6298307ca53fb8`` –
+==================================== ====
 
 The status of the job will be returned:
 
@@ -1127,7 +1127,7 @@ The status of the job will be returned:
 
    {
      "ended": "2022-08-26T12:48:01",
-     "jobId": "de61582b-fe42-4447-8555-4d1c736466bd",
+     "jobId": "638b357c5a6298307ca53fb8",
      "plugin": "markdown",
      "started": "2022-08-26T12:48:00",
      "status": "Success"
@@ -1186,7 +1186,7 @@ This will return:
    {
      "documentation": {
        "ended": "2022-08-26T12:49:33",
-       "jobId": "9c37e741-349b-4353-8c71-8fab3c58d34e",
+       "jobId": "638b3b0da6bf4d10bca9ff90",
        "plugin": "markdown",
        "started": "2022-08-26T12:49:33",
        "status": "Success"
