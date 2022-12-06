@@ -268,6 +268,89 @@ size of files in a documentation set: **4MB** - Time after which
 documentation in the sandbox expires and cannot be accessed anymore:
 **24 hours**
 
+Webhooks
+~~~~~~~~
+
+You may want to trigger some action automatically, for example after a
+model is changed in the Repository. There is a feature called *webhooks*
+that allows you to do just that – whenever a specific action is
+performed on some object, a the Repository executes an HTTP POST request
+to an endpoint defined by the user.
+
+This functionality has many possible use cases. For example, you can
+automatically validate newly uploaded data models and add appropriate
+metadata with validation status. Or you could convert the data model to
+a different format, once a new version is uploaded.
+
+A webhook’s body is a JSON file that looks like this:
+
+.. code:: json
+
+   {
+     "action": "...",
+     "body": {
+       ...
+     },
+     "context": {
+       "model": "sosa",
+       "namespace": "w3c",
+       "version": "1.0.0"
+     },
+     "hookId": "638f62056d64d41f7c3578ae",
+     "timestamp": "2022-12-06T15:39:02"
+   }
+
+-  ``action`` indicates the type of action that triggered the webhook
+-  the content of the ``body`` field depends on the specific type of
+   webhook
+-  ``context`` indicates the path to the object that the action was
+   performed on (namespace, model, version)
+-  ``hook_id`` is the unique identifier of the hook
+-  ``timestamp`` is the time at which the action occurred
+
+See the API guide for more information on how to define and manage
+webhooks.
+
+Webhook types (available actions)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Currently there is only one available action for webhooks.
+
+``content_upload``
+''''''''''''''''''
+
+Triggered whenever content is uploaded to a specific version of the
+model.
+
+Example webhook body:
+
+.. code:: json
+
+   {
+     "action": "content_upload",
+     "body": {
+       "contentType": "application/json",
+       "format": "json",
+       "md5": "98df1bb4a4675383b7d9fa12449dbf35",
+       "overwrite": true,
+       "size": 110208
+     },
+     "context": {
+       "model": "sosa",
+       "namespace": "w3c",
+       "version": "1.0.0"
+     },
+     "hookId": "638f62056d64d41f7c3578ae",
+     "timestamp": "2022-12-06T16:04:10"
+   }
+
+-  ``contentType`` – content type of the upload
+-  ``format`` – user-specified format of the upload
+-  ``md5`` – MD5 sum of the uploaded file
+-  ``overwrite`` – whether the upload overwrote previously uploaded
+   content for this model version
+-  ``size`` – size of the upload in bytes
+
 
 
 User guide – REST API
