@@ -1339,6 +1339,122 @@ Response:
      }
    }
 
+Webhooks
+~~~~~~~~
+
+See the `user guide <user-guide>`__ for an explanation of what webhooks
+are and their available types.
+
+New webhooks are defined by POST. For example, to create a webhook that
+listens for content uploads in model version w3c/sosa/1.0:
+
+Request: ``POST /hk`` Body:
+
+.. code:: json
+
+   {
+     "action": "content_upload",
+     "callback": "https://example.org/test/webhook",
+     "context": {
+       "namespace": "w3c",
+       "model": "sosa",
+       "version": "1.0"
+     }
+   }
+
+Response:
+
+.. code:: json
+
+   {
+       "handle": "638f62056d64d41f7c3578ae",
+       "message": "Webhook created."
+   }
+
+The ``namespace``, ``model``, ``version`` subfields in the ``context``
+field are all optional, you can even omit the entire ``context`` field
+if you want to listen to changes in the entire repository. It is
+recomended to listen only to changes in a narrowly-defined fragment of
+the repository (a single version or model), to avoid being bombarded
+with webhooks.
+
+The returned handle is the unique ID of the webhook.
+
+You can retrieve a list of all webhooks using GET:
+
+=========== ====
+Request     Body
+=========== ====
+``GET /hk`` –
+=========== ====
+
+Response
+
+.. code:: json
+
+   {
+     "webhooks": {
+       "inViewCount": 1,
+       "items": [
+         {
+           "action": "content_upload",
+           "callback": "https://example.org/test/webhook",
+           "context": {
+             "namespace": "w3c",
+             "model": "sosa",
+             "version": "1.0"
+           },
+           "id": "638f62056d64d41f7c3578ae"
+         }
+       ],
+       "page": 1,
+       "pageSize": 20,
+       "totalCount": 1
+     }
+   }
+
+This collection can be filtered and sorted by the ``action`` field.
+
+A single webhook can be retrieved by its ID:
+
+==================================== ====
+Request                              Body
+==================================== ====
+``GET /hk/638f62056d64d41f7c3578ae`` –
+==================================== ====
+
+Response:
+
+.. code:: json
+
+   {
+     "action": "content_upload",
+     "callback": "https://example.org/test/webhook",
+     "context": {
+       "namespace": "w3c",
+       "model": "sosa",
+       "version": "1.0"
+     },
+     "id": "638f62056d64d41f7c3578ae"
+   }
+
+Webhooks cannot be modified after they are created. They can only be
+deleted using DELETE with the ``force=1`` parameter:
+
+=============================================== ====
+Request                                         Body
+=============================================== ====
+``DELETE /hk/638f62056d64d41f7c3578ae?force=1`` –
+=============================================== ====
+
+Response:
+
+.. code:: json
+
+   {
+     "message": "Deleted webhook with ID '638f62056d64d41f7c3578ae'."
+   }
+
 Meta endpoints
 ~~~~~~~~~~~~~~
 
