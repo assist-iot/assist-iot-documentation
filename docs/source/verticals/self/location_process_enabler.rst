@@ -350,14 +350,116 @@ Query configuration. \| Name \| Description \| Type \| \|——|————-|�
            "publishEmptyOutput": true
          }
        ],
-     },
-     "format": {
-       "recordFormat": "object",
-       "showHeader": true,
-       "wrapSingleColumn": true
+      "format": {
+        "recordFormat": "object",
+        "showHeader": true,
+        "wrapSingleColumn": true
+      }
      },
      "sql": "select id, x, y from worker_positions where st_distance(st_makepoint(x, y), st_makepoint({input['x']}, {input['y']})) < 50;"
    }
+
+Examples
+--------
+
+Creating queries
+~~~~~~~~~~~~~~~~
+
+To create a query, use the POST method on the ``v1/queries`` endpoint.
+The request’s body is expected to be a complete definition of a query.
+
+.. code:: json
+
+   {
+     "name": "dangerous",
+     "inputSettings": {
+       "host": "pilot1",
+       "port": 1883,
+       "username": "jared",
+       "password": "dunn",
+       "topics": [
+         {"name": "vehicles/excavators"},
+         {"name": "cats"}
+       ]
+     },
+     "outputSettings": {
+       "host": "pilot2",
+       "port": 1883,
+       "username": "bob",
+       "password": "builder",
+       "topics": [
+         {
+           "name": "danger/{output['id']}",
+           "publishFlags": [
+             "QoSExactlyOnceDelivery",
+             "Retain"
+           ],
+           "publishWhen": "always",
+           "publishEmptyOutput": true
+         }
+       ],
+      "format": {
+        "recordFormat": "object",
+        "showHeader": true,
+        "wrapSingleColumn": true
+      }
+     },
+     "sql": "select id, x, y from worker_positions where st_distance(st_makepoint(x, y), st_makepoint({input['x']}, {input['y']})) < 50;"
+   }
+
+The query’s ``name`` is its unique identifier which will be later
+referenced to use the query. The ``inputSettings`` and
+``outputSettings`` refer to the MQTT input and output configuration. In
+both cases, ``host``, ``port``, ``username``, and ``password`` are used
+to connect to brokers. The client subscribes to the list of topic names
+provided in the ``topics`` inside the input settings. The ``topics``
+from the output settings are slightly different. Their names can be
+parametrized (see the dedicated section for more explanation on that
+matter), and they represent the topics to which the output messages will
+be sent. In this example, the message would be sent to the topic, which
+part would be determined after getting some specific field (in this case
+– ``id``) from the generated output (from running the SQL query).
+
+::
+
+   "name": "danger/{output['id']}"
+
+The part with ``publishFlags`` refers to the list of MQTT flags set
+while sending the message. The next part of the ``outputSettings`` is
+``publishWhen``. This option can control when the publish action is
+triggered – for instance, only if there are no errors. This modifier is
+practical as the output from running without errors can differ from the
+output of a failed query. The option ``publishEmptyOutput`` should be
+self-explanatory. Then there is ``format`` that controls how the output
+is formatted (see the definitions section to see the examples). Finally
+– the ``sql`` query. It is a parametrized string where one can use the
+received input values. The query will be run against the database
+included in the enabler. After creating the query, the response will
+confirm the operation returning the created query.
+
+Updating queries
+~~~~~~~~~~~~~~~~
+
+The queries can be updated by sending a PUT request (``v1/queries``)
+with the body describing the query the same as while creating a new
+query.
+
+Deleting queries
+~~~~~~~~~~~~~~~~
+
+To delete a query, send a DELETE request to ``v1/queries/{name}``, where
+``name`` is the query name.
+
+Triggering queries
+~~~~~~~~~~~~~~~~~~
+
+If one provides the input and output MQTT settings, then the queries are
+typically triggered by the MQTT events. However, every query can be run
+from the HTTP interface by calling its name and passing the input it
+expects from the MQTT broker – the request body must be a valid JSON
+with the input data. The endpoint format is ``v1/queries/{name}/input``
+(POST request). After running the query, the output is sent as the
+response.
 
 Endpoints
 ---------
