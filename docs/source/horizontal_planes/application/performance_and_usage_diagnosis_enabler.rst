@@ -96,40 +96,93 @@ Prerequisites
 ***************
 Installation
 ***************
-**PUD Helm Chart**
 
 **Helm** must be installed to use the charts. Please refer to Helm's `documentation <https://helm.sh/docs/>`_ to get started.
 
-- Once Helm is set up properly, add the repo as follows:
+**To install the chart with the release name** ``pude`` **:**
 
-  ``helm repo add --username <<Username>> --password <<Token>> PUD https://gitlab.assist-iot.eu/api/v4/projects/60/packages/helm/stable``
+Clone the `repository <https://gitlab.assist-iot.eu/wp4/applications/pud-enabler>`_ to your machine.
 
-To obtain an Access Token:
-    
-  1. Go to Settings > Access Tokens.
-    
-  2. Insert a Token name.
-    
-  3. Insert an Expiration date (Optional).
-    
-  4. Select api scope.
-    
+Change the content of extraScrapeConfigs.yaml file with the correct configurations and targets that you want PUD to scrape.
 
-- Update Helm's repositories.
+Install Performance and Usage Diagnosis Enabler
 
-  ``helm repo update``
+.. code:: cmd
 
-- Install PUD's Prometheus to your Kubernetes system using the following command:
+  helm install pude --set-file extraScrapeConfigs=extraScrapeConfigs.yaml ./performance-and-usage-diagnosis
 
-  ``helm install PUD/prometheus --name my-release``
 
-- Install PUD's Prometheus-elastic-adapter, Prometheus' remote storage adapter for Elasticsearch to your Kubernetes system using the following command:
+To check if the installation was successful run:
 
-  ``helm install PUD/prometheus-elastic-adapter --name my-release``
+.. code:: cmd
 
-- Install Elasticsearch and Kibana to your Kubernetes system using the following command:
+  kubectl get pods
 
-  ``helm install PUD/elasticsearch-kibana --name my-release``
+
+The result should show something like:
+
+.. code::
+
+  NAME                                                              READY   STATUS    RESTARTS   AGE
+  prometheus-es-adapter-85cd499bd8-dskkv                            1/1     Running   0          112s
+  pude-grafana-6986754ffd-7gr62                                     1/1     Running   0          112s
+  pude-kube-state-metrics-6f78cf594b-dg25z                          1/1     Running   0          112s
+  pude-performance-and-usage-diagnosis-alertmanager-cc8dfbb5ks27s   2/2     Running   0          112s
+  pude-performance-and-usage-diagnosis-pushgateway-85748b494zp4pv   1/1     Running   0          112s
+  pude-performance-and-usage-diagnosis-server-76ff877d66-8z6zd      2/2     Running   0          112s
+
+
+**To access PUD's Grafana Dashboard UI:**
+
+Port forward grafana's pod to port 3000:
+
+.. code:: cmd
+
+  kubectl port-forward pude-grafana-6986754ffd-7gr62 3000
+
+In PUD's Grafana login page use:
+
+Username: ``admin``
+
+To find the current password enter: 
+
+.. code:: cmd
+
+  kubectl get secret pude-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+To get kubernetes secrets and grafana's secret name witch in our case is `pude-grafana` enter:
+
+.. code:: cmd
+
+  kubectl get secrets
+
+To change your grafanas password enter:
+
+.. code:: cmd
+
+  kubectl exec -it <grafanas pod name> grafana-cli admin reset-admin-password <your reset password>
+
+**Add Prometheus data sourse PUD's Grafana:**
+
+- Go to ``Settings > Add Data Source > Prometheus``.
+
+To set Prometheus' URL under HTTP settings first find performance-and-usage-diagnosis-server clusterIP:
+
+.. code:: cmd
+
+  kubectl get services
+
+- Copy and Paste the IP in the URL field.
+
+- ``Save & Test``
+
+**Import new Dashboards for PUD's Grafana:**
+
+- Go to ``Dashboards > + Import``.
+
+- Upload Dashboard's json file or choose one from grafana.com.
+
+- ``Load``
 
 
 *********************
