@@ -11,23 +11,34 @@ Performance and Usage Diagnosis enabler
 ***************
 Introduction
 ***************
-Performance and Usage Diagnosis (PUD) enabler aims at collecting performance metrics from monitored targets by scraping metrics HTTP endpoints on them and highlighting potential problems in the ASSIST-IoT platform, so that it could autonomously act in accordance or to notify to the platform administrator to fine tuning machine resources. For this purpose we use **Prometheus**, an open-source software that collects metrics from targets by "scraping" metrics HTTP endpoints. Supported "targets" include infrastructure platforms (e.g. Kubernetes), applications, and services (e.g. database management systems). Together with its companion Alertmanager service, Prometheus is a flexible metrics collection and alerting tool.
+Performance and Usage Diagnosis (PUD) enabler aims at collecting performance metrics from monitored targets by scraping metrics HTTP endpoints on them and highlighting potential problems in the ASSIST-IoT platform, so that it could autonomously act in accordance or to notify to the platform administrator to fine tuning machine resources. For this purpose we use **Prometheus**, an open-source software that collects metrics from targets by "scraping" metrics HTTP endpoints. Supported "targets" include kube-state-metrics for monitoring every kubernetes cluster used in the project, node-exporter metrics for monitoring hardware, OS metrics exposed by *NIX kernels, as well as other important metrics for the rest of the enablers used in the architecture. Together with its companion Alertmanager service, Prometheus is a flexible metrics collection and alerting tool.
 
 ***************
 Features
 ***************
-Prometheus is an open-source monitoring framework. It provides out-of-the-box monitoring capabilities for the Kubernetes container orchestration platform. Its main features are:
+
+Performance and Usage Diagnosis (PUD) enabler's features
+--------------------------------------------------------
+- Prometheus is an open-source monitoring framework. It provides out-of-the-box monitoring capabilities for the Kubernetes container orchestration platform. Its main features are:
 
 
-- **Metric Collection**: Prometheus uses the pull model to retrieve metrics over HTTP. There is an option to push metrics to Prometheus using Pushgateway for use cases where Prometheus cannot Scrape the metrics.
+  1. **Metric Collection**: Prometheus uses the pull model to retrieve metrics over HTTP. There is an option to push metrics to Prometheus using Pushgateway for use cases where Prometheus cannot Scrape the metrics.
 
-- **Metric Endpoint**: The systems that you want to monitor using Prometheus should expose the metrics on an /metrics endpoint. Prometheus uses this endpoint to pull the metrics in regular intervals.
+  2. **Metric Endpoint**: The systems that you want to monitor using Prometheus should expose the metrics on an /metrics endpoint. Prometheus uses this endpoint to pull the metrics in regular intervals.
 
-- **PromQL**: Prometheus comes with PromQL, a very flexible query language that can be used to query the metrics in the Prometheus dashboard. Also, the PromQL query will be used by Prometheus UI and Grafana to visualize metrics.
+  3. **PromQL**: Prometheus comes with PromQL, a very flexible query language that can be used to query the metrics in the Prometheus dashboard. Also, the PromQL query will be used by Prometheus UI and Grafana to visualize metrics.
 
-- **Prometheus Exporters**: Exporters are libraries which converts existing metric from third-party apps to Prometheus metrics format. There are many official and community Prometheus exporters. One example is, Kube State metrics, a service which talks to Kubernetes API server to get all the details about all the API objects like deployments, pods, daemonsets etc.
+  4. **Prometheus Exporters**: Exporters are libraries which converts existing metric from third-party apps to Prometheus metrics format. There are many official and community Prometheus exporters. One example is, Kube State metrics, a service which talks to Kubernetes API server to get all the details about all the API objects like deployments, pods, daemonsets etc.
 
-- **TSDB** (time-series database): Prometheus uses TSDB for storing all the data. By default, all the data gets stored locally. However, there are options to integrate remote storage for Prometheus TSDB.
+  5. **TSDB** (time-series database): Prometheus uses TSDB for storing all the data. By default, all the data gets stored locally. However, there are options to integrate remote storage for Prometheus TSDB.
+
+- **Prometheus-es-adapter** is a read and write adapter for integrading LTSE's elastic search as prometheus' persistent storage.
+
+- **Grafana** is a multi-platform open source analytics and interactive visualization web application. It's used for creating and visualizing dashboads with graphs generated by prometheus metrics for more user friendly monitoring experience.
+ 
+- **Kube state metrics** is a listening service that generates metrics about the state of Kubernetes objects through leveraging the Kubernetes API.
+
+- **Node_exporter** is a Prometheus exporter for hardware and OS metrics exposed by *NIX kernels, written in Go is installed seperately in every GWEN and Ubuntu device. The node_exporter is designed to monitor the host system and it requires access to the host system so it's not recommended to get deployed as a Docker container.
 
 *********************
 Place in architecture
@@ -86,40 +97,93 @@ Prerequisites
 ***************
 Installation
 ***************
-**PUD Helm Chart**
 
 **Helm** must be installed to use the charts. Please refer to Helm's `documentation <https://helm.sh/docs/>`_ to get started.
 
-- Once Helm is set up properly, add the repo as follows:
+**To install the chart with the release name** ``pude`` **:**
 
-  ``helm repo add --username <<Username>> --password <<Token>> PUD https://gitlab.assist-iot.eu/api/v4/projects/60/packages/helm/stable``
+Clone the `repository <https://gitlab.assist-iot.eu/wp4/applications/pud-enabler>`_ to your machine.
 
-To obtain an Access Token:
-    
-  1. Go to Settings > Access Tokens.
-    
-  2. Insert a Token name.
-    
-  3. Insert an Expiration date (Optional).
-    
-  4. Select api scope.
-    
+Change the content of extraScrapeConfigs.yaml file with the correct configurations and targets that you want PUD to scrape.
 
-- Update Helm's repositories.
+Install Performance and Usage Diagnosis Enabler
 
-  ``helm repo update``
+.. code:: cmd
 
-- Install PUD's Prometheus to your Kubernetes system using the following command:
+  helm install pude --set-file extraScrapeConfigs=extraScrapeConfigs.yaml ./performance-and-usage-diagnosis
 
-  ``helm install PUD/prometheus --name my-release``
 
-- Install PUD's Prometheus-elastic-adapter, Prometheus' remote storage adapter for Elasticsearch to your Kubernetes system using the following command:
+To check if the installation was successful run:
 
-  ``helm install PUD/prometheus-elastic-adapter --name my-release``
+.. code:: cmd
 
-- Install Elasticsearch and Kibana to your Kubernetes system using the following command:
+  kubectl get pods
 
-  ``helm install PUD/elasticsearch-kibana --name my-release``
+
+The result should show something like:
+
+.. code::
+
+  NAME                                                              READY   STATUS    RESTARTS   AGE
+  prometheus-es-adapter-85cd499bd8-dskkv                            1/1     Running   0          112s
+  pude-grafana-6986754ffd-7gr62                                     1/1     Running   0          112s
+  pude-kube-state-metrics-6f78cf594b-dg25z                          1/1     Running   0          112s
+  pude-performance-and-usage-diagnosis-alertmanager-cc8dfbb5ks27s   2/2     Running   0          112s
+  pude-performance-and-usage-diagnosis-pushgateway-85748b494zp4pv   1/1     Running   0          112s
+  pude-performance-and-usage-diagnosis-server-76ff877d66-8z6zd      2/2     Running   0          112s
+
+
+**To access PUD's Grafana Dashboard UI:**
+
+Port forward grafana's pod to port 3000:
+
+.. code:: cmd
+
+  kubectl port-forward pude-grafana-6986754ffd-7gr62 3000
+
+In PUD's Grafana login page use:
+
+Username: ``admin``
+
+To find the current password enter: 
+
+.. code:: cmd
+
+  kubectl get secret pude-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+To get kubernetes secrets and grafana's secret name witch in our case is `pude-grafana` enter:
+
+.. code:: cmd
+
+  kubectl get secrets
+
+To change your grafanas password enter:
+
+.. code:: cmd
+
+  kubectl exec -it <grafanas pod name> grafana-cli admin reset-admin-password <your reset password>
+
+**Add Prometheus data sourse PUD's Grafana:**
+
+- Go to ``Settings > Add Data Source > Prometheus``.
+
+To set Prometheus' URL under HTTP settings first find performance-and-usage-diagnosis-server clusterIP:
+
+.. code:: cmd
+
+  kubectl get services
+
+- Copy and Paste the IP in the URL field.
+
+- ``Save & Test``
+
+**Import new Dashboards for PUD's Grafana:**
+
+- Go to ``Dashboards > + Import``.
+
+- Upload Dashboard's json file or choose one from grafana.com.
+
+- ``Load``
 
 
 *********************
