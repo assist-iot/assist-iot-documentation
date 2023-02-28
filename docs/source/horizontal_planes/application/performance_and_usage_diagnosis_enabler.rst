@@ -11,23 +11,34 @@ Performance and Usage Diagnosis enabler
 ***************
 Introduction
 ***************
-Performance and Usage Diagnosis (PUD) enabler aims at collecting performance metrics from monitored targets by scraping metrics HTTP endpoints on them and highlighting potential problems in the ASSIST-IoT platform, so that it could autonomously act in accordance or to notify to the platform administrator to fine tuning machine resources. For this purpose we use **Prometheus**, an open-source software that collects metrics from targets by "scraping" metrics HTTP endpoints. Supported "targets" include infrastructure platforms (e.g. Kubernetes), applications, and services (e.g. database management systems). Together with its companion Alertmanager service, Prometheus is a flexible metrics collection and alerting tool.
+Performance and Usage Diagnosis (PUD) enabler aims at collecting performance metrics from monitored targets by scraping metrics HTTP endpoints on them and highlighting potential problems in the ASSIST-IoT platform, so that it could autonomously act in accordance or to notify to the platform administrator to fine tuning machine resources. For this purpose we use **Prometheus**, an open-source software that collects metrics from targets by "scraping" metrics HTTP endpoints. Supported "targets" include kube-state-metrics for monitoring every kubernetes cluster used in the project, node-exporter metrics for monitoring hardware, OS metrics exposed by *NIX kernels, as well as other important metrics for the rest of the enablers used in the architecture. Together with its companion Alertmanager service, Prometheus is a flexible metrics collection and alerting tool.
 
 ***************
 Features
 ***************
-Prometheus is an open-source monitoring framework. It provides out-of-the-box monitoring capabilities for the Kubernetes container orchestration platform. Its main features are:
+
+Performance and Usage Diagnosis (PUD) enabler's features
+--------------------------------------------------------
+- Prometheus is an open-source monitoring framework. It provides out-of-the-box monitoring capabilities for the Kubernetes container orchestration platform. Its main features are:
 
 
-- **Metric Collection**: Prometheus uses the pull model to retrieve metrics over HTTP. There is an option to push metrics to Prometheus using Pushgateway for use cases where Prometheus cannot Scrape the metrics.
+  1. **Metric Collection**: Prometheus uses the pull model to retrieve metrics over HTTP. There is an option to push metrics to Prometheus using Pushgateway for use cases where Prometheus cannot Scrape the metrics.
 
-- **Metric Endpoint**: The systems that you want to monitor using Prometheus should expose the metrics on an /metrics endpoint. Prometheus uses this endpoint to pull the metrics in regular intervals.
+  2. **Metric Endpoint**: The systems that you want to monitor using Prometheus should expose the metrics on an /metrics endpoint. Prometheus uses this endpoint to pull the metrics in regular intervals.
 
-- **PromQL**: Prometheus comes with PromQL, a very flexible query language that can be used to query the metrics in the Prometheus dashboard. Also, the PromQL query will be used by Prometheus UI and Grafana to visualize metrics.
+  3. **PromQL**: Prometheus comes with PromQL, a very flexible query language that can be used to query the metrics in the Prometheus dashboard. Also, the PromQL query will be used by Prometheus UI and Grafana to visualize metrics.
 
-- **Prometheus Exporters**: Exporters are libraries which converts existing metric from third-party apps to Prometheus metrics format. There are many official and community Prometheus exporters. One example is, Kube State metrics, a service which talks to Kubernetes API server to get all the details about all the API objects like deployments, pods, daemonsets etc.
+  4. **Prometheus Exporters**: Exporters are libraries which converts existing metric from third-party apps to Prometheus metrics format. There are many official and community Prometheus exporters. One example is, Kube State metrics, a service which talks to Kubernetes API server to get all the details about all the API objects like deployments, pods, daemonsets etc.
 
-- **TSDB** (time-series database): Prometheus uses TSDB for storing all the data. By default, all the data gets stored locally. However, there are options to integrate remote storage for Prometheus TSDB.
+  5. **TSDB** (time-series database): Prometheus uses TSDB for storing all the data. By default, all the data gets stored locally. However, there are options to integrate remote storage for Prometheus TSDB.
+
+- **Prometheus-es-adapter** is a read and write adapter for integrading LTSE's elastic search as prometheus' persistent storage.
+
+- **Grafana** is a multi-platform open source analytics and interactive visualization web application. It's used for creating and visualizing dashboads with graphs generated by prometheus metrics for more user friendly monitoring experience.
+ 
+- **Kube state metrics** is a listening service that generates metrics about the state of Kubernetes objects through leveraging the Kubernetes API.
+
+- **Node_exporter** is a Prometheus exporter for hardware and OS metrics exposed by *NIX kernels, written in Go is installed seperately in every GWEN and Ubuntu device. The node_exporter is designed to monitor the host system and it requires access to the host system so it's not recommended to get deployed as a Docker container.
 
 *********************
 Place in architecture
@@ -45,16 +56,6 @@ Prometheus scrapes metrics from instrumented jobs. It stores all scraped samples
 Prometheus works well for recording any purely numeric time series. It fits both machine-centric monitoring as well as monitoring of highly dynamic service-oriented architectures. In a world of microservices, its support for multi-dimensional data collection and querying is a particular strength.
 
 Prometheus is designed for reliability, to be the system you go to during an outage to allow you to quickly diagnose problems. Each Prometheus server is standalone, not depending on network storage or other remote services. You can rely on it when other parts of your infrastructure are broken, and you do not need to setup extensive infrastructure to use it.
-
-Alongside Prometheus which is the main component of Performance and Usage Diagnosis (PUD) Enabler the following components are installed:
-
-- **Prometheus-es-adapter** which is a read and write adapter for integrading LTSE's elastic search as prometheus' persistent storage.
-
-- **Grafana** which is a multi-platform open source analytics and interactive visualization web application. It's used for creating and visualizing dashboads with graphs generated by prometheus metrics for more user friendly monitoring experience.
- 
-- **Kube state metrics** which is a listening service that generates metrics about the state of Kubernetes objects through leveraging the Kubernetes API.
-
-Moreover **Node_exporter** which is a Prometheus exporter for hardware and OS metrics exposed by *NIX kernels, written in Go is installed seperately in every GWEN and Ubuntu device. The node_exporter is designed to monitor the host system and it requires access to the host system so it's not recommended to get deployed as a Docker container.
 
 ***************
 User guide
