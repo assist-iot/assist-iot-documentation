@@ -3,7 +3,7 @@
 .. figure:: ./images/sd_wan_enabler/assist-IoT-logo.png 
 
 ########################
-WAN acceleration enabler
+WAN-Acceleration enabler
 ########################
 
 .. contents::
@@ -25,9 +25,6 @@ This enabler will be in charge of implementing features to support multiple WAN 
 - An SD-WAN Edge component, present in each K8s cluster, with a dedicated K8s controller and a Containerised Network function (CNF) through which traffic goes through it. The CNF will embed functions to setup aspects such related to IPSec, firewalling, DNS, DHCP and WAN link management, whereas a Custom Definition Resource (CRD) controller contains all the sub-controllers to create, query and configure these features.
 - A SD-WAN hub, which will act as a middleware among clusters and/or between them and the Internet, enabling the introduction of additional CNFs related to security, filtering, traffic shaping, etc. Once the basic features are implemented, the incorporation of additional ones (as CNFs) will be evaluated.
 
-.. note:: 
-  This enabler is stil under develoment, being subject to modifications of its scope.
-
 *********************
 Place in architecture
 *********************
@@ -36,7 +33,7 @@ architecture. In particular, it belongs to the building block related to VNFs, s
 (i) for provisioning private networks over public ones, jointly with the SD-WAN enabler, and
 (ii) for supporting VNFs chaining (containerised, thus CNFs).
 
-.. figure:: ./images/wan_acceleration_enabler/wan_acc_place.png  
+.. figure:: ./images/wan_acceleration_enabler/place-in-architecture.png  
    :alt: Place of the WAN Acceleration enabler within the Smart Network and Control Plance architecture
    :align: center
    
@@ -46,7 +43,7 @@ The following diagram aims at describing the global operation of the SD-WAN arch
 including the SD-WAN enabler and instances of the WAN Acceleration enabler (each of them composed by an SD-WAN
 custom k8s controller and an SD-WAN CNF).
 
-.. figure:: ./images/sd_wan_enabler/global_sdwan.png
+.. figure:: ./images/wan_acceleration_enabler/place-in-architecture2.png
    :alt: SD-WAN overall architecture
    :align: center
    
@@ -75,29 +72,7 @@ As aforementioned, the enabler is composed of two main elements, as one can see 
 User guide
 ***************
 
-REST API endpoints
-*******************
-The API has not been implemented yet, in the following table are presented the expected endpoints:
-
-+---------------------+----------------------------+-------------------------------------------------------------------------------------------------------------------------+
-| Method              | Endpoint                   | Description                                                                                                             |
-+=====================+============================+=========================================================================================================================+
-| GET/PUT             | /services/{id}             | To list all the services supported by the CNF, and execute an operation for one (e.g., mwan3, firewall, IPsec-related). |
-+---------------------+----------------------------+-------------------------------------------------------------------------------------------------------------------------+
-| GET/PUT             | /interfaces/{id}           | To list all the available interfaces and their specific information, allowing enabling or disabling them.               |
-+---------------------+----------------------------+-------------------------------------------------------------------------------------------------------------------------+
-| GET/POST/PUT/DELETE | /mwan3/policies/{id}       | Policies define how traffic will be routed through the WAN managed interfaces.                                          |
-+---------------------+----------------------------+-------------------------------------------------------------------------------------------------------------------------+
-| GET/POST/PUT/DELETE | /mwan3/rules/{id}          | Rules apply policies over specific source/destiny IP addresses, ports, IP type, protocol, etc.                          |
-+---------------------+----------------------------+-------------------------------------------------------------------------------------------------------------------------+
-| GET/POST/PUT/DELETE | /firewall/zones/{id}       | Groups one or many interfaces to be source or destination for forwardings, rules and redirects.                         |
-+---------------------+----------------------------+-------------------------------------------------------------------------------------------------------------------------+
-| GET/POST/PUT/DELETE | /firewall/redirects/{id}   | To define NAT rules.                                                                                                    |
-+---------------------+----------------------------+-------------------------------------------------------------------------------------------------------------------------+
-| GET/POST/PUT/DELETE | /firewall/rules/{id}       | To specify accept, drop and reject rules to restrict access to specific ports or hosts.                                 |
-+---------------------+----------------------------+-------------------------------------------------------------------------------------------------------------------------+
-| GET/POST/PUT/DELETE | /firewall/forwardings/{id} | To control traffic between zones.                                                                                       |
-+---------------------+----------------------------+-------------------------------------------------------------------------------------------------------------------------+
+This enabler is not prepared to integrate a standard API, but works in conjunction with SD-WAN Enabler. Once WAN-Acceleration is installed, the SD-WAN Enabler REST API can be run. The user guide for configuration and main usages is available in the SD-WAN Enabler documentation.
 
 ***************
 Prerequisites
@@ -133,7 +108,7 @@ Will be determined after the release of the enabler.
 ***************************
 Version control and release
 ***************************
-1.0.
+Version 1.0. First release. Under development.
 
 ***************
 License
