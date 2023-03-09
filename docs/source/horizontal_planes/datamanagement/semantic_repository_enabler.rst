@@ -178,7 +178,7 @@ number of values per one metadata key: **32** - Maximum length in
 characters of an individual metadata value: **1024**
 
 Documentation
-~~~~~~~~~~~~~
+***********
 
 To each model version you can attach documentation pages that, for
 example, help explain users how to use the various fields in your data
@@ -267,8 +267,93 @@ size of files in a documentation set: **4MB** - Time after which
 documentation in the sandbox expires and cannot be accessed anymore:
 **24 hours**
 
-REST API
-########
+Webhooks
+********
+
+You may want to trigger some action automatically, for example after a
+model is changed in the Repository. There is a feature called *webhooks*
+that allows you to do just that – whenever a specific action is
+performed on some object, a the Repository executes an HTTP POST request
+to an endpoint defined by the user.
+
+This functionality has many possible use cases. For example, you can
+automatically validate newly uploaded data models and add appropriate
+metadata with validation status. Or you could convert the data model to
+a different format, once a new version is uploaded.
+
+A webhook’s body is a JSON file that looks like this:
+
+.. code:: json
+
+   {
+     "action": "...",
+     "body": {
+       ...
+     },
+     "context": {
+       "model": "sosa",
+       "namespace": "w3c",
+       "version": "1.0.0"
+     },
+     "hookId": "638f62056d64d41f7c3578ae",
+     "timestamp": "2022-12-06T15:39:02"
+   }
+
+-  ``action`` indicates the type of action that triggered the webhook
+-  the content of the ``body`` field depends on the specific type of
+   webhook
+-  ``context`` indicates the path to the object that the action was
+   performed on (namespace, model, version)
+-  ``hook_id`` is the unique identifier of the hook
+-  ``timestamp`` is the time at which the action occurred
+
+See the API guide for more information on how to define and manage
+webhooks.
+
+Webhook types (available actions)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Currently there is only one available action for webhooks.
+
+``content_upload``
+''''''''''''''''''
+
+Triggered whenever content is uploaded to a specific version of the
+model.
+
+Example webhook body:
+
+.. code:: json
+
+   {
+     "action": "content_upload",
+     "body": {
+       "contentType": "application/json",
+       "format": "json",
+       "md5": "98df1bb4a4675383b7d9fa12449dbf35",
+       "overwrite": true,
+       "size": 110208
+     },
+     "context": {
+       "model": "sosa",
+       "namespace": "w3c",
+       "version": "1.0.0"
+     },
+     "hookId": "638f62056d64d41f7c3578ae",
+     "timestamp": "2022-12-06T16:04:10"
+   }
+
+-  ``contentType`` – content type of the upload
+-  ``format`` – user-specified format of the upload
+-  ``md5`` – MD5 sum of the uploaded file
+-  ``overwrite`` – whether the upload overwrote previously uploaded
+   content for this model version
+-  ``size`` – size of the upload in bytes
+
+
+
+User guide – REST API
+=====================
 
 The following is a brief guide to using the API in practice. The
 examples follow a basic use case of storing several `W3C
@@ -1102,7 +1187,7 @@ for further requests:
 .. code:: json
 
    {
-     "handle": "de61582b-fe42-4447-8555-4d1c736466bd",
+     "handle": "638b357c5a6298307ca53fb8",
      "message": "Compilation started.",
      "plugin": "markdown"
    }
@@ -1111,11 +1196,11 @@ The job has now been added to the queue and will be processed
 asynchronously. You can check the job’s status by making a GET request
 to ``/dg/{job_id}``. In our example:
 
-================================================ ====
-Request                                          Body
-================================================ ====
-``GET /dg/de61582b-fe42-4447-8555-4d1c736466bd`` –
-================================================ ====
+==================================== ====
+Request                              Body
+==================================== ====
+``GET /dg/638b357c5a6298307ca53fb8`` –
+==================================== ====
 
 The status of the job will be returned:
 
@@ -1123,7 +1208,7 @@ The status of the job will be returned:
 
    {
      "ended": "2022-08-26T12:48:01",
-     "jobId": "de61582b-fe42-4447-8555-4d1c736466bd",
+     "jobId": "638b357c5a6298307ca53fb8",
      "plugin": "markdown",
      "started": "2022-08-26T12:48:00",
      "status": "Success"
@@ -1182,7 +1267,7 @@ This will return:
    {
      "documentation": {
        "ended": "2022-08-26T12:49:33",
-       "jobId": "9c37e741-349b-4353-8c71-8fab3c58d34e",
+       "jobId": "638b3b0da6bf4d10bca9ff90",
        "plugin": "markdown",
        "started": "2022-08-26T12:49:33",
        "status": "Success"
@@ -1252,9 +1337,124 @@ Response:
      }
    }
 
-Meta endpoints
-**************
+Webhooks
+~~~~~~~~
 
+See the `user guide <user-guide>`__ for an explanation of what webhooks
+are and their available types.
+
+New webhooks are defined by POST. For example, to create a webhook that
+listens for content uploads in model version w3c/sosa/1.0:
+
+Request: ``POST /hk`` Body:
+
+.. code:: json
+
+   {
+     "action": "content_upload",
+     "callback": "https://example.org/test/webhook",
+     "context": {
+       "namespace": "w3c",
+       "model": "sosa",
+       "version": "1.0"
+     }
+   }
+
+Response:
+
+.. code:: json
+
+   {
+       "handle": "638f62056d64d41f7c3578ae",
+       "message": "Webhook created."
+   }
+
+The ``namespace``, ``model``, ``version`` subfields in the ``context``
+field are all optional, you can even omit the entire ``context`` field
+if you want to listen to changes in the entire repository. It is
+recomended to listen only to changes in a narrowly-defined fragment of
+the repository (a single version or model), to avoid being bombarded
+with webhooks.
+
+The returned handle is the unique ID of the webhook.
+
+You can retrieve a list of all webhooks using GET:
+
+=========== ====
+Request     Body
+=========== ====
+``GET /hk`` –
+=========== ====
+
+Response
+
+.. code:: json
+
+   {
+     "webhooks": {
+       "inViewCount": 1,
+       "items": [
+         {
+           "action": "content_upload",
+           "callback": "https://example.org/test/webhook",
+           "context": {
+             "namespace": "w3c",
+             "model": "sosa",
+             "version": "1.0"
+           },
+           "id": "638f62056d64d41f7c3578ae"
+         }
+       ],
+       "page": 1,
+       "pageSize": 20,
+       "totalCount": 1
+     }
+   }
+
+This collection can be filtered and sorted by the ``action`` field.
+
+A single webhook can be retrieved by its ID:
+
+==================================== ====
+Request                              Body
+==================================== ====
+``GET /hk/638f62056d64d41f7c3578ae`` –
+==================================== ====
+
+Response:
+
+.. code:: json
+
+   {
+     "action": "content_upload",
+     "callback": "https://example.org/test/webhook",
+     "context": {
+       "namespace": "w3c",
+       "model": "sosa",
+       "version": "1.0"
+     },
+     "id": "638f62056d64d41f7c3578ae"
+   }
+
+Webhooks cannot be modified after they are created. They can only be
+deleted using DELETE with the ``force=1`` parameter:
+
+=============================================== ====
+Request                                         Body
+=============================================== ====
+``DELETE /hk/638f62056d64d41f7c3578ae?force=1`` –
+=============================================== ====
+
+Response:
+
+.. code:: json
+
+   {
+     "message": "Deleted webhook with ID '638f62056d64d41f7c3578ae'."
+   }
+
+Meta endpoints
+~~~~~~~~~~~~~~
 
 Will be implemented in the next release. TODO: health, doc plugins,
 version, Swagger.
@@ -1269,12 +1469,10 @@ The GUI of the Semantic Repository is under development.
 ******************
 REST API reference
 ******************
-The REST API reference can be accessed through the following link:
 
-.. toctree::
-    :titlesonly:
 
-    semantic_repository_enabler/rest_api_reference.rst
+.. raw:: html
+   :file: semantic_repository_enabler/api.html
 
 
 *************

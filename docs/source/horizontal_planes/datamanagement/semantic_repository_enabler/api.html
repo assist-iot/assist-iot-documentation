@@ -183,7 +183,7 @@ font-style: italic;
     <div class="app-desc">The Semantic Repository enabler offers a “nexus” for data models, ontologies, and other files, that can be uploaded in different file formats, and served to users with relevant documentation.</div>
     <div class="app-desc">More information: <a href="https://openapi-generator.tech">https://openapi-generator.tech</a></div>
     <div class="app-desc">Contact Info: <a href="team@openapitools.org">team@openapitools.org</a></div>
-    <div class="app-desc">Version: 0.2</div>
+    <div class="app-desc">Version: 0.4</div>
     <div class="app-desc">BasePath:</div>
     <div class="license-info">All rights reserved</div>
     <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
@@ -238,6 +238,13 @@ font-style: italic;
   <li><a href="#getModelVersionRoute"><code><span class="http-method">get</span> /{namespace}/{model}/{version}</code></a></li>
   <li><a href="#patchModelVersionRoute"><code><span class="http-method">patch</span> /{namespace}/{model}/{version}</code></a></li>
   <li><a href="#postModelVersionRoute"><code><span class="http-method">post</span> /{namespace}/{model}/{version}</code></a></li>
+  </ul>
+  <h4><a href="#Webhook">Webhook</a></h4>
+  <ul>
+  <li><a href="#deleteWebhook"><code><span class="http-method">delete</span> /hk/{hook_id}</code></a></li>
+  <li><a href="#getWebhook"><code><span class="http-method">get</span> /hk/{hook_id}</code></a></li>
+  <li><a href="#getWebhooks"><code><span class="http-method">get</span> /hk</code></a></li>
+  <li><a href="#postWebhook"><code><span class="http-method">post</span> /hk</code></a></li>
   </ul>
 
   <h1><a name="Content">Content</a></h1>
@@ -1674,6 +1681,223 @@ font-style: italic;
         <a href="#ErrorResponse">ErrorResponse</a>
   </div> <!-- method -->
   <hr/>
+  <h1><a name="Webhook">Webhook</a></h1>
+  <div class="method"><a name="deleteWebhook"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /hk/{hook_id}</code></pre></div>
+    <div class="method-summary">Delete a webhook (<span class="nickname">deleteWebhook</span>)</div>
+    <div class="method-notes">Delete a registered webhook from the repository.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hook_id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Webhook's identifier default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">force (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' to really perform the deletion. This is to prevent accidental deletions. default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "warnings" : [ "warnings", "warnings" ],
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h4 class="field-label">404</h4>
+    Webhook not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getWebhook"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /hk/{hook_id}</code></pre></div>
+    <div class="method-summary">Get a webhook (<span class="nickname">getWebhook</span>)</div>
+    <div class="method-notes">Return a registered webhook in the repository.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hook_id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Webhook's identifier default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Webhook">Webhook</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "context" : {
+    "namespace" : "namespace",
+    "model" : "model",
+    "version" : "version"
+  },
+  "callback" : "callback",
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Webhook found.
+        <a href="#Webhook">Webhook</a>
+    <h4 class="field-label">404</h4>
+    Webhook not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getWebhooks"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /hk</code></pre></div>
+    <div class="method-summary">Get a list of registered webhooks (<span class="nickname">getWebhooks</span>)</div>
+    <div class="method-notes">Returns a list of registered webhooks, with filtering and sorting.</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">page (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of the page of child entities to be displayed (1-based). Defaults to 1. default: 1 format: int32</div><div class="param">page_size (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of model versions to display per page. default: null format: int32</div><div class="param">sort_by (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Field to sort the list of model versions by. default: null </div><div class="param">order (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Order in which sort the list of model versions. Default is ascending. default: ascending </div><div class="param">filter (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; A field filter – parameters are in the form of 'f.<em>'. Replace the '</em>' with the field name to filter by and set the value to the one that you want to filter for. This parameter can be used more than once – all filter conditions will be joined with the AND operator. default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebhookSet">WebhookSet</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>null</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    List of webhooks
+        <a href="#WebhookSet">WebhookSet</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postWebhook"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /hk</code></pre></div>
+    <div class="method-summary">Create a new webhook. (<span class="nickname">postWebhook</span>)</div>
+    <div class="method-notes">Registers a new webhook in the repository.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WebhookUpdate <a href="#WebhookUpdate">WebhookUpdate</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebhookCreatedInfo">WebhookCreatedInfo</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "handle" : "handle",
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Created webhook.
+        <a href="#WebhookCreatedInfo">WebhookCreatedInfo</a>
+  </div> <!-- method -->
+  <hr/>
 
   <h2><a name="__Models">Models</a></h2>
   [ Jump to <a href="#__Methods">Methods</a> ]
@@ -1708,6 +1932,13 @@ font-style: italic;
     <li><a href="#StoredFile"><code>StoredFile</code> - </a></li>
     <li><a href="#SuccessResponse"><code>SuccessResponse</code> - </a></li>
     <li><a href="#VersionResponse"><code>VersionResponse</code> - </a></li>
+    <li><a href="#Webhook"><code>Webhook</code> - </a></li>
+    <li><a href="#WebhookAction"><code>WebhookAction</code> - </a></li>
+    <li><a href="#WebhookContext"><code>WebhookContext</code> - </a></li>
+    <li><a href="#WebhookCreatedInfo"><code>WebhookCreatedInfo</code> - </a></li>
+    <li><a href="#WebhookSet"><code>WebhookSet</code> - </a></li>
+    <li><a href="#WebhookSet_allOf"><code>WebhookSet_allOf</code> - </a></li>
+    <li><a href="#WebhookUpdate"><code>WebhookUpdate</code> - </a></li>
   </ol>
 
   <div class="model">
@@ -1730,7 +1961,7 @@ The keys here correspond to the plugin name when creating a new documentation jo
     <h3><a name="DocumentationJob"><code>DocumentationJob</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>A documentation generation job.</div>
     <div class="field-items">
-      <div class="param">jobId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Unique job identifier. </div>
+      <div class="param">jobId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Unique job identifier (24 lowercase hexadecimal characters). </div>
 <div class="param">plugin </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Key of the plugin used for this job. </div>
 <div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Current status of the job. </div>
         <div class="param-enum-header">Enum:</div>
@@ -1955,6 +2186,66 @@ Contains a list of available namespaces.</div>
     <div class="field-items">
       <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">version </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Webhook"><code>Webhook</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>A webhook registered in the Semantic Repository.</div>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Unique webhook identifier (24 lowercase hexadecimal characters). </div>
+<div class="param">action </div><div class="param-desc"><span class="param-type"><a href="#WebhookAction">WebhookAction</a></span>  </div>
+<div class="param">callback </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Callback URI to which the POST request will be sent. </div>
+<div class="param">context </div><div class="param-desc"><span class="param-type"><a href="#WebhookContext">WebhookContext</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookAction"><code>WebhookAction</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>The type of action to which the webhook is registered.</div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookContext"><code>WebhookContext</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Object path context to which this hook should be applied.</div>
+    <div class="field-items">
+      <div class="param">namespace (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">model (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">version (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookCreatedInfo"><code>WebhookCreatedInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Response from the repository after creating a webhook.</div>
+    <div class="field-items">
+      <div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Informational message. </div>
+<div class="param">handle (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Unique webhook identifier (24 lowercase hexadecimal characters). </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookSet"><code>WebhookSet</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>List of registered webhooks.</div>
+    <div class="field-items">
+      <div class="param">totalCount </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Total count of all entities in this collection. format: int32</div>
+<div class="param">inViewCount </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of entities visible on the current page of the collection. format: int32</div>
+<div class="param">page </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> 1-based number of the current page. format: int32</div>
+<div class="param">pageSize </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Size of the current page (max number of entities that can be displayed per page). format: int32</div>
+<div class="param">items </div><div class="param-desc"><span class="param-type"><a href="#Webhook">array[Webhook]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookSet_allOf"><code>WebhookSet_allOf</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">items </div><div class="param-desc"><span class="param-type"><a href="#Webhook">array[Webhook]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookUpdate"><code>WebhookUpdate</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Webhook when it is being created in the repository.</div>
+    <div class="field-items">
+      <div class="param">action </div><div class="param-desc"><span class="param-type"><a href="#WebhookAction">WebhookAction</a></span>  </div>
+<div class="param">callback </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Callback URI to which the POST request will be sent. </div>
+<div class="param">context (optional)</div><div class="param-desc"><span class="param-type"><a href="#WebhookContext">WebhookContext</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   </body>
