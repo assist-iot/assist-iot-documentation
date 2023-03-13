@@ -19,7 +19,7 @@ Features
 
 Performance and Usage Diagnosis (PUD) enabler's features
 --------------------------------------------------------
-- Prometheus is an open-source monitoring framework. It provides out-of-the-box monitoring capabilities for the Kubernetes container orchestration platform. Its main features are:
+- **Prometheus** is an open-source monitoring framework. It provides out-of-the-box monitoring capabilities for the Kubernetes container orchestration platform. Its main features are:
 
 
   1. **Metric Collection**: Prometheus uses the pull model to retrieve metrics over HTTP. There is an option to push metrics to Prometheus using Pushgateway for use cases where Prometheus cannot Scrape the metrics.
@@ -31,6 +31,8 @@ Performance and Usage Diagnosis (PUD) enabler's features
   4. **Prometheus Exporters**: Exporters are libraries which converts existing metric from third-party apps to Prometheus metrics format. There are many official and community Prometheus exporters. One example is, Kube State metrics, a service which talks to Kubernetes API server to get all the details about all the API objects like deployments, pods, daemonsets etc.
 
   5. **TSDB** (time-series database): Prometheus uses TSDB for storing all the data. By default, all the data gets stored locally. However, there are options to integrate remote storage for Prometheus TSDB.
+
+- **Alertmanager** handles alerts sent by client applications such as the Prometheus server. It takes care of deduplicating, grouping, and routing them to the correct receiver integration.
 
 - **Prometheus-es-adapter** is a read and write adapter for integrading LTSE's elastic search as prometheus' persistent storage.
 
@@ -60,20 +62,20 @@ Prometheus is designed for reliability, to be the system you go to during an out
 ***************
 User guide
 ***************
-Prometheus provides a web UI for running basic queries located at `http://<your_server_IP>:9090/`. This is how it looks like in a web browser:
+Prometheus provides a web UI for running basic queries located at ``http://<your_server_IP>:9090/``. This is how it looks like in a web browser:
 
-.. image:: https://user-images.githubusercontent.com/100563908/156012977-574cd9f1-5c65-4ae2-bfdf-90c492967e85.PNG
+.. image:: https://user-images.githubusercontent.com/100563908/222110319-fa6212cb-6eaf-460b-8a09-1ba310f69eeb.PNG
 The “Table” tab is used to view the results of a query, while the “Graph” tab is used to create graphs based on a query.
 
 .. image:: https://user-images.githubusercontent.com/100563908/156175560-b75810c9-ae49-45f6-80ff-6b5a59504f35.PNG
 
-If you want to see a list of metrics sources, go to the Status → Targets page. Here, you will find a list of all services that are being monitored, including the path at which the metrics are available. In this case, the default path /metrics is used.
+If you want to see a list of metrics sources, go to the ``Status > Targets page``. Here, you will find a list of all services that are being monitored, including the path at which the metrics are available. In this case, the default path /metrics is used.
 
-.. image:: https://user-images.githubusercontent.com/100563908/156013055-80bf10cb-1be4-4b80-9e45-ee31d4ef14c8.PNG
+.. image:: https://user-images.githubusercontent.com/100563908/222110555-a19fd69e-a58b-4c5c-ba4e-8e734498d043.PNG
 
 If you’re curious to see how the metrics page looks like, head over to one of them by clicking one of the endpoint URLs.
 
-.. image:: https://user-images.githubusercontent.com/100563908/156013117-33257cdf-2d1d-443b-86c9-37fe6f42d3e4.PNG
+.. image:: https://user-images.githubusercontent.com/100563908/222110668-aa978e2c-db76-4595-b288-c92c59b39ec2.PNG
 
 The Prometheus server collects metrics and stores them in a time series database. Individual metrics are identified with names such as kube_pod_container_resource_requests. A metric may have a number of “labels” attached to it, to distinguish it from other similar sources of metrics. As an example, suppose kube_pod_container_resource_requests refers to the number of requested request resource by a container. It may have a label such as resource, which helps you inspect individual system resources by mentioning them.
  
@@ -87,6 +89,30 @@ In PromQL, an expression or subexpression should always evaluate to one of the f
 - String — A string value. String literals can be enclosed between single quotes, double quotes or backticks (`). However, escape sequences like \n are only processed when double quotes are used.
 
 For more about Querying please refer to Prometheus' `documentation <https://prometheus.io/docs/prometheus/latest/querying/basics/>`_ to get started.
+
+Grafana also provides a web UI located at ``http://<your_server_IP>:3000/``. First the user needs to get logged in:
+
+.. image:: https://user-images.githubusercontent.com/100563908/222115506-ec86a444-5528-45bf-9f88-eb379157573a.PNG
+
+After login user should choose and add Prometheus data sourse in PUD's Grafana.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222114194-991a1898-34bd-4868-bdb3-bbdb6c11bc51.PNG
+
+By going to ``Settings > Add Data Source > Prometheus``.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222114686-98433e40-8bb5-4285-8810-787b33fed86c.PNG
+
+After choosing data source user should import new Dashboards for PUD's Grafana.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222116609-cb3aebe3-d4e7-4d46-a234-1f2f85b3fa8b.PNG
+
+Dashboards regarding *Kube state metrics* and *Node_exporter* can be found in PUD's `repository <https://gitlab.assist-iot.eu/wp4/applications/pud-enabler>`_ in ``grafana-dashboards`` directory.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222117715-e297f520-15bc-4ac7-8d25-54b1fac71270.PNG
+
+By going to ``Dashboards`` user can access and manage all of his dashboards.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222118360-a47c1f43-c8d8-4031-a520-9b1b674c2862.PNG
 
 ***************
 Prerequisites
@@ -104,7 +130,7 @@ Installation
 
 Clone the `repository <https://gitlab.assist-iot.eu/wp4/applications/pud-enabler>`_ to your machine.
 
-Change the content of extraScrapeConfigs.yaml file with the correct configurations and targets that you want PUD to scrape.
+**NOTE**: Change the content of extraScrapeConfigs.yaml file with the correct configurations and targets that you want PUD to scrape.
 
 Install Performance and Usage Diagnosis Enabler
 
@@ -185,6 +211,57 @@ To set Prometheus' URL under HTTP settings first find performance-and-usage-diag
 
 - ``Load``
 
+**Node_exporter Installation:**
+
+- Create a node_exporter user to run the node exporter service.
+
+.. code:: cmd
+  
+  sudo useradd -rs /bin/false node_exporter
+  
+- Create a node_exporter service file under systemd.
+
+.. code:: cmd
+
+  sudo vi /etc/systemd/system/node_exporter.service
+  
+- Add the following service file content to the service file and save it.
+
+.. code:: cmd
+
+  [Unit]
+  Description=Node Exporter
+  After=network.target
+  
+  [Service]
+  User=node_exporter
+  Group=node_exporter
+  Type=simple
+  ExecStart=/usr/local/bin/node_exporter
+  
+  [Install]
+  WantedBy=multi-user.target
+
+- Reload the system daemon and star the node exporter service.
+
+.. code:: cmd
+
+  sudo systemctl daemon-reload
+  sudo systemctl start node_exporter
+  
+- Check the node exporter status to make sure it is running in the active state.
+
+.. code:: cmd
+
+  sudo systemctl status node_exporter
+  
+- Enable the node exporter service to the system startup.
+
+.. code:: cmd
+
+  sudo systemctl enable node_exporter
+
+Now, node exporter would be exporting metrics on port ``9100``. 
 
 *********************
 Configuration options
@@ -883,24 +960,161 @@ The following table lists the configurable parameters of the **Prometheus-elasti
 ***************
 Developer guide
 ***************
-**Prometheus Exporter**
 
-**Prometheus** follows an HTTP pull model: It scrapes Prometheus metrics from endpoints routinely. Typically the abstraction layer between the application and Prometheus is an **exporter**, which takes application-formatted metrics and converts them to Prometheus metrics for consumption. Because Prometheus is an HTTP pull model, the exporter typically provides an endpoint where the Prometheus metrics can be scraped.
+PUD’s Prometheus Metrics & Exporters
+------------------------------------
+
+**Performance and Usage Diagnosis** (PUD) Enabler follows an HTTP pull model: It scrapes performance metrics from endpoints routinely. Typically the abstraction layer between the application and PUD is an **exporter**, which takes application-formatted metrics and converts them to Prometheus metrics for consumption. Because PUD uses an HTTP pull model, the exporter typically provides an endpoint ``/metrics`` where the performance metrics can be scraped. 
 
 The relationship between Prometheus, the exporter, and the application in a Kubernetes environment can be visualized like this:
 
 .. image:: https://trstringer.com/images/prometheus-exporter.png
 
-There are a number of `exporters <https://prometheus.io/docs/instrumenting/exporters/>`_ that are maintained as part of the official `Prometheus GitHub <https://github.com/prometheus>`_
+Metrics are served as plaintext. They are designed to be consumed either by PUD itself or by a scraper that is compatible with scraping a Prometheus client endpoint. The raw metrics can also be visualized in a browser by opening /metrics endpoint. Note that the metrics exposed on the ``/metrics`` endpoint reflect the current state of the application monitored.
 
-You might need to write your own exporter if:
+The Prometheus metrics format is so widely adopted that it became an independent project: OpenMetrics, striving to make this metric format specification an industry standard.
 
-- You're using 3rd party software that doesn't have an existing exporter already.
-- You want to generate Prometheus metrics from software that you have written.
+Prometheus metrics naming
+-------------------------
 
-If you decide that you need to write your exporter, there are a handful of available languages and client libraries that you can use: Python, Go, Java, and `others <https://prometheus.io/docs/instrumenting/clientlibs/>`_.
+Generally metric names should allow someone who is familiar with Prometheus but not a particular system to make a good guess as to what a metric means. A metric named http_requests_total is not extremely useful - are these being measured as they come in, in some filter or when they get to the user’s code? And requests_total is even worse, what type of requests?
 
-Please refer to Prometheus' `documentation <https://prometheus.io/docs/instrumenting/writing_exporters/>`_ to get started.
+Metric names for applications should generally be prefixed by the exporter name, e.g. haproxy_up.
+
+Metrics must use base units (e.g. seconds, bytes) and leave converting them to something more readable to graphing tools. No matter what units you end up using, the units in the metric name must match the units in use.
+
+Prometheus metrics and label names are written in snake_case.
+Only [a-zA-Z0-9:_] are valid in metric names.
+
+The _sum, _count, _bucket and _total suffixes are used by Summaries, Histograms and Counters. Unless you’re producing one of those, avoid these suffixes.
+_total is a convention for counters, you should use it if you’re using the COUNTER type.
+Prometheus metric format has a name combined with a series of labels or tags.
+
+``<metric name>{<label name>=<label value>, ...}``
+
+A time series with the metric name http_requests_total and the labels service="service", server="pod50″ and env="production" could be written like this:
+
+``http_requests_total{service="service", server="pod50", env="production"}``
+
+You can associate any number of context-specific labels to every metric you submit.
+Imagine a typical metric like http_requests_per_second, every one of your web servers is emitting these metrics. You can then bundle the labels (or dimensions):
+-	Web Server software (Nginx, Apache)
+-	Environment (production, staging)
+-	HTTP method (POST, GET)
+-	Error code (404, 503) 
+-	HTTP response code (number) 
+-	Endpoint (/webapp1, /webapp2) 
+-	Datacenter zone (east, west)
+
+Prometheus metrics text-based format is line oriented. Lines are separated by a line feed character (n). The last line must end with a line feed character. Empty lines are ignored. A metric is composed by several fields:
+-	Metric name
+-	Any number of labels (can be 0), represented as a key-value array
+-	Current metric value 
+-	Optional metric timestamp
+
+A Prometheus metric can be as simple as:
+``http_requests 2``
+
+Or, including all the mentioned components:
+``http_requests_total{method="post",code="400"}  3   1395066363000``
+
+Metric output is typically preceded with ``# HELP`` and ``# TYPE`` metadata lines.
+
+The HELP string identifies the metric name and a brief description of it. The TYPE string identifies the type of metric. If there’s no TYPE before a metric, the metric is set to untyped. Everything else that starts with a # is parsed as a comment.
+
+.. code::
+
+  # HELP metric_name Description of the metric
+  # TYPE metric_name type
+  # Comment that's not parsed by prometheus
+  http_requests_total{method="post",code="400"}  3   1395066363000
+  
+Prometheus metrics client libraries
+-----------------------------------
+ 
+The Prometheus project maintains 4 official Prometheus metrics libraries written in Go, Java / Scala, Python, and Ruby.
+The Prometheus community has created many third-party libraries that you can use to instrument other languages (or just alternative implementations for the same language): 
+
+-	Bash 
+-	C++ 
+-	Common Lisp 
+-	Elixir 
+-	Erlang 
+-	Haskell 
+-	Lua for Nginx
+-	Lua for Tarantool 
+-	.NET / C# 
+-	Node.js 
+-	Perl 
+-	PHP 
+-	Rust
+
+Prometheus metrics / OpenMetrics types
+--------------------------------------
+
+Depending on what kind of information you want to collect and expose, you’ll have to use a different metric type. Here are your four choices available on the OpenMetrics specification:
+
+**Counter**
+
+This represents a cumulative metric that only increases over time, like the number of requests to an endpoint. Note: instead of using Counter to instrument decreasing values, use Gauges.
+
+.. code::
+
+  # HELP go_memstats_alloc_bytes_total Total number of bytes allocated, even if freed.
+  # TYPE go_memstats_alloc_bytes_total counter
+  go_memstats_alloc_bytes_total 3.7156890216e+10
+
+**Gauge**
+
+Gauges are instantaneous measurements of a value. They can be arbitrary values which will be recorded. Gauges represent a random value that can increase and decrease randomly such as the load of your system.
+
+.. code::
+
+  # HELP go_goroutines Number of goroutines that currently exist.
+  # TYPE go_goroutines gauge
+  go_goroutines 73
+  
+**Histogram**
+
+A histogram samples observations (usually things like request durations or response sizes) and counts them in configurable buckets. It also provides a sum of all observed values. A histogram with a base metric name of exposes multiple time series during a scrape:
+
+.. code::
+
+  # HELP http_request_duration_seconds request duration histogram
+  # TYPE http_request_duration_seconds histogram
+  http_request_duration_seconds_bucket{le="0.5"} 0
+  http_request_duration_seconds_bucket{le="1"} 1
+  http_request_duration_seconds_bucket{le="2"} 2
+  http_request_duration_seconds_bucket{le="3"} 3
+  http_request_duration_seconds_bucket{le="5"} 3
+  http_request_duration_seconds_bucket{le="+Inf"} 3
+  http_request_duration_seconds_sum 6
+  http_request_duration_seconds_count 3
+
+**Summary**
+
+Similar to a histogram, a summary samples observations (usually things like request durations and response sizes). While it also provides a total count of observations and a sum of all observed values, it calculates configurable quantiles over a sliding time window. A summary with a base metric name of also exposes multiple time series during a scrape:
+
+More regarding `OpenMetrics types <https://prometheus.io/docs/concepts/metric_types/>`_
+
+Prometheus exporters
+--------------------
+
+Many popular server applications like Nginx or PostgreSQL are much older than the Prometheus metrics / OpenMetrics popularization. They usually have their own metrics formats and exposition methods. To work around this hurdle, the Prometheus community is creating and maintaining a vast collection of Prometheus exporters. An exporter is a “translator” or “adapter” program able to collect the server native metrics and re-publishing these metrics using the Prometheus metrics format and HTTP protocol transports. These small binaries can be co-located in the same container or pod executing the main server that is being monitored, or isolated in their own sidecar container and then you can collect the service metrics scraping the exporter that exposes and transforms them into Prometheus metrics.
+
+There are a number of `exporters <https://prometheus.io/docs/instrumenting/exporters/>`_ that are maintained as part of the official `Prometheus GitHub <https://github.com/prometheus>`_.
+
+
+You might need to write your own exporter if…
+
+- You’re using 3rd party software that doesn’t have an existing exporter already
+
+- You want to generate Prometheus metrics from software that you have written
+
+Example
+-------
+
+Building a generic HTTP server metrics exporter in Python. By Nancy Chauhan: https://levelup.gitconnected.com/building-a-prometheus-exporter-8a4bbc3825f5
 
 ***************************
 Version control and release
@@ -910,9 +1124,11 @@ Prometheus v2.31.1
 
 Prometheus-es-adapter v3.3
 
-ElasticSearch v6.4.2
+Grafana v9.1.1
 
-Kibana v6.4.2
+kube-state-metrics v2.8.1
+
+node_exporter v0.18.1
 
 ***************
 License
