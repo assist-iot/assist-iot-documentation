@@ -58,6 +58,10 @@ To **deploy a new enabler**, click on the *Add a new enabler* button and a form 
 - **Use the Auto scheduler functionality of the Smart Orchestrator**: check the *Auto scheduler* checkbox and select a *Placement policy*. For more infomation about these policies,
   see the `Smart Orchestrator entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/smart/smart_orchestrator.html>`_.
 
+
+The full name of the enabler can be overrided by checking the *Fullname override* checkbox. This means that the value of the field *Name* of the form will be used to populate the *fullnameOverride* value 
+of the enabler's Helm chart, so the K8s services names of the enabler will follow this schema: *<fullnameOverride>-<component_name>*. For more information, please read the D6.7 of the project.
+
 In order to select the enabler to deploy, first select a Helm chart repository from the list. Then a selectable will appear containing all the enablers of the selected repository. 
 Select the desired enabler and, finally, choose a version from another selectable that will appear containing the available versions of the chosen enabler.
 
@@ -119,7 +123,17 @@ The Smart Orchestrator must be previously installed.
 ***************
 Installation
 ***************
-This enabler is part of the Tactile dashboard enabler, so see the installation section of the Tactile dashboard enabler entry.
+This enabler is part of the Tactile dashboard enabler, so it is installed along with the Smart Orchestrator in the latter's installation script.
+
+However, it can be installed using its Helm chart, which can be found in the Package registry of the Gitlab's public repository:
+
+1. Add the Helm chart repository:
+
+   ``helm repo add assist-public-repo https://gitlab.assist-iot.eu/api/v4/projects/85/packages/helm/stable``
+
+2. Install the last version of the dashboard's Helm chart
+
+   ``helm install assist-public-repo/dashboard``
 
 *********************
 Configuration options
@@ -134,7 +148,7 @@ For more information, read the `Tactile dashboard enabler entry <https://assist-
 ***************************
 Version control and release
 ***************************
-Version 0.2.0. Under development.
+Version 1.0.0. Fully functional and aligned with the version 3.0.0 of the Smart Orchestrator enabler.
 
 ***************
 License
@@ -143,6 +157,6 @@ The licenses of internal code are under analysis. The code is developed using op
 Prodevelop. For more information about PUI9 licenses, read the `Tactile dashboard enabler entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/application/tactile_dashboard_enabler.html>`_
 
 ********************
-Notice(dependencies)
+Notice (dependencies)
 ********************
 This enabler depends on the Smart Orchestrator enabler and it's part of the Tactile dashboard enabler.
