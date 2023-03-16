@@ -206,6 +206,7 @@ However, it can be installed using dashboard's Helm chart, which can be found in
 *********************
 Configuration options
 *********************
+
 The dashboard's Helm chart can be configured using the following environment variables:
 
 - Frontend:
@@ -228,7 +229,7 @@ The dashboard's Helm chart can be configured using the following environment var
 ***************
 Developer guide
 ***************
-For more information, read the `Tactile dashboard enabler entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/application/tactile_dashboard_enabler.html>`_
+For more information, read the `Tactile dashboard enabler entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/application/tactile_dashboard_enabler.html>`_.
 
 ***************************
 Version control and release

@@ -1,7 +1,7 @@
-.. _Trafic classification enabler:
+.. _Traffic classification enabler:
 
 #############################
-Trafic classification enabler
+Traffic classification enabler
 #############################
 
 .. contents::
@@ -45,7 +45,7 @@ architecture. In particular, it will be one of the enablers devoted to improve
 the performance of the network, in this case acting as an application that aids the SDN 
 controller.
 
-.. figure:: ./traffic_place.PNG
+.. figure:: ./traffic_place.png
    :alt: Place of the Traffic Classification enabler within the Smart Network and Control Plance architecture
    :align: center
    
@@ -58,7 +58,7 @@ The enabler is composed of three main elements, as one can see in the figure bel
 - **Training Module**: It will be invoked for training the DNN model and sub-models by the user, ideally when an extended or new dataset is available.
 - **Classifier**: It will contain the functions in charge of executing the inference process, taking a trained model and a set of packet features as inputs.
 
-.. figure:: ./traffic_arch.PNG
+.. figure:: ./traffic_arch.png
    :alt: Traffic Classification enabler architecture
    :align: center
 
@@ -129,7 +129,7 @@ will be managed by Helm's *values.yaml* manifest.
 ***************
 Developer guide
 ***************
-Not Applicable.
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release

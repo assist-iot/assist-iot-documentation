@@ -36,7 +36,7 @@ The Multi-link enabler is located in the Smart Network and Control plane of the 
 architecture. In particular, it will be one of the enablers devoted to extend the
 basic features of the system, in this case serving as a bridge of multiple wireless access networks.
 
-.. figure:: ./multi_place.PNG
+.. figure:: ./multi_place.png
    :alt: Place of the Multi-link enabler within the Smart Network and Control Plance architecture
    :align: center
    
@@ -49,7 +49,7 @@ The enabler is composed of three main elements, as one can see in the figure bel
 - **Bonding component**: It will be used for establishing the necessary bridges, bonding and prioritisation rules in a GWEN (or similar gateway device). It will bond the tunnels that will travel over different radio technologies, establishing a primary one and backups.
 - **VPN Client/Server**: P2P tunnels will be established over the system, so the wireless networks belong to the same virtual one. To that end, an underlying VPN technology is needed.
 
-.. figure:: ./multi_arch.PNG
+.. figure:: ./multi_arch.png
    :alt: Multi-link enabler architecture
    :align: center
 
@@ -114,17 +114,17 @@ as the needed configurations for having execution rights over the host OS.
 ***************
 Developer guide
 ***************
-Not Applicable.
+Will be determined after the release of the enabler.
 
 ***************************
 Version control and release
 ***************************
-Not Applicable. Any version has been released yet.
+Will be determined after the release of the enabler.
 
 ***************
 License
 ***************
-Not Applicable. Any code or binary has been released yet.
+Will be determined after the release of the enabler.
 
 *********************
 Notice (dependencies)

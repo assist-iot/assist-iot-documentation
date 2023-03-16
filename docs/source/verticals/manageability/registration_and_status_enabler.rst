@@ -149,6 +149,7 @@ However, it can be installed using the dashboard's Helm chart, which can be foun
 *********************
 Configuration options
 *********************
+
 The dashboard's Helm chart can be configured using the following environment variables:
 
 - Frontend:
