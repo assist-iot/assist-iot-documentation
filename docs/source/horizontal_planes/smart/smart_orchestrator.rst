@@ -122,8 +122,8 @@ SERVER). - p: Pod CIDR Network (This MUST be different in each cluster.
 If you choose 10.216.0.0/16, the other cluster MUST be for instance
 10.215.0.0/16).
 
-   ⚠️\ **Warning** - DO NOT REPEAT POD CIDR NETWORK. - 10.217.0.0/16 IS
-   RESERVED FOR THE SMART ORCHESTRATOR CLUSTER.
+.. warning:: 
+   - DO NOT REPEAT POD CIDR NETWORK. - 10.217.0.0/16 IS RESERVED FOR THE SMART ORCHESTRATOR CLUSTER.
 
 .. code:: bash
 
@@ -147,8 +147,9 @@ and copy the output of this command:
 
 Switch again to the master node of the cluster and paste the command
 output as *sudo*. 
-> **Note** > - A KUBEADM node can not be joined to a
-k3s cluster. > - A k3s node can not be joined to a KUBEADM cluster.
+.. note::
+ - A KUBEADM node can not be joined to a k3s cluster. 
+ - A k3s node can not be joined to a KUBEADM cluster.
 
 K3S
 ------
@@ -166,10 +167,9 @@ edge tier of the architecture
 
 ..
 
-   ⚠️\ **Warning** - ENSURE THAT ALL NODES ARE ADDED TO THE MAIN CLUSTER
-   (MASTER NODE) PRIOR TO ADDING THE CLUSTER TO THE SMARTORCHESTRATOR. -
-   WE ARE FACING SOME ISSUES WITH CILIUM AND RPI, PLEASE WAIT UNTIL WE
-   HAVE SOLVED IT.
+.. warning::
+   - ENSURE THAT ALL NODES ARE ADDED TO THE MAIN CLUSTER (MASTER NODE) PRIOR TO ADDING THE CLUSTER TO THE SMARTORCHESTRATOR. 
+   - WE ARE FACING SOME ISSUES WITH CILIUM AND RPI, PLEASE WAIT UNTIL WE HAVE SOLVED IT.
 
 .. _master-node-1:
 
@@ -185,8 +185,9 @@ IP. - p: Pod CIDR Network (This MUST be different in each cluster. If
 you choose 10.216.0.0/16, the other cluster MUST be for instance
 10.215.0.0/16).
 
-   ⚠️\ **Warning** - DO NOT REPEAT POD CIDR NETWORK. - 10.217.0.0/16 IS
-   RESERVED FOR THE SMART ORCHESTRATOR CLUSTER.
+.. warning::
+   - DO NOT REPEAT POD CIDR NETWORK. 
+   - 10.217.0.0/16 IS RESERVED FOR THE SMART ORCHESTRATOR CLUSTER.
 
 .. code:: bash
 
@@ -236,10 +237,9 @@ Orchestrator:
 Failure to follow these steps will result in the Smart Orchestrator
 preventing the joining of a cluster.
 
-   ⚠️\ **Warning** - ENSURE THAT ALL NODES ARE ADDED TO THE MAIN CLUSTER
-   (MASTER NODE) PRIOR TO ADDING THE CLUSTER TO THE SMARTORCHESTRATOR. -
-   WE ARE FACING SOME ISSUES WITH CILIUM AND RPI, PLEASE WAIT UNTIL WE
-   HAVE SOLVED IT.
+.. warning::
+   - ENSURE THAT ALL NODES ARE ADDED TO THE MAIN CLUSTER (MASTER NODE) PRIOR TO ADDING THE CLUSTER TO THE SMARTORCHESTRATOR. 
+   - WE ARE FACING SOME ISSUES WITH CILIUM AND RPI, PLEASE WAIT UNTIL WE HAVE SOLVED IT.
 ***************
 Troubleshooting
 ***************
