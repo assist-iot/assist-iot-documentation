@@ -45,22 +45,21 @@ This enabler is included in the Tactile Dashboard of the project, so a logged us
 
 Enablers
 *********************
-The enabler shows a table with the deployed enablers and some information: ID, name, operational status, detailed status and creation date.
+The enabler shows a table with the deployed enablers and some information: ID, name, K8s cluster where it is deployed, operational status, detailed status and creation date.
 
 .. figure:: ./enablers.png
    :alt: Devices management user interface
    :align: center
 
 
-To **deploy a new enabler**, click on the *Add a new enabler* button and a form will appear. There are two options to deploy a new enabler: 
+To **deploy a new enabler**, click on the *Add a new enabler* button and a form will appear. 
 
-- **Select manually the K8s where will be deployed**: uncheck the *Auto scheduler* checkbox and select a cluster.
-- **Use the Auto scheduler functionality of the Smart Orchestrator**: check the *Auto scheduler* checkbox and select a *Placement policy*. For more infomation about these policies,
-  see the `Smart Orchestrator entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/smart/smart_orchestrator.html>`_.
-
-
-The full name of the enabler can be overrided by checking the *Fullname override* checkbox. This means that the value of the field *Name* of the form will be used to populate the *fullnameOverride* value 
+The first step it to fill in the enabler name. The full name of the enabler can be overrided by checking the *Fullname override* checkbox. This means that the value of the field *Name* of the form will be used to populate the *fullnameOverride* value 
 of the enabler's Helm chart, so the K8s services names of the enabler will follow this schema: *<fullnameOverride>-<component_name>*. For more information, please read the D6.7 of the project.
+
+.. figure:: ./enabler_form_general_info.png
+   :alt: Enabler form general information
+   :align: center
 
 In order to select the enabler to deploy, first select a Helm chart repository from the list. Then a selectable will appear containing all the enablers of the selected repository. 
 Select the desired enabler and, finally, choose a version from another selectable that will appear containing the available versions of the chosen enabler.
@@ -69,6 +68,18 @@ Select the desired enabler and, finally, choose a version from another selectabl
    :alt: Select the enabler from a repository
    :align: center
 
+There are two options to deploy a new enabler: 
+
+- **Select manually the K8s where will be deployed**: uncheck the *Auto scheduler* checkbox and select a cluster.
+- **Use the Auto scheduler functionality of the Smart Orchestrator**: check the *Auto scheduler* checkbox and select a *Placement policy*. 
+  For more infomation about these policies, see the `Smart Orchestrator entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/smart/smart_orchestrator.html>`_.
+
+Only if the *cloud* cluster has been manually selected to deploy the enabler on it, the *Multi-cluster global service* checkbox will appear. This option makes the service 
+of the enabler's main interface available to the enablers deployed on the other clusters.
+
+.. figure:: ./enabler_form_multicluster_global_svc.png
+   :alt: Enable multi-cluster global service
+   :align: center
 
 The deployment of the new enabler can be configured by filling the *Additional parameters* box with a raw JSON object. The values included in this JSON object will replace the default values 
 of the *values.yaml* file of the enabler Helm chart. In future versions, the challenge is to customize this form for each enabler, including all the customizable parameters in a user-friendly way.
@@ -125,7 +136,7 @@ Installation
 ***************
 This enabler is part of the Tactile dashboard enabler, so it is installed along with the Smart Orchestrator in the latter's installation script.
 
-However, it can be installed using its Helm chart, which can be found in the Package registry of the Gitlab's public repository:
+However, it can be installed using the dashboard's Helm chart, which can be found in the Package registry of the Gitlab's public repository:
 
 1. Add the Helm chart repository:
 
@@ -138,7 +149,24 @@ However, it can be installed using its Helm chart, which can be found in the Pac
 *********************
 Configuration options
 *********************
-Not applicable.
+The dashboard's Helm chart can be configured using the following environment variables:
+
+- Frontend:
+
+  - **BACKEND_SCHEMA**: schema of the backend endpoint (*http* or *https*).
+  - **BACKEND_HOST**: hostname of the backend.
+  - **BACKEND_PORT**: port of the backend.
+
+- Backend:
+
+  - **JAVA_OPTS**: Java options of Apache Tomcat. The database connection is configured using these options.
+  - **ORCHESTRATOR_API_URL**: URL of the Smart Orchestrator's API.
+
+- Frontend:
+
+  - **POSTGRES_USER**: PostgreSQL database user.
+  - **POSTGRES_PASSWORD**: PostgreSQL database user password.
+  - **POSTGRES_DB**: PostgreSQL database name.
 
 ***************
 Developer guide
@@ -156,7 +184,7 @@ License
 The licenses of internal code are under analysis. The code is developed using open source technologies (Vue.js, Spring framework, ...) and PUI9, a framework that is property of
 Prodevelop. For more information about PUI9 licenses, read the `Tactile dashboard enabler entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/application/tactile_dashboard_enabler.html>`_
 
-********************
+**********************
 Notice (dependencies)
-********************
+**********************
 This enabler depends on the Smart Orchestrator enabler and it's part of the Tactile dashboard enabler.

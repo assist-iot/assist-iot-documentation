@@ -52,7 +52,7 @@ This enabler is included in the Tactile Dashboard of the project, so a logged us
 
 Kubernetes clusters
 *********************
-The enabler shows a **table with the registered K8s clusters** in the Smart Orchestrator and some information: ID, name, K8s version, server url, status and creation date.
+The enabler shows a **table with the registered K8s clusters** in the Smart Orchestrator and some information: ID, name, K8s version, server URL, status and creation date.
 
 .. figure:: ./k8sclusters.png
   :alt: Devices management user interface
@@ -193,7 +193,7 @@ Installation
 ***************
 This enabler is part of the Tactile dashboard enabler, so it is installed along with the Smart Orchestrator in the latter's installation script.
 
-However, it can be installed using its Helm chart, which can be found in the Package registry of the Gitlab's public repository:
+However, it can be installed using dashboard's Helm chart, which can be found in the Package registry of the Gitlab's public repository:
 
 1. Add the Helm chart repository:
 
@@ -206,7 +206,24 @@ However, it can be installed using its Helm chart, which can be found in the Pac
 *********************
 Configuration options
 *********************
-Not applicable.
+The dashboard's Helm chart can be configured using the following environment variables:
+
+- Frontend:
+
+  - **BACKEND_SCHEMA**: schema of the backend endpoint (*http* or *https*).
+  - **BACKEND_HOST**: hostname of the backend.
+  - **BACKEND_PORT**: port of the backend.
+
+- Backend:
+
+  - **JAVA_OPTS**: Java options of Apache Tomcat. The database connection is configured using these options.
+  - **ORCHESTRATOR_API_URL**: URL of the Smart Orchestrator's API.
+
+- Frontend:
+
+  - **POSTGRES_USER**: PostgreSQL database user.
+  - **POSTGRES_PASSWORD**: PostgreSQL database user password.
+  - **POSTGRES_DB**: PostgreSQL database name.
 
 ***************
 Developer guide
@@ -224,7 +241,7 @@ License
 The licenses of internal code are under analysis. The code is developed using open source technologies (Vue.js, Spring framework, ...) and PUI9, a framework that is property of
 Prodevelop. For more information about PUI9 licenses, read the `Tactile dashboard enabler entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/application/tactile_dashboard_enabler.html>`_
 
-********************
+*********************
 Notice (dependencies)
-********************
+*********************
 This enabler depends on the Smart Orchestrator enabler and it's part of the Tactile dashboard enabler.
