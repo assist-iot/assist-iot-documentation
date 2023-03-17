@@ -31,32 +31,24 @@ meet the specific use case.
 Features
 ========
 
-The enabler is in active development. Most features listed below are not
-implemented yet. Marked in **bold** are those that are already
-functioning.
+Implemented features
+~~~~~~~~~~~~~~~~~~~~
 
-Storing data models
-~~~~~~~~~~~~~~~~~~~
+-  Storage of any type of data model, both textual and binary.
+-  Ability to provide multiple formats of one data model, depending on
+   the requester’s preferences.
+-  Grouping data models into namespaces.
+-  Flexible versioning with arbitrary tag names.
+-  Ability to attach arbitrary additional metadata.
+-  Metadata searching and sorting.
+-  Support for adding documentation pages.
 
--  **Storage of any type of data model, both textual and binary.**
--  **Ability to provide multiple formats of one data model, depending on
-   the requester’s preferences.**
--  **Grouping data models into namespaces.**
--  **Flexible versioning with arbitrary tag names.**
--  Granular and easy-to-use access control.
-
-Metadata
-~~~~~~~~
+Planned features
+~~~~~~~~~~~~~~~~
 
 -  Tracking provenance information (creation/modification dates,
    authors).
--  Ability to attach arbitrary additional metadata.
--  Metadata searching and sorting.
-
-Documentation
-~~~~~~~~~~~~~
-
--  Support for Markdown/ASCIIDOC manual documentation pages.
+-  Granular and easy-to-use access control.
 -  Automatic documentation generation for some data model types.
 -  Flexible plugin architecture for creating additional documentation
    generation modules.
