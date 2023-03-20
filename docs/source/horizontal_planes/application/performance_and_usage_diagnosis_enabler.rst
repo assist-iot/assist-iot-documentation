@@ -992,7 +992,7 @@ Prometheus metric format has a name combined with a series of labels or tags.
 
 ``<metric name>{<label name>=<label value>, ...}``
 
-A time series with the metric name http_requests_total and the labels service="service", server="pod50″ and env="production" could be written like this:
+A time series with the metric name http_requests_total and the labels service="service", server="pod50" and env="production" could be written like this:
 
 ``http_requests_total{service="service", server="pod50", env="production"}``
 
