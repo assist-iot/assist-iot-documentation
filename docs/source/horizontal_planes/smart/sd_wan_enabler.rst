@@ -1,5 +1,5 @@
-.. image:: https://user-images.githubusercontent.com/100677511/170439941-58810f43-b437-41e5-9976-899b60cf1e5e.png
-   :alt: image-3
+.. image:: ./images/sd_wan_enabler/assist-IoT-logo.png
+   :alt: assist-IoT-logo
 
 SD-WAN enabler
 ==============
