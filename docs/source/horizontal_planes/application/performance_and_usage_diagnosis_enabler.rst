@@ -49,9 +49,9 @@ Performance and Usage Diagnosis (PUD) enabler is located in the Application and 
 
 .. image:: https://user-images.githubusercontent.com/100563908/156375733-78f4f855-139f-4c55-8241-d6052d15f783.PNG
 
-**Here is the high-level architecture of Prometheus.**
+**Here is the high-level architecture of PUD's Prometheus.**
 
-.. image:: https://prometheus.io/assets/architecture.png
+.. image:: https://user-images.githubusercontent.com/100563908/227181875-4a234213-7797-4eb9-84a2-bae69485dacb.png
 
 Prometheus scrapes metrics from instrumented jobs. It stores all scraped samples locally and runs rules over this data to either aggregate and record new time series from existing data or generate alerts.
 
@@ -155,7 +155,6 @@ The result should show something like:
   pude-grafana-6986754ffd-7gr62                                     1/1     Running   0          112s
   pude-kube-state-metrics-6f78cf594b-dg25z                          1/1     Running   0          112s
   pude-performance-and-usage-diagnosis-alertmanager-cc8dfbb5ks27s   2/2     Running   0          112s
-  pude-performance-and-usage-diagnosis-pushgateway-85748b494zp4pv   1/1     Running   0          112s
   pude-performance-and-usage-diagnosis-server-76ff877d66-8z6zd      2/2     Running   0          112s
 
 
@@ -1135,8 +1134,3 @@ License
 ***************
 
 **Apache License 2.0**
-
-********************
-Notice(dependencies)
-********************
-Will be determined after the release of the enabler.
