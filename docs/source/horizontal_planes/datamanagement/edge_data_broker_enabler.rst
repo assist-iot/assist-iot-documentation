@@ -149,6 +149,13 @@ Install Edge Data Broker Enabler.
   
 The command deploys EDB on the Kubernetes cluster in the default configuration.
 
+**Note**: ``kostasiccs/vernemq`` image is suitable for ARM architectures (Assist-IoT's GWEN, Raspberry Pi, etc.) and is the defaul image used in Edbe's helm chart. For other architectures use ``vernemq/vernemq`` official image and accept the VerneMQ EULA by appending the following in the additionalEnv.
+
+.. code-block::
+
+  - name: DOCKER_VERNEMQ_ACCEPT_EULA
+    value: "yes"
+
 To check if the installation was successful run:
 
 .. code-block:: cmd
@@ -211,6 +218,45 @@ The result should show something like:
   +--------------------------------------------------------+---------+
   | VerneMQ@edbe-1.edbe-headless.default.svc.cluster.local | true    |
   +--------------------------------------------------------+---------+
+  
+**To make an MQTT Bridge connection between two different VermeMQ clusters before the installation append in one of the cluster's values.yaml file the following additionaEnv:**
+
+.. code-block::
+
+  - name: DOCKER_VERNEMQ_PLUGINS__VMQ_BRIDGE
+    value: "on"
+  - name: DOCKER_VERNEMQ_VMQ_BRIDGE__TCP__BR0
+    value: "10.43.0.1:31883"
+  - name: DOCKER_VERNEMQ_VMQ_BRIDGE__TCP__BR0__TOPIC__1
+    value: "* in"
+  - name: DOCKER_VERNEMQ_VMQ_BRIDGE__TCP__BR0__MAX_OUTGOING_BUFFERED_MESSAGES
+    value: "100"
+    
+**Note**:  With the above configuration we allow to only import messages (all of them, '*'="#" wildcard) from a remote broker with address 10.43.0.1 and port 31883 and store up to 100 messages to our buffer.
+
+For more info refer to vernemq official `Documentation page <https://docs.vernemq.com/configuring-vernemq/bridge>`_.
+
+- Connect to a shell of a running container within Kubernetes pod.
+
+.. code-block:: cmd
+
+  kubectl exec -it edbe-0 -- /bin/bash
+
+- Check the bridges state:
+
+.. code-block:: cmd
+  
+  vmq-admin bridge show
+  
+The result should show something like:
+
+.. code-block::
+
+  +------+-----------------+-------------+------------+---------------------+--------------------------+
+  | name | endpoint        | buffer size | buffer max | buffer dropped msgs | MQTT process mailbox len |
+  +------+-----------------+-------------+------------+---------------------+--------------------------+
+  | br0  | 10.43.0.1:31883 | 0           | 100        | 0                   | 0                        |
+  +------+-----------------+-------------+------------+---------------------+--------------------------+
   
 **To monitor Edge Data Broker Enabler, type to your browser:**
 
@@ -719,14 +765,11 @@ Lastly as we can see when ``“new_payload”: “”`` the new payload generate
 ****************************
 Version control and release
 ****************************
-Will be determined after the release of the enabler.
+VerneMQ v1.12.3
+
+FR_Script v1.0
 
 ****************
 License
 ****************
-Will be determined after the release of the enabler.
-
-********************
-Notice(dependencies)
-********************
 Will be determined after the release of the enabler.
