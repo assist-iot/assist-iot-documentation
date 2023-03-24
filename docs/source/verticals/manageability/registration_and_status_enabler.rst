@@ -1,8 +1,8 @@
-.. _Enabler for registration and status of enablers:
+.. _Enablers manager:
 
-###############################################
-Enabler for registration and status of enablers
-###############################################
+#################
+Enablers manager
+#################
 
 .. contents::
   :local:
@@ -23,7 +23,7 @@ In future versions, the user will be able to see the logs of each deployed enabl
 *********************
 Place in architecture
 *********************
-The Enabler for registration and status of enablers is part of the vertical plane manageability enablers. Moreover, this enabler is a user interface that is part of the Tactile dashboard enabler.
+The Enablers manager is part of the vertical plane manageability enablers. Moreover, this enabler is a user interface that is part of the Tactile dashboard enabler.
 
 .. figure:: ./dashboard-manageability-architecture.png
    :alt: Dashboard architecture

@@ -1,8 +1,8 @@
-.. _Devices managment enabler:
+.. _Cluster and topology manager:
 
-#########################
-Devices managment enabler
-#########################
+#############################
+Cluster and topology manager
+#############################
 
 .. contents::
   :local:
@@ -31,7 +31,7 @@ In future versions, K8s clusters that make use of SD-WAN or VPN connections will
 *********************
 Place in architecture
 *********************
-The Devices managment enabler is part of the vertical plane manageability enablers. Moreover, this enabler is a user interface that is part of the Tactile dashboard enabler.
+The Cluster and topology manager is part of the vertical plane manageability enablers. Moreover, this enabler is a user interface that is part of the Tactile dashboard enabler.
 
 .. figure:: ./dashboard-manageability-architecture.png
   :alt: Dashboard architecture
