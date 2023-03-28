@@ -70,6 +70,7 @@ HTTP interface
 1 Parametrization refers to access to input or output data in JSON (with
 `JSONPath <https://support.smartbear.com/alertsite/docs/monitors/api/endpoint/jsonpath.html>`__),
 string, or byte string format. To do that, a special syntax is provided.
+
 *********************
 Place in architecture
 *********************
@@ -662,9 +663,9 @@ Prerequisites
 -  `Docker Compose <https://docs.docker.com/compose/>`__
 
 
-
+***************
 Installation
-============
+***************
 
 Development environment
 -----------------------
@@ -717,9 +718,9 @@ The ``prod-app.sh`` script starts the application. The application is
 accessible at ``localhost:8080``.
 
 
-
+***************
 Configuration
-=============
+***************
 
 Application
 -----------
@@ -736,9 +737,9 @@ i.e. \ *geolocation_user* - ``DB_GEOLOCATION_PASSWORD``:
 i.e. \ *postgres123*
 
 
-
+***************
 Developer guide
-===============
+***************
 
 Environment
 -----------
@@ -767,14 +768,15 @@ Configs for ``scalafmt``, ``scalafix``, and ``scalastyle`` can be found
 in the ``configs`` directory.
 
 
-
-Version control and releases
-============================
+***************************
+Version control and release
+***************************
 
 *The enabler is under development.*
 
 
 
+***************
 License
 ***************
 The Location Processing is licensed under the **Apache License, Version
@@ -782,9 +784,10 @@ The Location Processing is licensed under the **Apache License, Version
 
 One may obtain a copy of the License at
 http://www.apache.org/licenses/LICENSE-2.0
-***************
-Notice (dependencies)
-***************
+
+********************
+Notice(dependencies)
+********************
 Dependency list and licensing information will be provided before the
 first major release.
 
