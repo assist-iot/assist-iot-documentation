@@ -7,13 +7,37 @@ version = '0.1.0'
 
 # -- General configuration
 
+# extensions = [
+#     'sphinx.ext.duration',
+#     'sphinx.ext.doctest',
+#     'sphinx.ext.autodoc',
+#     'sphinx.ext.autosummary',
+#     'sphinx.ext.intersphinx',
+# ]
 extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
-]
+    'sphinx.ext.autodoc', 
+    'sphinx.ext.doctest', 
+    'sphinx.ext.todo', 
+    'sphinx.ext.viewcode', 
+    'sphinx.ext.intersphinx',  
+    'sphinx.ext.coverage', 
+    'sphinx.ext.mathjax', 
+    'sphinx.ext.ifconfig', 
+    'sphinx.ext.githubpages', 
+    'sphinx.ext.imgmath', 
+    'sphinx.ext.graphviz', 
+    'sphinx.ext.inheritance_diagram', 
+    'sphinx.ext.napoleon', 
+    'sphinx.ext.autosectionlabel', 
+    'sphinx.ext.extlinks', 
+    'sphinxcontrib.bibtex', 
+    'sphinxcontrib.mermaid', 
+    'sphinx.ext.toctree']
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),

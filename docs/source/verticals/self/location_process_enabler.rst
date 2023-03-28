@@ -89,9 +89,8 @@ database before starting the application. So that queries have access to
 the required tables and data.
 
 
-
 User guide HTTP interface
-=========================
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Definitions
 -----------
@@ -225,16 +224,13 @@ Output topic (*outputTopic*)
 Topic where the output is published.
 
 =============================== ===============================
-==================
 Name                            Description                     Type
 =============================== ===============================
-==================
 name                            Topic name                      string
 publishEmptyOutput \ *optional* Whether to publish empty output boolean
 publishWhen \ *optional*        When to publish                 publishWhen
 publishFlags \ *optional*       Publish flags                   array[publishFlag]
 =============================== ===============================
-==================
 
 .. code:: json
 
@@ -244,10 +240,11 @@ publishFlags \ *optional*       Publish flags                   array[publishFla
      "publishWhen": "success",
      "publishEmptyOutput": false
    }
+
 Input settings (*inputSettings*)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MQTT input settings. \| Name \| Description \| Type \| \|——|————-|——\|
+MQTT input settings. \| Name \| Description \| Type \| \|————\|
 \| host \| MQTT host \| string \| \| port \| MQTT port \| number \| \|
 username \ *optional* \| Client credentials \| string \| \| password
 \ *optional* \| Client credentials \| string \| \| topics \ *optional*
@@ -271,7 +268,7 @@ username \ *optional* \| Client credentials \| string \| \| password
 Output settings (*outputSettings*)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MQTT output settings. \| Name \| Description \| Type \| \|——|————-|——\|
+MQTT output settings. \| Name \| Description \| Type \| \|————\|
 \| host \| MQTT host \| string \| \| port \| MQTT port \| number \| \|
 username \ *optional* \| Client credentials \| string \| \| password
 \ *optional* \| Client credentials \| string \| \| topics \ *optional*
@@ -308,7 +305,7 @@ username \ *optional* \| Client credentials \| string \| \| password
 Query (*query*)
 ~~~~~~~~~~~~~~~
 
-Query configuration. \| Name \| Description \| Type \| \|——|————-|——\|
+Query configuration. \| Name \| Description \| Type \| \|————\|
 \| name \ *required* \| Unique query name \| string \| \| inputSettings
 \ *optional* \| Input settings \| inputSettings \| \| outputSettings
 \ *optional* \| Output settings \| outputSettings \| \| sql \ *required*
@@ -668,7 +665,7 @@ Installation
 ***************
 
 Development environment
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 For development, run the following scripts:
 
@@ -723,7 +720,7 @@ Configuration
 ***************
 
 Application
------------
+^^^^^^^^^^^
 
 The app can be configured via environment variables. - ``HTTP_PORT``:
 port at which the API is accessible, i.e. \ *8080* -
@@ -742,14 +739,14 @@ Developer guide
 ***************
 
 Environment
------------
+^^^^^^^^^^^
 
 Refer to the `installation
 guide <https://magnetic-fields.ibspan.waw.pl/assist-iot/wp5/location-processing/-/wikis/installation>`__
 to setup the environment.
 
 Scripts
--------
+^^^^^^^
 
 The development scripts are located in ``scripts`` directory. -
 ``check.sh`` runs linter (in check mode) and tests - ``clean.sh`` cleans

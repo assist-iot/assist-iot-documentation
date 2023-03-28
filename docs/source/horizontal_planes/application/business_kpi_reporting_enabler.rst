@@ -42,7 +42,7 @@ User guide
 **Note**: This user guide follows the `Quick start guide <https://www.elastic.co/guide/en/kibana/current/get-started.html>`__  from Kibana documentation page.
 
 Set up the installation
-*******************
+************************
 Go to the Instalattion section
 
 Add sample data
@@ -78,7 +78,7 @@ Discover displays the data in an interactive histogram that shows the distributi
    :alt: Explore data 3
    
 View and analyze the data
-*******************
+**************************
 
 A dashboard is a collection of panels that you can use to view and analyze the data. Panels contain visualizations, interactive controls, text, and more.
 
@@ -88,7 +88,7 @@ A dashboard is a collection of panels that you can use to view and analyze the d
    :alt: View data
    
 Create a visualization panel
-*******************
+*****************************
 Create a treemap panel that shows additional context information (such as top sales regions and manufacturers), then add the panel to the dashboard.
 
 - In the toolbar, click **Edit**.
@@ -150,7 +150,7 @@ Installation
 ***************
 
 Installing the chart
-*******************
+*********************
 The enabler is provided as a Helm chart. To install the chart with the release name ``my-BKPI``:
 
 ``helm install my-BKPI BKPI``
@@ -164,11 +164,11 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 
 
 Verification / Visualization
-*******************
+*****************************
 List all releases using ``helm list``
 
 Uninstalling the Chart
-*******************
+**********************
 To uninstall/delete the ``my-BKPI`` deployment:
 
 ``helm delete my-BKPI``
