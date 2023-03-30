@@ -1,8 +1,8 @@
 .. _OpenAPI Management enabler:
 
-############
+###########################
 OpenAPI Management enabler
-############
+###########################
 
 .. contents::
   :local:
