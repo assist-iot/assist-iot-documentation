@@ -26,9 +26,7 @@ extensions = [
     'sphinx.ext.napoleon', 
     'sphinx.ext.autosectionlabel', 
     'sphinx.ext.extlinks', 
-    'sphinxcontrib.bibtex', 
-    'sphinxcontrib.mermaid',
-    'sphinxcontrib-bibtex', 
+    'sphinxcontrib.mermaid', 
     'sphinx.ext.toctree']
 
 intersphinx_mapping = {
