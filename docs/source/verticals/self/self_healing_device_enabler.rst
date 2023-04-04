@@ -1,8 +1,8 @@
 .. _Self-healing device enabler:
 
-############
+############################
 Self-healing device enabler
-############
+############################
 
 .. contents::
   :local:
@@ -43,53 +43,52 @@ User guide
 They can be divided between CPU/RAM usage and network availability:
 
 CPU usage and RAM usage
-***************
+******************************
 The following figure illustrates the nodes and flows associated to these self-healing functionalities:
 
 .. figure:: ./self_healing_CPU_RAM_usage.png
    :alt: Self Healing CPU RAM usage
 
 Self-detector
-##########
+##############
 
 - The following command obtains the overall **CPU usage:** ``echo $[100-$(vmstat 1 2|tail -1|awk '{print $15}')]``
 - The following command obtains the overall **RAM usage:** ``free | grep Mem | awk '{print $3/$2 * 100.0}'``
 
 Self-monitor
-##########
+############
 
 - If CPU usage > 80\% (customizable parameter via API, as described below) during an amount of time, look for the process with the most CPU consumption. To do so, the following command gets the process with the most CPU consumption: ``ps -eo pcpu,pid | sort -rnk 1 | head -1``. In this command, sort is being used with the -r (reverse), the -n (numeric) and the -k (key) options which are telling the command to sort the output in reverse numeric order based on the first column (cpu usage) in the output from ps.
 - If RAM usage > 80% (customizable parameter via API, as described below) during an amount of time, look for the process with the most RAM consumption. To do so, the following command gets the process with the most RAM consumption: ``ps -eo pmem,pid | sort -rnk 1 | head -1``. In this command, sort is being used with the -r (reverse), the -n (numeric) and the -k (key) options which are telling the command to sort the output in reverse numeric order based on the first column (memory usage) in the output from ps.
 
 Self-Remediator
-##########
+################
 
 The following remediation command is performed (either with CPU usage or with RAM usage): ``CMD=``cat /proc/<pid>/cmdline |sed 's/\x0/ /g' \`\` && kill <pid> && \`\`$CMD\`\` &``. It will reload the process ``<pid>`` with the kill command
 
 Network availability
-***************
+**********************
 The following figure illustrates the nodes and flows associated to this self-healing functionality:
 
 .. figure:: ./self_healing_network.png
    :alt: Self Healing Network
 
 Self-detector
-##########
-
+#############
 - A Node-RED node to ping a remote server, for use as a keep-alive check) and use this node to ping a known service like www.google.es (IP = 8.8.8.8)
 
 Self-monitor
-##########
+#############
 
 - If response of the ping node is false, the ethernet connection could be off.
 
 Self-Remediator
-##########
+################
 
 - Restarts network manager service with the following command: ``sudo service network-manager restart``
 
 REST API endpoints
-***************
+******************
 
 The currently supported REST API endpoints are:
 
@@ -134,10 +133,6 @@ Configuration options
 
 - The threshold of the CPU and RAM usage can be configured via the supported restAPI endpoints
 
-***************
-Developer guide
-***************
-Not applicable
 
 ***************************
 Version control and release
@@ -159,7 +154,4 @@ License
 ***************
 TBD
 
-********************
-Notice(dependencies)
-********************
-Not applicable
+
