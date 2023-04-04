@@ -33,8 +33,10 @@ The following figure sketches the architectural diagram of tactile dashboard com
    :alt: Tactile dashboard
    
 - **Tactile frontend:** The tactile frontend is what the ASSIST-IoT user interacts with. Therefore, it is responsible for most of what a user actually sees, including the definition of the structure of the web page, the look and feel of the web page, and the implementation of mechanisms for responding to user interactions (clicking buttons, entering text, etc.)
-•	**Tactile backend:** An HTTP server that listens to the requests coming from the tactile frontend in a specific port number, which is always associated with the IP address of the hosting computer. Thus, the tactile backend waits for tactile frontend requests coming to that specific port, performs any actions stated by the request, and sends any requested data via an HTTP response.
-•	**PUI9 database:** It is the place to store the tactile embedded information so that it can easily be accessed, managed, and updated. It might store information about ASSIST-IoT pilot’s users, sensors’ data, list of daily instructions, or reports. When a user requests some data to the tactile dashboard frontend webpage, the data inserted into that page comes from the PUI9 database.
+
+-	**Tactile backend:** An HTTP server that listens to the requests coming from the tactile frontend in a specific port number, which is always associated with the IP address of the hosting computer. Thus, the tactile backend waits for tactile frontend requests coming to that specific port, performs any actions stated by the request, and sends any requested data via an HTTP response.
+
+-	**PUI9 database:** It is the place to store the tactile embedded information so that it can easily be accessed, managed, and updated. It might store information about ASSIST-IoT pilot’s users, sensors’ data, list of daily instructions, or reports. When a user requests some data to the tactile dashboard frontend webpage, the data inserted into that page comes from the PUI9 database.
 
 *********************
 Place in architecture
@@ -67,7 +69,7 @@ Prerequisites
 ***************
 The main dependencies of the core framework are:
 
--  `VueJS <https://vuetifyjs.com/en/>`__: Basic development framework 
+- `VueJS <https://vuetifyjs.com/en/>`__: Basic development framework 
 - `Vuetify <https://vuetifyjs.com/en/>`__: Adds a set of base web components on which PUI9 components are built.
 - `Vuex <https://vuex.vuejs.org/>`__: Adds a general model of the application
 - `Vue-Router <https://router.vuejs.org/>`__: Adds routing in the application
@@ -85,11 +87,7 @@ At development level the main dependencies are:
 - `Eslint <https://eslint.org/>`__: Code format validator Webpack loaders.
 - Set of loaders to manage VUE, Post-CSS, etc. files.
 
-***************
-Installation
-***************
 
-    
 *********************
 Configuration options
 *********************
@@ -101,7 +99,7 @@ Developer guide
 PUI9 client is a front-end solution for implementing single-page application (SPA) data management interfaces. It is based on the progressive javascript framework Vue.js and uses the Vuetify user interface kit.
 
 Install Node.js and NPM
-*********************
+*************************
 For the development of PUI9 client applications it is essential to install `Node.js <https://nodejs.org/en/>`__ and the NPM package manager locally.
 
 1. To do this, once the file has been downloaded, proceed with the installation, which is as simple as following the wizard and clicking next. 
@@ -117,7 +115,7 @@ For the development of PUI9 client applications it is essential to install `Node
 ``npm -v``
 
 Install Visual Studio Code
-*********************
+*****************************
 It is also recommended to use Visual Studio Code. To start building a new PUI9 client application from scratch you can/should use the PUI9 code generator. This code generator is integrated in eclipse and generates both the basic server and client structure. To develop the framework, the following Visual Studio Code plugins are used:
 
 - Babel ES6/ES7
@@ -160,7 +158,7 @@ In addition, the framework and petstore project has the **.editorconfig** file:
   insert_final_newline = true
 
 Building Tactile dashboard Docker image
-*********************
+*****************************************
 All the resources needed for building the image are located within ``dashboard.client``, ``docker`` folder,  such as the DockerFile, config fies and required scripts.
 
 The image is built over a nginx image, which acts as reverse proxy for the demanded requests from ``dashboard.back``.
@@ -226,7 +224,7 @@ Links: -
 https://stackoverflow.com/questions/42564058/how-to-use-local-docker-images-with-minikube
     
 Running Tactile dashboard Docker image
-*********************
+*****************************************
 From the root of the project you can build an instance of the Dashboard with docker compose.
 
 .. code:: bash
@@ -262,7 +260,7 @@ Create configmap for database initialization
    kubectl apply -f .  
    
 Building Tactile dashboard Helm Chart
-*********************
+*****************************************
 For building the tactile dashboard Helm Chart the helm-chart generator script of the project enablers is needed: https://gitlab.assist-iot.eu/wp6/t6.3/helm-chart-generator and just following the instructions the Helm Chart is created. Once a default chart has been created, any associated file can be modified for personal configuration.
 
 In addition, the following scripts have been added -
@@ -273,7 +271,7 @@ References links: -
 https://github.com/helm/charts/blob/master/stable/postgresql/templates/initialization-configmap.yaml
 
 Deploying Tactile dashboard Helm chart
-*********************
+*****************************************
 For properly running the tactile dashboard as a Helm Chart, additional dependant enablers are needed:
 
 1. LTSE. https://gitlab.assist-iot.eu/wp4/data-mgmt/ltse

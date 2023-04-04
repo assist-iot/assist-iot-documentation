@@ -1,8 +1,8 @@
 .. _FL Orchestrator:
 
-############
+################
 FL Orchestrator
-############
+################
 
 .. contents::
   :local:
@@ -11,7 +11,7 @@ FL Orchestrator
 ***************
 Introduction
 ***************
-**FL Orchestrator** is one of the enablers developed in the context of the **FL System** of the `ASSIST-IoT project.
+**FL Orchestrator** is one of the enablers developed in the context of the **FL System** of the `ASSIST-IoT project`.
 
 ***************
 Features
@@ -131,7 +131,7 @@ Next picture depicts what has been explained in the previous paragraph. The area
    :alt: Testing models method of FL Orchestrator API
    
 Building the Docker image
-------------
+---------------------------
 
 The different Docker images needed to be able to deploy all the services are defined / created in files called `Dockerfile <https://docs.docker.com/engine/reference/builder/>`__.
 
@@ -144,11 +144,11 @@ Next picture depicts the content of one of this Dockerfile.
 
 
 Deploying with Kubernetes and Helm3
-------------
+------------------------------------
 Will be determined after the release of the enabler.
 
 Verification the deployment
-------------
+------------------------------------
 Will be determined after the release of the enabler.
 
 *********************
@@ -209,6 +209,7 @@ The table of this section it is a software release overview of the different ele
 |                         |                               | json_intr |
 |                         |                               | o.asp>`__ |
 +-------------------------+-------------------------------+-----------+
+
 ***************
 License
 ***************
