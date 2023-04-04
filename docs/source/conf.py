@@ -25,8 +25,7 @@ extensions = [
     'sphinx.ext.inheritance_diagram', 
     'sphinx.ext.napoleon', 
     'sphinx.ext.autosectionlabel', 
-    'sphinx.ext.extlinks', 
-    'sphinx.ext.toctree']
+    'sphinx.ext.extlinks']
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
