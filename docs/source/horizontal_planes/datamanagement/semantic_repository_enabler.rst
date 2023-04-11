@@ -22,6 +22,10 @@ files that describe data models or support data transformations, such as
 ontologies, schema files, semantic alignment files etc. However, there
 are no restrictions on file format and size.
 
+Semantic Repository features flexible versioning, metadata support,
+built-in search capabilities, documentation generation and serving, and
+more.
+
 Overall focus of the Semantic Repository’s design is high performance,
 scalability, and resiliency. It should be able to scale up and down to
 meet the specific use case.
@@ -41,17 +45,10 @@ Implemented features
 -  Flexible versioning with arbitrary tag names.
 -  Ability to attach arbitrary additional metadata.
 -  Metadata searching and sorting.
--  Support for adding documentation pages.
-
-Planned features
-~~~~~~~~~~~~~~~~
-
--  Tracking provenance information (creation/modification dates,
-   authors).
--  Granular and easy-to-use access control.
--  Automatic documentation generation for some data model types.
--  Flexible plugin architecture for creating additional documentation
-   generation modules.
+-  Generating HTML documentation pages from source files.
+-  Serving documentation.
+-  Issuing notifications to external services about changes in the
+   repository (via webhooks).
 
 
 
@@ -60,9 +57,9 @@ Place in architecture
 
 The Semantic Repository is located in the Data management plane of the
 ASSIST-IoT architecture. It serves as a versioned and namespaced central
-repository of data models and other files. It has few limitations with
-regard to the content it can store, thus it can be used for diverse data
-storage-related scenarios.
+repository of data models and other files. It has no limitations with
+regard to the content that it can store, thus it can be used for diverse
+data storage-related scenarios.
 
 
 
@@ -1455,13 +1452,6 @@ version, Swagger.
 
 
 
-User guide – graphical user interface
-=====================================
-
-The GUI of the Semantic Repository is under development.
-
-
-
 REST API reference
 ==================
 
@@ -1472,15 +1462,28 @@ REST API reference
 Prerequisites
 =============
 
-There are currently no prerequisites for installing this enabler.
+The enabler requires only the base Kubernetes environment with Helm to
+function.
+
+Machines with at least 8 GB of RAM are recommended for running the
+enabler efficiently. Fast and plentiful storage will also be useful for
+large installations.
 
 
 
 Installation
 ============
 
-The installation procedure for this enabler is under development and
-will be documented in the next release.
+The primary way of installing this enabler is with Kubernetes and Helm.
+However, it can also be installed with docker-compose, which is
+especially useful for development purposes.
+
+Kubernetes installation
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Install the provided Helm chart on your Kubernetes cluster. Take into
+account the persistent volume claims for the MongoDB database and
+storage – you may want to modify their parameters.
 
 Development docker-compose stack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1539,24 +1542,135 @@ the ``demo`` directory.
 Configuration
 =============
 
-Currently, there are no “nicely” packaged facilities for configuring the
-enabler. However, for development and testing purposes, the available
-configuration settings are documented below.
+Helm chart
+~~~~~~~~~~
 
-Semantic Repository Core
-------------------------
+The provided Helm chart exposes several configurable values, such as
+ports, interfaces, RAM and CPU limits, etc. You can find them in the
+``values.yaml`` file of the chart.
 
-The main JVM application is configured using the ``application.conf``
-file.
+Main application (API server)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The main JVM application has the most important settings that control
+the Semantic Repository’s behavior (listed below). You can set these
+settings in several ways, depending on your deployment setup:
+
+**In Kubernetes (production deployment)** use the ``extraConfig``
+property in the values.yaml file. There, you can put multiple lines of
+config settings in the `HOCON
+format <https://github.com/lightbend/config/blob/main/HOCON.md>`__.
+Example:
+
+.. code:: yaml
+
+   backend:
+     # ...
+     envVars:
+       extraConfig: |
+         semrepo.limits.max-page-size = 100
+         semrepo.scheduled.doc-job-cleanup = 60m
+
+In other Docker-based deployments, you can use the ``REPO_EXTRA_CONFIG``
+environment variable in the same way.
 
 Settings
-~~~~~~~~
+^^^^^^^^
 
-Temporarily, the only documentation of the settings is in the
-configuration file itself.
++-----------------+-----------------+-----------------+-----------------+
+| Config key      | Type            | Description     | Default value   |
++=================+=================+=================+=================+
+| semrepo.mongodb | String          | MongoDB         | (…)             |
+| .connection-str |                 | connection      |                 |
+| ing             |                 | string. The     |                 |
+|                 |                 | default config  |                 |
+|                 |                 | works for a     |                 |
+|                 |                 | local           |                 |
+|                 |                 | development     |                 |
+|                 |                 | setup.          |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.http.po | String          | Port to listen  | “8080”          |
+| rt              |                 | on              |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.http.ho | String          | Host to listen  | “0.0.0.0”       |
+| st              |                 | on              |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum allowed | 50              |
+| max-page-size   |                 | page size when  |                 |
+|                 |                 | browsing        |                 |
+|                 |                 | collections of  |                 |
+|                 |                 | namespaces,     |                 |
+|                 |                 | models, and     |                 |
+|                 |                 | model versions. |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Default page    | 20              |
+| default-page-si |                 | size. Must be   |                 |
+| ze              |                 | lower or equal  |                 |
+|                 |                 | to              |                 |
+|                 |                 | max-page-size.  |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum number  | 64              |
+| metadata.max-pr |                 | of unique       |                 |
+| operties        |                 | metadata keys   |                 |
+|                 |                 | allowed per     |                 |
+|                 |                 | entity.         |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum number  | 32              |
+| metadata.max-va |                 | of values each  |                 |
+| lues            |                 | metadata key    |                 |
+|                 |                 | can have. Must  |                 |
+|                 |                 | be at least 1.  |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum length  | 1024            |
+| metadata.max-va |                 | of each         |                 |
+| lue-length      |                 | individual      |                 |
+|                 |                 | metadata value, |                 |
+|                 |                 | in characters.  |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Memory size     | Maximum allowed | 4M              |
+| docs.max-upload |                 | size of all     |                 |
+| -size           |                 | uploaded files  |                 |
+|                 |                 | for a doc       |                 |
+|                 |                 | compilation job |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum number  | 50              |
+| docs.max-files- |                 | of files in a   |                 |
+| in-upload       |                 | single upload   |                 |
+|                 |                 | for a doc       |                 |
+|                 |                 | compilation job |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Duration        | Time after      | 1d              |
+| docs.sandbox-ex |                 | which sandbox   |                 |
+| piry            |                 | doc compilation |                 |
+|                 |                 | jobs expire and |                 |
+|                 |                 | are deleted     |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Duration        | Maximum time a  | 30s             |
+| docs.job-execut |                 | job can execute |                 |
+| ion-time        |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum length  | 512             |
+| webhook.max-cal |                 | of the callback |                 |
+| lback-length    |                 | URI of a        |                 |
+|                 |                 | webhook         |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.schedul | Duration        | How frequently  | 15m             |
+| ed.doc-job-clea |                 | to check for    |                 |
+| nup             |                 | expired doc     |                 |
+|                 |                 | compilation     |                 |
+|                 |                 | jobs to remove  |                 |
+|                 |                 | them            |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.schedul | Duration        | How frequently  | 5m              |
+| ed.get-new-doc- |                 | to check for    |                 |
+| jobs            |                 | stalled doc     |                 |
+|                 |                 | compilation     |                 |
+|                 |                 | jobs in the     |                 |
+|                 |                 | queue           |                 |
++-----------------+-----------------+-----------------+-----------------+
 
-Dependencies
-~~~~~~~~~~~~
+Settings of dependencies (advanced)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the file, you can configure the libraries that Semantic Repository
 uses, such as Akka. This way you can for example modify the size of the
@@ -1580,10 +1694,9 @@ framework <https://akka.io/>`__. The information about the managed
 objects is stored in `MongoDB <https://www.mongodb.com/>`__ and the
 files are stored in `MinIO <https://min.io/>`__ (S3-compatible storage).
 
-Semantic Repository’s architecture (note that it is not fully
-implemented yet):
+Semantic Repository’s architecture:
 
-.. figure:: semantic_repository_enabler/uploads/b2b352b50cd1c96694d34a6d7c447c9f/image.png
+.. figure:: semantic_repository_enabler/uploads/1e470dc23fdc1babc10749fad47a00dc/image.png
    :alt: Enabler architecture
 
    Enabler architecture
@@ -1600,7 +1713,10 @@ Repository locally for development purposes.
 Version control and releases
 ============================
 
-Version 0.1. Under development.
+The enabler’s code is in ASSIST-IoT GitLab.
+
+Versioning and packaging is not finalized yet – this will be resolved in
+a future release.
 
 
 
