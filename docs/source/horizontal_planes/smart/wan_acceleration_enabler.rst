@@ -15,8 +15,7 @@ WAN-Acceleration enabler
 Introduction
 ***************
 The WAN acceleration enabler will incorporate features that will improve the connections among the clusters and/or sites managed by ASSIST-IoT, and towards the Internet. 
-It will work jointly with the SD-WAN enabler to establish scalable, private tunnels and 
-introduce optimisation features such as traffic prioritisation.
+It will work jointly with the SD-WAN enabler to establish scalable, private tunnels and introduce optimisation features such as traffic prioritisation.
 
 ***************
 Features
@@ -57,10 +56,11 @@ This overall SD-WAN architecture is guided by the following logic:
 3. These clusters can act as edges or hubs. Hubs are particular instances of the WAN acceleration enabler that allow chaining network functions that will process the traffic among clusters and before navigating from/towards the Internet.
 4. Besides, interacting with the K8s API (not directly with a WAN Acceleration's CNF), a user can define firewall, wan and traffic optimisation policies in the edge clusters.
 
-As aforementioned, the enabler is composed of two main elements, as one can see in the figure below:
+As aforementioned, the enabler is composed of three main elements, as one can see in the figure below:
 
 - **CRD Controller**: Component that will receive API calls from the K8s API of the cluster to configure the CNF component.
 - **SD-WAN CNF**: The CNF will embed functions to setup aspects such related to IPSec, firewalling, DNS, DHCP and WAN link management, exposing an API to be controlled/queried.
+- **API**: The API component contains an easy-to-use interface to create, list or delete all configuration related to internal management, such as firewall rules or mwan3 policies. This component interacts directly with the K8S API server rather than with other components.
 
 .. figure:: ./images/wan_acceleration_enabler/wan_acc_arch.png  
    :alt: WAN Acceleration enabler architecture
@@ -68,12 +68,122 @@ As aforementioned, the enabler is composed of two main elements, as one can see 
 
    WAN Acceleration enabler architecture
 
-
 ***************
 User guide
 ***************
 
-This enabler is not prepared to integrate a standard API, but works in conjunction with SD-WAN Enabler. Once WAN-Acceleration is installed, the SD-WAN Enabler REST API can be run. The user guide for configuration and main usages is available in the SD-WAN Enabler documentation.
+In the following table are presented the endpoint ready to use:
+
+**Firewall**
+------------
+Define internal firewall configuration. This functionality uses groups to manage general behavior and can define rules, access permissions and source, forward or destination NAT rules.
+
+**Zones**
+
++------------+-----------------------------------+---------------------------+----------------------------------------------------------------------------+
+| **Method** | **Endpoint**                      | **Description**           | **Payload (if need)**                                                      |
++============+===================================+===========================+============================================================================+
+| POST       | api/v1/firewall/zones             | Zone Registration         | {"metadata": {"name": "ovn-network"},"spec": {"network": ["ovn-network"]}} |
++------------+-----------------------------------+---------------------------+----------------------------------------------------------------------------+
+| GET        | api/v1/firewall/zones             | Get all firewall zones    |                                                                            |
++------------+-----------------------------------+---------------------------+----------------------------------------------------------------------------+
+| GET        | api/v1/firewall/zones/{zone-name} | Get firewall zone by name |                                                                            |
++------------+-----------------------------------+---------------------------+----------------------------------------------------------------------------+
+| DELETE     | api/v1/firewall/zones/{zone-name} | Delete firewall zone      |                                                                            |
++------------+-----------------------------------+---------------------------+----------------------------------------------------------------------------+
+
+**SNAT**
+
++------------+-----------------------------------+---------------------------+-----------------------------------------------------------------------+
+| **Method** | **Endpoint**                      | **Description**           | **Payload (if need)**                                                 |
++============+===================================+===========================+=======================================================================+
+| POST       | api/v1/firewall/snats             | SNAT Registration         | {"metadata": {"name": "firewallsnat"},"spec": {"src": "ovn-network"}} |
++------------+-----------------------------------+---------------------------+-----------------------------------------------------------------------+
+| GET        | api/v1/firewall/snats             | Get all firewall snats    |                                                                       |
++------------+-----------------------------------+---------------------------+-----------------------------------------------------------------------+
+| GET        | api/v1/firewall/snats/{snat-name} | Get firewall snat by name |                                                                       |
++------------+-----------------------------------+---------------------------+-----------------------------------------------------------------------+
+| DELETE     | api/v1/firewall/snats/{snat-name} | Delete firewall snat      |                                                                       |
++------------+-----------------------------------+---------------------------+-----------------------------------------------------------------------+
+
+**DNAT**
+
++------------+-----------------------------------+---------------------------+--------------------------------------------------------------------+
+| **Method** | **Endpoint**                      | **Description**           | **Payload (if need)**                                              |
++============+===================================+===========================+====================================================================+
+| POST       | api/v1/firewall/dnats             | DNAT Registration         | {"metadata": {"name": "firewalldnat"},"spec": {"src": "pnetwork"}} |
++------------+-----------------------------------+---------------------------+--------------------------------------------------------------------+
+| GET        | api/v1/firewall/dnats             | Get all firewall dnats    |                                                                    |
++------------+-----------------------------------+---------------------------+--------------------------------------------------------------------+
+| GET        | api/v1/firewall/dnats/{dnat-name} | Get firewall dnat by name |                                                                    |
++------------+-----------------------------------+---------------------------+--------------------------------------------------------------------+
+| DELETE     | api/v1/firewall/dnats/{dnat-name} | Delete firewall dnat      |                                                                    |
++------------+-----------------------------------+---------------------------+--------------------------------------------------------------------+
+
+**Forwarding**
+
++------------+-----------------------------------------------+---------------------------------+-----------------------------------------------------------------------------+
+| **Method** | **Endpoint**                                  | **Description**                 | **Payload (if need)**                                                       |
++============+===============================================+=================================+=============================================================================+
+| POST       | api/v1/firewall/forwardings                   | Forwarding Registration         | {"metadata": {"name": "firewallforwarding"},"spec": {"src": "ovn-network"}} |
++------------+-----------------------------------------------+---------------------------------+-----------------------------------------------------------------------------+
+| GET        | api/v1/firewall/forwardings                   | Get all firewall forwardings    |                                                                             |
++------------+-----------------------------------------------+---------------------------------+-----------------------------------------------------------------------------+
+| GET        | api/v1/firewall/forwardings/{forwarding-name} | Get firewall forwarding by name |                                                                             |
++------------+-----------------------------------------------+---------------------------------+-----------------------------------------------------------------------------+
+| DELETE     | api/v1/firewall/forwardings/{forwarding-name} | Delete firewall forwarding      |                                                                             |
++------------+-----------------------------------------------+---------------------------------+-----------------------------------------------------------------------------+
+
+**Rules**
+
++------------+------------------------------------+----------------------------+-----------------------------------------------------------------------+
+| **Method** | **Endpoint**                       | **Description**            | **Payload (if need)**                                                 |
++============+====================================+============================+=======================================================================+
+| POST       | api/v1/firewall/rules              | Firewall Rule Registration | {"metadata": {"name": "firewallrule"},"spec": {"src": "ovn-network"}} |
++------------+------------------------------------+----------------------------+-----------------------------------------------------------------------+
+| GET        | api/v1/firewall/rules              | Get all firewall rules     |                                                                       |
++------------+------------------------------------+----------------------------+-----------------------------------------------------------------------+
+| GET        | api/v1/firewall/rules/{rule-name}  | Get firewall rule by name  |                                                                       |
++------------+------------------------------------+----------------------------+-----------------------------------------------------------------------+
+| DELETE     | api/v1/firewall/ruless/{rule-name} | Delete firewall rule       |                                                                       |
++------------+------------------------------------+----------------------------+-----------------------------------------------------------------------+
+
+**MWAN3**
+------------
+Define internal mwan3 configuration. Define policies and rules to manage balancing and failover for each edge cluster.
+
+**Policies**
+
++------------+-------------------------------------+---------------------------+-----------------------------------------------------------+
+| **Method** | **Endpoint**                        | **Description**           | **Payload (if need)**                                     |
++============+=====================================+===========================+===========================================================+
+| POST       | api/v1/mwan3/policies               | MWAN3 Policy Registration | {"metadata": {"name": "mwan3policy"},"spec": {"members"}} |
++------------+-------------------------------------+---------------------------+-----------------------------------------------------------+
+| GET        | api/v1/mwan3/policies               | Get all mwan3 policies    |                                                           |
++------------+-------------------------------------+---------------------------+-----------------------------------------------------------+
+| GET        | api/v1/mwan3/policies/{policy-name} | Get mwan3 policy by name  |                                                           |
++------------+-------------------------------------+---------------------------+-----------------------------------------------------------+
+| DELETE     | api/v1/mwan3/policies/{policy-name} | Delete firewall policy    |                                                           |
++------------+-------------------------------------+---------------------------+-----------------------------------------------------------+
+
+**Rules**
+
++--------------+----------------------------------+---------------------------+------------------------------------------------------------+
+| ### Rules    |                                  |                           |                                                            |
++==============+==================================+===========================+============================================================+
+| **Method**   | **Endpoint**                     | **Description**           | **Payload (if need)**                                      |
++--------------+----------------------------------+---------------------------+------------------------------------------------------------+
+| ------------ | -------------------------------- | ------------------------- | ---------------------------------------------------------- |
++--------------+----------------------------------+---------------------------+------------------------------------------------------------+
+| POST         | api/v1/mwan3/rules               | MWAN3 Rule Registration   | {"metadata": {"name": "mwan3rule"},"spec": {"family"}}     |
++--------------+----------------------------------+---------------------------+------------------------------------------------------------+
+| GET          | api/v1/mwan3/rules               | Get all mwan3 rules       |                                                            |
++--------------+----------------------------------+---------------------------+------------------------------------------------------------+
+| GET          | api/v1/mwan3/rules/{rule-name}   | Get mwan3 rule by name    |                                                            |
++--------------+----------------------------------+---------------------------+------------------------------------------------------------+
+| DELETE       | api/v1/mwan3/rules/{rule-name}   | Delete firewall rule      |                                                            |
++--------------+----------------------------------+---------------------------+------------------------------------------------------------+
+
 
 ***************
 Prerequisites
@@ -109,12 +219,23 @@ Will be determined after the release of the enabler.
 ***************************
 Version control and release
 ***************************
-Version 1.0. First release. Under development.
+Version 1.0. First release.
 
 ***************
 License
 ***************
-Will be determined after the release of the enabler..
+Copyright 2023 Raúl Reinosa Simón (Universitat Politècnica de València)
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 *********************
 Notice (dependencies)
