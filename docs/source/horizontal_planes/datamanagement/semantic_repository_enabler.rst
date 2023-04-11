@@ -1734,8 +1734,559 @@ http://www.apache.org/licenses/LICENSE-2.0
 Notice (dependencies)
 =====================
 
-Dependency list and licensing information will be provided before the
-first major release.
+Components
+~~~~~~~~~~
+
+-  MongoDB – `Server Side Public License (SSPL
+   1.0) <https://www.mongodb.com/licensing/server-side-public-license>`__
+-  MinIO – `GNU Affero General Public License
+   v3.0 <https://github.com/minio/minio/blob/master/LICENSE>`__
+
+Main application (API server) dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Note that `Akka changed its
+license <https://www.lightbend.com/akka/license-faq>`__ to a restrictive
+one for versions 2.7.X and up. Because the Semantic Repository is using
+the 2.6.X version (under the Apache License), it remains unaffected.
+Future versions of the Semantic Repository are expected to use `Apache
+Pekko <https://pekko.apache.org/>`__ the free fork of Akka.
+
++---+----------------------------+--------------------------------------+
+| C | License                    | Dependency                           |
+| a |                            |                                      |
+| t |                            |                                      |
+| e |                            |                                      |
+| g |                            |                                      |
+| o |                            |                                      |
+| r |                            |                                      |
+| y |                            |                                      |
++===+============================+======================================+
+| A | `Apache                    | `ch.megard # akka-http-cors_2.13 #   |
+| p | 2 <https://www.apache.org/ | 1.1.3 <https://github.com/lomigmegar |
+| a | licenses/LICENSE-2.0.txt>` | d/akka-http-cors>`__                 |
+| c | __                         |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache                    | `io.spray # spray-json_2.13 #        |
+| p | 2 <http://www.apache.org/l | 1.3.6 <https://github.com/spray/spra |
+| a | icenses/LICENSE-2.0.txt>`_ | y-json>`__                           |
+| c | _                          |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache                    | `org.planet42 # laika-core_3 #       |
+| p | 2.0 <http://www.apache.org | 0.19.0 <https://planet42.github.io/L |
+| a | /licenses/LICENSE-2.0.txt> | aika/>`__                            |
+| c | `__                        |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache                    | `org.planet42 # laika-io_3 #         |
+| p | 2.0 <http://www.apache.org | 0.19.0 <https://planet42.github.io/L |
+| a | /licenses/LICENSE-2.0.txt> | aika/>`__                            |
+| c | `__                        |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache 2.0                | `com.typesafe.scala-logging #        |
+| p | License <http://www.apache | scala-logging_3 #                    |
+| a | .org/licenses/LICENSE-2.0. | 3.9.5 <https://github.com/lightbend/ |
+| c | html>`__                   | scala-logging>`__                    |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `io.projectreactor # reactor-core #  |
+| p | 2.0 <https://www.apache.or | 3.2.22.RELEASE <https://github.com/r |
+| a | g/licenses/LICENSE-2.0.txt | eactor/reactor-core>`__              |
+| c | >`__                       |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `org.yaml # snakeyaml #              |
+| p | 2.0 <http://www.apache.org | 1.31 <https://bitbucket.org/snakeyam |
+| a | /licenses/LICENSE-2.0.txt> | l/snakeyaml>`__                      |
+| c | `__                        |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | software.amazon.awssdk # annotations |
+| p | 2.0 <https://aws.amazon.co | # 2.11.14                            |
+| a | m/apache2.0>`__            |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `software.amazon.awssdk # auth #     |
+| p | 2.0 <https://aws.amazon.co | 2.11.14 <https://aws.amazon.com/sdkf |
+| a | m/apache2.0>`__            | orjava>`__                           |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | software.amazon.awssdk #             |
+| p | 2.0 <https://aws.amazon.co | http-client-spi # 2.11.14            |
+| a | m/apache2.0>`__            |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `software.amazon.awssdk # profiles # |
+| p | 2.0 <https://aws.amazon.co | 2.11.14 <https://aws.amazon.com/sdkf |
+| a | m/apache2.0>`__            | orjava>`__                           |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | software.amazon.awssdk # regions #   |
+| p | 2.0 <https://aws.amazon.co | 2.11.14                              |
+| a | m/apache2.0>`__            |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `software.amazon.awssdk # sdk-core # |
+| p | 2.0 <https://aws.amazon.co | 2.11.14 <https://aws.amazon.com/sdkf |
+| a | m/apache2.0>`__            | orjava>`__                           |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | software.amazon.awssdk # utils #     |
+| p | 2.0 <https://aws.amazon.co | 2.11.14                              |
+| a | m/apache2.0>`__            |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `software.amazon.eventstream #       |
+| p | 2.0 <https://aws.amazon.co | eventstream #                        |
+| a | m/apache2.0>`__            | 1.0.1 <https://github.com/awslabs/aw |
+| c |                            | s-eventstream-java>`__               |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.comcast # ip4s-core_3 #         |
+| p | pache.org/licenses/LICENSE | 3.1.3 <https://github.com/Comcast/ip |
+| a | -2.0.txt>`__               | 4s>`__                               |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.lightbend.akka #                |
+| p | pache.org/licenses/LICENSE | akka-stream-alpakka-file_2.13 #      |
+| a | -2.0>`__                   | 3.0.4 <https://doc.akka.io/docs/alpa |
+| c |                            | kka/current>`__                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.lightbend.akka #                |
+| p | pache.org/licenses/LICENSE | akka-stream-alpakka-s3_2.13 #        |
+| a | -2.0>`__                   | 3.0.4 <https://doc.akka.io/docs/alpa |
+| c |                            | kka/current>`__                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe # config #             |
+| p | pache.org/licenses/LICENSE | 1.4.2 <https://github.com/lightbend/ |
+| a | -2.0>`__                   | config>`__                           |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe # ssl-config-core_2.13 |
+| p | pache.org/licenses/LICENSE | #                                    |
+| a | -2.0.txt>`__               | 0.4.3 <https://github.com/lightbend/ |
+| c |                            | ssl-config>`__                       |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-actor-typed_2.13 #              |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka # akka-actor_2.13 |
+| p | pache.org/licenses/LICENSE | # 2.6.19 <https://akka.io/>`__       |
+| a | -2.0.html>`__              |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-http-core_2.13 #                |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-http-spray-json_2.13 #          |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-http-testkit_2.13 #             |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-http-xml_2.13 #                 |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka # akka-http_2.13  |
+| p | ource.org/licenses/Apache- | # 10.2.9 <https://akka.io>`__        |
+| a | 2.0>`__                    |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-parsing_2.13 #                  |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-protobuf-v3_2.13 #              |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka # akka-slf4j_2.13 |
+| p | pache.org/licenses/LICENSE | # 2.6.19 <https://akka.io/>`__       |
+| a | -2.0.html>`__              |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-stream-testkit_2.13 #           |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-stream-typed_2.13 #             |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-stream_2.13 #                   |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-testkit_2.13 #                  |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang # scala-library #    |
+| p | pache.org/licenses/LICENSE | 2.13.8 <https://www.scala-lang.org/> |
+| a | -2.0>`__                   | `__                                  |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang # scala-reflect #    |
+| p | pache.org/licenses/LICENSE | 2.13.6 <https://www.scala-lang.org/> |
+| a | -2.0>`__                   | `__                                  |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang # scala3-library_3 # |
+| p | pache.org/licenses/LICENSE | 3.1.3 <https://github.com/lampepfl/d |
+| a | -2.0>`__                   | otty>`__                             |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang.modules #            |
+| p | pache.org/licenses/LICENSE | scala-java8-compat_2.13 #            |
+| a | -2.0>`__                   | 1.0.0 <http://www.scala-lang.org/>`_ |
+| c |                            | _                                    |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang.modules #            |
+| p | pache.org/licenses/LICENSE | scala-parser-combinators_2.13 #      |
+| a | -2.0>`__                   | 1.1.2 <http://www.scala-lang.org/>`_ |
+| c |                            | _                                    |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang.modules #            |
+| p | pache.org/licenses/LICENSE | scala-xml_3 #                        |
+| a | -2.0>`__                   | 2.1.0 <http://www.scala-lang.org/>`_ |
+| c |                            | _                                    |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.typelevel #                     |
+| p | pache.org/licenses/LICENSE | cats-effect-kernel_3 #               |
+| a | -2.0.txt>`__               | 3.3.14 <https://github.com/typelevel |
+| c |                            | /cats-effect>`__                     |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.typelevel # cats-effect-std_3 # |
+| p | pache.org/licenses/LICENSE | 3.3.14 <https://github.com/typelevel |
+| a | -2.0.txt>`__               | /cats-effect>`__                     |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.typelevel # cats-effect_3 #     |
+| p | pache.org/licenses/LICENSE | 3.3.14 <https://github.com/typelevel |
+| a | -2.0.txt>`__               | /cats-effect>`__                     |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <http://www.ap | `org.typelevel # literally_3 #       |
+| p | ache.org/licenses/LICENSE- | 1.0.2 <https://github.com/typelevel/ |
+| a | 2.0>`__                    | literally>`__                        |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb # bson #                |
+| p | Version                    | 4.7.1 <https://bsonspec.org>`__      |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0.txt> |                                      |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb # bson-record-codec #   |
+| p | Version                    | 4.7.1 <https://www.mongodb.com/>`__  |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0.txt> |                                      |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb # mongodb-driver-core # |
+| p | Version                    | 4.7.1 <https://www.mongodb.com/>`__  |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0.txt> |                                      |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb #                       |
+| p | Version                    | mongodb-driver-reactivestreams #     |
+| a | 2.0 <http://www.apache.org | 4.7.1 <https://www.mongodb.com/>`__  |
+| c | /licenses/LICENSE-2.0.txt> |                                      |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb.scala #                 |
+| p | Version                    | mongo-scala-bson_2.13 #              |
+| a | 2.0 <http://www.apache.org | 4.7.1 <https://www.mongodb.com/>`__  |
+| c | /licenses/LICENSE-2.0.txt> |                                      |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb.scala #                 |
+| p | Version                    | mongo-scala-driver_2.13 #            |
+| a | 2.0 <http://www.apache.org | 4.7.1 <https://www.mongodb.com/>`__  |
+| c | /licenses/LICENSE-2.0.txt> |                                      |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache Software       | `com.fasterxml.jackson.core #        |
+| p | License, Version           | jackson-annotations #                |
+| a | 2.0 <http://www.apache.org | 2.13.4 <http://github.com/FasterXML/ |
+| c | /licenses/LICENSE-2.0.txt> | jackson>`__                          |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache Software       | `com.fasterxml.jackson.core #        |
+| p | License, Version           | jackson-core #                       |
+| a | 2.0 <http://www.apache.org | 2.13.4 <https://github.com/FasterXML |
+| c | /licenses/LICENSE-2.0.txt> | /jackson-core>`__                    |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache Software       | `com.fasterxml.jackson.core #        |
+| p | License, Version           | jackson-databind #                   |
+| a | 2.0 <http://www.apache.org | 2.13.4 <http://github.com/FasterXML/ |
+| c | /licenses/LICENSE-2.0.txt> | jackson>`__                          |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache Software       | `com.fasterxml.jackson.dataformat #  |
+| p | License, Version           | jackson-dataformat-yaml #            |
+| a | 2.0 <http://www.apache.org | 2.13.4 <https://github.com/FasterXML |
+| c | /licenses/LICENSE-2.0.txt> | /jackson-dataformats-text>`__        |
+| h | `__                        |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalactic # scalactic_3 #       |
+| p | Version                    | 3.2.12 <http://www.scalatest.org>`__ |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-compatible #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest # scalatest-core_3 #  |
+| p | Version                    | 3.2.12 <http://www.scalatest.org>`__ |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-diagrams_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-featurespec_3 #            |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-flatspec_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-freespec_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest # scalatest-funspec_3 |
+| p | Version                    | #                                    |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-funsuite_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-matchers-core_3 #          |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-mustmatchers_3 #           |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-propspec_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest # scalatest-refspec_3 |
+| p | Version                    | #                                    |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-shouldmatchers_3 #         |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-wordspec_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest # scalatest_3 #       |
+| p | Version                    | 3.2.12 <http://www.scalatest.org>`__ |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| B | `BSD-3-Clause <https://git | `org.scodec # scodec-bits_3 #        |
+| S | hub.com/scodec/scodec-bits | 1.1.34 <https://github.com/scodec/sc |
+| D | /blob/main/LICENSE>`__     | odec-bits>`__                        |
++---+----------------------------+--------------------------------------+
+| C | `CC0 <http://creativecommo | `org.reactivestreams #               |
+| C | ns.org/publicdomain/zero/1 | reactive-streams #                   |
+| 0 | .0/>`__                    | 1.0.3 <http://www.reactive-streams.o |
+|   |                            | rg/>`__                              |
++---+----------------------------+--------------------------------------+
+| M | `MIT <http://opensource.or | `co.fs2 # fs2-core_3 #               |
+| I | g/licenses/MIT>`__         | 3.2.14 <https://typelevel.org/fs2>`_ |
+| T |                            | _                                    |
++---+----------------------------+--------------------------------------+
+| M | `MIT <http://opensource.or | `co.fs2 # fs2-io_3 #                 |
+| I | g/licenses/MIT>`__         | 3.2.14 <https://typelevel.org/fs2>`_ |
+| T |                            | _                                    |
++---+----------------------------+--------------------------------------+
+| M | `MIT <https://opensource.o | `org.typelevel # cats-core_3 #       |
+| I | rg/licenses/MIT>`__        | 2.8.0 <https://typelevel.org/cats>`_ |
+| T |                            | _                                    |
++---+----------------------------+--------------------------------------+
+| M | `MIT <https://opensource.o | `org.typelevel # cats-kernel_3 #     |
+| I | rg/licenses/MIT>`__        | 2.8.0 <https://typelevel.org/cats>`_ |
+| T |                            | _                                    |
++---+----------------------------+--------------------------------------+
+| M | `MIT                       | `org.slf4j # slf4j-api #             |
+| I | License <http://www.openso | 1.7.36 <http://www.slf4j.org>`__     |
+| T | urce.org/licenses/mit-lice |                                      |
+|   | nse.php>`__                |                                      |
++---+----------------------------+--------------------------------------+
+| M | `MIT                       | `org.slf4j # slf4j-simple #          |
+| I | License <http://www.openso | 1.7.36 <http://www.slf4j.org>`__     |
+| T | urce.org/licenses/mit-lice |                                      |
+|   | nse.php>`__                |                                      |
++---+----------------------------+--------------------------------------+
 
 
 
