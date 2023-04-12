@@ -28,7 +28,7 @@ more.
 
 Overall focus of the Semantic Repository’s design is high performance,
 scalability, and resiliency. It should be able to scale up and down to
-meet the specific use case.
+meet the needs of a specific use case.
 
 
 
@@ -345,7 +345,7 @@ Example webhook body:
 User guide – REST API
 =====================
 
-The following is a brief guide to using the API in practice. The
+The following is a brief guide to using the v1 API in practice. The
 examples follow a basic use case of storing several `W3C
 ontologies <https://www.w3.org/standards/semanticweb/ontology>`__.
 
@@ -356,9 +356,9 @@ General information
 ~~~~~~~~~~~~~~~~~~~
 
 The API follows a very simple structure of
-/{namespace}/{model}/{model_version}. In general, ``POST`` creates a new
-*thing* at the given URL, ``GET`` retrieves it, ``DELETE`` deletes it,
-and ``PATCH`` modifies it.
+/v1/m/{namespace}/{model}/{model_version}. In general, ``POST`` creates
+a new *thing* at the given URL, ``GET`` retrieves it, ``DELETE`` deletes
+it, and ``PATCH`` modifies it.
 
 The API only returns responses in plain JSON. The following guide should
 give you a good idea of what the responses look like, but you can also
@@ -376,11 +376,11 @@ Step 1: create a namespace
 First, we will need to create a namespace for your models. We will name
 it ``w3c``.
 
-============= ============
-Request URL   Request body
-============= ============
-``POST /w3c`` (empty)
-============= ============
+================== ============
+Request URL        Request body
+================== ============
+``POST /v1/m/w3c`` (empty)
+================== ============
 
 ============= ===========================================
 Response code Response body
@@ -390,11 +390,11 @@ Response code Response body
 
 You can examine the created namespace by performing an HTTP GET request:
 
-============ ============
-Request URL  Request body
-============ ============
-``GET /w3c`` –
-============ ============
+================= ============
+Request URL       Request body
+================= ============
+``GET /v1/m/w3c`` –
+================= ============
 
 ============= ========================
 Response code Response body
@@ -407,11 +407,11 @@ name.
 
 You can also list all namespaces in the repository:
 
-=========== ============
-Request URL Request body
-=========== ============
-``GET /``   –
-=========== ============
+============= ============
+Request URL   Request body
+============= ============
+``GET /v1/m`` –
+============= ============
 
 Response:
 
@@ -430,9 +430,9 @@ described in detail in the `Browsing
 collections <#browsing-collections>`__ section below.
 
 **Note:** namespace name must meet the following criteria: - be at least
-3 characters, and at most 100 characters long - only contain lower or
-upper letters of the latin alphabet, digits, dashes (``-``), and
-underscores (``_``)
+1 and at most 100 characters long - only contain lower or upper letters
+of the latin alphabet, digits, dashes (``-``), and underscores (``_``) -
+not start with one of the following characters: ``_-``
 
 Step 2: create models
 ^^^^^^^^^^^^^^^^^^^^^
@@ -442,11 +442,11 @@ corresponding to `two well-known IoT
 ontologies <https://www.w3.org/TR/vocab-ssn/>`__. Creating a model is
 similar to creating a namespace:
 
-================= =======
-Request           Body
-================= =======
-``POST /w3c/ssn`` (empty)
-================= =======
+====================== =======
+Request                Body
+====================== =======
+``POST /v1/m/w3c/ssn`` (empty)
+====================== =======
 
 ============= ===========================================
 Response code Body
@@ -456,11 +456,11 @@ Response code Body
 
 and for sosa:
 
-================== =======
-Request            Body
-================== =======
-``POST /w3c/sosa`` (empty)
-================== =======
+======================= =======
+Request                 Body
+======================= =======
+``POST /v1/m/w3c/sosa`` (empty)
+======================= =======
 
 ============= ============================================
 Response code Body
@@ -470,11 +470,11 @@ Response code Body
 
 You can examine the created model:
 
-================= ====
-Request           Body
-================= ====
-``GET /w3c/sosa`` –
-================= ====
+====================== ====
+Request                Body
+====================== ====
+``GET /v1/m/w3c/sosa`` –
+====================== ====
 
 ============= =========================================
 Response code Body
@@ -482,8 +482,8 @@ Response code Body
 200           ``{"namespace": "w3c", "model": "sosa"}``
 ============= =========================================
 
-When you again examine the contents of the namespace (``GET /w3c``), you
-will see a collection of models:
+When you again examine the contents of the namespace
+(``GET /v1/m/w3c``), you will see a collection of models:
 
 .. code:: json
 
@@ -524,11 +524,11 @@ explicitly create a specific version of the model and work with that.
 
 For example, to create a version ``1.0`` of model ``sosa``:
 
-====================== =======
-Request                Body
-====================== =======
-``POST /w3c/sosa/1.0`` (empty)
-====================== =======
+=========================== =======
+Request                     Body
+=========================== =======
+``POST /v1/m/w3c/sosa/1.0`` (empty)
+=========================== =======
 
 ============= ========================================================
 Response code Body
@@ -538,11 +538,11 @@ Response code Body
 
 You can examine the content of this version:
 
-===================== ====
-Request               Body
-===================== ====
-``GET /w3c/sosa/1.0`` –
-===================== ====
+========================== ====
+Request                    Body
+========================== ====
+``GET /v1/m/w3c/sosa/1.0`` –
+========================== ====
 
 Response:
 
@@ -556,7 +556,7 @@ Response:
    }
 
 You can also retrieve a list of versions for the model (again,
-``GET /w3c/sosa``):
+``GET /v1/m/w3c/sosa``):
 
 .. code:: json
 
@@ -591,11 +591,11 @@ below)
 The ``latest`` version pointer can be set on a given model using a PATCH
 request:
 
-=================== ============================
-Request             Body
-=================== ============================
-``PATCH /w3c/sosa`` ``{"latestVersion": "1.0"}``
-=================== ============================
+======================== ============================
+Request                  Body
+======================== ============================
+``PATCH /v1/m/w3c/sosa`` ``{"latestVersion": "1.0"}``
+======================== ============================
 
 ============= ============================================
 Response code Body
@@ -604,7 +604,8 @@ Response code Body
 ============= ============================================
 
 Now it can be used in GET requests instead of the explicit version. So,
-``GET /w3c/sosa/latest`` is equivalent to ``GET /w3c/sosa/1.0``.
+``GET /v1/m/w3c/sosa/latest`` is equivalent to
+``GET /v1/m/w3c/sosa/1.0``.
 
 **Important:** to prevent accidental overwrites, **it is not possible to
 make POST, PATCH, or DELETE requests via the ``latest`` pointer**. Use
@@ -612,11 +613,11 @@ the explicit version in the URL instead.
 
 The version pointer can also be set during model creation:
 
-================= ============================
-Request           Body
-================= ============================
-``POST /w3c/ssn`` ``{"latestVersion": "1.0"}``
-================= ============================
+====================== ============================
+Request                Body
+====================== ============================
+``POST /v1/m/w3c/ssn`` ``{"latestVersion": "1.0"}``
+====================== ============================
 
 ============= ===========================================
 Response code Body
@@ -628,11 +629,11 @@ To change the pointer to a new value, simply make a PATCH request. To
 **unset** the pointer completely, use the special ``@unset`` value in a
 PATCH request:
 
-=================== ===============================
-Request             Body
-=================== ===============================
-``PATCH /w3c/sosa`` ``{"latestVersion": "@unset"}``
-=================== ===============================
+======================== ===============================
+Request                  Body
+======================== ===============================
+``PATCH /v1/m/w3c/sosa`` ``{"latestVersion": "@unset"}``
+======================== ===============================
 
 ============= ============================================
 Response code Body
@@ -649,11 +650,11 @@ previous section.
 
 To upload content in format ``text/turtle``:
 
-================================================= ===============
-Request                                           Body
-================================================= ===============
-``POST /w3c/sosa/1.0/content?format=text/turtle`` content: (file)
-================================================= ===============
+====================================================== ===============
+Request                                                Body
+====================================================== ===============
+``POST /v1/m/w3c/sosa/1.0/content?format=text/turtle`` content: (file)
+====================================================== ===============
 
 In the body of the request (form-data) set the field ``content`` to the
 file you want to upload.
@@ -676,7 +677,7 @@ can upload more content files for the model version in a similar manner.
 The Semantic Repository support multipart, streaming uploads and can
 handle files of any size this way.
 
-To see the available formats, make a ``GET /w3c/sosa/1.0`` request:
+To see the available formats, make a ``GET /v1/m/w3c/sosa/1.0`` request:
 
 .. code:: json
 
@@ -722,14 +723,12 @@ request presented above, it will be rejected with an HTTP 400 error:
 If you really want to overwrite this content (in case of a mistake, for
 example), add the ``overwrite=1`` parameter:
 
-=============================================================
-===============
-Request                                                       Body
-=============================================================
-===============
-``POST /w3c/sosa/1.0/content?format=text/turtle&overwrite=1`` content: (file)
-=============================================================
-===============
++---------------------------------------------+------------------------+
+| Request                                     | Body                   |
++=============================================+========================+
+| ``POST /v1/m/w3c/sosa/1.0/content?format=te | content: (file)        |
+| xt/turtle&overwrite=1``                     |                        |
++---------------------------------------------+------------------------+
 
 Response:
 
@@ -752,11 +751,14 @@ version, but can also be changed later.
 
 Changing the ``defaultFormat`` field is done with a PATCH request:
 
-======================= ============================================
-Request                 Body
-======================= ============================================
-``PATCH /w3c/sosa/1.0`` ``{"defaultFormat": "application/json+ld"}``
-======================= ============================================
+============================
+============================================
+Request                      Body
+============================
+============================================
+``PATCH /v1/m/w3c/sosa/1.0`` ``{"defaultFormat": "application/json+ld"}``
+============================
+============================================
 
 ============= ==========================================================
 Response code Body
@@ -764,7 +766,7 @@ Response code Body
 200           ``{"message": "Updated model version 'w3c/sosa/1.0.0'."}``
 ============= ==========================================================
 
-Now when you request ``GET /w3c/sosa/1.0/content`` (or any of the
+Now when you request ``GET /v1/m/w3c/sosa/1.0/content`` (or any of the
 equivalent forms shown above), the Repository will attempt to retrieve
 content in the ``application/json+ld`` format.
 
@@ -774,11 +776,11 @@ will receive a 404 error when trying to retrieve the content.
 
 The default format can also be set during model version creation:
 
-===================== ============================================
-Request               Body
-===================== ============================================
-``POST /w3c/ssn/1.0`` ``{"defaultFormat": "application/json+ld"}``
-===================== ============================================
+========================== ============================================
+Request                    Body
+========================== ============================================
+``POST /v1/m/w3c/ssn/1.0`` ``{"defaultFormat": "application/json+ld"}``
+========================== ============================================
 
 ============= =======================================================
 Response code Body
@@ -793,11 +795,11 @@ To change the default format to a new value, simply make a PATCH
 request. To **unset** the default format completely, use the special
 ``@unset`` value in a PATCH request:
 
-======================= ===============================
-Request                 Body
-======================= ===============================
-``PATCH /w3c/sosa/1.0`` ``{"defaultFormat": "@unset"}``
-======================= ===============================
+============================ ===============================
+Request                      Body
+============================ ===============================
+``PATCH /v1/m/w3c/sosa/1.0`` ``{"defaultFormat": "@unset"}``
+============================ ===============================
 
 ============= ========================================================
 Response code Body
@@ -811,12 +813,12 @@ Downloading the content
 Downloading the models is very straightforward. The most explicit way is
 to specify the namespace, model, version, and the desired format:
 
-``GET /w3c/sosa/1.0/content?format=text/turtle``
+``GET /v1/m/w3c/sosa/1.0/content?format=text/turtle``
 
 You can also omit the ``format`` parameter to obtain the content in the
 default format:
 
-``GET /w3c/sosa/1.0/content``
+``GET /v1/m/w3c/sosa/1.0/content``
 
 If you have set the ``latest`` tag for this model, you can use it
 instead of the explicit version, to fetch the most recent version of the
@@ -825,11 +827,11 @@ model.
 There is also a second, shorter style of URLs for downloading content,
 with the ``/c`` prefix:
 
-1. ``GET /c/w3c/sosa/1.0/text/turtle``
-2. ``GET /c/w3c/sosa/latest/text/turtle``
-3. ``GET /c/w3c/sosa/1.0``
-4. ``GET /c/w3c/sosa/latest``
-5. ``GET /c/w3c/sosa``
+1. ``GET /v1/c/w3c/sosa/1.0/text/turtle``
+2. ``GET /v1/c/w3c/sosa/latest/text/turtle``
+3. ``GET /v1/c/w3c/sosa/1.0``
+4. ``GET /v1/c/w3c/sosa/latest``
+5. ``GET /v1/c/w3c/sosa``
 
 Assuming that the ``latest`` tag is set to version ``1.0`` and the
 default format is ``text/turtle``, all of the above requests will return
@@ -850,7 +852,7 @@ of those cases, the only difference is in the URL.
 You can attach metadata when creating an entity via a POST request. For
 example, if we wanted to create a new model in the ``w3c`` namespace:
 
-Request: ``POST /w3c/dcat`` Body:
+Request: ``POST /v1/m/w3c/dcat`` Body:
 
 .. code:: json
 
@@ -871,11 +873,11 @@ metadata can be later modified, as explained below.
 
 To examine the created model:
 
-================= ====
-Request           Body
-================= ====
-``GET /w3c/dcat`` –
-================= ====
+====================== ====
+Request                Body
+====================== ====
+``GET /v1/m/w3c/dcat`` –
+====================== ====
 
 Response:
 
@@ -927,7 +929,7 @@ model. We (1) remove the ``editors`` key (2) add the ``git-repo`` key
 (3) change the value of ``external-docs`` to an array. The other keys
 will remain unchanged.
 
-Request: ``PATCH /w3c/dcat`` Body:
+Request: ``PATCH /v1/m/w3c/dcat`` Body:
 
 .. code:: json
 
@@ -944,11 +946,11 @@ Request: ``PATCH /w3c/dcat`` Body:
 
 To examine the modified model:
 
-================= ====
-Request           Body
-================= ====
-``GET /w3c/dcat`` –
-================= ====
+====================== ====
+Request                Body
+====================== ====
+``GET /v1/m/w3c/dcat`` –
+====================== ====
 
 Response:
 
@@ -984,21 +986,21 @@ Additionally, you must provide the ``force=1`` query parameter to the
 request. This is to avoid accidental deletions.
 
 For example, to delete a (previously emptied of any versions) model
-``/w3c/dcat``:
+``w3c/dcat``:
 
-============================ ====
-Request                      Body
-============================ ====
-``DELETE /w3c/dcat?force=1`` –
-============================ ====
+================================= ====
+Request                           Body
+================================= ====
+``DELETE /v1/m/w3c/dcat?force=1`` –
+================================= ====
 
 Another example: deleting a specific content of a model version:
 
-=========================================================== ====
-Request                                                     Body
-=========================================================== ====
-``DELETE /w3c/sosa/1.0/content?format=text/turtle&force=1`` –
-=========================================================== ====
+================================================================ ====
+Request                                                          Body
+================================================================ ====
+``DELETE /v1/m/w3c/sosa/1.0/content?format=text/turtle&force=1`` –
+================================================================ ====
 
 **Note 1: deleting things from the Repository is discouraged**, do so
 only in exceptional circumstances (e.g., a mistake). The contents of the
@@ -1029,11 +1031,11 @@ In the following example, let’s assume that we have namespace
 third page of the list of models in this namespace, while showing 4
 items per page:
 
-=================================== ====
-Request                             Body
-=================================== ====
-``GET /example?page=3&page_size=4`` –
-=================================== ====
+======================================== ====
+Request                                  Body
+======================================== ====
+``GET /v1/m/example?page=3&page_size=4`` –
+======================================== ====
 
 Response:
 
@@ -1090,9 +1092,10 @@ all will be joined with the AND operator. The sort & filter parameters
 can be freely combined with paging parameters.
 
 The following fields can be sorted and filtered: - Namespace collection
-(``/``): ``namespace``, ``metadata.*`` - Model collection (``/{ns}``):
-``model``, ``latestVersion``, ``metadata.*`` - Model version collection
-(``/{ns}/{model}``): ``version``, ``defaultFormat``, ``metadata.*``
+(``/v1/m``): ``namespace``, ``metadata.*`` - Model collection
+(``/v1/m/{ns}``): ``model``, ``latestVersion``, ``metadata.*`` - Model
+version collection (``/v1/m/{ns}/{model}``): ``version``,
+``defaultFormat``, ``metadata.*``
 
 The ``metadata.*`` field indicates it is possible to sort or filter by
 any of the metadata properties. For example, to sort by metadata field
@@ -1109,11 +1112,14 @@ filter-able fields in this collection, as described above.
 For example, to search for models that have the latest version set to
 ``1.0.0`` and their ``source`` metadata field is ``internal``:
 
-================================================================= ====
-Request                                                           Body
-================================================================= ====
-``GET /example?f.latestVersion=1.0.0&f.metadata.source=internal`` –
-================================================================= ====
+======================================================================
+====
+Request                                                                Body
+======================================================================
+====
+``GET /v1/m/example?f.latestVersion=1.0.0&f.metadata.source=internal`` –
+======================================================================
+====
 
 **Note 1:** metadata fields can have multiple values. A filter on such a
 field will be satisfied if at least one value is equal to the filter
@@ -1132,11 +1138,11 @@ set to ``ascending`` by default.
 
 For example, to sort namespaces by their name, in descending order:
 
-============================================ ====
-Request                                      Body
-============================================ ====
-``GET /?sort_by=namespace&order=descending`` –
-============================================ ====
+================================================ ====
+Request                                          Body
+================================================ ====
+``GET /v1/m?sort_by=namespace&order=descending`` –
+================================================ ====
 
 **Note 1:** sorting is applied after filtering, but before paging. This
 allows you to freely browse filtered and sorted collections.
@@ -1152,7 +1158,8 @@ The Semantic Repository can store and serve generated documentation
 pages – see the user guide for details on the available formats and
 modes of operation. This functionality can be accessed via two
 endpoints: - Documentation per model version:
-``/{namespace}/{model}/{version}/doc`` - Documentation sandbox: ``/dg``
+``/v1/m/{namespace}/{model}/{version}/doc`` - Documentation sandbox:
+``/v1/doc_gen``
 
 In the following sections, it is explained how to upload new
 documentation jobs, monitor their status, and retrieve the generated
@@ -1164,11 +1171,11 @@ Documentation sandbox
 To create a new documentation generation job in the sandbox using the
 ``markdown`` plugin:
 
-============================ ===============
-Request                      Body
-============================ ===============
-``POST /dg?plugin=markdown`` content: (file)
-============================ ===============
+==================================== ===============
+Request                              Body
+==================================== ===============
+``POST /v1/doc_gen?plugin=markdown`` content: (file)
+==================================== ===============
 
 Here, the ``content`` body field can be one or more files to be
 processed. In response you will receive an acknowledgement with your
@@ -1185,13 +1192,13 @@ for further requests:
 
 The job has now been added to the queue and will be processed
 asynchronously. You can check the job’s status by making a GET request
-to ``/dg/{job_id}``. In our example:
+to ``/v1/doc_gen/{job_id}``. In our example:
 
-==================================== ====
-Request                              Body
-==================================== ====
-``GET /dg/638b357c5a6298307ca53fb8`` –
-==================================== ====
+============================================ ====
+Request                                      Body
+============================================ ====
+``GET /v1/doc_gen/638b357c5a6298307ca53fb8`` –
+============================================ ====
 
 The status of the job will be returned:
 
@@ -1213,23 +1220,24 @@ successfully, and the generated documentation can be accessed. -
 provides additional detail as to the cause of the problem.
 
 After the job has been finished successfully, you can access the
-generated files at ``/dg/{job_id/doc/`` - ``GET /dg/{job_id}/doc``
-redirects to ``GET /dg/{job_id}/doc/`` - ``GET /dg/{job_id}/doc/``
+generated files at ``/v1/doc_gen/{job_id/doc/`` -
+``GET /v1/doc_gen/{job_id}/doc`` redirects to
+``GET /v1/doc_gen/{job_id}/doc/`` - ``GET /v1/doc_gen/{job_id}/doc/``
 returns the content of the home page of the documentation
-(``index.html``) - ``GET /dg/{job_id}/doc/{file_path}`` return the
-content of the file under the given path.
+(``index.html``) - ``GET /v1/doc_gen/{job_id}/doc/{file_path}`` returns
+the content of the file under the given path.
 
 Documentation for model versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The process for adding documentation to model versions is very similar.
-To add documentation to model version ``/w3c/sosa/1.0``:
+To add documentation to model version ``w3c/sosa/1.0``:
 
-============================================== ===============
-Request                                        Body
-============================================== ===============
-``POST /w3c/sosa/1.0/doc_gen?plugin=markdown`` content: (file)
-============================================== ===============
+=================================================== ===============
+Request                                             Body
+=================================================== ===============
+``POST /v1/m/w3c/sosa/1.0/doc_gen?plugin=markdown`` content: (file)
+=================================================== ===============
 
 Response:
 
@@ -1245,11 +1253,11 @@ The returned job handle is not a unique ID, but rather the model
 version’s name. To check the status of the job, simply retrieve the
 details of the model version:
 
-===================== ====
-Request               Body
-===================== ====
-``GET /w3c/sosa/1.0`` –
-===================== ====
+========================== ====
+Request                    Body
+========================== ====
+``GET /v1/m/w3c/sosa/1.0`` –
+========================== ====
 
 This will return:
 
@@ -1270,22 +1278,22 @@ This will return:
    }
 
 The generated documentation is available under
-``GET /{namespace}/{model}/{version}/doc`` and is served in the same
-manner as with sandbox jobs.
+``GET /v1/m/{namespace}/{model}/{version}/doc`` and is served in the
+same manner as with sandbox jobs.
 
 **Note:** when overwriting the documentation for a model version, it is
 necessary to include the ``overwrite=1`` query parameter. Otherwise, the
 request will be rejected.
 
 It is also possible to delete the documentation for a model version. To
-do this, simply call ``DELETE /{namespace}/{model}/{version}/doc`` with
-the ``force=1`` parameter:
+do this, simply call ``DELETE /v1/m/{namespace}/{model}/{version}/doc``
+with the ``force=1`` parameter:
 
-==================================== ====
-Request                              Body
-==================================== ====
-``DELETE /w3c/sosa/1.0/doc?force=1`` –
-==================================== ====
+========================================= ====
+Request                                   Body
+========================================= ====
+``DELETE /v1/m/w3c/sosa/1.0/doc?force=1`` –
+========================================= ====
 
 Response:
 
@@ -1299,13 +1307,13 @@ Documentation plugins info
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is possible to list the installed documentation plugins and their
-supported file extensions, with the ``/dg`` endpoint:
+supported file extensions, with the ``/v1/doc_gen`` endpoint:
 
-=========== ====
-Request     Body
-=========== ====
-``GET /dg`` –
-=========== ====
+=================== ====
+Request             Body
+=================== ====
+``GET /v1/doc_gen`` –
+=================== ====
 
 Response:
 
@@ -1337,7 +1345,7 @@ are and their available types.
 New webhooks are defined by POST. For example, to create a webhook that
 listens for content uploads in model version w3c/sosa/1.0:
 
-Request: ``POST /hk`` Body:
+Request: ``POST /v1/webhook`` Body:
 
 .. code:: json
 
@@ -1371,11 +1379,11 @@ The returned handle is the unique ID of the webhook.
 
 You can retrieve a list of all webhooks using GET:
 
-=========== ====
-Request     Body
-=========== ====
-``GET /hk`` –
-=========== ====
+=================== ====
+Request             Body
+=================== ====
+``GET /v1/webhook`` –
+=================== ====
 
 Response
 
@@ -1406,11 +1414,11 @@ This collection can be filtered and sorted by the ``action`` field.
 
 A single webhook can be retrieved by its ID:
 
-==================================== ====
-Request                              Body
-==================================== ====
-``GET /hk/638f62056d64d41f7c3578ae`` –
-==================================== ====
+============================================ ====
+Request                                      Body
+============================================ ====
+``GET /v1/webhook/638f62056d64d41f7c3578ae`` –
+============================================ ====
 
 Response:
 
@@ -1430,11 +1438,11 @@ Response:
 Webhooks cannot be modified after they are created. They can only be
 deleted using DELETE with the ``force=1`` parameter:
 
-=============================================== ====
-Request                                         Body
-=============================================== ====
-``DELETE /hk/638f62056d64d41f7c3578ae?force=1`` –
-=============================================== ====
+======================================================= ====
+Request                                                 Body
+======================================================= ====
+``DELETE /v1/webhook/638f62056d64d41f7c3578ae?force=1`` –
+======================================================= ====
 
 Response:
 
@@ -1748,9 +1756,9 @@ Main application (API server) dependencies
 Note that `Akka changed its
 license <https://www.lightbend.com/akka/license-faq>`__ to a restrictive
 one for versions 2.7.X and up. Because the Semantic Repository is using
-the 2.6.X version (under the Apache License), it remains unaffected.
-Future versions of the Semantic Repository are expected to use `Apache
-Pekko <https://pekko.apache.org/>`__ the free fork of Akka.
+the 2.6.X version (still under the Apache License), it remains
+unaffected. Future versions of the Semantic Repository are expected to
+use `Apache Pekko <https://pekko.apache.org/>`__, the free fork of Akka.
 
 +---+----------------------------+--------------------------------------+
 | C | License                    | Dependency                           |

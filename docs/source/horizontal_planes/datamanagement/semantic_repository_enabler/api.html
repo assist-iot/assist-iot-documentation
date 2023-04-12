@@ -183,7 +183,7 @@ font-style: italic;
     <div class="app-desc">The Semantic Repository enabler offers a “nexus” for data models, ontologies, and other files, that can be uploaded in different file formats, and served to users with relevant documentation.</div>
     <div class="app-desc">More information: <a href="https://openapi-generator.tech">https://openapi-generator.tech</a></div>
     <div class="app-desc">Contact Info: <a href="team@openapitools.org">team@openapitools.org</a></div>
-    <div class="app-desc">Version: 0.4</div>
+    <div class="app-desc">Version: 0.5.0</div>
     <div class="app-desc">BasePath:</div>
     <div class="license-info">All rights reserved</div>
     <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
@@ -196,62 +196,73 @@ font-style: italic;
   <div class="method-summary"></div>
   <h4><a href="#Content">Content</a></h4>
   <ul>
-  <li><a href="#deleteContentRoute"><code><span class="http-method">delete</span> /{namespace}/{model}/{version}/content</code></a></li>
-  <li><a href="#getContentRoute"><code><span class="http-method">get</span> /{namespace}/{model}/{version}/content</code></a></li>
-  <li><a href="#postContentRoute"><code><span class="http-method">post</span> /{namespace}/{model}/{version}/content</code></a></li>
+  <li><a href="#deleteContentRoute"><code><span class="http-method">delete</span> /v1/m/{namespace}/{model}/{version}/content</code></a></li>
+  <li><a href="#getContentRoute"><code><span class="http-method">get</span> /v1/m/{namespace}/{model}/{version}/content</code></a></li>
+  <li><a href="#getContentShortDefaultRoute"><code><span class="http-method">get</span> /v1/c/{namespace}/{model}/{version}</code></a></li>
+  <li><a href="#getContentShortLatestRoute"><code><span class="http-method">get</span> /v1/c/{namespace}/{model}</code></a></li>
+  <li><a href="#getContentShortRoute"><code><span class="http-method">get</span> /v1/c/{namespace}/{model}/{version}/{format}</code></a></li>
+  <li><a href="#postContentRoute"><code><span class="http-method">post</span> /v1/m/{namespace}/{model}/{version}/content</code></a></li>
   </ul>
   <h4><a href="#DocModel">DocModel</a></h4>
   <ul>
-  <li><a href="#deleteModelDocsRoute"><code><span class="http-method">delete</span> /{namespace}/{model}/{version}/doc</code></a></li>
-  <li><a href="#postModelJobRoute"><code><span class="http-method">post</span> /{namespace}/{model}/{version}/doc_gen</code></a></li>
-  <li><a href="#serveModelDocsRoute"><code><span class="http-method">get</span> /{namespace}/{model}/{version}/doc/{file}</code></a></li>
+  <li><a href="#deleteModelDocsRoute"><code><span class="http-method">delete</span> /v1/m/{namespace}/{model}/{version}/doc</code></a></li>
+  <li><a href="#postModelJobRoute"><code><span class="http-method">post</span> /v1/m/{namespace}/{model}/{version}/doc_gen</code></a></li>
+  <li><a href="#serveModelDocsRoute"><code><span class="http-method">get</span> /v1/m/{namespace}/{model}/{version}/doc/{file}</code></a></li>
   </ul>
   <h4><a href="#DocSandbox">DocSandbox</a></h4>
   <ul>
-  <li><a href="#getSandboxJobStatusRoute"><code><span class="http-method">get</span> /dg/{job_id}</code></a></li>
-  <li><a href="#postSandboxJobRoute"><code><span class="http-method">post</span> /dg</code></a></li>
-  <li><a href="#serveSandboxDocsRoute"><code><span class="http-method">get</span> /dg/{job_id}/content/{file}</code></a></li>
+  <li><a href="#getSandboxJobStatusRoute"><code><span class="http-method">get</span> /v1/doc_gen/{job_id}</code></a></li>
+  <li><a href="#postSandboxJobRoute"><code><span class="http-method">post</span> /v1/doc_gen</code></a></li>
+  <li><a href="#serveSandboxDocsRoute"><code><span class="http-method">get</span> /v1/doc_gen/{job_id}/content/{file}</code></a></li>
   </ul>
   <h4><a href="#Meta">Meta</a></h4>
   <ul>
-  <li><a href="#getDocMetaRoute"><code><span class="http-method">get</span> /dg</code></a></li>
-  <li><a href="#getVersionRoute"><code><span class="http-method">get</span> /v</code></a></li>
+  <li><a href="#getDocMetaRoute"><code><span class="http-method">get</span> /v1/doc_gen</code></a></li>
+  <li><a href="#getInfoRoute"><code><span class="http-method">get</span> /v1/info</code></a></li>
+  <li><a href="#getVersionRoute"><code><span class="http-method">get</span> /v1/version</code></a></li>
   </ul>
   <h4><a href="#Model">Model</a></h4>
   <ul>
-  <li><a href="#deleteModelRoute"><code><span class="http-method">delete</span> /{namespace}/{model}</code></a></li>
-  <li><a href="#getModelRoute"><code><span class="http-method">get</span> /{namespace}/{model}</code></a></li>
-  <li><a href="#patchModelRoute"><code><span class="http-method">patch</span> /{namespace}/{model}</code></a></li>
-  <li><a href="#postModelRoute"><code><span class="http-method">post</span> /{namespace}/{model}</code></a></li>
+  <li><a href="#deleteModelRoute"><code><span class="http-method">delete</span> /v1/m/{namespace}/{model}</code></a></li>
+  <li><a href="#getModelRoute"><code><span class="http-method">get</span> /v1/m/{namespace}/{model}</code></a></li>
+  <li><a href="#patchModelRoute"><code><span class="http-method">patch</span> /v1/m/{namespace}/{model}</code></a></li>
+  <li><a href="#postModelRoute"><code><span class="http-method">post</span> /v1/m/{namespace}/{model}</code></a></li>
   </ul>
   <h4><a href="#Namespace">Namespace</a></h4>
   <ul>
-  <li><a href="#deleteNamespaceRoute"><code><span class="http-method">delete</span> /{namespace}</code></a></li>
-  <li><a href="#getAllNamespacesRoute"><code><span class="http-method">get</span> /</code></a></li>
-  <li><a href="#getNamespaceRoute"><code><span class="http-method">get</span> /{namespace}</code></a></li>
-  <li><a href="#patchNamespaceRoute"><code><span class="http-method">patch</span> /{namespace}</code></a></li>
-  <li><a href="#postNamespaceRoute"><code><span class="http-method">post</span> /{namespace}</code></a></li>
+  <li><a href="#deleteNamespaceRoute"><code><span class="http-method">delete</span> /v1/m/{namespace}</code></a></li>
+  <li><a href="#getAllNamespacesRoute"><code><span class="http-method">get</span> /v1/m</code></a></li>
+  <li><a href="#getNamespaceRoute"><code><span class="http-method">get</span> /v1/m/{namespace}</code></a></li>
+  <li><a href="#patchNamespaceRoute"><code><span class="http-method">patch</span> /v1/m/{namespace}</code></a></li>
+  <li><a href="#postNamespaceRoute"><code><span class="http-method">post</span> /v1/m/{namespace}</code></a></li>
+  </ul>
+  <h4><a href="#Openapi">Openapi</a></h4>
+  <ul>
+  <li><a href="#getOpenApiJsonSpecRoute"><code><span class="http-method">get</span> /v1/api-export/swagger.json</code></a></li>
+  <li><a href="#getOpenApiSpecRoute"><code><span class="http-method">get</span> /v1/api-export/openapi</code></a></li>
+  <li><a href="#getOpenApiYamlSpecRoute"><code><span class="http-method">get</span> /v1/api-export/swagger.yaml</code></a></li>
+  <li><a href="#getSwaggerUiRoute"><code><span class="http-method">get</span> /v1/api-export/docs</code></a></li>
   </ul>
   <h4><a href="#Version">Version</a></h4>
   <ul>
-  <li><a href="#deleteModelVersionRoute"><code><span class="http-method">delete</span> /{namespace}/{model}/{version}</code></a></li>
-  <li><a href="#getModelVersionRoute"><code><span class="http-method">get</span> /{namespace}/{model}/{version}</code></a></li>
-  <li><a href="#patchModelVersionRoute"><code><span class="http-method">patch</span> /{namespace}/{model}/{version}</code></a></li>
-  <li><a href="#postModelVersionRoute"><code><span class="http-method">post</span> /{namespace}/{model}/{version}</code></a></li>
+  <li><a href="#deleteModelVersionRoute"><code><span class="http-method">delete</span> /v1/m/{namespace}/{model}/{version}</code></a></li>
+  <li><a href="#getModelVersionRoute"><code><span class="http-method">get</span> /v1/m/{namespace}/{model}/{version}</code></a></li>
+  <li><a href="#patchModelVersionRoute"><code><span class="http-method">patch</span> /v1/m/{namespace}/{model}/{version}</code></a></li>
+  <li><a href="#postModelVersionRoute"><code><span class="http-method">post</span> /v1/m/{namespace}/{model}/{version}</code></a></li>
   </ul>
   <h4><a href="#Webhook">Webhook</a></h4>
   <ul>
-  <li><a href="#deleteWebhook"><code><span class="http-method">delete</span> /hk/{hook_id}</code></a></li>
-  <li><a href="#getWebhook"><code><span class="http-method">get</span> /hk/{hook_id}</code></a></li>
-  <li><a href="#getWebhooks"><code><span class="http-method">get</span> /hk</code></a></li>
-  <li><a href="#postWebhook"><code><span class="http-method">post</span> /hk</code></a></li>
+  <li><a href="#deleteWebhook"><code><span class="http-method">delete</span> /v1/webhook/{hook_id}</code></a></li>
+  <li><a href="#getWebhook"><code><span class="http-method">get</span> /v1/webhook/{hook_id}</code></a></li>
+  <li><a href="#getWebhooks"><code><span class="http-method">get</span> /v1/webhook</code></a></li>
+  <li><a href="#postWebhook"><code><span class="http-method">post</span> /v1/webhook</code></a></li>
   </ul>
 
   <h1><a name="Content">Content</a></h1>
   <div class="method"><a name="deleteContentRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /{namespace}/{model}/{version}/content</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /v1/m/{namespace}/{model}/{version}/content</code></pre></div>
     <div class="method-summary">Delete a model's content (<span class="nickname">deleteContentRoute</span>)</div>
     <div class="method-notes">Delete content in a given format for a specific version of a model in the repository.</div>
 
@@ -316,7 +327,7 @@ font-style: italic;
   <div class="method"><a name="getContentRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /{namespace}/{model}/{version}/content</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/m/{namespace}/{model}/{version}/content</code></pre></div>
     <div class="method-summary">Get the model's content (<span class="nickname">getContentRoute</span>)</div>
     <div class="method-notes">Return the content of a specific version of a model</div>
 
@@ -363,10 +374,142 @@ font-style: italic;
         <a href="#ErrorResponse">ErrorResponse</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="getContentShortDefaultRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/c/{namespace}/{model}/{version}</code></pre></div>
+    <div class="method-summary">Get the model's content (shorthand, default format) (<span class="nickname">getContentShortDefaultRoute</span>)</div>
+    <div class="method-notes">Return the content of a specific version of a model, in the default format</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div><div class="param">version (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Version tag default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Content found
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Content not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getContentShortLatestRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/c/{namespace}/{model}</code></pre></div>
+    <div class="method-summary">Get the model's content (shorthand, latest version, default format) (<span class="nickname">getContentShortLatestRoute</span>)</div>
+    <div class="method-notes">Return the content for the latest version of a model, in the default format</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Content found
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Content not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getContentShortRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/c/{namespace}/{model}/{version}/{format}</code></pre></div>
+    <div class="method-summary">Get the model's content (shorthand) (<span class="nickname">getContentShortRoute</span>)</div>
+    <div class="method-notes">Return the content of a specific version of a model</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">namespace (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the namespace default: null </div><div class="param">model (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the model default: null </div><div class="param">version (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Version tag default: null </div><div class="param">format (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Preferred format for the content. default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Content found
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Content not found
+        <a href="#ErrorResponse">ErrorResponse</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="postContentRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /{namespace}/{model}/{version}/content</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/m/{namespace}/{model}/{version}/content</code></pre></div>
     <div class="method-summary">Upload model's content (<span class="nickname">postContentRoute</span>)</div>
     <div class="method-notes">Upload content for a specific version of a model in the repository.</div>
 
@@ -443,7 +586,7 @@ font-style: italic;
   <div class="method"><a name="deleteModelDocsRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /{namespace}/{model}/{version}/doc</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /v1/m/{namespace}/{model}/{version}/doc</code></pre></div>
     <div class="method-summary">Delete a model version's documentation (<span class="nickname">deleteModelDocsRoute</span>)</div>
     <div class="method-notes">Delete all documentation for a specific version of a model in the repository.</div>
 
@@ -506,7 +649,7 @@ font-style: italic;
   <div class="method"><a name="postModelJobRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /{namespace}/{model}/{version}/doc_gen</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/m/{namespace}/{model}/{version}/doc_gen</code></pre></div>
     <div class="method-summary">Submit a documentation job for a model version (<span class="nickname">postModelJobRoute</span>)</div>
     <div class="method-notes">Submits a new version of the model version's documentation. On submission, the documentation generation job is added to the queue.</div>
 
@@ -580,7 +723,7 @@ font-style: italic;
   <div class="method"><a name="serveModelDocsRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /{namespace}/{model}/{version}/doc/{file}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/m/{namespace}/{model}/{version}/doc/{file}</code></pre></div>
     <div class="method-summary">Get the generated documentation for a model version (<span class="nickname">serveModelDocsRoute</span>)</div>
     <div class="method-notes">Returns the generated documentation files for a specific model version</div>
 
@@ -626,7 +769,7 @@ font-style: italic;
   <div class="method"><a name="getSandboxJobStatusRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /dg/{job_id}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/doc_gen/{job_id}</code></pre></div>
     <div class="method-summary">Get the status of a sandbox documentation job (<span class="nickname">getSandboxJobStatusRoute</span>)</div>
     <div class="method-notes">Returns the status and detailed information on a sandbox documentation generation job, which was previously submitted.</div>
 
@@ -680,7 +823,7 @@ font-style: italic;
   <div class="method"><a name="postSandboxJobRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /dg</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/doc_gen</code></pre></div>
     <div class="method-summary">Submit a sandbox documentation job (<span class="nickname">postSandboxJobRoute</span>)</div>
     <div class="method-notes">Submits to the queue a new sandbox documentation generation job. On submission, the user is given a unique job id that can be later used to retrieve the job's status and the generated files.</div>
 
@@ -735,7 +878,7 @@ font-style: italic;
   <div class="method"><a name="serveSandboxDocsRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /dg/{job_id}/content/{file}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/doc_gen/{job_id}/content/{file}</code></pre></div>
     <div class="method-summary">Get the generated documentation (<span class="nickname">serveSandboxDocsRoute</span>)</div>
     <div class="method-notes">Returns the generated documentation files for a specific sandbox job</div>
 
@@ -777,7 +920,7 @@ font-style: italic;
   <div class="method"><a name="getDocMetaRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /dg</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/doc_gen</code></pre></div>
     <div class="method-summary">Get the metadata about documentation plugins (<span class="nickname">getDocMetaRoute</span>)</div>
     <div class="method-notes">Returns information about documentation generation plugins available in this instance of the Semantic Repository</div>
 
@@ -819,11 +962,11 @@ font-style: italic;
         <a href="#DocMetadata">DocMetadata</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="getVersionRoute"/>
+  <div class="method"><a name="getInfoRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /v</code></pre></div>
-    <div class="method-summary">Returns version information (<span class="nickname">getVersionRoute</span>)</div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/info</code></pre></div>
+    <div class="method-summary">Returns information about the Semantic Repository (<span class="nickname">getInfoRoute</span>)</div>
     <div class="method-notes"></div>
 
 
@@ -834,7 +977,7 @@ font-style: italic;
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#VersionResponse">VersionResponse</a>
+      <a href="#InfoResponse">InfoResponse</a>
       
     </div>
 
@@ -856,15 +999,50 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    Version information
-        <a href="#VersionResponse">VersionResponse</a>
+    General information
+        <a href="#InfoResponse">InfoResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getVersionRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/version</code></pre></div>
+    <div class="method-summary">Returns the version of the Semantic Repository (<span class="nickname">getVersionRoute</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      String
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Semantic Versioning version tag (as plain string)
+        <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
   <h1><a name="Model">Model</a></h1>
   <div class="method"><a name="deleteModelRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /{namespace}/{model}</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /v1/m/{namespace}/{model}</code></pre></div>
     <div class="method-summary">Delete a model (<span class="nickname">deleteModelRoute</span>)</div>
     <div class="method-notes">Delete a model in the repository. This is only possible if the model is empty, i.e., all model versions were already deleted.</div>
 
@@ -925,7 +1103,7 @@ font-style: italic;
   <div class="method"><a name="getModelRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /{namespace}/{model}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/m/{namespace}/{model}</code></pre></div>
     <div class="method-summary">Get a model by name (<span class="nickname">getModelRoute</span>)</div>
     <div class="method-notes">Return a model based on name</div>
 
@@ -988,7 +1166,7 @@ font-style: italic;
   <div class="method"><a name="patchModelRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="patch"><code class="huge"><span class="http-method">patch</span> /{namespace}/{model}</code></pre></div>
+    <pre class="patch"><code class="huge"><span class="http-method">patch</span> /v1/m/{namespace}/{model}</code></pre></div>
     <div class="method-summary">Update an existing model (<span class="nickname">patchModelRoute</span>)</div>
     <div class="method-notes">Change one or more fields of a model in the repository.</div>
 
@@ -1055,7 +1233,7 @@ font-style: italic;
   <div class="method"><a name="postModelRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /{namespace}/{model}</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/m/{namespace}/{model}</code></pre></div>
     <div class="method-summary">Create a new model (<span class="nickname">postModelRoute</span>)</div>
     <div class="method-notes">Create a new model in the repository.</div>
 
@@ -1126,7 +1304,7 @@ font-style: italic;
   <div class="method"><a name="deleteNamespaceRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /{namespace}</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /v1/m/{namespace}</code></pre></div>
     <div class="method-summary">Delete a namespace (<span class="nickname">deleteNamespaceRoute</span>)</div>
     <div class="method-notes">Delete a namespace in the repository. This is only possible if the namespace is empty.</div>
 
@@ -1185,7 +1363,7 @@ font-style: italic;
   <div class="method"><a name="getAllNamespacesRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/m</code></pre></div>
     <div class="method-summary">Get a list of namespaces (<span class="nickname">getAllNamespacesRoute</span>)</div>
     <div class="method-notes">Return a list of namespaces in the repository</div>
 
@@ -1237,7 +1415,7 @@ font-style: italic;
   <div class="method"><a name="getNamespaceRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /{namespace}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/m/{namespace}</code></pre></div>
     <div class="method-summary">Get a namespace by name (<span class="nickname">getNamespaceRoute</span>)</div>
     <div class="method-notes">Return a namespace based on name</div>
 
@@ -1298,7 +1476,7 @@ font-style: italic;
   <div class="method"><a name="patchNamespaceRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="patch"><code class="huge"><span class="http-method">patch</span> /{namespace}</code></pre></div>
+    <pre class="patch"><code class="huge"><span class="http-method">patch</span> /v1/m/{namespace}</code></pre></div>
     <div class="method-summary">Update an existing namespace (<span class="nickname">patchNamespaceRoute</span>)</div>
     <div class="method-notes">Change one or more fields of a namespace in the repository.</div>
 
@@ -1363,7 +1541,7 @@ font-style: italic;
   <div class="method"><a name="postNamespaceRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /{namespace}</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/m/{namespace}</code></pre></div>
     <div class="method-summary">Create a new namespace (<span class="nickname">postNamespaceRoute</span>)</div>
     <div class="method-notes">Create a new namespace in the repository.</div>
 
@@ -1425,11 +1603,152 @@ font-style: italic;
         <a href="#ErrorResponse">ErrorResponse</a>
   </div> <!-- method -->
   <hr/>
+  <h1><a name="Openapi">Openapi</a></h1>
+  <div class="method"><a name="getOpenApiJsonSpecRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/api-export/swagger.json</code></pre></div>
+    <div class="method-summary">Alternative URL for retrieving the OpenAPI specification of the Semantic Repository (<span class="nickname">getOpenApiJsonSpecRoute</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      Object
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OpenAPI specification
+        <a href="#Object">Object</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getOpenApiSpecRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/api-export/openapi</code></pre></div>
+    <div class="method-summary">Returns the OpenAPI specification of the Semantic Repository (<span class="nickname">getOpenApiSpecRoute</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      Object
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OpenAPI specification
+        <a href="#Object">Object</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getOpenApiYamlSpecRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/api-export/swagger.yaml</code></pre></div>
+    <div class="method-summary">Returns OpenAPI specification of the Semantic Repository in the YAML format (<span class="nickname">getOpenApiYamlSpecRoute</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      Object
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/yaml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OpenAPI specification
+        <a href="#Object">Object</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getSwaggerUiRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/api-export/docs</code></pre></div>
+    <div class="method-summary">Returns the Swagger UI for the Semantic Repository (<span class="nickname">getSwaggerUiRoute</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      String
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/html</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Swagger UI
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
   <h1><a name="Version">Version</a></h1>
   <div class="method"><a name="deleteModelVersionRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /{namespace}/{model}/{version}</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /v1/m/{namespace}/{model}/{version}</code></pre></div>
     <div class="method-summary">Delete a model version (<span class="nickname">deleteModelVersionRoute</span>)</div>
     <div class="method-notes">Delete a specific version of a model in the repository. This is only possible if the model version is empty, i.e., all associated content and documentation pages were already deleted.</div>
 
@@ -1492,7 +1811,7 @@ font-style: italic;
   <div class="method"><a name="getModelVersionRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /{namespace}/{model}/{version}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/m/{namespace}/{model}/{version}</code></pre></div>
     <div class="method-summary">Get a model version (<span class="nickname">getModelVersionRoute</span>)</div>
     <div class="method-notes">Return a specific version of a model</div>
 
@@ -1543,7 +1862,7 @@ font-style: italic;
   <div class="method"><a name="patchModelVersionRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="patch"><code class="huge"><span class="http-method">patch</span> /{namespace}/{model}/{version}</code></pre></div>
+    <pre class="patch"><code class="huge"><span class="http-method">patch</span> /v1/m/{namespace}/{model}/{version}</code></pre></div>
     <div class="method-summary">Update an existing model version (<span class="nickname">patchModelVersionRoute</span>)</div>
     <div class="method-notes">Change one or more fields of a specific version of a model in the repository.</div>
 
@@ -1612,7 +1931,7 @@ font-style: italic;
   <div class="method"><a name="postModelVersionRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /{namespace}/{model}/{version}</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/m/{namespace}/{model}/{version}</code></pre></div>
     <div class="method-summary">Create a new model version (<span class="nickname">postModelVersionRoute</span>)</div>
     <div class="method-notes">Create a new version of a model in the repository.</div>
 
@@ -1685,7 +2004,7 @@ font-style: italic;
   <div class="method"><a name="deleteWebhook"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /hk/{hook_id}</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /v1/webhook/{hook_id}</code></pre></div>
     <div class="method-summary">Delete a webhook (<span class="nickname">deleteWebhook</span>)</div>
     <div class="method-notes">Delete a registered webhook from the repository.</div>
 
@@ -1741,7 +2060,7 @@ font-style: italic;
   <div class="method"><a name="getWebhook"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /hk/{hook_id}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/webhook/{hook_id}</code></pre></div>
     <div class="method-summary">Get a webhook (<span class="nickname">getWebhook</span>)</div>
     <div class="method-notes">Return a registered webhook in the repository.</div>
 
@@ -1796,7 +2115,7 @@ font-style: italic;
   <div class="method"><a name="getWebhooks"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /hk</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/webhook</code></pre></div>
     <div class="method-summary">Get a list of registered webhooks (<span class="nickname">getWebhooks</span>)</div>
     <div class="method-notes">Returns a list of registered webhooks, with filtering and sorting.</div>
 
@@ -1848,7 +2167,7 @@ font-style: italic;
   <div class="method"><a name="postWebhook"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /hk</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/webhook</code></pre></div>
     <div class="method-summary">Create a new webhook. (<span class="nickname">postWebhook</span>)</div>
     <div class="method-notes">Registers a new webhook in the repository.</div>
 
@@ -1916,6 +2235,7 @@ font-style: italic;
     <li><a href="#FullModel_allOf"><code>FullModel_allOf</code> - </a></li>
     <li><a href="#FullNamespace"><code>FullNamespace</code> - </a></li>
     <li><a href="#FullNamespace_allOf"><code>FullNamespace_allOf</code> - </a></li>
+    <li><a href="#InfoResponse"><code>InfoResponse</code> - </a></li>
     <li><a href="#Model"><code>Model</code> - </a></li>
     <li><a href="#ModelSet"><code>ModelSet</code> - </a></li>
     <li><a href="#ModelSet_allOf"><code>ModelSet_allOf</code> - </a></li>
@@ -1931,7 +2251,6 @@ font-style: italic;
     <li><a href="#RootInfo"><code>RootInfo</code> - </a></li>
     <li><a href="#StoredFile"><code>StoredFile</code> - </a></li>
     <li><a href="#SuccessResponse"><code>SuccessResponse</code> - </a></li>
-    <li><a href="#VersionResponse"><code>VersionResponse</code> - </a></li>
     <li><a href="#Webhook"><code>Webhook</code> - </a></li>
     <li><a href="#WebhookAction"><code>WebhookAction</code> - </a></li>
     <li><a href="#WebhookContext"><code>WebhookContext</code> - </a></li>
@@ -2047,6 +2366,14 @@ The keys here correspond to the plugin name when creating a new documentation jo
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">models (optional)</div><div class="param-desc"><span class="param-type"><a href="#ModelSet">ModelSet</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="InfoResponse"><code>InfoResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">version </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -2178,14 +2505,6 @@ Contains a list of available namespaces.</div>
     <div class="field-items">
       <div class="param">message </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">warnings (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> Optional array of non-fatal warnings. </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="VersionResponse"><code>VersionResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'></div>
-    <div class="field-items">
-      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">version </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
