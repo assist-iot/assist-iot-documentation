@@ -26,32 +26,35 @@ However, it should be noticed that the data that is being used in both
 FL training processes has to be in the same format, which is imposed by
 the ML model that is being employed. In order to carry out with all
 these local operations, the FL Local Operation enabler is proposed. It
-will consist of components: Local Data Transformer component (that will
-be in charge of guaranteeing that data is appropriately formatted for
-the FL model in use), Local Model Training component, Local Model
-Inference component, Communication component (to enable in and out
-communications between involved local parties and FL orchestrator and FL
-collector), Privacy Component (to provide privacy mechanisms for
-communication e.g. encryption).
+consists of a few different modules: a data transformation module (the
+module handles the process of negotiating a suitable transformation
+pipeline for a given data format in order to allow for the training or
+inference of a specific model, and will be further extended in future
+works), a component encapsulated in a web application and responsible
+for model training, a component equipped with gRPC services and
+responsible for model inference, as well as a privacy module providing
+two selected privacy mechanisms for the FL training process (adaptive
+differential privacy and homomorphic encryption).
 
 Features
 ========
 
 -  Enabler embedded in each FL involved party performing local training.
 -  Verification of local data formats compatibility with data formats
-   required by FL.
+   required by FL. The full negotiation process will still be expanded
+   upon, but local verification is currently available
 -  Transformation of local data formats to format required by the ML
-   system (possibly using predefined transformers).
+   system (by specifying a chain of atomic transformations).
 -  The local results will be sent to the FL Training Collector in order
    to carry out the appropriate aggregation methodology over the common
    shared model.
 -  Inference with the final shared ML model.
--  Communication of model updates via encryption mechanisms. A
-   homomorphic encryptor will not permit outsiders to see the output
-   model of each device/party (MITM attacks), whereas methods for
-   creating differentially private noise will guarantee that Malicious
-   Aggregator cannot be allowed to infer which records are actual models
-   and which not.
+-  Communication of model updates via encryption mechanisms. Homomorphic
+   encryption will not permit outsiders to see the output model of each
+   device/party (MITM attacks), whereas methods for creating
+   differentially private noise will guarantee that Malicious Aggregator
+   cannot be allowed to infer which records are actual models and which
+   not.
 
 Place in architecture
 =====================
@@ -235,12 +238,6 @@ A federated learning framework designed to work with a large number of
 clients. It is both compatible with a variety of ML frameworks and
 supports a wide range of devices.
 
-OpenVINO
-^^^^^^^^
-
-A free toolkit facilitating the optimization of a deep learning model.
-It is cross-platform and free to use.
-
 OpenCV
 ^^^^^^
 
@@ -279,8 +276,12 @@ http://www.apache.org/licenses/LICENSE-2.0
 Notice (dependencies)
 =====================
 
-Dependency list and licensing information will be provided before the
-first major release.
+The information about the dependencies needed to run a specific part of
+the application can be found described in the appropriate
+``requirements.txt`` files located. However, since they are downloaded
+automatically during the construction of the appropriate Docker images,
+the local dependencies needed to deploy the application include only a
+local Docker along with Docker Compose or Kubernetes installation.
 
 
 
