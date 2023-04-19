@@ -80,11 +80,27 @@ User guide
 
 Authorization server offers a Rest interface for decision making. The url should include the resource, action and requester id. The response will include the decision to be implemented in the enforcer (Permit or Deny).
 
-+--------+------------------------------------------------------------------+-----------------------+---------------------+----------------------------------------------------------------------------------------------------------------------+
-| Method |             Endpoint                                             | Description           | Payload (if needed) | Response format                                                                                                      |
-+========+==================================================================+=======================+=====================+======================================================================================================================+
-|  GET   | /evaluate?resource=<domain>@<resource>&action=<action>&code=<id> | Evaluation request    |                     | { "retcode": "0", "resource":"<domain>@<res>", "action": <action>", "code": "<id>", "response": "Permit","msg": ""}  |
-+--------+------------------------------------------------------------------+-----------------------+---------------------+----------------------------------------------------------------------------------------------------------------------+
++--------+---------------------------------------------------------------------------------------+-----------------------+---------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| Method |             Endpoint                                                                  | Description           | Payload (if needed) | Response format                                                                                                                                |
++========+=======================================================================================+=======================+=====================+================================================================================================================================================+
+|  GET   | /evaluate?resource=<domain>@<sourceOfId>&action=<actionName>&code=<idCode>            | Evaluation request    |                     | { "retcode": "0", "resource":"<domain>@<sourceOfId>", "action": <actionName>", "code": "<idCode>", "response": "Permit","msg": ""}             |
++--------+---------------------------------------------------------------------------------------+-----------------------+---------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+|  GET   | /evaluate?resource=<domain>@<sourceOfId>&action=<actionName>&code=<idCode>@<userRole> | Evaluation request    |                     | { "retcode": "0", "resource":"<domain>@<sourceOfId>", "action": <actionName>", "code": "<idCode>@<userRole>", "response": "Deny","msg": ""}    |
++--------+---------------------------------------------------------------------------------------+-----------------------+---------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+The required parameters are:
+
+-	Resource: resource=domain@sourceOfId
+  - domain: Security domain of the policy in Authzserver
+  - sourceOfId: Name of the source of identification of the Authzserver user for the code provided.
+
+-	Action: action=actionName
+  - actionName: Name of the action, must match in the policy conditions.
+
+-	Identification code: code=idCode@userRole
+  - idCode: Identification code registered in Authzserver for the user.
+  - userRole (Optional): Role of the user in IDM for the client app.
+
 
 The policy that provides this decision can be configured in the graphic UI provided by de server.
 
@@ -124,7 +140,39 @@ Will be determined after the release of the enabler.
 Version control and release
 ***************************
 
-Version 0.1. Under development.
+Version 2.4
+
+- Policy rule condition editor: Added support for the following comparission operators <, <=, >, >=, appart of the ==. Can be used in string, int and double values.
+
+Version 2.3
+
+- Enhances in the rule editor GUI
+
+Version 2.2
+
+- Added UserRole support in evaluation, receiving in code=idCode@userRole parameter of the request
+
+Version 2.1.
+
+- Added support for evaluation logging to Elasticsearch. 
+- MQTT and Elasticsearch configuration made via new enviroment variables
+
+Version 2.0.
+
+- GUI Remake with addition of Variable Catalog, for use in PIP configuration and Condition edition. 
+- Fixed GUI and code errors in Obligations Execution (fixed https support)
+- Simplified User GUI for rule and PIP edition, removing redundant fields.
+
+Version 1.5.
+
+- Fixes and enhancements in policy exporting to federated PDPs.
+
+Version 1.0. First stable version. 
+
+- PIP configuration and variable definition via GUI using XACML syntax.
+- MQTT publication of evaluation results
+- Obligation execotion in Premit/Deny evaluations
+- Federation supported.
 
 ***************
 License
