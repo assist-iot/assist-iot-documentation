@@ -641,24 +641,31 @@ available. Output MQTT topics have access to input and output data.
 Input data
 ~~~~~~~~~~
 
--  ``input`` JSON data
--  ``strInput`` JSON data in string format
+-  ``input`` input payload as a parsed JSON
+-  ``inputTopic`` MQTT topic on which the data arrived, as string
+-  ``strInput`` input payload as string
 
 Output data
 ~~~~~~~~~~~
 
--  ``output`` JSON data
--  ``strOutput`` JSON data in string format
+-  ``output`` output payload as a parsed JSON
+-  ``strOutput`` output payload as string
 
-To access JSON data (``input`` or ``output``) one may use
+All expressions must be inside curly braces ``{...}``.
+
+To access JSON data (``input`` or ``output``) use
 `JSONPath <https://support.smartbear.com/alertsite/docs/monitors/api/endpoint/jsonpath.html>`__
-syntax.
+syntax. - JSON strings will yield SQL string literals. - JSON integers
+will yield SQL integer literals. - JSON nulls will yield SQL NULL. -
+Unmatched paths will yield SQL NULL.
 
-A valid expression must be inside curly braces ``{...}``.
+Matching other types of JSON values will result in an error.
 
-*Examples:*
+*Example – accessing the input value in PostgreSQL*
 
 ``"select {strInput}::json->>2;"``
+
+*Example – JSON Path queries*
 
 ``"topic/{output..temperature.max()}"``
 
