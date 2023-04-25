@@ -134,7 +134,21 @@ The Authorization server options for the rest API to connect are available in th
 ***************
 Developer guide
 ***************
-Will be determined after the release of the enabler.
+
+The AuthServer enabler exchanges data with the client application via GET call to the request evaluation endpoint with the required parameters, as it is shown in previous section.
+They way this exchange data works is at follows:
+
+1- The app sends a Request to the authserver with all the needed data to evaluate it.
+The required parameters are described before, in the User Guide section.
+
+2- If it is needed external data, such as temperature, humidity, distance between two obejtcs,.. this request will be perfomanced by the Authserver to the PiP REST API server previously configured in the policy.
+
+3- Once the Authserver has all the need data evaluates if the user can perform the action and answers with a “Permit” if it can be done or a “Deny” if not.
+
+Example permit response: {"retcode":"0","resource":"domain@sourceOfId","action":"actionName","code":"idCode@admin","response":"Permit","msg":""}
+
+Example deny response: {"retcode":"0","resource":"domain@sourceOfId","action":"actionName","code":"idCode","response":"Deny","msg":""}
+
 
 ***************************
 Version control and release
