@@ -102,7 +102,8 @@ semantics. Another possible scenario is that there are applications
 consuming data in RDF and central semantics. In such case, second
 syntactic translation is not necessary.
 
-
+.. |Overview of translation with central modularized ontology| image:: semantic_translation_enabler/uploads/platforms.png
+.. |Process overview| image:: semantic_translation_enabler/uploads/process.png
 
 
 
@@ -171,7 +172,7 @@ Note that in each case, the translation process should be handled by one
 semantic translation channel. By default, a translation channel is
 configured with two alignments that are applied sequentially.
 
-
+.. |Architecture| image:: semantic_translation_enabler/uploads/architecture.png
 
 
 
@@ -207,6 +208,7 @@ mind that:
 -  it should contain subject-specific modules that can be independently
    maintained and versioned (for easier change management)
 
+.. |GOIoTP and GOIoTPex modules| image:: semantic_translation_enabler/uploads/giotp.png
 
 
 
