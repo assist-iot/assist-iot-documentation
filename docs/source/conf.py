@@ -5,6 +5,7 @@ project = 'ASSIST-IoT'
 release = '0.1'
 version = '0.1.0'
 
+
 # -- General configuration
 
 extensions = [
@@ -34,6 +35,17 @@ intersphinx_mapping = {
 intersphinx_disabled_domains = ['std']
 
 templates_path = ['_templates']
+
+
+# List of versions to build
+versions = ['M18', 'M30', 'latest']
+
+# Exclude patterns for certain versions
+exclude_patterns = {
+    'M18': ['_build', 'docs/M30/*', 'docs/M30/*'],
+    'M30': ['_build', 'docs/M18/*', 'docs/M18/*'],
+    'latest': ['_build', 'docs/M10/*', 'docs/master/*'],
+}
 
 # -- Options for HTML output
 
