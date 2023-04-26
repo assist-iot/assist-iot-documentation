@@ -25,38 +25,53 @@ However, it should be noticed that the data that is being used in both
 FL training processes has to be in the same format, which is imposed by
 the ML model that is being employed. In order to carry out with all
 these local operations, the FL Local Operation enabler is proposed. It
-will consist of components: Local Data Transformer component (that will
-be in charge of guaranteeing that data is appropriately formatted for
-the FL model in use), Local Model Training component, Local Model
-Inference component, Communication component (to enable in and out
-communications between involved local parties and FL orchestrator and FL
-collector), Privacy Component (to provide privacy mechanisms for
-communication e.g. encryption).
+consists of a few different modules: a data transformation module (the
+module handles the process of negotiating a suitable transformation
+pipeline for a given data format in order to allow for the training or
+inference of a specific model, and will be further extended in future
+works), a component encapsulated in a web application and responsible
+for model training, a component equipped with gRPC services and
+responsible for model inference, as well as a privacy module providing
+two selected privacy mechanisms for the FL training process (adaptive
+differential privacy and homomorphic encryption).
 
 Features
 ========
 
 -  Enabler embedded in each FL involved party performing local training.
+-  The possibility of conducting such training using PyTorch and Keras
+   libraries, additionally allowing for the detailed configuration of
+   appropriate optimizers, schedulers and callbacks.
 -  Verification of local data formats compatibility with data formats
-   required by FL.
--  Transformation of local data formats to format required by the ML
-   system (possibly using predefined transformers).
--  The local results will be sent to the FL Training Collector in order
+   required by FL (This particular feature will still be expanded upon).
+-  Transformation of local data formats to the format required by the ML
+   system by specifying a chain of atomic transformations along with the
+   appropriate parameters (this feature will, too, be expanded upon in
+   the future versions).
+-  Local storage of models for training process optimization purposes is
+   allowed.
+-  The local results are be sent to the FL Training Collector in order
    to carry out the appropriate aggregation methodology over the common
    shared model.
--  Inference with the final shared ML model.
--  Communication of model updates via encryption mechanisms. A
-   homomorphic encryptor will not permit outsiders to see the output
-   model of each device/party (MITM attacks), whereas methods for
-   creating differentially private noise will guarantee that Malicious
-   Aggregator cannot be allowed to infer which records are actual models
-   and which not.
+-  There are multiple aggregation algorithms provided, with an added
+   possibility to implement and include an additional one.
+-  The inference module allows for placing models in the TFLite format
+   on inference. Combined with the inclusion of gRPC for inference
+   module communication, it provides a particularly lightweight
+   inference solution.
+-  Communication of model updates via encryption mechanisms. Homomorphic
+   encryption will not permit outsiders to see the output model of each
+   device/party (MITM attacks), whereas methods for creating
+   differentially private noise will guarantee that Malicious Aggregator
+   cannot be allowed to infer which records are actual models and which
+   not.
+-  Unit tests are included which can be ran using ``pytest``.
 
 Place in architecture
 =====================
 
 FL Local Operations enabler is one of the Federated Learning enablers
-that together enable to deploy a federated learning environment.
+that together enable to deploy a Federated Learning environment.
 Functionally, it operates on scalability and manageability verticals in
 the Assist-IoT architecture.
 
@@ -128,19 +143,29 @@ parameters for a training job to be executed can be set:
    in it, e.g. “keras1”
 -  server_address - address of FL Training Collector,
    e.g. “training_collector”
--  optimizer - name of the optimized to be used, e.g. “adam”
 -  eval_metrics - list of evaluation metrics, e.g. [“MSE”]
 -  eval_func - evaluation function, e.g. “Huber”
+-  eval_metrics_value - the baseline value of the metrics, e.g. 0
 -  num_classes - number of classes, e.g. “10”
 -  model_id - model identifier, e.g. “10”
 -  model_version - model version, e.g. “10”
 -  shape - shape of the data, e.g. [“32”, “32”, “3”]
--  config_id - identifier of the configuration to be used
--  batch_size - size of a batch, e.g. “64”
--  steps_per_epoch - number of steps in each epoch, e.g. “32”
--  epochs - number of epochs, e.g. “5”
--  learning_rate - tuning parameter in an optimization algorithm,
-   e.g. “0.001”
+-  training_id - the id of this specific training process
+-  model_name - the name of the model to be loaded for the training
+-  model_version - the version of the model to be loaded for the
+   training
+-  config - a dictionary specifying configuration values specific to
+   this training process, like “batch_size” or “learning_rate”
+-  optimizer_config - a dictionary specifying the type of the optimizer
+   to be used, as well as parameter values specific to this optimizer
+-  scheduler_config - a dictionary specifying the type of the scheduler
+   to be used, as well as parameter values specific to this scheduler
+-  warmup_config - a dictionary specifying the type of the warmup to be
+   used, as well as parameter values specific to this warmup
+-  privacy_mechanisms - a dictionary specifying whether the client
+   should use privacy mechanisms and with what kind of parameters, with
+   the possibility to select Homomorphic Encryption, Differential
+   Privacy, none or both of them
 
 Developer guide
 ===============
@@ -155,11 +180,10 @@ The Local Model Training component is responsible for local model
 training. During configuration it instantiates appropriate ML training
 libraries and, if this is the beginning of the process, initial version
 of the shared model. This step can be completed locally by the node
-owner, but this is unlikely. The main problem would be assuring
+owner, but this is unlikely. The main priority lies in assuring
 uniformity of training methods across nodes belonging to different
-owner. More likely, the necessary modules (ML algorithm libraries and
-the initial version of the shared model) will be downloaded from the FL
-Repository.
+owner. The necessary modules (ML algorithm libraries and the initial
+version of the shared model) will be downloaded from the FL Repository.
 
 Local model inferencer
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -171,7 +195,7 @@ quality of the shared model. In the latter case, each new version of the
 shared model would replace the previous one. Obviously, it is implicitly
 assumed that each new version of the shared global model will deliver
 better quality of results. Here, data to be fed into the trained model
-can be transformed using the Data Transformer component. Interpretation
+can be transformed using the Data Transformation Module. Interpretation
 of the results of application of the model to specific input data
 (including actions to be, possibly, undertaken on the basis of the
 results) is likely to be provided by the data owner. However, it is also
@@ -190,15 +214,27 @@ In IoT ecosystems, each partner may (and is likely to) store data in its
 own (private/local) format. Use of FL requires transformation of
 appropriate parts of local data into the correct format. This format has
 to be described as part of the FL configuration, and all participating
-nodes have to oblige. This may be achieved by node owner providing
-appropriate transformation component. However, such component can be
-envisioned as being downloaded from the FL Repository enabler.
+nodes have to oblige. This may be achieved by node owner providing a set
+of the appropriate transformation components, that applied in a certain
+order may allow for data format unification. However, such components
+have to be flexibly downloaded from the FL Repository enabler.
 
 Privacy
 ~~~~~~~
 
-The component is not yet implemented and the description will be
-provided in the next release of the documentation.
+The privacy capabilities of this module currently include two possible
+methods. The first, Homomorphic Encryption, relies on the implementation
+provided by the TenSEAL library to decrypt and encrypt the data as
+efficiently as possible. Unfortunately, due to the high memory usage of
+this encryption method, it can be used only for extremely small model
+architectures (such as Logistic Regression). Therefore, the encryption
+is included in the enabler only in its most basic form, with
+pregenerated secret files (which can nevertheless be later easily
+swapped and regenerated). Differential Privacy with adaptive clipping,
+on the other hand, is a method that can be applied in the training
+process regardless of the model size. A more detailed explanation of the
+functioning and modifiable parameters offered by the method can be found
+in: https://arxiv.org/pdf/1905.03871.pdf
 
 Technologies
 ------------
@@ -213,10 +249,9 @@ widely used in the industry.
 pyTorch
 ~~~~~~~
 
-An open source machine learning framework based on
-the Torch library, used for applications such as computer
-vision and natural language processing, primarily developed
-by Facebook’s AI Research lab (FAIR).
+An open source machine learning framework based on the Torch library,
+used for applications such as computer vision and natural language
+processing, primarily developed by Facebook’s AI Research lab (FAIR).
 
 Python
 ~~~~~~
@@ -228,10 +263,17 @@ applications.
 TensorFlow
 ~~~~~~~~~~
 
-A free and open-source software library for machine
-learning and artificial intelligence. It can be used across a range of
-tasks but has a particular focus on training and inference of deep
-neural networks.
+A free and open-source software library for machine learning and
+artificial intelligence. It can be used across a range of tasks but has
+a particular focus on training and inference of deep neural networks.
+
+Tensorflow Lite
+^^^^^^^^^^^^^^^
+
+A mobile library allowing for easy, lightweight deployment of ML models
+on mobile, microcontrollers and edge device. It employs, for example,
+quantization in order to decrease the resources consumed by the model
+during inference.
 
 Flower
 ~~~~~~
@@ -240,11 +282,6 @@ A federated learning framework designed to work with a large number of
 clients. It is both compatible with a variety of ML frameworks and
 supports a wide range of devices.
 
-OpenVINO
-~~~~~~~~
-
-A free toolkit facilitating the optimization of a deep learning model.
-It is cross-platform and free to use.
 
 OpenCV
 ~~~~~~
@@ -255,9 +292,17 @@ It is cross-platform and open-source.
 Pailier Encryption, Affine Homomorphic Encryption
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Two homomorphic encryption algorithms that will be used to preserve the
-privacy of the data without affecting the performance of the model.
-Component: Privacy
+A library that empowers users to easily conduct Homomorphic Encryption
+operations on tensors, built on top of Microsoft SEAL. Since the
+underlying implementation uses C++, the resulting methods consume as
+little resources as possible.
+
+gRPC
+^^^^
+
+A modern open source, high performance Remote Procedure Call (RPC)
+framework. gRPC works across many languages and platforms, is
+exceptionally efficient and scalable.
 
 FastAPI
 ~~~~~~~
@@ -284,8 +329,12 @@ http://www.apache.org/licenses/LICENSE-2.0
 Notice (dependencies)
 =====================
 
-Dependency list and licensing information will be provided before the
-first major release.
+The information about the dependencies needed to run a specific part of
+the application can be found described in the appropriate
+``requirements.txt`` files located. However, since they are downloaded
+automatically during the construction of the appropriate Docker images,
+the local dependencies needed to deploy the application include only a
+local Docker along with Docker Compose or Kubernetes installation.
 
 
 

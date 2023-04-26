@@ -21,44 +21,33 @@ files that describe data models or support data transformations, such as
 ontologies, schema files, semantic alignment files etc. However, there
 are no restrictions on file format and size.
 
+Semantic Repository features flexible versioning, metadata support,
+built-in search capabilities, documentation generation and serving, and
+more.
+
 Overall focus of the Semantic Repository’s design is high performance,
 scalability, and resiliency. It should be able to scale up and down to
-meet the specific use case.
+meet the needs of a specific use case.
 
 
 ***************
 Features
 ***************
 
-The enabler is in active development. Most features listed below are not
-implemented yet. Marked in **bold** are those that are already
-functioning.
+Implemented features
+********************
 
-Storing data models
-###################
-
--  **Storage of any type of data model, both textual and binary.**
--  **Ability to provide multiple formats of one data model, depending on
-   the requester’s preferences.**
--  **Grouping data models into namespaces.**
--  **Flexible versioning with arbitrary tag names.**
--  Granular and easy-to-use access control.
-
-Metadata
-########
-
--  Tracking provenance information (creation/modification dates,
-   authors).
+-  Storage of any type of data model, both textual and binary.
+-  Ability to provide multiple formats of one data model, depending on
+   the requester’s preferences.
+-  Grouping data models into namespaces.
+-  Flexible versioning with arbitrary tag names.
 -  Ability to attach arbitrary additional metadata.
 -  Metadata searching and sorting.
-
-Documentation
-#############
-
--  Support for Markdown/ASCIIDOC manual documentation pages.
--  Automatic documentation generation for some data model types.
--  Flexible plugin architecture for creating additional documentation
-   generation modules.
+-  Generating HTML documentation pages from source files.
+-  Serving documentation.
+-  Issuing notifications to external services about changes in the
+   repository (via webhooks).
 
 
 *********************
@@ -67,9 +56,9 @@ Place in architecture
 
 The Semantic Repository is located in the Data management plane of the
 ASSIST-IoT architecture. It serves as a versioned and namespaced central
-repository of data models and other files. It has few limitations with
-regard to the content it can store, thus it can be used for diverse data
-storage-related scenarios.
+repository of data models and other files. It has no limitations with
+regard to the content that it can store, thus it can be used for diverse
+data storage-related scenarios.
 
 
 **********
@@ -80,8 +69,6 @@ The Semantic Repository enabler exposes a single REST API endpoint for
 both manipulating the repository’s contents, as well as for retrieving
 stored data models. There is also a graphical user interface for
 performing most of the same tasks.
-
-
 
 Basic concepts
 **************
@@ -94,6 +81,7 @@ Basic concepts
    also have associated documentation pages and other metadata.
 -  **Content** – each model version can have many content files
    attached, each in a different format.
+
 There are few restrictions on how you can use these concepts to build
 your repository. For example, it is possible to upload files of
 arbitrary size and format.
@@ -150,6 +138,7 @@ email, license), indicating the source Git branch, etc.
 Each entity (that is, a namespace, model, or model version) can have a
 number of metadata keys. Each key can have either a single textual value
 or several values (an array).
+
 For example, if you want to indicate the authorship of a model version
 and its source Git branch, its metadata could look like: - author: -
 ``Rob`` - ``Bob`` - branch: ``rob-bob-branch``
@@ -178,7 +167,7 @@ number of values per one metadata key: **32** - Maximum length in
 characters of an individual metadata value: **1024**
 
 Documentation
-***********
+*************
 
 To each model version you can attach documentation pages that, for
 example, help explain users how to use the various fields in your data
@@ -355,7 +344,7 @@ Example webhook body:
 User guide – REST API
 =====================
 
-The following is a brief guide to using the API in practice. The
+The following is a brief guide to using the v1 API in practice. The
 examples follow a basic use case of storing several `W3C
 ontologies <https://www.w3.org/standards/semanticweb/ontology>`__.
 
@@ -366,9 +355,9 @@ General information
 *******************
 
 The API follows a very simple structure of
-/{namespace}/{model}/{model_version}. In general, ``POST`` creates a new
-*thing* at the given URL, ``GET`` retrieves it, ``DELETE`` deletes it,
-and ``PATCH`` modifies it.
+/v1/m/{namespace}/{model}/{model_version}. In general, ``POST`` creates
+a new *thing* at the given URL, ``GET`` retrieves it, ``DELETE`` deletes
+it, and ``PATCH`` modifies it.
 
 The API only returns responses in plain JSON. The following guide should
 give you a good idea of what the responses look like, but you can also
@@ -385,11 +374,11 @@ Creating and retrieving models
 First, we will need to create a namespace for your models. We will name
 it ``w3c``.
 
-============= ============
-Request URL   Request body
-============= ============
-``POST /w3c`` (empty)
-============= ============
+================== ============
+Request URL        Request body
+================== ============
+``POST /v1/m/w3c`` (empty)
+================== ============
 
 ============= ===========================================
 Response code Response body
@@ -399,28 +388,28 @@ Response code Response body
 
 You can examine the created namespace by performing an HTTP GET request:
 
-============ ============
-Request URL  Request body
-============ ============
-``GET /w3c`` –
-============ ============
+================= ============
+Request URL       Request body
+================= ============
+``GET /v1/m/w3c`` –
+================= ============
 
-============= ===================
+============= ========================
 Response code Response body
-============= ===================
+============= ========================
 200           ``{"namespace": "w3c"}``
-============= ===================
+============= ========================
 
 Currently, there is no other information in the namespace other than its
 name.
 
 You can also list all namespaces in the repository:
 
-=========== ============
-Request URL Request body
-=========== ============
-``GET /``   –
-=========== ============
+============= ============
+Request URL   Request body
+============= ============
+``GET /v1/m`` –
+============= ============
 
 Response:
 
@@ -439,9 +428,9 @@ described in detail in the `Browsing
 collections <#browsing-collections>`__ section below.
 
 **Note:** namespace name must meet the following criteria: - be at least
-3 characters, and at most 100 characters long - only contain lower or
-upper letters of the latin alphabet, digits, dashes (``-``), and
-underscores (``_``)
+1 and at most 100 characters long - only contain lower or upper letters
+of the latin alphabet, digits, dashes (``-``), and underscores (``_``) -
+not start with one of the following characters: ``_-``
 
 
 **Step 2: create models**
@@ -451,11 +440,11 @@ corresponding to `two well-known IoT
 ontologies <https://www.w3.org/TR/vocab-ssn/>`__. Creating a model is
 similar to creating a namespace:
 
-================= =======
-Request           Body
-================= =======
-``POST /w3c/ssn`` (empty)
-================= =======
+====================== =======
+Request                Body
+====================== =======
+``POST /v1/m/w3c/ssn`` (empty)
+====================== =======
 
 ============= ===========================================
 Response code Body
@@ -465,11 +454,11 @@ Response code Body
 
 and for sosa:
 
-================== =======
-Request            Body
-================== =======
-``POST /w3c/sosa`` (empty)
-================== =======
+======================= =======
+Request                 Body
+======================= =======
+``POST /v1/m/w3c/sosa`` (empty)
+======================= =======
 
 ============= ============================================
 Response code Body
@@ -479,20 +468,20 @@ Response code Body
 
 You can examine the created model:
 
-================= ====
-Request           Body
-================= ====
-``GET /w3c/sosa`` –
-================= ====
+====================== ====
+Request                Body
+====================== ====
+``GET /v1/m/w3c/sosa`` –
+====================== ====
 
-============= ========================================
+============= =========================================
 Response code Body
-============= ========================================
+============= =========================================
 200           ``{"namespace": "w3c", "model": "sosa"}``
-============= ========================================
+============= =========================================
 
-When you again examine the contents of the namespace (``GET /w3c``), you
-will see a collection of models:
+When you again examine the contents of the namespace
+(``GET /v1/m/w3c``), you will see a collection of models:
 
 .. code:: json
 
@@ -515,6 +504,7 @@ will see a collection of models:
      },
      "namespace": "w3c"
    }
+
 Some additional information is also returned, such as ``page`` and
 ``totalCount``. These are described in detail in the `Browsing
 collections section <#browsing-collections>`__.
@@ -532,11 +522,11 @@ explicitly create a specific version of the model and work with that.
 
 For example, to create a version ``1.0`` of model ``sosa``:
 
-====================== =======
-Request                Body
-====================== =======
-``POST /w3c/sosa/1.0`` (empty)
-====================== =======
+=========================== =======
+Request                     Body
+=========================== =======
+``POST /v1/m/w3c/sosa/1.0`` (empty)
+=========================== =======
 
 ============= ========================================================
 Response code Body
@@ -546,11 +536,11 @@ Response code Body
 
 You can examine the content of this version:
 
-===================== ====
-Request               Body
-===================== ====
-``GET /w3c/sosa/1.0`` –
-===================== ====
+========================== ====
+Request                    Body
+========================== ====
+``GET /v1/m/w3c/sosa/1.0`` –
+========================== ====
 
 Response:
 
@@ -564,7 +554,7 @@ Response:
    }
 
 You can also retrieve a list of versions for the model (again,
-``GET /w3c/sosa``):
+``GET /v1/m/w3c/sosa``):
 
 .. code:: json
 
@@ -599,11 +589,11 @@ below)
 The ``latest`` version pointer can be set on a given model using a PATCH
 request:
 
-=================== ============================
-Request             Body
-=================== ============================
-``PATCH /w3c/sosa`` ``{"latestVersion": "1.0"}``
-=================== ============================
+======================== ============================
+Request                  Body
+======================== ============================
+``PATCH /v1/m/w3c/sosa`` ``{"latestVersion": "1.0"}``
+======================== ============================
 
 ============= ============================================
 Response code Body
@@ -612,7 +602,8 @@ Response code Body
 ============= ============================================
 
 Now it can be used in GET requests instead of the explicit version. So,
-``GET /w3c/sosa/latest`` is equivalent to ``GET /w3c/sosa/1.0``.
+``GET /v1/m/w3c/sosa/latest`` is equivalent to
+``GET /v1/m/w3c/sosa/1.0``.
 
 **Important:** to prevent accidental overwrites, **it is not possible to
 make POST, PATCH, or DELETE requests via the ``latest`` pointer**. Use
@@ -620,11 +611,11 @@ the explicit version in the URL instead.
 
 The version pointer can also be set during model creation:
 
-================= ============================
-Request           Body
-================= ============================
-``POST /w3c/ssn`` ``{"latestVersion": "1.0"}``
-================= ============================
+====================== ============================
+Request                Body
+====================== ============================
+``POST /v1/m/w3c/ssn`` ``{"latestVersion": "1.0"}``
+====================== ============================
 
 ============= ===========================================
 Response code Body
@@ -636,11 +627,11 @@ To change the pointer to a new value, simply make a PATCH request. To
 **unset** the pointer completely, use the special ``@unset`` value in a
 PATCH request:
 
-=================== ===============================
-Request             Body
-=================== ===============================
-``PATCH /w3c/sosa`` ``{"latestVersion": "@unset"}``
-=================== ===============================
+======================== ===============================
+Request                  Body
+======================== ===============================
+``PATCH /v1/m/w3c/sosa`` ``{"latestVersion": "@unset"}``
+======================== ===============================
 
 ============= ============================================
 Response code Body
@@ -657,11 +648,11 @@ previous section.
 
 To upload content in format ``text/turtle``:
 
-================================================= ===============
-Request                                           Body
-================================================= ===============
-``POST /w3c/sosa/1.0/content?format=text/turtle`` content: (file)
-================================================= ===============
+====================================================== ===============
+Request                                                Body
+====================================================== ===============
+``POST /v1/m/w3c/sosa/1.0/content?format=text/turtle`` content: (file)
+====================================================== ===============
 
 In the body of the request (form-data) set the field ``content`` to the
 file you want to upload.
@@ -684,7 +675,7 @@ can upload more content files for the model version in a similar manner.
 The Semantic Repository support multipart, streaming uploads and can
 handle files of any size this way.
 
-To see the available formats, make a ``GET /w3c/sosa/1.0`` request:
+To see the available formats, make a ``GET /v1/m/w3c/sosa/1.0`` request:
 
 .. code:: json
 
@@ -730,14 +721,12 @@ request presented above, it will be rejected with an HTTP 400 error:
 If you really want to overwrite this content (in case of a mistake, for
 example), add the ``overwrite=1`` parameter:
 
-=============================================================
-===============
-Request                                                       Body
-=============================================================
-===============
-``POST /w3c/sosa/1.0/content?format=text/turtle&overwrite=1`` content: (file)
-=============================================================
-===============
++---------------------------------------------+------------------------+
+| Request                                     | Body                   |
++=============================================+========================+
+| ``POST /v1/m/w3c/sosa/1.0/content?format=te | content: (file)        |
+| xt/turtle&overwrite=1``                     |                        |
++---------------------------------------------+------------------------+
 
 Response:
 
@@ -760,11 +749,12 @@ version, but can also be changed later.
 
 Changing the ``defaultFormat`` field is done with a PATCH request:
 
-======================= ============================================
-Request                 Body
-======================= ============================================
-``PATCH /w3c/sosa/1.0`` ``{"defaultFormat": "application/json+ld"}``
-======================= ============================================
+============================ ============================================
+Request                      Body
+============================ ============================================
+``PATCH /v1/m/w3c/sosa/1.0`` ``{"defaultFormat": "application/json+ld"}``
+============================ ============================================
+
 
 ============= ==========================================================
 Response code Body
@@ -772,7 +762,7 @@ Response code Body
 200           ``{"message": "Updated model version 'w3c/sosa/1.0.0'."}``
 ============= ==========================================================
 
-Now when you request ``GET /w3c/sosa/1.0/content`` (or any of the
+Now when you request ``GET /v1/m/w3c/sosa/1.0/content`` (or any of the
 equivalent forms shown above), the Repository will attempt to retrieve
 content in the ``application/json+ld`` format.
 
@@ -782,11 +772,11 @@ will receive a 404 error when trying to retrieve the content.
 
 The default format can also be set during model version creation:
 
-===================== ============================================
-Request               Body
-===================== ============================================
-``POST /w3c/ssn/1.0`` ``{"defaultFormat": "application/json+ld"}``
-===================== ============================================
+========================== ============================================
+Request                    Body
+========================== ============================================
+``POST /v1/m/w3c/ssn/1.0`` ``{"defaultFormat": "application/json+ld"}``
+========================== ============================================
 
 ============= =======================================================
 Response code Body
@@ -801,11 +791,11 @@ To change the default format to a new value, simply make a PATCH
 request. To **unset** the default format completely, use the special
 ``@unset`` value in a PATCH request:
 
-======================= ===============================
-Request                 Body
-======================= ===============================
-``PATCH /w3c/sosa/1.0`` ``{"defaultFormat": "@unset"}``
-======================= ===============================
+============================ ===============================
+Request                      Body
+============================ ===============================
+``PATCH /v1/m/w3c/sosa/1.0`` ``{"defaultFormat": "@unset"}``
+============================ ===============================
 
 ============= ========================================================
 Response code Body
@@ -819,12 +809,12 @@ Downloading the content
 Downloading the models is very straightforward. The most explicit way is
 to specify the namespace, model, version, and the desired format:
 
-``GET /w3c/sosa/1.0/content?format=text/turtle``
+``GET /v1/m/w3c/sosa/1.0/content?format=text/turtle``
 
 You can also omit the ``format`` parameter to obtain the content in the
 default format:
 
-``GET /w3c/sosa/1.0/content``
+``GET /v1/m/w3c/sosa/1.0/content``
 
 If you have set the ``latest`` tag for this model, you can use it
 instead of the explicit version, to fetch the most recent version of the
@@ -833,11 +823,11 @@ model.
 There is also a second, shorter style of URLs for downloading content,
 with the ``/c`` prefix:
 
-1. ``GET /c/w3c/sosa/1.0/text/turtle``
-2. ``GET /c/w3c/sosa/latest/text/turtle``
-3. ``GET /c/w3c/sosa/1.0``
-4. ``GET /c/w3c/sosa/latest``
-5. ``GET /c/w3c/sosa``
+1. ``GET /v1/c/w3c/sosa/1.0/text/turtle``
+2. ``GET /v1/c/w3c/sosa/latest/text/turtle``
+3. ``GET /v1/c/w3c/sosa/1.0``
+4. ``GET /v1/c/w3c/sosa/latest``
+5. ``GET /v1/c/w3c/sosa``
 
 Assuming that the ``latest`` tag is set to version ``1.0`` and the
 default format is ``text/turtle``, all of the above requests will return
@@ -849,7 +839,7 @@ In all cases the response will be simply the stored file, with the
 appropriate Content-Type header.
 
 Attaching metadata
-~~~~~~~~~~~~~~~~~~
+******************
 
 As described in the User guide, you can attach arbitrary metadata to any
 entity (namespace, model, model version). The API is identical for each
@@ -858,7 +848,7 @@ of those cases, the only difference is in the URL.
 You can attach metadata when creating an entity via a POST request. For
 example, if we wanted to create a new model in the ``w3c`` namespace:
 
-Request: ``POST /w3c/dcat`` Body:
+Request: ``POST /v1/m/w3c/dcat`` Body:
 
 .. code:: json
 
@@ -879,11 +869,11 @@ metadata can be later modified, as explained below.
 
 To examine the created model:
 
-================= ====
-Request           Body
-================= ====
-``GET /w3c/dcat`` –
-================= ====
+====================== ====
+Request                Body
+====================== ====
+``GET /v1/m/w3c/dcat`` –
+====================== ====
 
 Response:
 
@@ -917,7 +907,7 @@ keyword. No other types of values (e.g., numeric, null…) are supported.
 versions is identical and the same limitations apply.
 
 Modifying metadata
-~~~~~~~~~~~~~~~~~~
+******************
 
 The metadata can be modified using PATCH requests with a very similar
 syntax to the POST requests described above. There are three possible
@@ -935,7 +925,7 @@ model. We (1) remove the ``editors`` key (2) add the ``git-repo`` key
 (3) change the value of ``external-docs`` to an array. The other keys
 will remain unchanged.
 
-Request: ``PATCH /w3c/dcat`` Body:
+Request: ``PATCH /v1/m/w3c/dcat`` Body:
 
 .. code:: json
 
@@ -952,11 +942,11 @@ Request: ``PATCH /w3c/dcat`` Body:
 
 To examine the modified model:
 
-================= ====
-Request           Body
-================= ====
-``GET /w3c/dcat`` –
-================= ====
+====================== ====
+Request                Body
+====================== ====
+``GET /v1/m/w3c/dcat`` –
+====================== ====
 
 Response:
 
@@ -992,21 +982,21 @@ Additionally, you must provide the ``force=1`` query parameter to the
 request. This is to avoid accidental deletions.
 
 For example, to delete a (previously emptied of any versions) model
-``/w3c/dcat``:
+``w3c/dcat``:
 
-============================ ====
-Request                      Body
-============================ ====
-``DELETE /w3c/dcat?force=1`` –
-============================ ====
+================================= ====
+Request                           Body
+================================= ====
+``DELETE /v1/m/w3c/dcat?force=1`` –
+================================= ====
 
 Another example: deleting a specific content of a model version:
 
-=========================================================== ====
-Request                                                     Body
-=========================================================== ====
-``DELETE /w3c/sosa/1.0/content?format=text/turtle&force=1`` –
-=========================================================== ====
+================================================================ ====
+Request                                                          Body
+================================================================ ====
+``DELETE /v1/m/w3c/sosa/1.0/content?format=text/turtle&force=1`` –
+================================================================ ====
 
 **Note 1: deleting things from the Repository is discouraged**, do so
 only in exceptional circumstances (e.g., a mistake). The contents of the
@@ -1038,11 +1028,11 @@ In the following example, let’s assume that we have namespace
 third page of the list of models in this namespace, while showing 4
 items per page:
 
-=================================== ====
-Request                             Body
-=================================== ====
-``GET /example?page=3&page_size=4`` –
-=================================== ====
+======================================== ====
+Request                                  Body
+======================================== ====
+``GET /v1/m/example?page=3&page_size=4`` –
+======================================== ====
 
 Response:
 
@@ -1090,7 +1080,7 @@ Browsing collections of namespaces and model versions is performed
 identically.
 
 Filtering and sorting collections
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*********************************
 
 All collections that support paging (as described above) can be sorted
 and filtered. There is support for filtering by one field at a time
@@ -1099,9 +1089,10 @@ all will be joined with the AND operator. The sort & filter parameters
 can be freely combined with paging parameters.
 
 The following fields can be sorted and filtered: - Namespace collection
-(``/``): ``namespace``, ``metadata.*`` - Model collection (``/{ns}``):
-``model``, ``latestVersion``, ``metadata.*`` - Model version collection
-(``/{ns}/{model}``): ``version``, ``defaultFormat``, ``metadata.*``
+(``/v1/m``): ``namespace``, ``metadata.*`` - Model collection
+(``/v1/m/{ns}``): ``model``, ``latestVersion``, ``metadata.*`` - Model
+version collection (``/v1/m/{ns}/{model}``): ``version``,
+``defaultFormat``, ``metadata.*``
 
 The ``metadata.*`` field indicates it is possible to sort or filter by
 any of the metadata properties. For example, to sort by metadata field
@@ -1118,11 +1109,11 @@ filter-able fields in this collection, as described above.
 For example, to search for models that have the latest version set to
 ``1.0.0`` and their ``source`` metadata field is ``internal``:
 
-================================================================= ====
-Request                                                           Body
-================================================================= ====
-``GET /example?f.latestVersion=1.0.0&f.metadata.source=internal`` –
-================================================================= ====
+====================================================================== ====
+Request                                                                Body
+====================================================================== ====
+``GET /v1/m/example?f.latestVersion=1.0.0&f.metadata.source=internal`` –
+====================================================================== ====
 
 **Note 1:** metadata fields can have multiple values. A filter on such a
 field will be satisfied if at least one value is equal to the filter
@@ -1141,11 +1132,11 @@ set to ``ascending`` by default.
 
 For example, to sort namespaces by their name, in descending order:
 
-============================================ ====
-Request                                      Body
-============================================ ====
-``GET /?sort_by=namespace&order=descending`` –
-============================================ ====
+================================================ ====
+Request                                          Body
+================================================ ====
+``GET /v1/m?sort_by=namespace&order=descending`` –
+================================================ ====
 
 **Note 1:** sorting is applied after filtering, but before paging. This
 allows you to freely browse filtered and sorted collections.
@@ -1155,13 +1146,14 @@ sorted field. This is especially relevant for sorting with metadata
 fields.
 
 Documentation
-~~~~~~~~~~~~~
+*************
 
 The Semantic Repository can store and serve generated documentation
 pages – see the user guide for details on the available formats and
 modes of operation. This functionality can be accessed via two
 endpoints: - Documentation per model version:
-``/{namespace}/{model}/{version}/doc`` - Documentation sandbox: ``/dg``
+``/v1/m/{namespace}/{model}/{version}/doc`` - Documentation sandbox:
+``/v1/doc_gen``
 
 In the following sections, it is explained how to upload new
 documentation jobs, monitor their status, and retrieve the generated
@@ -1173,11 +1165,11 @@ Documentation sandbox
 To create a new documentation generation job in the sandbox using the
 ``markdown`` plugin:
 
-============================ ===============
-Request                      Body
-============================ ===============
-``POST /dg?plugin=markdown`` content: (file)
-============================ ===============
+==================================== ===============
+Request                              Body
+==================================== ===============
+``POST /v1/doc_gen?plugin=markdown`` content: (file)
+==================================== ===============
 
 Here, the ``content`` body field can be one or more files to be
 processed. In response you will receive an acknowledgement with your
@@ -1194,13 +1186,13 @@ for further requests:
 
 The job has now been added to the queue and will be processed
 asynchronously. You can check the job’s status by making a GET request
-to ``/dg/{job_id}``. In our example:
+to ``/v1/doc_gen/{job_id}``. In our example:
 
-==================================== ====
-Request                              Body
-==================================== ====
-``GET /dg/638b357c5a6298307ca53fb8`` –
-==================================== ====
+============================================ ====
+Request                                      Body
+============================================ ====
+``GET /v1/doc_gen/638b357c5a6298307ca53fb8`` –
+============================================ ====
 
 The status of the job will be returned:
 
@@ -1222,23 +1214,24 @@ successfully, and the generated documentation can be accessed. -
 provides additional detail as to the cause of the problem.
 
 After the job has been finished successfully, you can access the
-generated files at ``/dg/{job_id/doc/`` - ``GET /dg/{job_id}/doc``
-redirects to ``GET /dg/{job_id}/doc/`` - ``GET /dg/{job_id}/doc/``
+generated files at ``/v1/doc_gen/{job_id/doc/`` -
+``GET /v1/doc_gen/{job_id}/doc`` redirects to
+``GET /v1/doc_gen/{job_id}/doc/`` - ``GET /v1/doc_gen/{job_id}/doc/``
 returns the content of the home page of the documentation
-(``index.html``) - ``GET /dg/{job_id}/doc/{file_path}`` return the
-content of the file under the given path.
+(``index.html``) - ``GET /v1/doc_gen/{job_id}/doc/{file_path}`` returns
+the content of the file under the given path.
 
 Documentation for model versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The process for adding documentation to model versions is very similar.
-To add documentation to model version ``/w3c/sosa/1.0``:
+To add documentation to model version ``w3c/sosa/1.0``:
 
-============================================== ===============
-Request                                        Body
-============================================== ===============
-``POST /w3c/sosa/1.0/doc_gen?plugin=markdown`` content: (file)
-============================================== ===============
+=================================================== ===============
+Request                                             Body
+=================================================== ===============
+``POST /v1/m/w3c/sosa/1.0/doc_gen?plugin=markdown`` content: (file)
+=================================================== ===============
 
 Response:
 
@@ -1254,11 +1247,11 @@ The returned job handle is not a unique ID, but rather the model
 version’s name. To check the status of the job, simply retrieve the
 details of the model version:
 
-===================== ====
-Request               Body
-===================== ====
-``GET /w3c/sosa/1.0`` –
-===================== ====
+========================== ====
+Request                    Body
+========================== ====
+``GET /v1/m/w3c/sosa/1.0`` –
+========================== ====
 
 This will return:
 
@@ -1279,22 +1272,22 @@ This will return:
    }
 
 The generated documentation is available under
-``GET /{namespace}/{model}/{version}/doc`` and is served in the same
-manner as with sandbox jobs.
+``GET /v1/m/{namespace}/{model}/{version}/doc`` and is served in the
+same manner as with sandbox jobs.
 
 **Note:** when overwriting the documentation for a model version, it is
 necessary to include the ``overwrite=1`` query parameter. Otherwise, the
 request will be rejected.
 
 It is also possible to delete the documentation for a model version. To
-do this, simply call ``DELETE /{namespace}/{model}/{version}/doc`` with
-the ``force=1`` parameter:
+do this, simply call ``DELETE /v1/m/{namespace}/{model}/{version}/doc``
+with the ``force=1`` parameter:
 
-==================================== ====
-Request                              Body
-==================================== ====
-``DELETE /w3c/sosa/1.0/doc?force=1`` –
-==================================== ====
+========================================= ====
+Request                                   Body
+========================================= ====
+``DELETE /v1/m/w3c/sosa/1.0/doc?force=1`` –
+========================================= ====
 
 Response:
 
@@ -1308,13 +1301,13 @@ Documentation plugins info
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is possible to list the installed documentation plugins and their
-supported file extensions, with the ``/dg`` endpoint:
+supported file extensions, with the ``/v1/doc_gen`` endpoint:
 
-=========== ====
-Request     Body
-=========== ====
-``GET /dg`` –
-=========== ====
+=================== ====
+Request             Body
+=================== ====
+``GET /v1/doc_gen`` –
+=================== ====
 
 Response:
 
@@ -1338,7 +1331,7 @@ Response:
    }
 
 Webhooks
-~~~~~~~~
+********
 
 See the `user guide <user-guide>`__ for an explanation of what webhooks
 are and their available types.
@@ -1346,7 +1339,7 @@ are and their available types.
 New webhooks are defined by POST. For example, to create a webhook that
 listens for content uploads in model version w3c/sosa/1.0:
 
-Request: ``POST /hk`` Body:
+Request: ``POST /v1/webhook`` Body:
 
 .. code:: json
 
@@ -1380,11 +1373,11 @@ The returned handle is the unique ID of the webhook.
 
 You can retrieve a list of all webhooks using GET:
 
-=========== ====
-Request     Body
-=========== ====
-``GET /hk`` –
-=========== ====
+=================== ====
+Request             Body
+=================== ====
+``GET /v1/webhook`` –
+=================== ====
 
 Response
 
@@ -1415,11 +1408,11 @@ This collection can be filtered and sorted by the ``action`` field.
 
 A single webhook can be retrieved by its ID:
 
-==================================== ====
-Request                              Body
-==================================== ====
-``GET /hk/638f62056d64d41f7c3578ae`` –
-==================================== ====
+============================================ ====
+Request                                      Body
+============================================ ====
+``GET /v1/webhook/638f62056d64d41f7c3578ae`` –
+============================================ ====
 
 Response:
 
@@ -1439,11 +1432,11 @@ Response:
 Webhooks cannot be modified after they are created. They can only be
 deleted using DELETE with the ``force=1`` parameter:
 
-=============================================== ====
-Request                                         Body
-=============================================== ====
-``DELETE /hk/638f62056d64d41f7c3578ae?force=1`` –
-=============================================== ====
+======================================================= ====
+Request                                                 Body
+======================================================= ====
+``DELETE /v1/webhook/638f62056d64d41f7c3578ae?force=1`` –
+======================================================= ====
 
 Response:
 
@@ -1454,16 +1447,10 @@ Response:
    }
 
 Meta endpoints
-~~~~~~~~~~~~~~
+**************
 
 Will be implemented in the next release. TODO: health, doc plugins,
 version, Swagger.
-
-
-User guide – graphical user interface
-########################
-The GUI of the Semantic Repository is under development.
-
 
 
 ******************
@@ -1478,18 +1465,31 @@ REST API reference
 *************
 Prerequisites
 *************
-There are currently no prerequisites for installing this enabler.
 
+The enabler requires only the base Kubernetes environment with Helm to
+function.
+
+Machines with at least 8 GB of RAM are recommended for running the
+enabler efficiently. Fast and plentiful storage will also be useful for
+large installations.
 
 ************
 Installation
 ************
 
+The primary way of installing this enabler is with Kubernetes and Helm.
+However, it can also be installed with docker-compose, which is
+especially useful for development purposes.
 
-The installation procedure for this enabler is under development and
-will be documented in the next release.
+Kubernetes installation
+***********************
+
+Install the provided Helm chart on your Kubernetes cluster. Take into
+account the persistent volume claims for the MongoDB database and
+storage – you may want to modify their parameters.
+
 Development docker-compose stack
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To simplify development and integration with the Semantic Repository, a
 simple docker-compose stack is provided. To use it, you will have to
@@ -1514,7 +1514,7 @@ Repository on localhost. It should connect to the containerized
 services.
 
 Local Docker image build
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In general, it is easier to just pull the ready image from the container
 registry, but if you need to build the container by yourself, it is also
@@ -1532,7 +1532,7 @@ that in your commands as needed.
    docker build -t assistiot/semantic-repository .
 
 Demo database
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 The Semantic Repository comes with a script that can set up an example
 database for you to get started. This is especially useful if you want
@@ -1541,29 +1541,138 @@ service. You will find the script and an appropriate ``README`` file in
 the ``demo`` directory.
 
 *************
-
-
 Configuration
 *************
 
+Helm chart
+***********
 
-Currently, there are no “nicely” packaged facilities for configuring the
-enabler. However, for development and testing purposes, the available
-configuration settings are documented below.
-Semantic Repository Core
-------------------------
+The provided Helm chart exposes several configurable values, such as
+ports, interfaces, RAM and CPU limits, etc. You can find them in the
+``values.yaml`` file of the chart.
 
-The main JVM application is configured using the ``application.conf``
-file.
+Main application (API server)
+*****************************
+
+The main JVM application has the most important settings that control
+the Semantic Repository’s behavior (listed below). You can set these
+settings in several ways, depending on your deployment setup:
+
+**In Kubernetes (production deployment)** use the ``extraConfig``
+property in the values.yaml file. There, you can put multiple lines of
+config settings in the `HOCON
+format <https://github.com/lightbend/config/blob/main/HOCON.md>`__.
+Example:
+
+.. code:: yaml
+
+   backend:
+     # ...
+     envVars:
+       extraConfig: |
+         semrepo.limits.max-page-size = 100
+         semrepo.scheduled.doc-job-cleanup = 60m
+
+In other Docker-based deployments, you can use the ``REPO_EXTRA_CONFIG``
+environment variable in the same way.
 
 Settings
-~~~~~~~~
+********
 
-Temporarily, the only documentation of the settings is in the
-configuration file itself.
++-----------------+-----------------+-----------------+-----------------+
+| Config key      | Type            | Description     | Default value   |
++=================+=================+=================+=================+
+| semrepo.mongodb | String          | MongoDB         | (…)             |
+| .connection-str |                 | connection      |                 |
+| ing             |                 | string. The     |                 |
+|                 |                 | default config  |                 |
+|                 |                 | works for a     |                 |
+|                 |                 | local           |                 |
+|                 |                 | development     |                 |
+|                 |                 | setup.          |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.http.po | String          | Port to listen  | “8080”          |
+| rt              |                 | on              |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.http.ho | String          | Host to listen  | “0.0.0.0”       |
+| st              |                 | on              |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum allowed | 50              |
+| max-page-size   |                 | page size when  |                 |
+|                 |                 | browsing        |                 |
+|                 |                 | collections of  |                 |
+|                 |                 | namespaces,     |                 |
+|                 |                 | models, and     |                 |
+|                 |                 | model versions. |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Default page    | 20              |
+| default-page-si |                 | size. Must be   |                 |
+| ze              |                 | lower or equal  |                 |
+|                 |                 | to              |                 |
+|                 |                 | max-page-size.  |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum number  | 64              |
+| metadata.max-pr |                 | of unique       |                 |
+| operties        |                 | metadata keys   |                 |
+|                 |                 | allowed per     |                 |
+|                 |                 | entity.         |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum number  | 32              |
+| metadata.max-va |                 | of values each  |                 |
+| lues            |                 | metadata key    |                 |
+|                 |                 | can have. Must  |                 |
+|                 |                 | be at least 1.  |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum length  | 1024            |
+| metadata.max-va |                 | of each         |                 |
+| lue-length      |                 | individual      |                 |
+|                 |                 | metadata value, |                 |
+|                 |                 | in characters.  |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Memory size     | Maximum allowed | 4M              |
+| docs.max-upload |                 | size of all     |                 |
+| -size           |                 | uploaded files  |                 |
+|                 |                 | for a doc       |                 |
+|                 |                 | compilation job |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum number  | 50              |
+| docs.max-files- |                 | of files in a   |                 |
+| in-upload       |                 | single upload   |                 |
+|                 |                 | for a doc       |                 |
+|                 |                 | compilation job |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Duration        | Time after      | 1d              |
+| docs.sandbox-ex |                 | which sandbox   |                 |
+| piry            |                 | doc compilation |                 |
+|                 |                 | jobs expire and |                 |
+|                 |                 | are deleted     |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Duration        | Maximum time a  | 30s             |
+| docs.job-execut |                 | job can execute |                 |
+| ion-time        |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.limits. | Integer         | Maximum length  | 512             |
+| webhook.max-cal |                 | of the callback |                 |
+| lback-length    |                 | URI of a        |                 |
+|                 |                 | webhook         |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.schedul | Duration        | How frequently  | 15m             |
+| ed.doc-job-clea |                 | to check for    |                 |
+| nup             |                 | expired doc     |                 |
+|                 |                 | compilation     |                 |
+|                 |                 | jobs to remove  |                 |
+|                 |                 | them            |                 |
++-----------------+-----------------+-----------------+-----------------+
+| semrepo.schedul | Duration        | How frequently  | 5m              |
+| ed.get-new-doc- |                 | to check for    |                 |
+| jobs            |                 | stalled doc     |                 |
+|                 |                 | compilation     |                 |
+|                 |                 | jobs in the     |                 |
+|                 |                 | queue           |                 |
++-----------------+-----------------+-----------------+-----------------+
 
-Dependencies
-~~~~~~~~~~~~
+Settings of dependencies (advanced)
+***********************************
 
 In the file, you can configure the libraries that Semantic Repository
 uses, such as Akka. This way you can for example modify the size of the
@@ -1576,7 +1685,8 @@ HTTP <https://doc.akka.io/docs/akka-http/current/configuration.html>`__
 - `Akka
 Streams <https://doc.akka.io/docs/akka/current/general/stream/stream-configuration.html>`__
 
-***************
+
+
 Developer guide
 ***************
 The Semantic Repository is written in `Scala
@@ -1585,10 +1695,9 @@ framework <https://akka.io/>`__. The information about the managed
 objects is stored in `MongoDB <https://www.mongodb.com/>`__ and the
 files are stored in `MinIO <https://min.io/>`__ (S3-compatible storage).
 
-Semantic Repository’s architecture (note that it is not fully
-implemented yet):
+Semantic Repository’s architecture:
 
-.. figure:: semantic_repository_enabler/uploads/b2b352b50cd1c96694d34a6d7c447c9f/image.png
+.. figure:: semantic_repository_enabler/uploads/1e470dc23fdc1babc10749fad47a00dc/image.png
    :alt: Enabler architecture
 
    Enabler architecture
@@ -1603,7 +1712,10 @@ Repository locally for development purposes.
 ***************************
 Version control and release
 ***************************
-Version 0.1. Under development.
+The enabler’s code is in ASSIST-IoT GitLab.
+
+Versioning and packaging is not finalized yet – this will be resolved in
+a future release.
 
 
 *******
@@ -1619,8 +1731,126 @@ http://www.apache.org/licenses/LICENSE-2.0
 *********************
 Notice (dependencies)
 *********************
-Dependency list and licensing information will be provided before the
-first major release.
+
+Components
+**********
+
+-  MongoDB – `Server Side Public License (SSPL
+   1.0) <https://www.mongodb.com/licensing/server-side-public-license>`__
+-  MinIO – `GNU Affero General Public License
+   v3.0 <https://github.com/minio/minio/blob/master/LICENSE>`__
+
+Main application (API server) dependencies
+******************************************
+
+Note that `Akka changed its
+license <https://www.lightbend.com/akka/license-faq>`__ to a restrictive
+one for versions 2.7.X and up. Because the Semantic Repository is using
+the 2.6.X version (still under the Apache License), it remains
+unaffected. Future versions of the Semantic Repository are expected to
+use `Apache Pekko <https://pekko.apache.org/>`__, the free fork of Akka.
+
+.. list-table:: Dependencies
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Category
+     - License
+     - Dependency
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `ch.megard # akka-http-cors_2.13#1.1.3 <https://github.com/lomigmegard/akka-http-cors>`_ 
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     -  `io.spray # spray-json_2.13 #1.3.6 <https://github.com/spray/spray-json>`_  
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.planet42 # laika-core_3 # 0.19.0 <https://planet42.github.io/Laika/>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `com.typesafe.scala-logging # scala-logging_3 #3.9.5 <https://github.com/lightbend/scala-logging>`_  
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `io.projectreactor # reactor-co re #3.2.22.RELEASE <https://github.com/reactor/reactor-core>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.yaml # snakeyaml #1.31 <https://bitbucket.org/snakeyaml/snakeyaml>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `software.amazon.awssdk # 2.11.14 <https://aws.amazon.com/sdkforjava>`_   
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `software.amazon.eventstream #eventstream # 1.0.1 <https://github.com/awslabs/aws-eventstream-java>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `com.comcast # ip4s-core_3 #  3.1.3 <https://github.com/Comcast/ip4s>`_   
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `com.lightbend.akka #akka-stream-alpakka-file_2.13 #3.0.4 <https://doc.akka.io/docs/alpakka/current>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `com.typesafe # config # 1.4.2 <https://github.com/lightbend/config>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `com.typesafe # ssl-config-core_2.13#0.4.3 <https://github.com/lightbend/ssl-config>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `com.typesafe.akka # akka-actor_2.13 <https://akka.io/>`_          
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.scala-lang # scala-library #2.13.8 <https://www.scala-lang.org/>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.scala-lang # scala3-library_3 #3.1.3 <https://github.com/lampepfl/dotty>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.scala-lang.modules #scala-java8-compat_2.13 #  1.0.0 <http://www.scala-lang.org/>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.scala-lang.modules #scala-xml_3 # 2.1.0 <http://www.scala-lang.org/>`_                 
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     -  `org.typelevel #cats-effect-kernel_3 # 3.3.14 <https://github.com/typelevel/cats-effect>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.typelevel # cats-effect-std_3 #3.3.14 <https://github.com/typelevel/cats-effect>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.typelevel # literally_3 # 1.0.2 <https://github.com/typelevel/ literally>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.mongodb # bson # 4.7.1 <https://bsonspec.org>`_          
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.mongodb # bson-record-codec #4.7.1 <https://www.mongodb.com/>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.mongodb # mongodb-driver-core # mongodb-driver-reactivestreams  # mongo-scala-bson_2.13 # mongo-scala-driver_2.13 # 4.7.1 <https://www.mongodb.com/>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `com.fasterxml.jackson.core #jackson-annotations # jackson-core # jackson-databind #  2.13.4 <http://github.com/FasterXML/jackson>`_
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `com.fasterxml.jackson.dataformat # jackson-dataformat-yaml # 2.13.4 <https://github.com/FasterXML/jackson-dataformats-text>`_  
+   * - Apache
+     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
+     - `org.scalactic # scalactic_3 # scalatest-compatible # scalatest-core_3 # scalatest-diagrams_3 # scalatest-featurespec_3 # scalatest-featurespec_3 # scalatest-funspec_3 # scalatest-funsuite_3 # scalatest-matchers-core_3 # scalatest-mustmatchers_3 # scalatest-propspec_3  # scalatest-refspec_3 # scalatest-shouldmatchers_3 #scalatest-wordspec_3 # scalatest_3 # 3.2.12 <http://www.scalatest.org>`_       
+   * - BSD
+     - `BSD-3-Clause <https://github.com/scodec/scodec-bits/blob/main/LICENSE>`_
+     - `org.scodec # scodec-bits_3 #1.1.34 <https://github.com/scodec/scodec-bits>`_
+   * - CCO
+     - `CC0 <http://creativecommons.org/publicdomain/zero/1.0/>`_
+     - `org.reactivestreams # reactive-streams # 1.0.3 <http://www.reactive-streams.org/>`_      
+   * - MIT
+     - `MIT <http://opensource.org/licenses/MIT>`_
+     - `co.fs2 # fs2-core_3 # fs2-io_3 # 3.2.14 <https://typelevel.org/fs2>`_
+   * - MIT
+     - `MIT <http://opensource.org/licenses/MIT>`_
+     - `org.typelevel # cats-core_3 # cats-kernel_3 # 2.8.0 <https://typelevel.org/cats>`_       
+   * - MIT
+     - `MIT <http://opensource.org/licenses/MIT>`_
+     - `org.slf4j # slf4j-api # slf4j-simple # 1.7.36 <http://www.slf4j.org>`_       
+ 
 
 
 
