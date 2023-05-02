@@ -305,7 +305,10 @@ The configuration listed is for the SIEM, related to data volumes for the integr
 ***************
 Developer guide
 ***************
-Will be determined after the release of the enabler.
+
+The Cybersecurity monitoring enabler only interacts with the cybersecurity monitoring Agent. 
+
+The Cybersecurity monitoring enabler, gets the info from the agent and checks what entries are considered as real attacks and what no. With those that are considered a real attack it can, for example, perform a reaction blocking temporarily the source of the attack.
 
 ***************************
 Version control and release
