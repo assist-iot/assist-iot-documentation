@@ -15,7 +15,7 @@ In SDN-enabled networks, a controller is responsible for controlling the underly
 sources/sinks, ports and type of traffic. The aim of this enabler is aid the 
 controller to classify network traffic into a number of application classes 
 (video streaming, VoIP, Network control, best effort, OAM, etc.), making use 
-of an AI/ML framework and dedicated algo-rithms. The traffic classification 
+of an AI/ML framework and dedicated algorithms. The traffic classification 
 enabler can be seen as a service of the application layer of the general SDN 
 architecture.
 
@@ -24,17 +24,14 @@ Features
 ***************
 Two main features are supported by this enabler, especifically:
 
-- Training a machine learning model to classify traffic packets, based on the combination of different algorithms.
-- To inference the type of traffic of a specific packet based on different packet parameters.
+- Training a machine learning model to classify traffic packets, in, type or application.
+- To inference the type of traffic of a specific packet/s passed via .pcap file.
 
-To that end, the enabler will rely on a Deep Neural Network (DNN) which combines 
-the outputs of three models, hence being a "meta-model". The underlying classifers
-are based on K-Nearest Neighbours (KNN), Random Forest (RF), and Decision Tree 
-(DT) algorithms.
+To that end, the enabler will rely on Convolutional Neural Network (CNN) and RESNET models.
 
 
 .. note:: 
-  At this moment, only the expossed API only works for classifying a packet, not for (re)training the model.
+   At this moment, the enabler has only been validated to work with CNN models. Code for Resnet has been added and tested, but not validated with real data. Additional modifications are expected (code cleaning, management of models via SemRepo enabler, average of results of .pcap file rather than packet-based).
 
 
 *********************
@@ -54,8 +51,8 @@ controller.
 
 The enabler is composed of three main elements, as one can see in the figure below:
 
-- **Traffic Classification API**: an API REST will act as a central proxy of the operations that are offered by the enabler. It is responsible of managing the API calls related to starting an inference (i.e., traffic classification) process and retrain the AI model with new data. 
-- **Training Module**: It will be invoked for training the DNN model and sub-models by the user, ideally when an extended or new dataset is available.
+- **Traffic Classification API**: an API REST will act as a central proxy of the operations that are offered by the enabler. It is responsible of managing the API calls related to starting a training and an inference process. It also includes necessary calls for preparing data used for further training.
+- **Training Module**: It will be invoked for training the DNN model and sub-models by the user, ideally when an extended or new dataset is available. In future releases, this component might be conditionally deployed (as nodes with low resources might not be suitable for training operations).
 - **Classifier**: It will contain the functions in charge of executing the inference process, taking a trained model and a set of packet features as inputs.
 
 .. figure:: ./traffic_arch.png
@@ -70,61 +67,56 @@ User guide
 
 REST API endpoints
 *******************
-The API has not been finalised yet, in the following table are presented the endpoints
-that will be implemented.
+The following API endpoints have been developed:
 
-+--------+------------+------------------------------------------------------------------------------------------------------------+--------------------------------------------------+-----------------+
-| Method | Endpoint   | Description                                                                                                | Payload (if needed)                              | Response format |
-+========+============+============================================================================================================+==================================================+=================+
-| POST   | /training  | Get information of the WireGuard network interface                                                         | Successful or error code depending on the result |                 |
-+--------+------------+------------------------------------------------------------------------------------------------------------+--------------------------------------------------+-----------------+
-| POST   | /inference | Returns the class of a specific packet, based on the inputs received and the application of the DNN model. | JSON with the output class                       |                 |
-+--------+------------+------------------------------------------------------------------------------------------------------------+--------------------------------------------------+-----------------+
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| Method | Endpoint                     | Description                                                                                                                                            | Payload (if needed)                                                                                                         | Response format                                  |
++========+==============================+========================================================================================================================================================+=============================================================================================================================+==================================================+
+| GET    | /version                     | Returns the version of the enabler.                                                                                                                    |                                                                                                                             | JSON with the output class                       |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| GET    | /health                      | Returns status of the enabler (it is considered healthy if its components are deployed and can be communicated).                                       |                                                                                                                             | JSON with the output class                       |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| get    | /v1/api-export               | Returns the openapi specifications of the enabler.                                                                                                     |                                                                                                                             | JSON with the output class                       |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| POST   | /v1/preprocess               | Given a set of .pcap files via volume (in ML_folder/data), these are prepared for further training.                                                    |                                                                                                                             | Successful or error code depending on the result |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| POST   | /v1/create_train_test_set    | Given a set of preprocessed files (in ML_folder/preprocessed), these are split in two sets for training and validation, and parcel files are prepared. |                                                                                                                             | Successful or error code depending on the result |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| POST   | /v1/train                    | Given a set of prepared files (in ML_folder/target), a training process is started. This may take a long time depending on the input data volume       | {“model_type”: “cnn”, “task”: “app”} Other options: "resnet" and "traffic", respectively.                                   | Successful or error code depending on the result |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| POST   | /v1/cnn_inference_app        | Returns the application of the packets of a .pcap file, considering a previously trained CNN model (present in ML_folder/model).                       |                                                                                                                             | JSON with inferenced application class/es        |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| POST   | /v1/cnn_inference_traffic    | Returns the traffic type of the packets of a .pcap file, considering a previously trained CNN model (present in ML_folder/model).                      |                                                                                                                             | JSON with inferenced traffic class/es            |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| POST   | /v1/resnet_inference_app     | Returns the application of the packets of a .pcap file, considering a previously trained resnet model (present in ML_folder/model).                    |                                                                                                                             | JSON with inferenced application class/es        |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| POST   | /v1/resnet_inference_traffic | Returns the traffic type of the packets of a .pcap file, considering a previously trained resnet model (present in ML_folder/model).                   |                                                                                                                             | JSON with inferenced traffic class/es            |
++--------+------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
 
-Currently, to classify a packet to get its class, a request has to be made to the 
-IP address of the host and the corresponding port of the service (4000 by default).
-The request has to be accompanied by a body with a set of parameters belonging to
-the packet to be classified (extracted from .pcap files). A request example is attached 
-below (e.g., *protocol = 1* corresponds to ICMP protocol):
+Currently, to classify a packet to get its class, a request has to be made to the IP address of the host and the corresponding port of the service (10000 by default). The request has to be accompanied by a body with the.pcap file with packets to classify. A request example for some of the above endpoints is attached below:
 
   .. code-block:: bash
 
-        curl --location --request POST 'http://<IP_address>:<api_port>/v1' -d
-        {
-          "protocol": "1",
-          "src_port": "0",
-          "dst_port": "0",
-          "src2dst_packets": "16",
-          "src2dst_bytes": "5332",
-          "dst2src_packets": "8",
-          "dst2src_bytes": "612"
-        }
-
-The request for performing the request has not been implemented yet.
+        curl -F pcap_data=@email.pcap -X POST http://<IP_address>:10000/v1/cnn_inference_traffic 
 
 ***************
 Prerequisites
 ***************
-The current version works in a Docker environment with Docker Compose, they must be installed previously.
+The current version works in a Docker environment with Docker Compose; or Kubernetes environment with Helm chart; or ASSIST-IoT environment managed by the Smart orchestrator. The two latter approaches are encouraged.
 
 ***************
 Installation
 ***************
-Any Helm chart nor dedicated K8s manifest has been developed yet. Two steps are needed
-before using the enabler:
-
-1. Build the docker image: ``docker build -t networkclassifier .``
-   
-2. Run the docker container: ``docker run -p 4000:4000 -d networkclassifier``
+Enabler is provided as a Helm chart. Hence, it can be deployed with the manageability enablers (see 2.5.1) or directly via Helm install. Data and/or models are currently passed from a volume from the host's path (can be configured at *values.yaml*).
 
 *********************
 Configuration options
 *********************
-Only one configuration variable of the enabler can be configured right now. To set it
-up, the Docker compose file has to be modified manually. In the future, this variable
-will be managed by Helm's *values.yaml* manifest.
+Only two configuration variables of the enabler can be configured right now. To set it
+up, the chart's *values.yaml* manifest can be changed.
 
 - **API_PORT**: Port where the Traffic Classification API is exposed.
+- **ML_PORT**: Internal port for the traffic classification training and inference.
 
 ***************
 Developer guide
@@ -134,15 +126,15 @@ Will be determined after the release of the enabler.
 ***************************
 Version control and release
 ***************************
-Version 0.1. A major release has not been released yet as some key functionalities are missing
-and it is not ready for being deployed in K8s environments.
+Version 1.0. 
 
 ***************
 License
 ***************
 Apache License 2.0.
 
-This work is extends the research presented in P.K. Mondal *et.al*, "A dynamic network traffic classifier using supervised ML for a Docker-based SDN network", 2021, Connection Science, 1-26.
+This work builds upon the research presented in Lotfollahi, M., Jafari Siavoshani, M., Shirali Hossein Zade, R. et al. Deep packet: a novel approach for encrypted traffic classification using deep learning. Soft Comput 24, 1999–2012 (2020). https://doi.org/10.1007/s00500-019-04030-2
+It also extends the work done in: https://blog.munhou.com/2020/04/05/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Tra%EF%AC%83c-Classi%EF%AC%81cation-Using-Deep-Learning/
 
 *********************
 Notice (dependencies)
