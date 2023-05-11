@@ -218,8 +218,12 @@ font-style: italic;
   <h4><a href="#Meta">Meta</a></h4>
   <ul>
   <li><a href="#getDocMetaRoute"><code><span class="http-method">get</span> /v1/doc_gen</code></a></li>
-  <li><a href="#getInfoRoute"><code><span class="http-method">get</span> /v1/info</code></a></li>
-  <li><a href="#getVersionRoute"><code><span class="http-method">get</span> /v1/version</code></a></li>
+  <li><a href="#getHealthRoute"><code><span class="http-method">get</span> /health</code></a></li>
+  <li><a href="#getHealthRouteV1"><code><span class="http-method">get</span> /v1/health</code></a></li>
+  <li><a href="#getInfoRoute"><code><span class="http-method">get</span> /info</code></a></li>
+  <li><a href="#getInfoRouteV1"><code><span class="http-method">get</span> /v1/info</code></a></li>
+  <li><a href="#getVersionRoute"><code><span class="http-method">get</span> /version</code></a></li>
+  <li><a href="#getVersionRouteV1"><code><span class="http-method">get</span> /v1/version</code></a></li>
   </ul>
   <h4><a href="#Model">Model</a></h4>
   <ul>
@@ -962,11 +966,100 @@ font-style: italic;
         <a href="#DocMetadata">DocMetadata</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="getHealthRoute"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /health</code></pre></div>
+    <div class="method-summary">Returns the health status of the Semantic Repository (<span class="nickname">getHealthRoute</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Health status
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getHealthRouteV1"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/health</code></pre></div>
+    <div class="method-summary">Returns the health status of the Semantic Repository (<span class="nickname">getHealthRouteV1</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Health status
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="getInfoRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/info</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /info</code></pre></div>
     <div class="method-summary">Returns information about the Semantic Repository (<span class="nickname">getInfoRoute</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#InfoResponse">InfoResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "name" : "name",
+  "version" : "version"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    General information
+        <a href="#InfoResponse">InfoResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getInfoRouteV1"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/info</code></pre></div>
+    <div class="method-summary">Returns information about the Semantic Repository (<span class="nickname">getInfoRouteV1</span>)</div>
     <div class="method-notes"></div>
 
 
@@ -1006,8 +1099,43 @@ font-style: italic;
   <div class="method"><a name="getVersionRoute"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/version</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /version</code></pre></div>
     <div class="method-summary">Returns the version of the Semantic Repository (<span class="nickname">getVersionRoute</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      String
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Semantic Versioning version tag (as plain string)
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getVersionRouteV1"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/version</code></pre></div>
+    <div class="method-summary">Returns the version of the Semantic Repository (<span class="nickname">getVersionRouteV1</span>)</div>
     <div class="method-notes"></div>
 
 
