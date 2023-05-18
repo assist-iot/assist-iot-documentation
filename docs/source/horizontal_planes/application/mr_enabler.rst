@@ -65,28 +65,28 @@ The following table lists the configurable parameters of the MR enabler.
 | ``pilot_uuid``            | Gets the unique id of the construction    |
 |                           | site                                      |
 +---------------------------+-------------------------------------------+
-| ``edbe_ip``               | Access point’s IP for consuming real–time |
+| ``edbe_url``              | Access point’s IP for consuming real–time |
 |                           | data                                      |
 +---------------------------+-------------------------------------------+
 | ``edbe_port``             | Access point’s Port for consuming         |
 |                           | real-time data                            |
 +---------------------------+-------------------------------------------+
-| ``alert_topic``           | Path to subscribe to Edge Data Broker to  |
+| ``alerts_topic``          | Path to subscribe to Edge Data Broker to  |
 |                           | receive real-time alerts                  |
 +---------------------------+-------------------------------------------+
-| ``worker_location_topic`` | Path to subscribe to Edge Data Broker to  |
+| ``workers_location_topic``| Path to subscribe to Edge Data Broker to  |
 |                           | receive real-time workers’                |
 |                           | location from the Edge Data Broker        |
 +---------------------------+-------------------------------------------+
-| ``semantic_ip``           | Access point’s IP for receiving ifc       |
+| ``semantic_url``          | Access point’s IP for receiving ifc       |
 |                           | models                                    |
 +---------------------------+-------------------------------------------+
 | ``semantic_port``         | Access point’s port for receiving ifc     |
 |                           | models                                    |
 +---------------------------+-------------------------------------------+
-| ``ifc_models_path``       | Receives IFC models files                 |
+| ``building_path``         | Receives IFC models files                 |
 +---------------------------+-------------------------------------------+
-| ``ltse_ip``               | Access point’s IP for receiving           |
+| ``ltse_url``              | Access point’s IP for receiving           |
 |                           | localization dictionaries, worker’s data  |
 |                           | and sending reports                       |
 +---------------------------+-------------------------------------------+
@@ -94,13 +94,10 @@ The following table lists the configurable parameters of the MR enabler.
 |                           | localization dictionaries, worker’s data  |
 |                           | and sending reports                       |
 +---------------------------+-------------------------------------------+
-| ``localization``          | Receives localization dictionaries for    |
-|                           | incoming data                             |
-+---------------------------+-------------------------------------------+
-| ``worker_path``           | Receives training and medical data of     |
+| ``workers_info``          | Receives training and medical data of     |
 |                           | the workers                               |
 +---------------------------+-------------------------------------------+
-| ``reports_files_path``    | Gets the path for uploading and saving    |
+| ``report_files``          | Gets the path for uploading and saving    |
 |                           | reports                                   |
 +---------------------------+-------------------------------------------+
 
@@ -116,10 +113,10 @@ In order to test the correct functionality of the MR enabler, the developers nee
 ***************************
 Version control and release
 ***************************
-Version 0.1.1.0
+Version 0.2.0.0
 
 ***************
 License
 ***************
-Will be determined after the release of the enabler.
+GNU AGPLv3
 
