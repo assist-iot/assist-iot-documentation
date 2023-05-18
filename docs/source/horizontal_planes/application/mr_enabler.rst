@@ -42,12 +42,12 @@ Last but not least, the application's menu also offers the ability to capture a 
 ***************
 Prerequisites
 ***************
-The MR enabler is designed to be executed on a Microsoft Hololens 2 device with ARM64 architecture.
+The MR enabler is designed to be executed on a Microsoft Hololens 2 device with ARM64 architecture. Access to a computer that is connected to the same network with the device is needed for the installation of the MR enabler application.
 
 ***************
 Installation
 ***************
-In order to install the application, the user has to use the device's portal of the MR device that will be available through any browser on a computer of the local network, using the MR device's local IP as the URL. The users have to go to Views > Apps and find the Deploy apps section, click "Browse..." and select the “appxbundle” file of the MR enabler. The user should also check the box next to "Allow me to select framework packages", if it is the first time installing the app on their device. Finally, they should click on "Install" to complete the installation (or "Next" if option "Allow me to select framework packages" is selected).
+In order to install the application, the user has to use the device's portal of the MR device that will be available through any browser on a computer of the local network, using the MR device's local ip as the url. The users has to go to Views > Apps and find the Deploy apps section, click "Browse..." and select the package with the installation files of the MR enabler, that will be either in ".appx" or ".msix" format, and is required for the package to be signed with a digital signature. The user should also check the box next to "Allow me to select framework packages", if it is the first time installing the app on their device. Finally, they should click on "Install" to complete the installation (or "Next" if option "Allow me to select framework packages" is selected).
 
 .. figure:: ./installation.svg
    :width: 800px 
@@ -57,55 +57,66 @@ Configuration options
 *********************
 The following table lists the configurable parameters of the MR enabler.
 
-+------------------------+-------------------------------------------------------------------------------+
-| Parameter              | Description                                                                   |
-+========================+===============================================================================+
-| ``alerting``           | Gets information about thresholds and ID/location of incidents                |
-+------------------------+-------------------------------------------------------------------------------+
-| ``authorization``      | Authenticates the MR application (HMD)                                        |
-+------------------------+-------------------------------------------------------------------------------+
-| ``authorization_pass`` | Authenticates the MR application (HMD)                                        |
-+------------------------+-------------------------------------------------------------------------------+
-| ``ifc_danger``         | Gets the IFC danger zones                                                     |
-+------------------------+-------------------------------------------------------------------------------+
-| ``ifc_models``         | Receives IFC models                                                           |
-+------------------------+-------------------------------------------------------------------------------+
-| ``localization``       | Gets location and orientation data of the MR interface (OSH inspector)        |
-+------------------------+-------------------------------------------------------------------------------+
-| ``media_files_path``   | Receives training and medical data                                            |
-+------------------------+-------------------------------------------------------------------------------+
-| ``mqtt``               | Access point of connection for consuming real–time data                       |
-+------------------------+-------------------------------------------------------------------------------+
-| ``name``               | Gets the name of the construction site                                        |
-+------------------------+-------------------------------------------------------------------------------+
-| ``network_ip``         | Connects MR interface to network and gets data                                |
-+------------------------+-------------------------------------------------------------------------------+
-| ``pilot_uuid``         | Gets the unique id of the construction site                                   |
-+------------------------+-------------------------------------------------------------------------------+
-| ``reports_files_path`` | Gets the path for uploading and saving reports                                |
-+------------------------+-------------------------------------------------------------------------------+
-| ``ssid``               | Gets the name of Wi-Fi network                                                |
-+------------------------+-------------------------------------------------------------------------------+
-| ``ssid_password``      | Receives the password key of the Wi-Fi network                                |
-+------------------------+-------------------------------------------------------------------------------+
++---------------------------+-------------------------------------------+
+| Parameter                 | Description                               |
++===========================+===========================================+
+| ``name``                  | Gets the name of the construction site    |
++---------------------------+-------------------------------------------+
+| ``pilot_uuid``            | Gets the unique id of the construction    |
+|                           | site                                      |
++---------------------------+-------------------------------------------+
+| ``edbe_url``              | Access point’s IP for consuming real–time |
+|                           | data                                      |
++---------------------------+-------------------------------------------+
+| ``edbe_port``             | Access point’s Port for consuming         |
+|                           | real-time data                            |
++---------------------------+-------------------------------------------+
+| ``alerts_topic``          | Path to subscribe to Edge Data Broker to  |
+|                           | receive real-time alerts                  |
++---------------------------+-------------------------------------------+
+| ``workers_location_topic``| Path to subscribe to Edge Data Broker to  |
+|                           | receive real-time workers’                |
+|                           | location from the Edge Data Broker        |
++---------------------------+-------------------------------------------+
+| ``semantic_url``          | Access point’s IP for receiving ifc       |
+|                           | models                                    |
++---------------------------+-------------------------------------------+
+| ``semantic_port``         | Access point’s port for receiving ifc     |
+|                           | models                                    |
++---------------------------+-------------------------------------------+
+| ``building_path``         | Receives IFC models files                 |
++---------------------------+-------------------------------------------+
+| ``ltse_url``              | Access point’s IP for receiving           |
+|                           | localization dictionaries, worker’s data  |
+|                           | and sending reports                       |
++---------------------------+-------------------------------------------+
+| ``ltse_port``             | Access point’s port for receiving         |
+|                           | localization dictionaries, worker’s data  |
+|                           | and sending reports                       |
++---------------------------+-------------------------------------------+
+| ``workers_info``          | Receives training and medical data of     |
+|                           | the workers                               |
++---------------------------+-------------------------------------------+
+| ``report_files``          | Gets the path for uploading and saving    |
+|                           | reports                                   |
++---------------------------+-------------------------------------------+
+
 
 ***************
 Developer guide
 ***************
-Will be determined after the release of the enabler.
+In order to test the correct functionality of the MR enabler, the developers need a device where they can execute scripts, host a mqtt broker and an instance of the LTS enabler. Any scripting language is able to test the MR enabler, as long as the language supports sending messages with the HTTP and the MQTT protocols. The developer then is able to:
+* Send alerts from the script with the mqtt protocol to a broker and check if they receive them inside the MR enabler application
+* Send reports to the LTS enabler and check the LTS tables to confirm that the report has been sent correctly
+* Check the PUD enabler if the MR device is constantly sending correct health metrics.
 
 ***************************
 Version control and release
 ***************************
-Will be determined after the release of the enabler.
+Version 0.2.0.0
 
 ***************
 License
 ***************
-Will be determined after the release of the enabler.
-
-********************
-Notice(dependencies)
-********************
-Will be determined after the release of the enabler.
+GNU AGPLv3
 
