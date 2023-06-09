@@ -299,9 +299,9 @@ License
 ***************
 The licenses of internal code are under analysis. Once assessed, an open source one will be selected (likely Apache 2.0).
 
-********************
-Notice(dependencies)
-********************
+*********************
+Notice (dependencies)
+*********************
 In next releases, this enabler will depend on the Long-Term Storage Enabler to persist the data.
 
 Furthermore, the VPN enabler uses WireGuard. The Wireguard's Linux kernel components are released under the GPLv2 license, as is the Linux kernel itself.
