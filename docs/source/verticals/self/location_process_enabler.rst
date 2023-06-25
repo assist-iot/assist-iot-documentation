@@ -464,8 +464,8 @@ response.
 Endpoints
 ---------
 
-GET ``v1/queries``
-~~~~~~~~~~~~~~~~~~
+GET ``/v1/queries``
+~~~~~~~~~~~~~~~~~~~
 
 Retrieves all queries.
 
@@ -494,8 +494,8 @@ Returns:
      "description": "..."
    }
 
-GET ``v1/queries/{name}``
-~~~~~~~~~~~~~~~~~~~~~~~~~
+GET ``/v1/queries/{name}``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Retrieves the query with ``name``.
 
@@ -533,8 +533,8 @@ Returns:
      "description": "..."
    }
 
-POST ``v1/queries``
-~~~~~~~~~~~~~~~~~~~
+POST ``/v1/queries``
+~~~~~~~~~~~~~~~~~~~~
 
 Creates a query.
 
@@ -565,8 +565,8 @@ Returns:
      "description: "..."
    }
 
-PUT ``v1/queries/{name}``
-~~~~~~~~~~~~~~~~~~~~~~~~~
+PUT ``/v1/queries/{name}``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Updates the query with ``name``.
 
@@ -599,8 +599,8 @@ Returns:
      "description: "..."
    }
 
-DELETE ``v1/queries/{name}``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+DELETE ``/v1/queries/{name}``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Deletes the query with ``name``.
 
@@ -628,6 +628,11 @@ Returns:
    {
      "description": "..."
    }
+
+GET ``/metrics``
+~~~~~~~~~~~~~~~~
+
+Returns the metrics of the enabler in the Prometheus format.
 
 
 
