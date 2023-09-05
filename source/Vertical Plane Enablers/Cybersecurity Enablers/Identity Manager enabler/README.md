@@ -1,0 +1,1 @@
+The documentation for the Identity Manager enabler can be found [here](https://assist-iot-enablers-documentation.readthedocs.io/en/latest/index.html) 

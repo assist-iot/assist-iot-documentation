@@ -1,0 +1,1 @@
+The documentation for the WAN-Acceleration enabler can be found [here](https://assist-iot-enablers-documentation.readthedocs.io/en/latest/index.html) 
