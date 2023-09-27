@@ -678,7 +678,9 @@ font-style: italic;
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">overwrite (optional)</div>
+      <div class="param">plugin (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Specifies the documentation compilation plugin to use. The list of available plugins can be retrieved with <code>GET /v1/doc_gen</code>. default: null </div><div class="param">overwrite (optional)</div>
 
       <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Set this parameter to '1' when overwriting content that was uploaded earlier in the same place. Without this parameter an overwriting upload will be rejected with HTTP 400. default: null </div>
     </div>  <!-- field-items -->
@@ -840,6 +842,12 @@ font-style: italic;
 
 
 
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">plugin (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Specifies the documentation compilation plugin to use. The list of available plugins can be retrieved with <code>GET /v1/doc_gen</code>. default: null </div>
+    </div>  <!-- field-items -->
 
     <h3 class="field-label">Form parameters</h3>
     <div class="field-items">
