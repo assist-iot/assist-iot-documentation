@@ -86,7 +86,8 @@ All agent modules have different purposes and settings. Here is a brief descript
 *********************
 Place in architecture
 *********************
-.. image:: https://github.com/JMoretS21Sec/assist-iot-documentation/blob/master/docs/source/verticals/cybersecurity/PlaceInArchitecture_CyberSecurity.png
+
+.. figure:: ./PlaceInArchitecture_CyberSecurity.png
    :width: 1200
    :alt: "CyberSecurity"
 
@@ -184,7 +185,44 @@ Configuration options
 Developer guide
 ***************
 
-**Not applicable.**
+The Cybersecurity monitoring agent enabler only interacts with the cybersecurity monitoring. This enabler is installed in each physical system that we want to protect and collects info from the OS and network and send I to the monitoring system.
+
+There are two methods for enrolling an agent to the manager server: 
+
+1.	Enrollment via agent configuration: Once the IP address of the manager has been set, the agent will be able to automatically request the key and import it (Recommended).
+
+The Wazuh manager IP address on the agent can be configured in one of two ways:
+
+•	Using environment variables during the agent installation process.
+
+•	Manually configuring the Wazuh manager IP address in the agent configuration file.
+
+
+2.	Enrollment via manager API: The user requests the key from the manager API and then manually imports it to the agent.
+Using this option, the steps to follow are these ones:
+
+a)	The user sends an API request with the manager API credentials to generate an authorization token (a JSON Web Token).
+
+TOKEN=$(curl -u <user>:<password> -k -X POST "https://<MANAGER_IP>:55000/security/user/authenticate?raw=true")
+
+b)	The user sends an API request with the authorization token to the Wazuh manager. This request enrolls the agent and gets the agent key. You must specify the desired agent name instead of <agent_name>.
+
+curl -k -X POST -d '{"name":"<agent_name>"}' "https://<MANAGER_IP>:55000/agents?pretty=true" -H "Content-Type:application/json" -H "Authorization: Bearer $TOKEN"
+
+c)	On the agent endpoint, the user imports the key to the agent.
+
+d)	The user configures the Wazuh manager IP address on the agent.
+
+e)	The user restarts the agent and then the connection to the manager is established.
+
+You must ensure the outbound connectivity from the Wazuh agent to the Wazuh manager services.
+
+1514/TCP for agent communication.
+
+1515/TCP for enrollment via automatic agent request.
+
+55000/TCP for enrollment via manager API.
+
 
 ***************************
 Version control and release
@@ -204,5 +242,4 @@ License
 ********************
 Notice(dependencies)
 ********************
-
-**Not applicable.**
+Will be determined after the release of the enabler.

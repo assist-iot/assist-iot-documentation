@@ -119,10 +119,9 @@ Features
 *********************
 Place in architecture
 *********************
-.. image:: https://github.com/JMoretS21Sec/assist-iot-documentation/blob/master/docs/source/verticals/cybersecurity/PlaceInArchitecture_CyberSecurity.png
+.. figure:: ./PlaceInArchitecture_CyberSecurity.png
    :width: 1200
    :alt: "CyberSecurity"
-
 
 
 ***************
@@ -307,7 +306,9 @@ The configuration listed is for the SIEM, related to data volumes for the integr
 Developer guide
 ***************
 
-**Not applicable.**
+The Cybersecurity monitoring enabler only interacts with the cybersecurity monitoring Agent. 
+
+The Cybersecurity monitoring enabler, gets the info from the agent and checks what entries are considered as real attacks and what no. With those that are considered a real attack it can, for example, perform a reaction blocking temporarily the source of the attack.
 
 ***************************
 Version control and release
@@ -351,5 +352,4 @@ License
 ********************
 Notice(dependencies)
 ********************
-
-**Not applicable.**
+Will be determined after the release of the enabler.

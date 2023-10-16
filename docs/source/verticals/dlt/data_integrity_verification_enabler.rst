@@ -16,7 +16,7 @@ This is an enabler responsible for providing DLT-based data integrity verificati
 ***************
 Features
 ***************
- Network peers host smart con-tract (chaincode) which includes the data integrity business logic. It stores hashed data in a data structure and it compares it with the hashed data of the queries made by clients in order to verify their integrity.
+Network peers host smart con-tract (chaincode) which includes the data integrity business logic. It stores hashed data in a data structure and it compares it with the hashed data of the queries made by clients in order to verify their integrity.
  
 *********************
 Place in architecture
@@ -31,7 +31,7 @@ The user guide will be determined after the release of the enabler.
 ***************
 Prerequisites
 ***************
- Hyperledger Fabric 2.2, Hyperledger Fabric CA 1.4
+Hyperledger Fabric 2.2, Hyperledger Fabric CA 1.4
 
 ***************
 Installation
@@ -57,7 +57,7 @@ Gitlab will be used as a version control and release tool.
 ***************
 License
 ***************
- To be determined.
+Will be determined after the release of the enabler.
 
 ********************
 Notice(dependencies)

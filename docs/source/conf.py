@@ -3,7 +3,8 @@
 project = 'ASSIST-IoT'
 
 release = '0.1'
-version = '0.1.0'
+# version = '0.1.0'
+
 
 # -- General configuration
 
@@ -12,8 +13,20 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
-    'sphinx.ext.intersphinx',
-]
+    'sphinx.ext.intersphinx', 
+    'sphinx.ext.todo', 
+    'sphinx.ext.viewcode', 
+    'sphinx.ext.intersphinx',  
+    'sphinx.ext.coverage', 
+    'sphinx.ext.mathjax', 
+    'sphinx.ext.ifconfig', 
+    'sphinx.ext.githubpages', 
+    'sphinx.ext.imgmath', 
+    'sphinx.ext.graphviz', 
+    'sphinx.ext.inheritance_diagram', 
+    'sphinx.ext.napoleon', 
+    'sphinx.ext.autosectionlabel', 
+    'sphinx.ext.extlinks']
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
@@ -22,6 +35,11 @@ intersphinx_mapping = {
 intersphinx_disabled_domains = ['std']
 
 templates_path = ['_templates']
+
+
+# List of versions to build
+versions = ['M18', 'M30', 'latest']
+
 
 # -- Options for HTML output
 

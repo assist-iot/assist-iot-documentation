@@ -1,0 +1,1 @@
+The documentation for the Logging and auditing enabler can be found [here](https://assist-iot-enablers-documentation.readthedocs.io/en/latest/index.html) 
