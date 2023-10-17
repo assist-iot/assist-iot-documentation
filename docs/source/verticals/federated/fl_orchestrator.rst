@@ -213,7 +213,7 @@ The table of this section it is a software release overview of the different ele
 ***************
 License
 ***************
-Will be determined after the release of the enabler.
+Apache 2.0
 
 ********************
 Notice(dependencies)
