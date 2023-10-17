@@ -346,7 +346,7 @@ Will be determined after the release of the enabler.
 ***************
 License
 ***************
-Apache License Version 2.0
+GNU AGPLv3
 
 ********************
 Notice(dependencies)
