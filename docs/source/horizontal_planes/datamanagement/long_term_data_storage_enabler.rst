@@ -268,7 +268,7 @@ Version control and release
 ***************
 License
 ***************
-Will be determined after the release of the enabler.
+Apache 2.0
 
 ********************
 Notice(dependencies)
