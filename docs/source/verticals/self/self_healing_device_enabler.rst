@@ -152,6 +152,6 @@ Version control and release
 ***************
 License
 ***************
-TBD
+Apache 2.0
 
 
