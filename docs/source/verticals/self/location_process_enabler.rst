@@ -34,9 +34,6 @@ geolocation data and the application configuration.
 Features
 ========
 
-The enabler is still under development. Missing functionalities are in
-italics.
-
 Input stream settings
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -67,7 +64,6 @@ HTTP interface
 -  Deleting queries
 -  Retrieving queries
 -  Running queries manually
--  *Authorization*
 
 1 Parametrization refers to access to input or output data in JSON (with
 `JSONPath <https://support.smartbear.com/alertsite/docs/monitors/api/endpoint/jsonpath.html>`__),
@@ -78,7 +74,7 @@ string, or byte string format. To do that, a special syntax is provided.
 Place in architecture
 =====================
 
-…
+The data management plane.
 
 
 
@@ -629,6 +625,40 @@ Returns:
      "description": "..."
    }
 
+POST ``/v1/queries/{name}/input?topic={topic}``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Runs the query with ``name``. The ``topic`` parameters is optional.
+Later, it can be one can refer to it as the input topic. If the input
+topic is not specified the default one will be used – “http”.
+
+Parameters:
+
+-  ``name``: query name
+-  ``topic``: input topic name (optional)
+
+Body: JSON data to be inserted.
+
+Returns:
+
+-  On success - status code 200, body:
+
+.. code:: json
+
+   {
+     "..."
+   }
+
+The returned body can be any output specified in the query settings.
+
+-  On failure - status code 500, body:
+
+.. code:: json
+
+   {
+     "description": "..."
+   }
+
 GET ``/metrics``
 ~~~~~~~~~~~~~~~~
 
@@ -687,8 +717,8 @@ Prerequisites
 Installation
 ============
 
-Development environment
------------------------
+Development environment (docker-compose)
+----------------------------------------
 
 For development, run the following scripts:
 
@@ -715,8 +745,8 @@ start a QGIS instance to visualize the geolocation data.
 The ``dev-app.sh`` script starts the application. The application is
 accessible at ``localhost:8080``.
 
-Production environment
-----------------------
+Production environment (docker-compose)
+---------------------------------------
 
 To simulate the production environment, run the following scripts:
 
@@ -737,6 +767,15 @@ The ``prod-env.sh`` script starts the Postgres database.
 The ``prod-app.sh`` script starts the application. The application is
 accessible at ``localhost:8080``.
 
+Production environment (helm)
+-----------------------------
+
+Use the provided helm charts in the ``helm`` directory.
+
+.. code:: bash
+
+   helm install lp helm
+
 
 
 Configuration
@@ -746,15 +785,25 @@ Application
 -----------
 
 The app can be configured via environment variables. - ``HTTP_PORT``:
-port at which the API is accessible, i.e. \ *8080* -
-``DB_QUERIES_SERVER_NAME``: i.e. \ *postgres* - ``DB_QUERIES_PORT``:
-i.e. \ *5432* - ``DB_QUERIES_NAME``: i.e. \ *queries* -
-``DB_QUERIES_USER``: i.e. \ *queries_user* - ``DB_QUERIES_PASSWORD``:
-i.e. \ *postgres123* - ``DB_GEOLOCATION_SERVER_NAME``: i.e. \ *postgres*
-- ``DB_GEOLOCATION_PORT``: i.e. \ *5432* - ``DB_GEOLOCATION_NAME``:
+port at which the API is accessible, i.e. \ *8080* - ``DB_ADMIN_PORT``:
+i.e. \ *5432* - ``DB_ADMIN_NAME``: i.e. \ *postgres* -
+``DB_ADMIN_USER``: i.e. \ *postgres* - ``DB_ADMIN_PASSWORD``:
+i.e. \ *postgres* - ``DB_QUERIES_SERVER_NAME``: i.e. \ *postgres* -
+``DB_QUERIES_PORT``: i.e. \ *5432* - ``DB_QUERIES_NAME``:
+i.e. \ *queries* - ``DB_QUERIES_USER``: i.e. \ *queries_user* -
+``DB_QUERIES_PASSWORD``: i.e. \ *postgres123* -
+``DB_GEOLOCATION_SERVER_NAME``: i.e. \ *postgres* -
+``DB_GEOLOCATION_PORT``: i.e. \ *5432* - ``DB_GEOLOCATION_NAME``:
 i.e. \ *geolocation* - ``DB_GEOLOCATION_USER``:
 i.e. \ *geolocation_user* - ``DB_GEOLOCATION_PASSWORD``:
 i.e. \ *postgres123*
+
+Database
+--------
+
+The database can be configured via environment variables. -
+``POSTGRES_DB``: i.e. \ *postgres* - ``POSTGRES_USER``:
+i.e. \ *postgres* - ``POSTGRES_PASSWORD``: i.e. \ *postgres*
 
 
 
@@ -792,7 +841,7 @@ in the ``configs`` directory.
 Version control and releases
 ============================
 
-*The enabler is under development.*
+The latest version is 1.0.0.
 
 
 
@@ -810,8 +859,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 Notice (dependencies)
 =====================
 
-Dependency list and licensing information will be provided before the
-first major release.
+The enabler can run as a standalone application.
 
 
 
