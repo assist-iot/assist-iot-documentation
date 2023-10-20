@@ -141,8 +141,14 @@ number of metadata keys. Each key can have either a single textual value
 or several values (an array).
 
 For example, if you want to indicate the authorship of a model version
-and its source Git branch, its metadata could look like: - author: -
-``Rob`` - ``Bob`` - branch: ``rob-bob-branch``
+and its source Git branch, its metadata could look like:
+
+-  author:
+
+   -  ``Rob``
+   -  ``Bob``
+
+-  branch: ``rob-bob-branch``
 
 Or, in JSON:
 
@@ -163,9 +169,12 @@ Limits
 
 By default, the Semantic Repository limits the amount of metadata that
 can be stored per entity. These default limits can be changed (see:
-Configuration). - Maximum number of keys per entity: **64** - Maximum
-number of values per one metadata key: **32** - Maximum length in
-characters of an individual metadata value: **1024**
+Configuration).
+
+-  Maximum number of keys per entity: **64**
+-  Maximum number of values per one metadata key: **32**
+-  Maximum length in characters of an individual metadata value:
+   **1024**
 
 Documentation
 ~~~~~~~~~~~~~
@@ -178,13 +187,17 @@ images to the documentation pages.
 
 The documentation pages are generated from a given markup format with
 the use of a *documentation plugin*. Currently, Semantic Repository
-offers the following plugins: - ``markdown`` for text formatted in
-`vanilla Markdown <https://daringfireball.net/projects/markdown/>`__;
-accepted file extensions: ``.md``, ``.markdown`` - ``gfm`` for text in
-`GitHub-flavored Markdown <https://github.github.com/gfm/>`__; accepted
-file extensions: ``.md``, ``.markdown`` - ``rst`` for text in the
-`reStructuredText <https://docutils.sourceforge.io/rst.html>`__ format;
-accepted file extensions: ``.rst``
+offers the following plugins:
+
+-  ``markdown`` for text formatted in `vanilla
+   Markdown <https://daringfireball.net/projects/markdown/>`__; accepted
+   file extensions: ``.md``, ``.markdown``
+-  ``gfm`` for text in `GitHub-flavored
+   Markdown <https://github.github.com/gfm/>`__; accepted file
+   extensions: ``.md``, ``.markdown``
+-  ``rst`` for text in the
+   `reStructuredText <https://docutils.sourceforge.io/rst.html>`__
+   format; accepted file extensions: ``.rst``
 
 The documentation can be attached to a model version, but it is also
 possible to test the behavior of the documentation generator in the
@@ -429,10 +442,12 @@ A collection of namespaces is returned. Browsing such collections is
 described in detail in the `Browsing
 collections <#browsing-collections>`__ section below.
 
-**Note:** namespace name must meet the following criteria: - be at least
-1 and at most 100 characters long - only contain lower or upper letters
-of the latin alphabet, digits, dashes (``-``), and underscores (``_``) -
-not start with one of the following characters: ``_-``
+**Note:** namespace name must meet the following criteria:
+
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), and underscores (``_``)
+-  not start with one of the following characters: ``_-``
 
 Step 2: create models
 ^^^^^^^^^^^^^^^^^^^^^
@@ -511,10 +526,12 @@ Some additional information is also returned, such as ``page`` and
 ``totalCount``. These are described in detail in the `Browsing
 collections section <#browsing-collections>`__.
 
-**Note:** model names must meet the following criteria: - be at least 1
-and at most 100 characters long - only contain lower or upper letters of
-the latin alphabet, digits, dashes (``-``), and underscores (``_``) -
-not start with one of the following characters: ``_-``
+**Note:** model names must meet the following criteria:
+
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), and underscores (``_``)
+-  not start with one of the following characters: ``_-``
 
 Step 3: create versions
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -578,12 +595,14 @@ You can also retrieve a list of versions for the model (again,
      }
    }
 
-**Note:** version tags must meet the following criteria: - be at least 1
-and at most 100 characters long - only contain lower or upper letters of
-the latin alphabet, digits, dashes (``-``), underscores (``_``), dots
-(``.``), and plus signs (``+``) - not start with one of the following
-characters: ``._-+`` - not be ``latest``, which is a reserved tag (see
-below)
+**Note:** version tags must meet the following criteria:
+
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), underscores (``_``), dots (``.``), and plus signs
+   (``+``)
+-  not start with one of the following characters: ``._-+``
+-  not be ``latest``, which is a reserved tag (see below)
 
 ``latest`` pointer
 ~~~~~~~~~~~~~~~~~~
@@ -695,17 +714,23 @@ To see the available formats, make a ``GET /v1/m/w3c/sosa/1.0`` request:
      "version": "1.0"
    }
 
-In the response notice that: - ``defaultFormat`` has been set to
-“text/turtle”. You can change that later. - ``formats`` is keyed by
-format name. - ``contentType`` displays the content type of the uploaded
-file, which in this case is the same as format. - ``md5`` is the MD5
-checksum of the entire file. - ``size`` is the file’s size in bytes.
+In the response notice that:
 
-**Note:** format names must meet the following criteria: - be at least 1
-and at most 100 characters long - only contain lower or upper letters of
-the latin alphabet, digits, dashes (``-``), underscores (``_``), dots
-(``.``), and plus signs (``+``) - not start with one of the following
-characters: ``._-+``
+-  ``defaultFormat`` has been set to “text/turtle”. You can change that
+   later.
+-  ``formats`` is keyed by format name.
+-  ``contentType`` displays the content type of the uploaded file, which
+   in this case is the same as format.
+-  ``md5`` is the MD5 checksum of the entire file.
+-  ``size`` is the file’s size in bytes.
+
+**Note:** format names must meet the following criteria:
+
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), underscores (``_``), dots (``.``), and plus signs
+   (``+``)
+-  not start with one of the following characters: ``._-+``
 
 Overwriting content
 ^^^^^^^^^^^^^^^^^^^
@@ -898,9 +923,11 @@ Response:
      (...)
    }
 
-**Note:** metadata keys must meet the following criteria: - be at least
-1 and at most 100 characters long - only contain lower or upper letters
-of the latin alphabet, digits, dashes (``-``), and underscores (``_``)
+**Note:** metadata keys must meet the following criteria:
+
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), and underscores (``_``)
 
 Values of the keys can be any strings (as long as they fit into the
 length limit, 1024 characters by default) or arrays of such strings.
@@ -916,10 +943,13 @@ Modifying metadata
 The metadata can be modified using PATCH requests with a very similar
 syntax to the POST requests described above. There are three possible
 operations that can be performed with each individual key in a request:
-- Keep it unchanged. To do that, simply don’t include the key in the
-request. - Set it to a new value. For that, just specify it along with
-its new value, just like in a POST request. - Remove the key. This is
-done by setting it to the reserved ``@unset`` keyword.
+
+-  Keep it unchanged. To do that, simply don’t include the key in the
+   request.
+-  Set it to a new value. For that, just specify it along with its new
+   value, just like in a POST request.
+-  Remove the key. This is done by setting it to the reserved ``@unset``
+   keyword.
 
 **Note:** individual array elements cannot be modified. You can only
 change or remove entire keys.
@@ -978,12 +1008,15 @@ Deleting models and other objects
 
 Namespaces, models, model versions, and contents can be permanently
 deleted from the repository. The rules and the interface are identical
-on all cases: - The entity must be “empty”, that is, must have no child
-entities. For example, to delete a namespace, all its models must be
-deleted beforehand. - To delete the entity, simply use the URL path you
-would for a GET request, but use the DELETE method instead. -
-Additionally, you must provide the ``force=1`` query parameter to the
-request. This is to avoid accidental deletions.
+on all cases:
+
+-  The entity must be “empty”, that is, must have no child entities. For
+   example, to delete a namespace, all its models must be deleted
+   beforehand.
+-  To delete the entity, simply use the URL path you would for a GET
+   request, but use the DELETE method instead.
+-  Additionally, you must provide the ``force=1`` query parameter to the
+   request. This is to avoid accidental deletions.
 
 For example, to delete a (previously emptied of any versions) model
 ``w3c/dcat``:
@@ -1021,10 +1054,12 @@ Browsing collections
 
 The API supports browsing through long lists of namespaces, models, and
 model versions. The mechanism is identical in all three cases and is
-based on two query parameters: - ``page`` – 1-based number of the page
-to display. - ``page_size`` – (optional) number of items to display per
-page, 20 by default. This parameter is subject to a configurable limit,
-set to 50 by default.
+based on two query parameters:
+
+-  ``page`` – 1-based number of the page to display.
+-  ``page_size`` – (optional) number of items to display per page, 20 by
+   default. This parameter is subject to a configurable limit, set to 50
+   by default.
 
 In the following example, let’s assume that we have namespace
 ``example`` with 20 models named from ``01`` to ``20``. To display the
@@ -1069,12 +1104,16 @@ Response:
      "namespace": "example"
    }
 
-The ``models`` key provides the following information: - ``items`` –
-list of models on this page. - ``inViewCount`` – number of items
-currently displayed. Always lower or equal to ``pageSize``. -
-``totalCount`` – number of all items in this collection, given the
-currently set filters. - ``pageSize`` – maximum number of items that can
-be displayed on the page. - ``page`` – current page number (1-based).
+The ``models`` key provides the following information:
+
+-  ``items`` – list of models on this page.
+-  ``inViewCount`` – number of items currently displayed. Always lower
+   or equal to ``pageSize``.
+-  ``totalCount`` – number of all items in this collection, given the
+   currently set filters.
+-  ``pageSize`` – maximum number of items that can be displayed on the
+   page.
+-  ``page`` – current page number (1-based).
 
 **Note:** if you request a page number for which there are no results,
 an empty set will be returned.
@@ -1091,11 +1130,13 @@ and filtered. There is support for filtering by one field at a time
 all will be joined with the AND operator. The sort & filter parameters
 can be freely combined with paging parameters.
 
-The following fields can be sorted and filtered: - Namespace collection
-(``/v1/m``): ``namespace``, ``metadata.*`` - Model collection
-(``/v1/m/{ns}``): ``model``, ``latestVersion``, ``metadata.*`` - Model
-version collection (``/v1/m/{ns}/{model}``): ``version``,
-``defaultFormat``, ``metadata.*``
+The following fields can be sorted and filtered:
+
+-  Namespace collection (``/v1/m``): ``namespace``, ``metadata.*``
+-  Model collection (``/v1/m/{ns}``): ``model``, ``latestVersion``,
+   ``metadata.*``
+-  Model version collection (``/v1/m/{ns}/{model}``): ``version``,
+   ``defaultFormat``, ``metadata.*``
 
 The ``metadata.*`` field indicates it is possible to sort or filter by
 any of the metadata properties. For example, to sort by metadata field
@@ -1157,9 +1198,11 @@ Documentation
 The Semantic Repository can store and serve generated documentation
 pages – see the user guide for details on the available formats and
 modes of operation. This functionality can be accessed via two
-endpoints: - Documentation per model version:
-``/v1/m/{namespace}/{model}/{version}/doc`` - Documentation sandbox:
-``/v1/doc_gen``
+endpoints:
+
+-  Documentation per model version:
+   ``/v1/m/{namespace}/{model}/{version}/doc``
+-  Documentation sandbox: ``/v1/doc_gen``
 
 In the following sections, it is explained how to upload new
 documentation jobs, monitor their status, and retrieve the generated
@@ -1213,19 +1256,24 @@ The status of the job will be returned:
    }
 
 A documentation job can be in one of three states (the ``status``
-field): - ``Started`` – the job has been enqueued and is either waiting
-in line, or being processed. - ``Success`` – the job has finished
-successfully, and the generated documentation can be accessed. -
-``Failed`` – the job has ended with an error. The ``error`` field
-provides additional detail as to the cause of the problem.
+field):
+
+-  ``Started`` – the job has been enqueued and is either waiting in
+   line, or being processed.
+-  ``Success`` – the job has finished successfully, and the generated
+   documentation can be accessed.
+-  ``Failed`` – the job has ended with an error. The ``error`` field
+   provides additional detail as to the cause of the problem.
 
 After the job has been finished successfully, you can access the
-generated files at ``/v1/doc_gen/{job_id/doc/`` -
-``GET /v1/doc_gen/{job_id}/doc`` redirects to
-``GET /v1/doc_gen/{job_id}/doc/`` - ``GET /v1/doc_gen/{job_id}/doc/``
-returns the content of the home page of the documentation
-(``index.html``) - ``GET /v1/doc_gen/{job_id}/doc/{file_path}`` returns
-the content of the file under the given path.
+generated files at ``/v1/doc_gen/{job_id/doc/``
+
+-  ``GET /v1/doc_gen/{job_id}/doc`` redirects to
+   ``GET /v1/doc_gen/{job_id}/doc/``
+-  ``GET /v1/doc_gen/{job_id}/doc/`` returns the content of the home
+   page of the documentation (``index.html``)
+-  ``GET /v1/doc_gen/{job_id}/doc/{file_path}`` returns the content of
+   the file under the given path.
 
 Documentation for model versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1512,11 +1560,13 @@ To deploy the stack, simply run:
 You can also deploy only the services in the stack (MongoDB and minIO)
 and run the Semantic Repository on localhost. This is especially useful
 when you want to debug the application, or quickly iterate on it. To do
-this: - In the ``docker-compose.yml`` file uncomment the line
-``# MONGODB_ADVERTISED_HOSTNAME: localhost`` - Run
-``docker-compose up -d mongo-primary minio`` - Run the Semantic
-Repository on localhost. It should connect to the containerized
-services.
+this:
+
+-  In the ``docker-compose.yml`` file uncomment the line
+   ``# MONGODB_ADVERTISED_HOSTNAME: localhost``
+-  Run ``docker-compose up -d mongo-primary minio``
+-  Run the Semantic Repository on localhost. It should connect to the
+   containerized services.
 
 Local Docker image build
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1684,12 +1734,12 @@ In the file, you can configure the libraries that Semantic Repository
 uses, such as Akka. This way you can for example modify the size of the
 thread pool. **These settings are generally only meant for advanced
 users**, so proceed with caution. Please refer to the documentation of:
--
-`Akka <https://doc.akka.io/docs/akka/current/general/configuration.html>`__
-- `Akka
-HTTP <https://doc.akka.io/docs/akka-http/current/configuration.html>`__
-- `Akka
-Streams <https://doc.akka.io/docs/akka/current/general/stream/stream-configuration.html>`__
+
+-  `Akka <https://doc.akka.io/docs/akka/current/general/configuration.html>`__
+-  `Akka
+   HTTP <https://doc.akka.io/docs/akka-http/current/configuration.html>`__
+-  `Akka
+   Streams <https://doc.akka.io/docs/akka/current/general/stream/stream-configuration.html>`__
 
 
 
