@@ -1771,10 +1771,12 @@ Repository locally for development purposes.
 Version control and releases
 ============================
 
-The enabler’s code is in ASSIST-IoT GitLab.
+The enabler’s code is `published on
+GitHub <https://github.com/assist-iot/semantic_repository>`__.
 
-Versioning and packaging is not finalized yet – this will be resolved in
-a future release.
+Semantic Repository follows the `Semantic Versioning 2.0
+scheme <https://semver.org/>`__. The current version is 1.0.0, which is
+the final version delivered in the ASSIST-IoT project.
 
 
 
