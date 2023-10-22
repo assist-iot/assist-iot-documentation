@@ -278,7 +278,7 @@ Helm chart
 
 The FL Training Collector enabler has been developed with the assumption
 that it will be deployed on Kubernetes with a dedicated Helm chart. To
-do so, just run
+do so, just run go to the ``helm-chart`` directory and run
 ``helm install trainingcollectorlocal trainingcollector``. To make sure
 that before that the enabler has been configured properly, check if the
 values like ``REPOSITORY_ADDRESS`` (indicating the address under which
