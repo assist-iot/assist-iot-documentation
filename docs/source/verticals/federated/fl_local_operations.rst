@@ -193,12 +193,11 @@ Helm chart
 
 The FL Local Operations enabler has been developed with the assumption
 that it will be deployed on a Kubernetes cluster with a dedicated Helm
-chart. To do so, just go to the ``helm-chart`` directory and run
-``helm install fllocaloperationslocal fllocaloperations``. If you want
-to deploy multiple FL Local Operations in one Kubernetes cluster, just
-choose different names for all of the deployments. If you want to deploy
-only the inference component, run
-``helm install fllocaloperationslocal fllocaloperations --set inferenceapp.fullDeployment.enabled=false``.
+chart. To do so, just run ``helm install <deployment name> helm-chart``.
+If you want to deploy multiple FL Local Operations in one Kubernetes
+cluster, just choose different names for all of the deployments. If you
+want to deploy only the inference component, run
+``helm install <deployment name> helm-chart --set inferenceapp.fullDeployment.enabled=false``.
 
 To make sure that before that the enabler has been configured properly,
 check the 3 ConfigMaps that are deployed alongside the enabler. Their
