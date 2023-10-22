@@ -963,6 +963,13 @@ determine the license most applicable to their projects.
 You may obtain a copy of the License at:
 http://www.apache.org/licenses/LICENSE-2.0
 
+Authors
+=======
+
+-  Karolina Bogacka
+-  Piotr Sowiński
+-  Jose Antonio Clemente Perez
+
 Notice (dependencies)
 =====================
 
