@@ -189,9 +189,8 @@ Helm chart
 
 The FL Repository enabler has been developed with the assumption that it
 will be deployed on Kubernetes with a dedicated Helm chart. To do so,
-just go to the ``helm-chart`` directory and run
-``helm install flrepositorylocaldb flrepositorydb``. To make sure that
-before that the enabler has been configured properly, check if the
+just run ``helm install <deployment name> helm-chart``. To make sure
+that before that the enabler has been configured properly, check if the
 values in the ``repository-configmap`` have been properly set (to change
 them, you can always modify the configmap with
 ``kubectl edit cm repository-configmap`` and then recreate the FL
