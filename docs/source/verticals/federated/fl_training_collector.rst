@@ -494,6 +494,11 @@ operations on tensors, built on top of Microsoft SEAL. Since the
 underlying implementation uses C++, the resulting methods consume as
 little resources as possible.
 
+Authors
+=======
+
+Karolina Bogacka
+
 Licence
 =======
 
