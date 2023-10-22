@@ -278,11 +278,10 @@ Helm chart
 
 The FL Training Collector enabler has been developed with the assumption
 that it will be deployed on Kubernetes with a dedicated Helm chart. To
-do so, just run go to the ``helm-chart`` directory and run
-``helm install trainingcollectorlocal trainingcollector``. To make sure
-that before that the enabler has been configured properly, check if the
-values like ``REPOSITORY_ADDRESS`` (indicating the address under which
-the FL Repository can be found in the Kubernetes cluster) or
+do so, just run ``helm install <deployment name> helm-chart``. To make
+sure that before that the enabler has been configured properly, check if
+the values like ``REPOSITORY_ADDRESS`` (indicating the address under
+which the FL Repository can be found in the Kubernetes cluster) or
 ``ORCHESTRATOR_ADDRESS`` (similar address, but for the FL Orchestrator)
 in the ``training-collector-configmap`` have been properly set (to
 change them, you can always modify the configmap with
