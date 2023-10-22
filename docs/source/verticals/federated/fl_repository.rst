@@ -496,6 +496,12 @@ A Python library allowing for the serialization and de-serialization of
 any Python object through converting them to a byte stream. An extension
 (one of many) of the pickle library is known as dill.
 
+Authors
+=======
+
+-  Karolina Bogacka
+-  Katarzyna Wasielewska-Michniewska
+
 License
 =======
 
