@@ -4,10 +4,6 @@
 SD-WAN enabler
 ==============
 
-Note: Currently in development
-
-The installation has been verified on kubernetes v1.23.3
-
 Introduction
 ------------
 
@@ -216,25 +212,31 @@ Will be determined after the release of the enabler.
 Version control and release
 ---------------------------
 
-1.0
+1.0.0
 
 License
 -------
 
-Copyright 2023 Raúl Reinosa Simón (Universitat Politècnica de València)
-
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
-You may obtain a copy of the License at 
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This software is licensed under the `Apache 2.0 license <https://www.apache.org/licenses/LICENSE-2.0>`_.
 
 Notice (dependencies)
 ---------------------
 
-Although it can be deployed standalone, this enabler does not have any sense without having WAN acceleration enablers deployed in the clusters to manage (as hubs or as edge nodes).
+ASSIST-IoT - Architecture for Scalable, Self-*, human-centric, Intelligent, Se-cure, and Tactile next generation IoT
+
+This project has received funding from the European Union's Horizon 2020
+research and innovation programme under grant agreement No 957258.
+
+SD-WAN enabler
+
+Copyright 2020-2023 Universitat Politècnica de València
+
+I. Included Software
+
+-   icn-sdwan (https://github.com/akraino-edge-stack/icn-sdwan), Apache-2.0 license
+
+II. Used Software
+
+III. List of licenses
+
+-   Apache-2.0 license (https://www.apache.org/licenses/LICENSE-2.0)
