@@ -23,11 +23,12 @@ federation of systems.
 **Semantic Translation Enabler (STE)** enables alignments-based semantic
 translation of RDF data (messages). At its core STE builds on a
 considerably enhanced version of the Inter Platform Semantic Mediator
-(IPSM) component, developed by the INTER-IoT project.
+(IPSM) component, developed by the
+`INTER-IoT <https://inter-iot.github.io/>`__ project.
 
 The translation performed by STE is based on alignments and uses a
 deployment-specific modularized `central
-ontology <IPSM/Central-ontology>`__. For IoT domain, the core modules
+ontology <STE/Central-ontology>`__. For IoT domain, the core modules
 describing, e.g. devices, observations are (usually) based on `GOIoTP
 (Generic Ontology of IoT
 Platforms) <https://inter-iot.github.io/ontology>`__ that is a meta-data
@@ -88,7 +89,7 @@ ecosystem needs to be proposed.
 
 When the message arrives at STE, the RDF named graph *payload* is
 translated with respect to configuration of the semantic translation
-channel (see `Architecture <IPSM/Architecture>`__). Usually two
+channel (see `Architecture <STE/Architecture>`__). Usually two
 alignments are applied, however STE can be configured with special
 predefined IDENTITY alignment that does not change the graph. Another
 remark here, is that STE follows the rule: translate only what can be
@@ -108,8 +109,8 @@ syntactic translation is not necessary.
 
 
 
-IPSM Architecture
-=================
+STE Architecture
+================
 
 STE is a component for performing semantic translation that can be use
 in a standalone mode or in combination with other ASSIST-IoT enablers
@@ -177,8 +178,8 @@ configured with two alignments that are applied sequentially.
 
 
 
-IPSM Central ontology
-=====================
+STE Central ontology
+====================
 
 Central ontology is not directly used by STE, but it needs to be
 established for a given STE deployment, to enable construction of
@@ -607,11 +608,93 @@ Input and output RDF
 
 
 
-Deployment Installation
-=======================
+Deployment Configuration
+========================
 
-The installation procedure documentation for the Semantic Translation
-Enabler is under development.
+Configuration parameters for the STE can be provided by setting the
+appropriate environment variables. For example, to change the port for
+the REST interface from the default ``8080`` to ``8888``
+
+.. code:: sh
+
+   export IPSM_REST_PORT="8888"
+
+By default STE is configured to handle MQTT-MQTT channels only, which in
+terms of environment variable can be expressed as:
+
+.. code:: sh
+
+   export IPSM_BROKER_TYPES.0="MM"
+
+To add Kafka-Kafka type channels handling the above configuration should
+be augmented as follows:
+
+.. code:: sh
+
+   export IPSM_BROKER_TYPES.0="MM"
+   export IPSM_BROKER_TYPES.1="KK"
+
+In order to configure a locally running MQTT server as the source and
+sink for the messages the following set of environment variables can be
+used:
+
+.. code:: sh
+
+   export IPSM_MQTT_SRC_HOST="host.docker.internal"
+   export IPSM_MQTT_SRC_PORT="1883"
+   export IPSM_MQTT_TRG_HOST="host.docker.internal"
+   export IPSM_MQTT_TRG_PORT="1883"
+
+To configure Kafka (streaming) message broker for the STE
+
+.. code:: sh
+
+   export IPSM_KAFKA_HOST="host.decker.internal"
+   export IPSM_KAFKA_PORT="29092"
+
+The configuration parameters can also be set directly by editing the
+``application.conf`` configuration file.
+
+.. code:: hocon
+
+   ipsm = {
+     supported-channel-types = ["MM"] // MQTT-MQTT only – the default
+     //  supported-channel-types = ["KK"] // Kafka-Kafka only
+     //  supported-channel-types = ["MM", "KK"] // Both MQTT-MQTT and Kafka-Kafka
+     supported-channel-types = ${?IPSM_BROKER_TYPES}
+     db-sqlite {
+       driverClassName = org.sqlite.JDBC
+       jdbcUrl = "jdbc:sqlite:/data/ipsm.sqlite"
+     }
+     http {
+       port = "8080"
+       port = ${?IPSM_REST_PORT}
+       host = "0.0.0.0"
+       host = ${?IPSM_REST_HOST}
+     }
+     mqtt {
+       messageSizeLimitInKB = 256
+       messageSizeLimitInKB = ${?IPSM_MQTT_MSG_SIZE}
+       source {
+         host = "host.docker.internal"
+         host = ${?IPSM_MQTT_SRC_HOST}
+         port = 1883
+         port = ${?IPSM_MQTT_SRC_PORT}
+       }
+       target {
+         host = "host.docker.internal"
+         host = ${?IPSM_MQTT_TRG_HOST}
+         port = 1883
+         port = ${?IPSM_MQTT_TRG_PORT}
+       }
+     }
+     kafka = {
+       host = "host.docker.internal"
+       host = ${?IPSM_KAFKA_HOST}
+       port = 29092
+       port = ${?IPSM_KAFKA_PORT}
+     }
+   }
 
 
 
@@ -791,6 +874,11 @@ Name                     Description       Schema
 +-----------------------+-----------------------+-----------------------+
 | Name                  | Description           | Schema                |
 +=======================+=======================+=======================+
+| **chanType**          | Channel input/output  | string                |
+| \ *required*          | type (“MM” for        |                       |
+|                       | MQTT-MQTT, “KK” for   |                       |
+|                       | Kafka-Kafka)          |                       |
++-----------------------+-----------------------+-----------------------+
 | **inpAlignmentName**  | Name of the input     | string                |
 | \ *required*          | alignment, used for   |                       |
 |                       | translating the       |                       |
@@ -1465,7 +1553,11 @@ Produces
 Version control and releases
 ============================
 
-TBD
+The Semantic Translation Enabler source code is available from the
+`ASSIST-IoT
+Github <https://github.com/assist-iot/semantic_translation/>`__
+repository. Currently, the repository contains the code for the initial
+version (1.0.0) of the enabler.
 
 
 
@@ -1483,8 +1575,11 @@ http://www.apache.org/licenses/LICENSE-2.0
 Notice dependencies
 ===================
 
-Dependency list and licensing information will be provided before the
-first major release of the STE.
+Semantic Translation Enabler can be used as a standalone tool, offering
+translation via a REST interface. Streaming translation support, for
+both MQTT and Kafka message brokers, can be
+`configured <Deployment/Configuration.md>`__ via suitable config
+parameters or environment variables.
 
 
 
