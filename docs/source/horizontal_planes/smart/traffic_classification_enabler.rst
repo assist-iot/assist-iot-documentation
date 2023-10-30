@@ -139,6 +139,49 @@ It also extends the work done in: https://blog.munhou.com/2020/04/05/Pytorch-Imp
 *********************
 Notice (dependencies)
 *********************
-This enabler does not depend on any other. However, it provides an additional 
-functionality for the SDN Controller, being interesting to be deployed together
-(integration between them still pending).
+ASSIST-IoT - Architecture for Scalable, Self-*, human-centric, Intelligent, Se-cure, and Tactile next generation IoT
+
+This project has received funding from the European Union's Horizon 2020
+research and innovation programme under grant agreement No 957258.
+
+Traffic classification enabler
+Copyright 2020-2023 Universitat Politècnica de València
+
+I. Included Software
+-	Deep-Packet (https://github.com/munhouiani/Deep-Packet), MIT license 
+
+II. Used Software
+
+-	colorama 0.4.4 (https://github.com/tartley/colorama/tree/0.4.4), BSD-3-Clause license
+-	joblib (https://github.com/joblib/joblib), BSD-3-Clause license
+-	Flask 2.0.2 (https://github.com/pallets/flask/tree/2.0.x), BSD-3-Clause li-cense
+-	itsdangerous 2.0.1 (https://github.com/pallets/itsdangerous/tree/2.0.1) BSD-3-Clause license
+-	Jinja2 3.0.3 (https://github.com/pallets/jinja/tree/3.0.3), BSD-3-Clause license
+-	MarkupSafe 2.0.1 (https://github.com/pallets/markupsafe/tree/2.0.1), BSD-3-Clause license
+-	Werkzeug 2.0.2 (https://github.com/pallets/werkzeug/tree/2.0.x), BSD-3-Clause license
+-	Gunicorn 20.1.0 (https://github.com/benoitc/gunicorn/tree/20.x), custom li-cense (see list below)
+-	Requests 2.27.1 (https://github.com/psf/requests/tree/v2.27.x), Apache-2.0 license
+-	flask_wtf 1.0.0 (https://github.com/wtforms/flask-wtf/tree/1.0.x), BSD-3-Clause license
+-	peewee 3.14.10 (https://github.com/coleifer/peewee/tree/3.14.10), MIT license
+-	wtforms (https://github.com/wtforms/wtforms), BSD-3-Clause license
+-	pymysql (https://github.com/PyMySQL/PyMySQL), MIT license
+-	click 8.1.3 (https://github.com/pallets/click/tree/8.1.x), BSD-3-Clause li-cense
+-	jupyterlab 3.4.7 (https://jupyter.org/governance/projectlicense.html), BSD-3-Clause license
+-	matplotlib 3.5.3 (https://matplotlib.org/stable/users/project/license.html), custom license (PSF-based, see list below)
+-	datasets 2.5.1 (https://github.com/huggingface/datasets/tree/2.5.1), Apache-2.0 license
+-	pandas 1.4.4 (https://github.com/pandas-dev/pandas/tree/1.4.x), BSD-3-Clause license
+-	plotly 5.10.0 (https://github.com/plotly/plotly.py/tree/v5.10.0), MIT li-cense
+-	pyspark 3.3.0 (https://github.com/apache/spark/tree/master/python/pyspark), Apache-2.0 license
+-	pytorch-lightning 1.7.7 (https://github.com/Lightning-AI/lightning/tree/1.7.7), Apache-2.0 license
+-	scapy[complete] 2.5.0rc1 (https://github.com/secdev/scapy/tree/v2.5.0rc1), GPL-2.0 license
+-	scikit-learn 1.1.2 (https://github.com/scikit-learn/scikit-learn/tree/1.1.X), BSD-3-Clause license
+-	seaborn 0.11.2 (https://github.com/mwaskom/seaborn/tree/v0.11.2), BSD-3-Clause li-cense
+-	tensorboard 2.10.0 (https://github.com/tensorflow/tensorboard/tree/2.10), Apache-2.0 license
+
+III. List of licenses
+-	BSD-3-Clause license
+-	Gunicorn license
+-	Apache-2.0 license
+-	MIT license
+-	matplotlib license
+-	GPL-2.0 license
