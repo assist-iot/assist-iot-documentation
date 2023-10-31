@@ -471,7 +471,9 @@ Once the enabler is deployed it is possible to modify the configuration or apply
 ***************
 Developer guide
 ***************
-Will be determined after the release of the enabler.
+This code is expected to be executed within a Helm chart, in a Kubernetes-governed platform. In case that developers aims at using the code directly over a given Operating System, non-virtualized, the code has been tested in Ubuntu 20.04 machines in amd64 and arm64 (Raspberry Pi 4), and hence we do not grant that it will work in any other OS.
+
+This code is open source and can be freely used by the innovation and research community. In case that commits are to be made, the mantainer team (UPV) holds the rights to accept or deny them. Best practices are encouraged in the latter case.
 
 ***************************
 Version control and release
@@ -523,3 +525,4 @@ Main application (**API Multi-link Client/Server**) dependencies
     - `MIT <https://github.com/axios/axios/blob/v1.x/LICENSE>`_ 
   * - `nodejs/process <https://github.com/defunctzombie/node-process>`_
     - `MIT <https://github.com/defunctzombie/node-process/blob/master/LICENSE>`_ 
+      
