@@ -49,27 +49,20 @@ This enabler is included in the Tactile Dashboard of the project, so a logged us
 
 Kubernetes clusters
 *********************
-The enabler shows a **table with the registered K8s clusters** in the Smart Orchestrator and some information: ID, name, K8s version, server URL, status and creation date.
+The enabler shows a **table with the registered K8s clusters** in the Smart Orchestrator and some information: ID, name, server URL, status, Cloud and CNI.
 
 .. figure:: ./k8sclusters.png
   :alt: Devices management user interface
   :align: center
 
-To **register a new K8s cluster**, click on the *Add a new cluster* button and a form will appear. There are two options to register a new cluster 
-(click on the top right button to switch between these options): 
+To **register a new K8s cluster**, click on the *Add a new cluster* button and a form will appear. 
 
 .. warning:: 
   - Ensure that all the K8s nodes are added to the K8s cluster prior to adding the cluster to the Smart Orchestrator.
 
-  - The first cluster to be added must be the *cloud* cluster (the cluster where is installed the Smart Orchestrator).
-
-  - Cluster name and all names in the Kubeconfig must be the same.
-
   For more information about adding K8s clusters, please visit the `Smart Orchestraror enabler entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/smart/smart_orchestrator.html>`_
 
-
-**(i) upload a kubeconfig JSON/YAML file** (examples can be found below)
-
+For adding a cluster, upload its kubeconfig JSON/YAML file (examples can be found below).Choose the installed CNI (Container Network Interface) within the cluster and indicate the cloud role by selecting the checkbox.
 
 .. figure:: ./k8scluster_form_file.png
   :alt: Register a new K8s cluster uploading a Kubeconfig file
@@ -140,20 +133,16 @@ Kubeconfig YAML file example:
             client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb2dJQkFBS0NBUUVBdFdCaEZJV0JOR1c5bjYrM0FISUlOZS9Kd3NFd1c4VStvVjJhYzU1N2Z5VUVHRThaCkJxZm5PZVY0STBLZEhneVJoSlp4S1BrdC90V1M3SXp6cHlsN1JRWFJjOXpvbS96aHhvU1pFd243K2hKbVQzR2oKMmxHY2RseFhuT0NxSkhROEdkYkJTQy9Lc0JYVmlYTGZBcTFJbHI2L3BGZGREWk5palRVSk5yK3cxU25IbXpMUwpxOEljdXVJeGtwVWlBTWZRZGVjR1FucVcwYTROQ2kybGZEM1FKR3VKSHFtc1c0VW9Dam9ZcDlpYkVaenpidmY3CkJiSjZhQ3JPeEdmaWlmM2l0YkRZSG1wOXp1bk9sM2JpMUZqYTRIWE1qbWVuaDRTdVMxTUdRczltd2ZKMkNFNEoKY0Q0ZVdUL0FuQzJaK0Y0enF2dnhQQTU0c084Y1plUTUxK0ZnaVFJREFRQUJBb0lCQUhpUFNiaEVUVyt3dU94dAo5ZXhiMzgxS1NBZ21OYWlxWVVrTldON0ZWejFhTTNDZEV2dHptNlRHUEtialhtQmM1bFVGVXM1ell2bGlxVGlICk1HWEtrdDk4VUk3OUpiaVp6TkVSemxYemF3UDhPdmxQaGlSVjN2Umx5TzdEL3hRZ0Z0cnQvcWVtN01sQ21oKzAKdFR1b1J2bThiTkltSi9vZ0gzL1E0d0Q3UmVWSnNqSmFxRFV5dnVsc0ZDVlJKNGNWVW1ueVhxR1c5VXFiQ2NSNgpCT0pITjh4N25qWFBNWUxWTWtCbWdHbElBdGtmL29qSzhQb0lRcW5mS3huUEVPTGQ1UUZUNGtOYm95SlEvRHFoCks0R1RMcjFldjNlU3NPVUxwSnVUdklGT0FZQU56ZE95RjhFbjdHbUg4N3YyVTZzcDFGM1RuRDVZdFBSZWoraTQKZEVlUUhxa0NnWUVBd3M5VTBWZ01yaC9ZQ2M2K3ZQRjdKVzJ4NncxTnU1MGp0dUlwSTJtV3gwUUM1UThNclVDMQpiNTYxekdnVzlXYVFMVHhHQ1lVSTZ0Znk0RDdic1ZIczVkazJYZ1poUnNJb1Z5aWJPSnp5Q0lIRGxoOW5tbUM5CndMYXBlU01TZFVCUThKNFJrQzV6VjFiWW1DRXZ0K1c1Zlp3bVhWcGlQeVpXUkJSK2xTSWhZR01DZ1lFQTdsamUKQm4vVFF1M2NHN0tsZStzdEtRaEwvNWxzRElaZ2loWGxLbWNjamx4K0VDdjZSbktPejl2SzBER09Uc1RVOHA4QgpZcjJTb0RxVm43S244eHBXWjJMMGhyaXhmQ3Z2eTRyWXFzQ3dTa2xGMUhlcFdCU3BkdU5aVzRyTDQ1RUlMUHhSCnVock8zcjRkSU1WTzBhVUYwZmxsY3o0aGdRSGNlK1RMT01wYzhTTUNnWUEyMC8yT01kYlh4dlNaeGd0ZXlDUWQKbzZMNGdiVUlBYkVFanVCL0svK1lzNmFRNjB4cEVwWStCUkFycUh3VnN6a08wakR3Q3ZZNGluQzc5bFVFc2djWApwYXVzaU9VbDhnMUNncFkxTjg3UzRCcTVETHV1OGwxVmVOTjMyWXdmWGV1cDNRTWFia2hlSTM0d1N0N1FSaUtQCm5Md2JlQTNBc2p5RFNyVlpxZEowK3dLQmdEdVRNT1BVL1h4RU1ma21YU0N0TnR1RHZHTkYrUERrZ2FyaU1DYTYKSVRRZ1FFNVFmNzB1RXk0M1ZPbFhDYWY4b1BHSDl2TzBTTHNPQ2FvaUlNS3QrWnpiNmh6bWUwNTdPUFBhWDYvRwpmQW9GYUpQajJRc3dGdStsZ2dkVW1RUG5rM0NUSE9aMG52S2orR25oaDRMMVNaQWpVMDFMNFZuNm1oN0pvRll3CmxxeWJBb0dBTDViT0JuNEd6SS92anVHczd3YTFNMGFlQ0hSYldPdUJmMXBSRUltR2JXNE91QU9BQmZHdTlPRGoKeUVkanVlRSszOW9tYzMzZitYWi9Cdk5HREZ3Q2tPQzRYRnVEZWhPeG4zaCtjbjg2Zzl3N3lOVDF2U1R2VVk1ZQorc295NUFTQUxJVElxRlJlQ1YwczlUdDlVVGtiSUI0Z240R0N5WVdmNUVTbXM2OG9hUkE9Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==
 
 
-or **(ii) fill in the form manually.**
-
-.. figure:: ./k8scluster_form_manual.png
-  :alt: Register a new K8s cluster manually
-  :align: center
-
-.. figure:: ./k8scluster_form_manual2.png
-  :alt: Register a new K8s cluster manually (2)
-  :align: center
-
 To **delete a registered cluster**, click on the *Delete cluster* button of the selected cluster and confirm the action in the dialog.
 
 .. figure:: ./k8scluster_delete.png
   :alt: Delete a registered K8s cluster
+  :align: center
+
+A cloud cluster cannot be deleted if there is at least one added edge cluster. Similarly, an edge cluster cannot be deleted if it has any installed enablers or lacks a connection. In this latter scenario, force deletion enables the removal of a cluster with enablers or without a connection from the cloud cluster.
+
+.. figure:: ./k8scluster_force_deletion.png
+  :alt: Force deletion of a registered K8s cluster
   :align: center
 
 
@@ -198,7 +187,7 @@ However, it can be installed using dashboard's Helm chart, which can be found in
 
 2. Install the last version of the dashboard's Helm chart
 
-   ``helm install assist-public-repo/dashboard``
+   ``helm install assist-public-repo/manageability-dashboard``
 
 *********************
 Configuration options
@@ -206,18 +195,18 @@ Configuration options
 
 The dashboard's Helm chart can be configured using the following environment variables:
 
-- Frontend:
+- web:
 
-  - **BACKEND_SCHEMA**: schema of the backend endpoint (*http* or *https*).
-  - **BACKEND_HOST**: hostname of the backend.
-  - **BACKEND_PORT**: port of the backend.
+  - **DASHBOARD_HOST_NAME**: hostname of the backend.
+  - **DASHBOARD_HOST_PORT**: port of the backend.
+  - **ENABLE_AUTH_IDM**: enable the use of an identification manager and authorization enabler for authentication.
 
-- Backend:
+- api:
 
   - **JAVA_OPTS**: Java options of Apache Tomcat. The database connection is configured using these options.
   - **ORCHESTRATOR_API_URL**: URL of the Smart Orchestrator's API.
 
-- Frontend:
+- db:
 
   - **POSTGRES_USER**: PostgreSQL database user.
   - **POSTGRES_PASSWORD**: PostgreSQL database user password.

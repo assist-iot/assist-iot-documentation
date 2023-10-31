@@ -43,7 +43,7 @@ This enabler is included in the Tactile Dashboard of the project, so a logged us
 
 Enablers
 *********************
-The enabler shows a table with the deployed enablers and some information: ID, name, K8s cluster where it is deployed, operational status, detailed status and creation date.
+The enabler shows a table with the deployed enablers and some information: ID, name, Helm Chart, Version, K8s Cluster, Enabler Status and Detailed Status
 
 .. figure:: ./enablers.png
    :alt: Devices management user interface
@@ -69,11 +69,10 @@ Select the desired enabler and, finally, choose a version from another selectabl
 There are two options to deploy a new enabler: 
 
 - **Select manually the K8s where will be deployed**: uncheck the *Auto scheduler* checkbox and select a cluster.
-- **Use the Auto scheduler functionality of the Smart Orchestrator**: check the *Auto scheduler* checkbox and select a *Placement policy*. 
-  For more infomation about these policies, see the `Smart Orchestrator entry <https://assist-iot-enablers-documentation.readthedocs.io/en/latest/horizontal_planes/smart/smart_orchestrator.html>`_.
+- **Use the Auto scheduler functionality of the Smart Orchestrator**: check the *Auto scheduler* checkbox and select a *Placement policy*. There are three potential placement policies: best-fit, worst-fit, and traffic-most. The best-fit approach situates the enabler in the cluster with the most available CPU and RAM, while the worst-fit places it where the least CPU and RAM are available. The traffic-most policy situates it where there is the highest network traffic.
 
 Only if the *cloud* cluster has been manually selected to deploy the enabler on it, the *Multi-cluster global service* checkbox will appear. This option makes the service 
-of the enabler's main interface available to the enablers deployed on the other clusters.
+of the enabler's main interface available to the enablers deployed on the other clusters. The use of a timeout is required to stop the installation of an enabler in case its time limit is exceeded.
 
 .. figure:: ./enabler_form_multicluster_global_svc.png
    :alt: Enable multi-cluster global service
@@ -86,31 +85,35 @@ of the *values.yaml* file of the enabler Helm chart. In future versions, the cha
    :alt: Deploy a new enabler
    :align: center
 
-
-A deployed enabler cannot be deleted until it has been terminated. To **terminate a deployed enabler**, click on the *Terminate enabler* button of the selected enabler and confirm the action in the dialog.
-
-.. figure:: ./enabler_terminate.png
-   :alt: Terminate a deployed enabler
-   :align: center
-
-To **delete a terminated enabler**, click on the *Delete enabler* button of the selected enabler and confirm the action in the dialog.
+To **delete an enabler**, click on the *Delete enabler* button of the selected enabler and confirm the action in the dialog.
 
 .. figure:: ./enabler_delete.png
    :alt: Delete a terminated enabler
    :align: center
 
+Before initiating deletion, there's an option to forcibly delete in cases where the cluster is unreachable and deleting the enabler through regular means is not possible. When deletion is forced, the enabler is removed from the system but remains in the cluster.
+
+.. figure:: ./enabler_force_delete.png
+   :alt: Force deletion of an enabler
+   :align: center
+
+Finally, the persistent data can be also deleted or preserve it for installation of future releases.
+
+.. figure:: ./enabler_delete_pv.png
+   :alt: Delete a terminated enabler
+   :align: center
 
 Helm chart repositories
 ************************
-The enabler shows a table with the registered Helm chart repositories and some information: ID, name, description, URL, status and creation date. 
-This registered repositories will be listed in the *Add a new enabler* form.
+The enabler shows a table with the registered Helm chart repositories and some information: ID, name, description, URL, status and type (public or private). 
+These registered repositories will be added with the *Add a new enabler* form. Upon uploading new charts to a repository, click the *Update repository* button located in the Actions column to refresh/update the list of charts.
 
 .. figure:: ./helm_repositories.png
    :alt: Helm chart repositories user interface
    :align: center
 
 
-To **register a new Helm chart repository**, click on the *Add a new repository* button and a form will appear.
+To **register a new Helm chart repository**, click on the *Add a new repository* button and a form will appear. There are two repository options categorized by type: private or public. For a public repository, the checkbox should remain unchecked, requiring the entry of a name, description, and URL. If a private repository is selected, two additional fields—username and password—are required.
 
 .. figure:: ./repository_form.png
    :alt: Register a new Helm chart repository
@@ -142,7 +145,7 @@ However, it can be installed using the dashboard's Helm chart, which can be foun
 
 2. Install the last version of the dashboard's Helm chart
 
-   ``helm install assist-public-repo/dashboard``
+   ``helm install assist-public-repo/manageability-dashboard``
 
 *********************
 Configuration options
@@ -150,18 +153,18 @@ Configuration options
 
 The dashboard's Helm chart can be configured using the following environment variables:
 
-- Frontend:
+- web:
 
-  - **BACKEND_SCHEMA**: schema of the backend endpoint (*http* or *https*).
-  - **BACKEND_HOST**: hostname of the backend.
-  - **BACKEND_PORT**: port of the backend.
+  - **DASHBOARD_HOST_NAME**: hostname of the backend.
+  - **DASHBOARD_HOST_PORT**: port of the backend.
+  - **ENABLE_AUTH_IDM**: enable the use of an identification manager and authorization enabler for authentication.
 
-- Backend:
+- api:
 
   - **JAVA_OPTS**: Java options of Apache Tomcat. The database connection is configured using these options.
   - **ORCHESTRATOR_API_URL**: URL of the Smart Orchestrator's API.
 
-- Frontend:
+- db:
 
   - **POSTGRES_USER**: PostgreSQL database user.
   - **POSTGRES_PASSWORD**: PostgreSQL database user password.
