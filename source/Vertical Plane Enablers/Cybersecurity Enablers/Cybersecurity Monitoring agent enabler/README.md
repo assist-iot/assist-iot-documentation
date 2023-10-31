@@ -1,1 +1,0 @@
-The documentation for the Cybersecurity Monitoring agent enabler can be found [here](https://assist-iot-enablers-documentation.readthedocs.io/en/latest/index.html) 

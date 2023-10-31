@@ -1,1 +1,0 @@
-The documentation for the Location Processing Enabler can be found [here](https://assist-iot-enablers-documentation.readthedocs.io/en/latest/index.html) 

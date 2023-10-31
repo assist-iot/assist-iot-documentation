@@ -1,1 +1,0 @@
-The documentation for the Monitoring and Notifying enabler can be found [here](https://assist-iot-enablers-documentation.readthedocs.io/en/latest/index.html) 

@@ -1,1 +1,0 @@
-The documentation for the DLT-based FL enabler can be found [here](https://assist-iot-enablers-documentation.readthedocs.io/en/latest/index.html) 

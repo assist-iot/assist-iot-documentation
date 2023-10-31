@@ -1,1 +1,0 @@
-The documentation for the Smart Orchestrator can be found [here](https://assist-iot-enablers-documentation.readthedocs.io/en/latest/index.html) 
