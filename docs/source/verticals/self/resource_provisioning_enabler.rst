@@ -76,7 +76,9 @@ Documentation availabe at: https://gitlab.assist-iot.eu/wp5/t51/resource-provisi
 ***************
 Developer guide
 ***************
-Will be determined after the release of the enabler.
+This code is expected to be executed within a Helm chart, in a Kubernetes-governed platform. It has been also tested with Docker compose and directly over Ubuntu x64 distributions, with and without GPU NVIDIA processors. In case that developers aims at using the code directly over a given Operating System, non-virtualized, the code has been tested only in Ubuntu 20.04 machines, and hence we do not grant that it will work in any other OS.
+
+This code is open source and can be freely used by the innovation and research community. In case that commits are to be made, the mantainer team (UPV) holds the rights to accept or deny them. Best practices are encouraged in the latter case.
 
 ***************************
 Version control and release
