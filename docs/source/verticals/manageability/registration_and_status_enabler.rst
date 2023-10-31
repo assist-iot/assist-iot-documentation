@@ -186,7 +186,7 @@ Apache License Version 2.0
 Notice (dependencies)
 **********************
 
-ASSIST-IoT - Architecture for Scalable, Self-*, human-centric, Intelligent, Se-cure, and Tactile next generation IoT
+ASSIST-IoT - Architecture for Scalable, Self-\*, human-centric, Intelligent, Se-cure, and Tactile next generation IoT
 
 This project has received funding from the European Union's Horizon 2020
 research and innovation programme under grant agreement No 957258.
