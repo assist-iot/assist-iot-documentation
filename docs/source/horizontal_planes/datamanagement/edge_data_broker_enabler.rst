@@ -91,7 +91,6 @@ to a topic and publishes messages to it.
     import paho.mqtt.client as paho
     import json, time
 
-    #broker= "10.0.2.15"
     broker= "127.0.0.1"
     port  = 31883
     topic = "assist.test"
@@ -537,7 +536,7 @@ The following table lists the configurable parameters of the chart and their def
      - vernemq's mqtt nodePort
      - ``""``
    * - vernemq.service.ports.mqtt.protocol
-     - vernemq's mqtt port protocol
+     - vernemq's mqtt protocol
      - ``TCP``
    * - vernemq.service.ports.mqtts.enabled
      - whether vernemq's mqtts port is enabled
@@ -555,7 +554,7 @@ The following table lists the configurable parameters of the chart and their def
      - vernemq's mqtts nodePort
      - ``""``
    * - vernemq.service.ports.mqtts.protocol
-     - vernemq's mqtts port protocol
+     - vernemq's mqtts protocol
      - ``TCP``
    * - vernemq.service.ports.ws.enabled
      - whether vernemq's ws port is enabled
@@ -573,7 +572,7 @@ The following table lists the configurable parameters of the chart and their def
      - vernemq's ws nodePort
      - ``""``
    * - vernemq.service.ports.ws.protocol
-     - vernemq's ws port protocol
+     - vernemq's ws protocol
      - ``TCP``
    * - vernemq.service.ports.wss.enabled
      - whether vernemq's wss port is enabled
@@ -591,7 +590,7 @@ The following table lists the configurable parameters of the chart and their def
      - vernemq's wss nodePort
      - ``""``
    * - vernemq.service.ports.wss.protocol
-     - vernemq's wss port protocol
+     - vernemq's wss protocol
      - ``TCP``
    * - vernemq.service.ports.prometheus.enabled
      - whether vernemq's prometheus port is enabled
@@ -609,7 +608,7 @@ The following table lists the configurable parameters of the chart and their def
      - vernemq's prometheus nodePort
      - ``""``
    * - vernemq.service.ports.prometheus.protocol
-     - vernemq's prometheus port protocol
+     - vernemq's prometheus protocol
      - ``TCP``
    * - vernemq.resources
      - resource requests and limits
@@ -693,7 +692,7 @@ The following table lists the configurable parameters of the chart and their def
      - frscript's api nodePort
      - ``""``
    * - frscript.service.ports.api.protocol
-     - frscript's api port protocol
+     - frscript's api protocol
      - ``TCP``
    * - frscript.service.ports.metrics.enabled
      - whether frscript's metrics port is enabled
@@ -780,7 +779,7 @@ The following table lists the configurable parameters of the chart and their def
      - mqttexplorer's ui nodePort
      - ``""``
    * - mqttexplorer.service.ports.ui.protocol
-     - mqttexplorer's ui port protocol
+     - mqttexplorer's ui protocol
      - ``TCP``
    * - mqttexplorer.resources
      - resource requests and limits
@@ -824,7 +823,7 @@ FR-Script Documentation
 
 In order for the fr_script to operate the user should provide relevant filters and rules corresponding to different use cases (scenarios). 
 
-The filters and rules should be provided in json format. GET, POST, PATCH, DELETE HTTP Methods can be used to fetch, post, update and delete json objects via an API respectively. The APIs can get accessed on port 30008. Use endpoint ``/docs#/`` for accessing swgger UI.
+The filters and rules should be provided in json format. GET, POST, PATCH, DELETE HTTP Methods can be used to fetch, post, update and delete json objects via an API respectively. Use endpoint ``/docs`` for accessing swgger UI.
 
 .. image:: https://user-images.githubusercontent.com/100563908/222690700-13739082-a840-4431-90c9-2373e0fa9fc1.PNG
 
