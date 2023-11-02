@@ -14,7 +14,11 @@ Introduction
 The Edge Data Broker enables the efficient management of data demand and data supply among edge nodes based on 
 a publish/subscribe schema, taking account load balancing criteria. This enabler distributes data where it is 
 needed for application, services and further analysis while considered essential only in those deployments that 
-involve IoT architectures.
+involve IoT architectures. Below is a high-level diagram of the Edge data broker.
+
+.. image:: https://github.com/assist-iot/assist-iot-documentation/assets/100563908/a42928b4-3eb9-4194-a338-38712e96ccc2
+  :width: 600
+  :alt: High level diagram of Edge data broker
 
 ***************
 Features
@@ -22,8 +26,8 @@ Features
 The Edge Data Broker enabler has the following operational and intelligent functionalities:
 
 - Subscriptions and messages between Edge Devices through the Edge Data Broker enabler
-- Management and distribution of messages using scheduling, routing and delivery mechanisms
-- Common interfaces for searching and finding information
+- Management and distribution of messages using delivery mechanisms
+- Common interfaces for filtering messages
 - Integration with other data brokers if needed
 
 *********************
@@ -37,6 +41,10 @@ communication channel to all IoT devices.
 ***************
 User guide
 ***************
+
+To connect to Edge data broker use MQTT Clients:
+------------
+
 The Edge Data Broker is an distributed MQTT Broker and follows the MQTT specification. As such in theory any
 MQTT compliant library can be used to connect, subscribe and publish messages to the Edge Data Broker.Here 
 we provide an example using python.
@@ -45,8 +53,6 @@ This is a subscriber python script that uses the paho-mqtt library to connect to
 to a topic and receive and print messages from it.
 
 .. code-block:: python
-
-    :emphasize-lines: 3,5
 
     import paho.mqtt.client as mqtt
 
@@ -81,8 +87,6 @@ This is a publisher python script that uses the paho-mqtt library to connect to 
 to a topic and publishes messages to it.
 
 .. code-block:: python
-
-    :emphasize-lines: 3,5
     
     import paho.mqtt.client as paho
     import json, time
@@ -119,13 +123,50 @@ to a topic and publishes messages to it.
         time.sleep(0.1)
 
 Executing those two scripts will produce and consume json messages to the Edge Data Broker.
+The scripts can be found `here`_. 
+
+.. _here: https://github.com/assist-iot/edge_data_broker/tree/main/python
+
+To monitor Edge Data Broker Enabler, type to your browser:
+----------------------------------------------------------
+
+``http://<IP>:<NodePort>/status`` to get EDBE's status page.
+
+``http://<IP>:<NodePort>/metrics`` to get EDBE's metrics page made for Performance and Usage Diagnosis Enabler's consumption.
+
+To access Filtering and Ruling Script's API type to your browser:
+-----------------------------------------------------------------
+
+``http://<IP>:<NodePort>/docs`` and fr-script's Swagger page will open up, where you can fetch, post, update and delete filters and rules.
+
+For more info regarding FR-Script's usage please check FR-Script's Documentation in Developers guide section.
+
+
+To use MQTT-Explorer:
+---------------------
+
+**NOTE**: MQTT-Explorer works for Ubuntu x64 architectures and not for ARM. When deploying EDBE in ARM architectures, set the parameter ``mqttexplorer.enabled=false``.
+
+- Set the parameter ``service.ports.ws.enabled=true``
+
+- Add as environmental variable the following:
+
+.. code-block::
+
+  DOCKER_VERNEMQ_LISTENER__WS__DEFAULT: "0.0.0.0:9001"
+
+- Type to your browser ``http://<IP>:<NodePort>/``
+
+- Insert the correct ``NodePort`` in the Port field, ``mqtt`` in Basepath filed and press CONNECT.
+
+- If ``DOCKER_VERNEMQ_ALLOW_ANONYMOUS: "off"`` in EDBE's Vernemq environmental variables, also insert ``Username``, ``Password`` in the corresponding fields and change the ``Client ID`` in the ADVANCED options.
 
 ***************
 Prerequisites
 ***************
 The Edge Data Broker enabler is designed to be executed on a cluster of devices on ARM64 
-architecture. It can be executed of course on a x86 architecture as well by changing the 
-docker image.
+architecture. It can be executed of course on a x64 architecture as well by changing the 
+docker images.
 
 - Kubernetes 1.16+
 - Helm 3+
@@ -137,24 +178,27 @@ Installation
 Edge Data Broker (EDB) Enabler Installation
 -------------------------------------------
 
-**To install the chart with the release name edbe:**
-
-Clone the repository to your machine.
-
-Install Edge Data Broker Enabler.
+**To install the chart with the release name edbe for Ubuntu Architectures:**
 
 .. code-block:: cmd
 
-  helm install edbe ./edge-data-broker
+  helm repo add assist-public-repo https://gitlab.assist-iot.eu/api/v4/projects/85/packages/helm/stable
+  helm install edbe assist-public-repo/edgedatabrokerx64
+
+**To install the chart with the release name edbe for ARM Architectures:**
+
+.. code-block:: cmd
+
+  helm repo add assist-public-repo https://gitlab.assist-iot.eu/api/v4/projects/85/packages/helm/stable
+  helm install edbe assist-public-repo/edgedatabrokerarm
+
+**Else you can also clone https://github.com/assist-iot/edge_data_broker repo to your machine and install Edge Data Broker Enabler.**
+
+.. code-block:: cmd
+
+  helm install edbe ./edgedatabroker
   
 The command deploys EDB on the Kubernetes cluster in the default configuration.
-
-**Note**: ``kostasiccs/vernemq`` image is suitable for ARM architectures (Assist-IoT's GWEN, Raspberry Pi, etc.) and is the defaul image used in Edbe's helm chart. For other architectures use ``vernemq/vernemq`` official image and accept the VerneMQ EULA by appending the following in the additionalEnv.
-
-.. code-block::
-
-  - name: DOCKER_VERNEMQ_ACCEPT_EULA
-    value: "yes"
 
 To check if the installation was successful run:
 
@@ -166,18 +210,188 @@ The result should show something like:
 
 .. code-block::
 
-  NAME                         READY   STATUS    RESTARTS   AGE
-  edbe-0                       1/1     Running   0          174m
-  edbe-1                       1/1     Running   0          172m
-  fr-script-66f6f8688d-7x6ts   1/1     Running   0          174m
+  NAME                                               READY   STATUS    RESTARTS   AGE
+  edbe-edgedatabroker-frscript-6468497fbf-c72dt      1/1     Running   0          2m58s
+  edbe-edgedatabroker-mqttexplorer-69659d465-q6ff2   1/1     Running   0          2m58s
+  edbe-edgedatabroker-vernemq-0                      1/1     Running   0          2m58s
+  edbe-edgedatabroker-vernemq-1                      1/1     Running   0          2m56s
+
+Edge Data Broker works for both Ubuntu x64 and ARM architectures.
+-----------------------------------------------------------------
+
+Use ``gitlab.assist-iot.eu:5050/enablers-registry/public/edb/vernemq-arm`` and ``gitlab.assist-iot.eu:5050/enablers-registry/public/edb/frscript-arm`` images for deploying EDBE in ARM architectures.
+
+**Note**: Disable mqttexplorer when deploying EDBE in ARM architectures.
+
+Use ``erlio/docker-vernemq`` (official vernemq image) and ``gitlab.assist-iot.eu:5050/enablers-registry/public/edb/frscript-ubuntu`` images for deploying EDBE in Ubuntu x64 architectures.
+
+**Note**: Add ``DOCKER_VERNEMQ_ACCEPT_EULA: "yes"`` as an environmental variable when using the official vernemq image.
+
+
+*********************
+Configuration options
+*********************
+
+SSL Configuration for secure communication (Enable MQTTS).
+----------------------------------------------------------
+
+Accepting SSL connections on port 8883:
+
+- Set the parameter service.ports.mqtts.enabled=true
+- Create secret resource using existing certificates using the key and crt files, you can create a secret. Kubernetes stores these files as a base64 string, so the first step is to encode them.
+
+.. code-block::
+
+  $ cat ca.crt| base64
+  LS0tLS1CRUdJTiBDRVJUSUZJQ...CBDRVJUSUZJQ0FURS0tLS0t
+  $ cat tls.crt | base64
+  LS0tLS1CRUdJTiBDRVJUSUZJQ...gQ0VSVElGSUNBVEUtLS0tLQo=
+  $ cat tls.key | base64
+  LS0tLS1CRUdJTiBSU0EgUFJJV...gUFJJVkFURSBLRVktLS0tLQo=
+
+- Use ``vernemq-certificates-secret.yaml`` to create the secret resource by updating the data values.
+
+.. code-block::
+
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: vernemq-certificates-secret
+    namespace: default
+  type: kubernetes.io/tls
+  data:
+    ca.crt:LS0tLS1CRUdJTiBDRVJUSUZJQ...CBDRVJUSUZJQ0FURS0tLS0t
+    tls.crt:LS0tLS1CRUdJTiBDRVJUSUZJQ...gQ0VSVElGSUNBVEUtLS0tLQo=
+    tls.key:LS0tLS1CRUdJTiBSU0EgUFJJV...gUFJJVkFURSBLRVktLS0tLQo=
+
+.. code-block:: cmd
+
+  kubectl apply -f vernemq-certificates-secret.yaml
+
+The result should show something like: ``secret "vernemq-certificates-secret" created``
+
+- Mount the certificate secret inside the EDBE's Vernemq values.
+
+.. code-block::
+
+  ...
+  secretMounts:
+    - name: vernemq-certificates
+      secretName: vernemq-certificates-secret
+      path: /etc/ssl/vernemq
+  ...
+
+- Add as environmental variables the following:
+
+.. code-block::
+
+  DOCKER_VERNEMQ_LISTENER__SSL__CAFILE: "/etc/ssl/vernemq/tls.crt"
+  DOCKER_VERNEMQ_LISTENER__SSL__CERTFILE: "/etc/ssl/vernemq/tls.crt"
+  DOCKER_VERNEMQ_LISTENER__SSL__KEYFILE: "/etc/ssl/vernemq/tls.key"
+  DOCKER_VERNEMQ_LISTENER__SSL__DEFAULT: "0.0.0.0:8883"
+
+For more info regarding self-signed certificates please check `self-signed-certificates.md`_.
+
+.. _self-signed-certificates.md: https://github.com/assist-iot/edge_data_broker/blob/main/self-signed-certificates.md
+
+
+To use fr-script over SSL:
+--------------------------
+
+- Mount the certificate secret inside EDBE's FR-Script values.
+
+.. code-block::
   
-**To make the two VerneMQ nodes (edbe-0, edbe-1) run as a singular cluster, you'll need to join one node to the other like this:**
+  ...
+  secretMounts:
+    - name: vernemq-certificates
+      secretName: vernemq-certificates-secret
+      path: /etc/ssl/frscript
+  ...
+
+- Add as environmental variables the following:
+
+.. code-block::
+
+  VERNEMQ_PORT: "8883"
+  FR_SCRIPT_SSL_ENABLED: "True"
+
+To enable ``client-id``, ``username`` and ``password`` for fr-script add as environmental variables the following:
+------------------------------------------------------------------------------------------------------------------
+
+.. code-block::
+
+  FR_SCRIPT_CLIENT_ID: "<client-id>"
+  FR_SCRIPT_USERNAME: "<username>"
+  FR_SCRIPT_PASSWORD: "<password>"
+
+Enable PostgreSQL authentication and authorization (integration with LTSE).
+-----------------------------------------------------------------------------
+
+- Add as environmental variables the following:
+
+.. code-block::
+
+  DOCKER_VERNEMQ_PLUGINS__VMQ_DIVERSITY: "on"
+  DOCKER_VERNEMQ_PLUGINS__VMQ_PASSWD: "off"
+  DOCKER_VERNEMQ_PLUGINS__VMQ_ACL: "off"
+  DOCKER_VERNEMQ_VMQ_DIVERSITY__AUTH_POSTGRES__ENABLED: "on"
+  DOCKER_VERNEMQ_VMQ_DIVERSITY__POSTGRES__HOST: "<IP>"
+  DOCKER_VERNEMQ_VMQ_DIVERSITY__POSTGRES__PORT: "<PORT>"
+  DOCKER_VERNEMQ_VMQ_DIVERSITY__POSTGRES__USER: "<DATABASE_USER>"
+  DOCKER_VERNEMQ_VMQ_DIVERSITY__POSTGRES__PASSWORD: "<DATABASE_PASSWORD>"
+  DOCKER_VERNEMQ_VMQ_DIVERSITY__POSTGRES__DATABASE: "<DATABASE>"
+  DOCKER_VERNEMQ_VMQ_DIVERSITY__POSTGRES__PASSWORD_HASH_METHOD: "crypt"
+
+- Create the Postgres tables
+
+.. code-block::
+
+  CREATE EXTENSION pgcrypto;
+  CREATE TABLE vmq_auth_acl
+   (
+     mountpoint character varying(10) NOT NULL,
+     client_id character varying(128) NOT NULL,
+     username character varying(128) NOT NULL,
+     password character varying(128),
+     publish_acl json,
+     subscribe_acl json,
+     CONSTRAINT vmq_auth_acl_primary_key PRIMARY KEY (mountpoint, client_id, username)
+   );
+
+- Enter new users and Access Control List entries using a query similar to the following
+
+.. code-block::
+
+  WITH x AS (
+      SELECT
+          ''::text AS mountpoint,
+             'test-client'::text AS client_id,
+             'test-user'::text AS username,
+             '123'::text AS password,
+             gen_salt('bf')::text AS salt,
+             '[{"pattern": "a/b/c"}, {"pattern": "c/b/#"}]'::json AS publish_acl,
+             '[{"pattern": "a/b/c"}, {"pattern": "c/b/#"}]'::json AS subscribe_acl
+      )
+  INSERT INTO vmq_auth_acl (mountpoint, client_id, username, password, publish_acl, subscribe_acl)
+      SELECT
+          x.mountpoint,
+          x.client_id,
+          x.username,
+          crypt(x.password, x.salt),
+          publish_acl,
+          subscribe_acl
+      FROM x;
+
+
+To make the two VerneMQ nodes (edbe-0, edbe-1) run as a singular cluster, you'll need to join one node to the other like this:
+------------------------------------------------------------------------------------------------------------------------------
 
 - Connect to a shell of a running container within Kubernetes pod (edbe-0 or edbe-1).
 
 .. code-block:: cmd
 
-  kubectl exec -it edbe-0 -- /bin/bash
+  kubectl exec -it edbe-edgedatabroker-vernemq-0 -- /bin/bash
   
 - Check the cluster state (you should see a 1 node cluster):
 
@@ -189,11 +403,11 @@ The result should show something like:
 
 .. code-block::
 
-  +--------------------------------------------------------+---------+
-  | Node                                                   | Running |
-  +--------------------------------------------------------+---------+
-  | VerneMQ@edbe-0.edbe-headless.default.svc.cluster.local | true    |
-  +--------------------------------------------------------+---------+
+  +--------------------+---------+
+  | Node               | Running |
+  +--------------------+---------+
+  | VerneMQ@10.1.6.252 | true    |
+  +--------------------+---------+
 
 - Join one node to the other with:
 
@@ -211,30 +425,33 @@ The result should show something like:
 
 .. code-block::
 
-  +--------------------------------------------------------+---------+
-  | Node                                                   | Running |
-  +--------------------------------------------------------+---------+
-  | VerneMQ@edbe-0.edbe-headless.default.svc.cluster.local | true    |
-  +--------------------------------------------------------+---------+
-  | VerneMQ@edbe-1.edbe-headless.default.svc.cluster.local | true    |
-  +--------------------------------------------------------+---------+
+  +--------------------+---------+
+  | Node               | Running |
+  +--------------------+---------+
+  | VerneMQ@10.1.7.1   | true    |
+  +--------------------+---------+
+  | VerneMQ@10.1.6.252 | true    |
+  +--------------------+---------+
+
   
-**To make an MQTT Bridge connection between two different VermeMQ clusters before the installation append in one of the cluster's values.yaml file the following additionaEnv:**
+Create an MQTT bridge so Edge Data Broker Enabler can interface with other brokers (and itself).
+------------------------------------------------------------------------------------------------
+
+- Add as environmental variables the following:
+.. code-block::
+
+  DOCKER_VERNEMQ_PLUGINS__VMQ_BRIDGE: "on"
+  DOCKER_VERNEMQ_VMQ_BRIDGE__TCP__BR0: "<IP>:<PORT>"
+  DOCKER_VERNEMQ_VMQ_BRIDGE__TCP__BR0__TOPIC__1: "* in"
+
+``DOCKER_VERNEMQ_VMQ_BRIDGE__TCP__BR0__TOPIC__#`` Define the topics the bridge should incorporate in its local topic tree (by subscribing to the remote), or the topics it should export to the remote broker. The configuration syntax is:
 
 .. code-block::
 
-  - name: DOCKER_VERNEMQ_PLUGINS__VMQ_BRIDGE
-    value: "on"
-  - name: DOCKER_VERNEMQ_VMQ_BRIDGE__TCP__BR0
-    value: "10.43.0.1:31883"
-  - name: DOCKER_VERNEMQ_VMQ_BRIDGE__TCP__BR0__TOPIC__1
-    value: "* in"
-  - name: DOCKER_VERNEMQ_VMQ_BRIDGE__TCP__BR0__MAX_OUTGOING_BUFFERED_MESSAGES
-    value: "100"
-    
-**Note**:  With the above configuration we allow to only import messages (all of them, '*'="#" wildcard) from a remote broker with address 10.43.0.1 and port 31883 and store up to 100 messages to our buffer.
+  topic [[ out | in | both ] qos-level]
 
-For more info refer to vernemq official `Documentation page <https://docs.vernemq.com/configuring-vernemq/bridge>`_.
+topic defines a topic pattern that is shared between the two brokers. Any topics matching the pattern (which may include wildcards) are shared. The second parameter defines the direction that the messages will be shared in, so it is possible to import messages from a remote broker using in, export messages to a remote broker using out or share messages in both directions. If this parameter is not defined, VerneMQ defaults to out. The QoS level defines the publish/subscribe QoS level used for this topic and defaults to 0.
+**NOTE**: Currently the # wildcard is treated as a comment from the configuration parser, please use * instead.
 
 - Connect to a shell of a running container within Kubernetes pod.
 
@@ -255,255 +472,348 @@ The result should show something like:
   +------+-----------------+-------------+------------+---------------------+--------------------------+
   | name | endpoint        | buffer size | buffer max | buffer dropped msgs | MQTT process mailbox len |
   +------+-----------------+-------------+------------+---------------------+--------------------------+
-  | br0  | 10.43.0.1:31883 | 0           | 100        | 0                   | 0                        |
+  | br0  | 10.42.0.1:31094 | 0           | 0          | 0                   | 0                        |
   +------+-----------------+-------------+------------+---------------------+--------------------------+
-  
-**To monitor Edge Data Broker Enabler, type to your browser:**
 
-``http://<IP>:30888/status`` to get EDBE's status page.
-
-``http://<IP>:30888/metrics`` to get EDBE's metrics page made for Performance and Usage Diagnosis Enabler's consumption.
-
-**To access Filtering and Ruling json file:**
-
-Port forward fr-script's pod to port 8000:
-
-.. code-block:: cmd
-
-  kubectl port-forward fr-script-66f6f8688d-7x6ts 8000
-  
-``GET`` or ``POST`` Filtering and Ruling json file by Postman, CURL, etc, with ``http://<ip>:8000/``.
-
-To see fr-script's logs:
-
-.. code-block:: cmd
-
-  kubectl logs fr-script-66f6f8688d-7x6ts
-
-*********************
-Configuration options
-*********************
 
 The following table lists the configurable parameters of the chart and their default values.
 
 .. list-table::
-   :widths: 25 50 20
+   :widths: 50 10 25
    :header-rows: 1
    
    * - Parameter
      - Description
      - Default
-   * - additionalEnv
-     - additional environment variables
-     - see values.yaml
-   * - envFrom
-     - additional envFrom configmaps or secrets
-     - see values.yaml
-   * - image.pullPolicy
-     - container image pull policy
-     - ``IfNotPresent``
-   * - image.repository
+   * - nameOverride
+     - string to partially override enabler.fullname template
+     - ``""``
+   * - fullnameOverride
+     - string to fully override enabler.fullname template
+     - ``""``
+   * - enablerNodeSelector
+     - Deploy all the components in specific K8s node(s)
+     - ``{}``
+   * - globalService
      - container image repository
-     - ``kostasiccs/vernemq``
-   * - image.tag
-     - container image tag
-     - the current versions (e.g. `1.12.3`)
-   * - ingress.enabled
-     - whether to enable an ingress object to route to the WebSocket service. Requires an ingress controller and the WebSocket service to be enabled.
      - ``false``
-   * - ingress.labels
-     - additional ingress labels
-     - ``{}``
-   * - ingress.annotations
-     - additional service annotations
-     - ``{}``
-   * - ingress.hosts
-     - a list of routable hostnames for host-based routing of traffic to the WebSocket service
-     - ``[]``
-   * - ingress.paths
-     - a list of paths for path-based routing of traffic to the WebSocket service
-     - ``/``
-   * - ingress.tls
-     - a list of TLS ingress configurations for securing the WebSocket ingress
-     - ``[]``
-   * - nodeSelector
-     - node labels for pod assignment
-     - ``{}``
-   * - persistentVolume.accessModes
-     - data Persistent Volume access modes
-     - ``[ReadWriteOnce]``
-   * - persistentVolume.annotations
-     - annotations for Persistent Volume Claim
-     - ``{}``
-   * - persistentVolume.enabled
-     - if true, create a Persistent Volume Claim
+   * - vernemq.enabled
+     - whether vernemq component is enabled
      - ``true``
-   * - persistentVolume.size
-     - data Persistent Volume size
-     - ``5Gi``
-   * - persistentVolume.storageClass
-     - data Persistent Volume Storage Class
-     - ``unset``
-   * - extraVolumeMounts
-     - Additional volumeMounts to the pod
+   * - vernemq.tier
+     - vernemq's tier
+     - ``external``
+   * - vernemq.replicaCount
+     - vernemq's number of replicas
+     - ``2``
+   * - vernemq.imagePullSecrets
+     - vernemq's image pull secrets
      - ``[]``
-   * - extraVolumes
-     - Additional volumes to the pod
-     - ``[]``
-   * - secretMounts
-     - mounts a secret as a file inside the statefulset. Useful for mounting certificates and other secrets
-     - ``[]``
-   * - podAntiAffinity
-     - pod anti affinity, `soft` for trying not to run pods on the same nodes, `hard` to force kubernetes not to run 2 pods on the same node
-     - ``soft``
-   * - rbac.create
+   * - vernemq.image.repository
+     - vernemq's image repository
+     - ``gitlab.assist-iot.eu:5050/enablers-registry/public/edb/vernemq-arm``
+   * - vernemq.image.tag
+     - vernemq's image tag
+     - ``"latest"``
+   * - vernemq.image.pullPolicy
+     - vernemq's image pull policy
+     - ``IfNotPresent``
+   * - vernemq.service.type
+     - vernemq's service type
+     - ``NodePort``
+   * - vernemq.service.ports.mqtt.enabled
+     - whether vernemq's mqtt port is enabled
+     - ``true``
+   * - vernemq.service.ports.mqtt.port
+     - vernemq's mqtt port
+     - ``1883``
+   * - vernemq.service.ports.mqtt.targetPort
+     - vernemq's mqtt targetPort
+     - ``1883``
+   * - vernemq.service.ports.mqtt.containerPort
+     - vernemq's mqtt containerPort
+     - ``1883``
+   * - vernemq.service.ports.mqtt.nodePort
+     - vernemq's mqtt nodePort
+     - ``""``
+   * - vernemq.service.ports.mqtt.protocol
+     - vernemq's mqtt port protocol
+     - ``TCP``
+   * - vernemq.service.ports.mqtts.enabled
+     - whether vernemq's mqtts port is enabled
+     - ``false``
+   * - vernemq.service.ports.mqtts.port
+     - vernemq's mqtts port
+     - ``8883``
+   * - vernemq.service.ports.mqtts.targetPort
+     - vernemq's mqtts targetPort
+     - ``8883``
+   * - vernemq.service.ports.mqtts.containerPort
+     - vernemq's mqtts containerPort
+     - ``8883``
+   * - vernemq.service.ports.mqtts.nodePort
+     - vernemq's mqtts nodePort
+     - ``""``
+   * - vernemq.service.ports.mqtts.protocol
+     - vernemq's mqtts port protocol
+     - ``TCP``
+   * - vernemq.service.ports.ws.enabled
+     - whether vernemq's ws port is enabled
+     - ``true``
+   * - vernemq.service.ports.ws.port
+     - vernemq's ws port
+     - ``9001``
+   * - vernemq.service.ports.ws.targetPort
+     - vernemq's ws targetPort
+     - ``9001``
+   * - vernemq.service.ports.ws.containerPort
+     - vernemq's ws containerPort
+     - ``9001``
+   * - vernemq.service.ports.ws.nodePort
+     - vernemq's ws nodePort
+     - ``""``
+   * - vernemq.service.ports.ws.protocol
+     - vernemq's ws port protocol
+     - ``TCP``
+   * - vernemq.service.ports.wss.enabled
+     - whether vernemq's wss port is enabled
+     - ``false``
+   * - vernemq.service.ports.wss.port
+     - vernemq's wss port
+     - ``9002``
+   * - vernemq.service.ports.wss.targetPort
+     - vernemq's wss targetPort
+     - ``9002``
+   * - vernemq.service.ports.wss.containerPort
+     - vernemq's wss containerPort
+     - ``9002``
+   * - vernemq.service.ports.wss.nodePort
+     - vernemq's wss nodePort
+     - ``""``
+   * - vernemq.service.ports.wss.protocol
+     - vernemq's wss port protocol
+     - ``TCP``
+   * - vernemq.service.ports.prometheus.enabled
+     - whether vernemq's prometheus port is enabled
+     - ``false``
+   * - vernemq.service.ports.prometheus.port
+     - vernemq's prometheus port
+     - ``8888``
+   * - vernemq.service.ports.prometheus.targetPort
+     - vernemq's prometheus targetPort
+     - ``8888``
+   * - vernemq.service.ports.prometheus.containerPort
+     - vernemq's prometheus containerPort
+     - ``8888``
+   * - vernemq.service.ports.prometheus.nodePort
+     - vernemq's prometheus nodePort
+     - ``""``
+   * - vernemq.service.ports.prometheus.protocol
+     - vernemq's prometheus port protocol
+     - ``TCP``
+   * - vernemq.resources
+     - resource requests and limits
+     - ``{}``
+   * - vernemq.autoscaling.enabled
+     - whether vernemq's autoscaling is enabled
+     - ``true``
+   * - vernemq.podSecurityContext
+     - vernemq's pod security context
+     - ``{}``
+   * - vernemq.securityContext
+     - vernemq's security context
+     - ``{}``
+   * - vernemq.rbac.create
      - if true, create & use RBAC resources
      - ``true``
-   * - rbac.serviceAccount.create
-     - if true, create a serviceAccount
+   * - vernemq.certificates
+     - vernemq's sertificates
+     - ``{}``
+   * - vernemq.envVars
+     - vernemq's environmental variables
+     - see values.yaml
+   * - vernemq.persistence.enabled
+     - weather vernemq's data persistence is enabled
      - ``true``
-   * - rbac.serviceAccount.name
-     - name of the service account to use or create
-     - ``{{ include "vernemq.fullname" . }}``
-   * - replicaCount
-     - desired number of nodes
-     - ``1``
-   * - resources
-     - resource requests and limits (YAML)
+   * - vernemq.persistence.existingClaim
+     - vernemq's data persistence existing claim
+     - ``""``
+   * - vernemq.persistence.accessModes
+     - vernemq's data persistence access modes
+     - `ReadWriteOnce``
+   * - vernemq.persistence.size
+     - vernemq's data persistence size
+     - ``50Mi``
+   * - vernemq.nodeSelector
+     - vernemq's node selector
      - ``{}``
-   * - securityContext
-     - securityContext for containers in pod
+   * - vernemq.tolerations
+     - vernemq's tolerations
+     - ``[]``
+   * - vernemq.affinity
+     - vernemq's affinity
      - ``{}``
-   * - service.annotations
-     - service annotations
-     - ``{}``
-   * - service.clusterIP
-     - custom cluster IP when `service.type` is `ClusterIP`
-     - ``none``
-   * - service.externalIPs
-     - optional service external IPs
-     - ``none``
-   * - service.labels
-     - additional service labels
-     - ``{}``
-   * - service.loadBalancerIP
-     - optional load balancer IP when `service.type` is `LoadBalancer`
-     - ``none``
-   * - service.loadBalancerSourceRanges
-     - optional load balancer source ranges when `service.type` is `LoadBalancer`
-     - ``none``
-   * - service.externalTrafficPolicy
-     - set this to `Local` to preserve client source IPs and prevent additional hops between K8s nodes if the service type is `LoadBalancer` or `NodePort`
-     - ``unset``
-   * - service.sessionAffinity
-     - service session affinity
-     - ``none``
-   * - service.sessionAffinityConfig
-     - service session affinity config
-     - ``none``
-   * - service.mqtt.enabled
-     - whether to expose MQTT port
+   * - frscript.enabled
+     - whether frscript component is enabled
      - ``true``
-   * - service.mqtt.nodePort
-     - the MQTT port exposed by the node when `service.type` is `NodePort`
-     - ``1883``
-   * - service.mqtt.port
-     - the MQTT port exposed by the service
-     - ``1883``
-   * - service.mqtts.enabled
-     - whether to expose MQTTS port
-     - ``false``
-   * - service.mqtts.nodePort
-     - the MQTTS port exposed by the node when `service.type` is `NodePort`
-     - ``8883``
-   * - service.mqtts.port
-     - the MQTTS port exposed by the service
-     - ``8883``
-   * - service.type
-     - type of service to create
-     - ``ClusterIP``
-   * - service.ws.enabled
-     - whether to expose WebSocket port
-     - ``false``
-   * - service.ws.nodePort
-     - the WebSocket port exposed by the node when `service.type` is `NodePort`
-     - ``8080``
-   * - service.ws.port
-     - the WebSocket port exposed by the service
-     - ``8080``
-   * - service.wss.enabled
-     - whether to expose secure WebSocket port
-     - ``false``
-   * - service.wss.nodePort
-     - the secure WebSocket port exposed by the node when `service.type` is `NodePort`
-     - ``8443``
-   * - service.wss.port
-     - the secure WebSocket port exposed by the service
-     - ``8443``
-   * - statefulset.annotations
-     - additional annotations to the StatefulSet
-     - ``{}``
-   * - statefulset.labels
-     - additional labels on the StatefulSet
-     - ``{}``
-   * - statefulset.podAnnotations
-     - additional pod annotations
-     - ``{}``
-   * - statefulset.podManagementPolicy
-     - start and stop pods in Parallel or OrderedReady (one-by-one.)  **Note** - Cannot change after first release.
-     - ``OrderedReady``
-   * - statefulset.terminationGracePeriodSeconds
-     - configure how much time VerneMQ takes to move offline queues to other nodes
-     - ``60``
-   * - statefulset.updateStrategy
-     - Statefulset updateStrategy
-     - ``RollingUpdate``
-   * - statefulset.lifecycle
-     - Statefulset lifecycle hooks
-     - ``{}``
-   * - serviceMonitor.create
-     - whether to create a ServiceMonitor for Prometheus Operator
-     - ``false``
-   * - serviceMonitor.labels
-     - whether to add more labels to ServiceMonitor for Prometheus Operator
-     - ``{}``
-   * - pdb.enabled
-     - whether to create a Pod Disruption Budget
-     - ``false``
-   * - pdb.minAvailable
-     - PDB (min available) for the cluster
+   * - frscript.tier
+     - frscript's tier
+     - ``external``
+   * - frscript.replicaCount
+     - frscript's number of replicas
      - ``1``
-   * - pdb.maxUnavailable
-     - PDB (max unavailable) for the cluster
-     - ``nil``
-   * - certificates.cert
-     - String (not base64 encoded) containing the listener certificate in PEM format
-     - ``nil``
-   * - certificates.key
-     - String (not base64 encoded) containing the listener private key in PEM format
-     - ``nil``
-   * - certificates.ca
-     - String (not base64 encoded) containing the CA certificate for validating client certs    
-     - ``nil``
-   * - certificates.secret.labels
-     - additional labels for the created secret containing certificates and keys
-     - ``nil``
-   * - certificates.secret.annotations
-     - additional labels for the created secret containing certificates and keys
-     - ``nil``
-   * - acl.enabled
-     - whether acls should be applied
+   * - frscript.imagePullSecrets
+     - frscript's image pull secrets
+     - ``[]``
+   * - frscript.image.repository
+     - frscript's image repository
+     - ``gitlab.assist-iot.eu:5050/enablers-registry/public/edb/frscript-arm``
+   * - frscript.image.tag
+     - frscript's image tag
+     - ``"latest"``
+   * - frscript.image.pullPolicy
+     - frscript's image pull policy
+     - ``IfNotPresent``
+   * - frscript.service.type
+     - frscript's service type
+     - ``NodePort``
+   * - frscript.service.ports.api.enabled
+     - whether frscript's api port is enabled
+     - ``true``
+   * - frscript.service.ports.api.port
+     - frscript's api port
+     - ``9877``
+   * - frscript.service.ports.api.targetPort
+     - frscript's api targetPort
+     - ``9877``
+   * - frscript.service.ports.api.containerPort
+     - frscript's api containerPort
+     - ``9877``
+   * - frscript.service.ports.api.nodePort
+     - frscript's api nodePort
+     - ``""``
+   * - frscript.service.ports.api.protocol
+     - frscript's api port protocol
+     - ``TCP``
+   * - frscript.service.ports.metrics.enabled
+     - whether frscript's metrics port is enabled
      - ``false``
-   * - acl.content
-     - content of the acl file
-     - ``topic #``
-   * - acl.labels
-     - additional labels on the acl configmap
+   * - frscript.service.ports.metrics.port
+     - frscript's metrics port
+     - ``8000``
+   * - frscript.service.ports.metrics.targetPort
+     - frscript's metrics targetPort
+     - ``8000``
+   * - frscript.service.ports.metrics.containerPort
+     - frscript's metrics containerPort
+     - ``8000``
+   * - frscript.service.ports.metrics.nodePort
+     - frscript's metrics nodePort
+     - ``""``
+   * - frscript.service.ports.metrics.protocol
+     - frscript's mqtts metrics protocol
+     - ``TCP``
+   * - frscript.resources
+     - resource requests and limits
      - ``{}``
-   * - acl.annotations
-     - additional annotations on the acl configmap
-     - ``{``
+   * - frscript.autoscaling.enabled
+     - whether frscript's autoscaling is enabled
+     - ``true``
+   * - frscript.podSecurityContext
+     - frscript's pod security context
+     - ``{}``
+   * - frscript.securityContext
+     - frscript's security context
+     - ``{}``
+   * - frscript.certificates
+     - frscript's sertificates
+     - ``{}``
+   * - frscript.envVars
+     - frscript's environmental variables
+     - see values.yaml
+   * - frscript.nodeSelector
+     - frscript's node selector
+     - ``{}``
+   * - frscript.tolerations
+     - frscript's tolerations
+     - ``[]``
+   * - frscript.affinity
+     - frscript's affinity
+     - ``{}``
+   * - mqttexplorer.enabled
+     - whether mqttexplorer component is enabled
+     - ``false``
+   * - mqttexplorer.tier
+     - mqttexplorer's tier
+     - ``external``
+   * - mqttexplorer.replicaCount
+     - mqttexplorer's number of replicas
+     - ``1``
+   * - mqttexplorer.imagePullSecrets
+     - mqttexplorer's image pull secrets
+     - ``[]``
+   * - mqttexplorer.image.repository
+     - mqttexplorer's image repository
+     - ``gitlab.assist-iot.eu:5050/enablers-registry/public/edb/mqtt-explorer``
+   * - mqttexplorer.image.tag
+     - mqttexplorer's image tag
+     - ``"latest"``
+   * - mqttexplorer.image.pullPolicy
+     - mqttexplorer's image pull policy
+     - ``IfNotPresent``
+   * - mqttexplorer.service.type
+     - mqttexplorer's service type
+     - ``NodePort``
+   * - mqttexplorer.service.ports.ui.enabled
+     - whether mqttexplorer's ui port is enabled
+     - ``true``
+   * - mqttexplorer.service.ports.ui.port
+     - mqttexplorer's ui port
+     - ``4000``
+   * - mqttexplorer.service.ports.ui.targetPort
+     - mqttexplorer's ui targetPort
+     - ``4000``
+   * - mqttexplorer.service.ports.ui.containerPort
+     - mqttexplorer's ui containerPort
+     - ``4000``
+   * - mqttexplorer.service.ports.ui.nodePort
+     - mqttexplorer's ui nodePort
+     - ``""``
+   * - mqttexplorer.service.ports.ui.protocol
+     - mqttexplorer's ui port protocol
+     - ``TCP``
+   * - mqttexplorer.resources
+     - resource requests and limits
+     - ``{}``
+   * - mqttexplorer.autoscaling.enabled
+     - whether mqttexplorer's autoscaling is enabled
+     - ``true``
+   * - mqttexplorer.podSecurityContext
+     - mqttexplorer's pod security context
+     - ``{}``
+   * - mqttexplorer.securityContext
+     - mqttexplorer's security context
+     - ``{}``
+   * - mqttexplorer.certificates
+     - mqttexplorer's sertificates
+     - ``{}``
+   * - mqttexplorer.envVars
+     - mqttexplorer's environmental variables
+     - see values.yaml
+   * - mqttexplorer.nodeSelector
+     - mqttexplorer's node selector
+     - ``{}``
+   * - mqttexplorer.tolerations
+     - mqttexplorer's tolerations
+     - ``[]``
+   * - mqttexplorer.affinity
+     - mqttexplorer's affinity
+     - ``{}``
 
+
+See installation and configuration proccess in `video`_.
+
+.. _video: https://www.youtube.com/watch?v=FSxbm4eLCZY
 
 ****************
 Developer guide
@@ -772,4 +1082,16 @@ FR_Script v1.0
 ****************
 License
 ****************
-Will be determined after the release of the enabler.
+Copyright 2023 ICCS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
