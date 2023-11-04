@@ -1,8 +1,8 @@
 .. _Location processing:
 
-###########################
-Location Processing Enabler
-###########################
+###################
+Location processing
+###################
 
 .. contents::
   :local:
@@ -10,9 +10,10 @@ Location Processing Enabler
 
 Documentation for the Location Processing enabler of ASSIST-IoT.
 
-***************
+
+
 Introduction
-***************
+============
 
 The Location Processing enabler aims to provide highly configurable and
 flexible geofencing capabilities based on location data. The enabler
@@ -28,12 +29,10 @@ streaming capabilities are compatible with the MQTT protocol.
 The database is shipped with the Postgis extension. It stores the
 geolocation data and the application configuration.
 
-***************
-Features
-***************
 
-The enabler is still under development. Missing functionalities are in
-italics.
+
+Features
+========
 
 Input stream settings
 ^^^^^^^^^^^^^^^^^^^^^
@@ -65,21 +64,23 @@ HTTP interface
 -  Deleting queries
 -  Retrieving queries
 -  Running queries manually
--  *Authorization*
 
 1 Parametrization refers to access to input or output data in JSON (with
 `JSONPath <https://support.smartbear.com/alertsite/docs/monitors/api/endpoint/jsonpath.html>`__),
 string, or byte string format. To do that, a special syntax is provided.
 
-*********************
+
+
 Place in architecture
-*********************
+=====================
 
-For ASSIST-IoT Pilot it will be closely used with Location Trackin Enabler
+The data management plane.
 
-***************
+
+
 User guide
-***************
+==========
+
 The user-defined queries can be created via the HTTP interface. After
 successful creation, a query is stored in the database. Then, it is run
 inside the application, and it starts processing the data.
@@ -89,8 +90,9 @@ database before starting the application. So that queries have access to
 the required tables and data.
 
 
+
 User guide HTTP interface
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+=========================
 
 Definitions
 -----------
@@ -142,7 +144,7 @@ and ``object``.
 
 ``array`` formatting:
 
-.. code:: json
+.. code:: python
 
    {
      "fields": [
@@ -158,7 +160,7 @@ and ``object``.
 
 ``object`` formatting:
 
-.. code:: json
+.. code:: python
 
    {
      "fields": [
@@ -191,7 +193,7 @@ wrapSingleColumn Whether a single column should be wrapped boolean
 
 *Examples:*
 
-.. code:: json
+.. code:: python
 
    {
      "recordFormat": "object",
@@ -212,7 +214,7 @@ name Topic name  string
 
 *Examples:*
 
-.. code:: json
+.. code:: python
 
    {
      "name": "vehicles/excavators"
@@ -223,16 +225,16 @@ Output topic (*outputTopic*)
 
 Topic where the output is published.
 
-=============================== ===============================
+=============================== =============================== ==================
 Name                            Description                     Type
-=============================== ===============================
+=============================== =============================== ==================
 name                            Topic name                      string
 publishEmptyOutput \ *optional* Whether to publish empty output boolean
 publishWhen \ *optional*        When to publish                 publishWhen
 publishFlags \ *optional*       Publish flags                   array[publishFlag]
-=============================== ===============================
+=============================== =============================== ==================
 
-.. code:: json
+.. code:: python
 
    {
      "name": "cats",
@@ -244,15 +246,31 @@ publishFlags \ *optional*       Publish flags                   array[publishFla
 Input settings (*inputSettings*)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MQTT input settings. \| Name \| Description \| Type \| \|————\|
-\| host \| MQTT host \| string \| \| port \| MQTT port \| number \| \|
-username \ *optional* \| Client credentials \| string \| \| password
-\ *optional* \| Client credentials \| string \| \| topics \ *optional*
-\| MQTT topics to subscribe \| array[inputTopic] \|
+MQTT Input Settings
+===================
+
++---------+---------------------+------------+
+| Name    | Description         | Type       |
++=========+=====================+============+
+| host    | MQTT host           | string     |
++---------+---------------------+------------+
+| port    | MQTT port           | number     |
++---------+---------------------+------------+
+| username| Client credentials  | string     |
+|         | (optional)          |            |
++---------+---------------------+------------+
+| password| Client credentials  | string     |
+|         | (optional)          |            |
++---------+---------------------+------------+
+| topics  | MQTT topics to      | array[inpu |
+|         | subscribe           | tTopic]    |
+|         | (optional)          |            |
++---------+---------------------+------------+
+
 
 *Examples:*
 
-.. code:: json
+.. code:: python
 
    {
      "host": "pilot1",
@@ -268,16 +286,31 @@ username \ *optional* \| Client credentials \| string \| \| password
 Output settings (*outputSettings*)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MQTT output settings. \| Name \| Description \| Type \| \|————\|
-\| host \| MQTT host \| string \| \| port \| MQTT port \| number \| \|
-username \ *optional* \| Client credentials \| string \| \| password
-\ *optional* \| Client credentials \| string \| \| topics \ *optional*
-\| MQTT topics to publish \| array[outputTopic] \| \| format
-\ *optional* \| Determines how to format the output \| jsonFormat \|
+MQTT Input Settings
+===================
+
++---------+---------------------+------------+
+| Name    | Description         | Type       |
++=========+=====================+============+
+| host    | MQTT host           | string     |
++---------+---------------------+------------+
+| port    | MQTT port           | number     |
++---------+---------------------+------------+
+| username| Client credentials  | string     |
+|         | (optional)          |            |
++---------+---------------------+------------+
+| password| Client credentials  | string     |
+|         | (optional)          |            |
++---------+---------------------+------------+
+| topics  | MQTT topics to      | array[inp  |
+|         | subscribe           | utTopic]   |
+|         | (optional)          |            |
++---------+---------------------+------------+
+
 
 *Examples:*
 
-.. code:: json
+.. code:: python
 
    {
      "host": "pilot2",
@@ -305,13 +338,27 @@ username \ *optional* \| Client credentials \| string \| \| password
 Query (*query*)
 ~~~~~~~~~~~~~~~
 
-Query configuration. \| Name \| Description \| Type \| \|————\|
-\| name \ *required* \| Unique query name \| string \| \| inputSettings
-\ *optional* \| Input settings \| inputSettings \| \| outputSettings
-\ *optional* \| Output settings \| outputSettings \| \| sql \ *required*
-\| SQL query \| parametrizedString \|
+Query Configuration
+===================
 
-.. code:: json
++--------------+------------------------+----------------------+
+| Name         | Description            | Type                 |
++==============+========================+======================+
+| name         | Unique query name      | string               |
+|              | (required)             |                      |
++--------------+------------------------+----------------------+
+| inputSettings| Input settings         | inputSettings        |
+|              | (optional)             |                      |
++--------------+------------------------+----------------------+
+| outputSet    | Output settings        | outputSettings       |
+| tings        | (optional)             |                      |
++--------------+------------------------+----------------------+
+| sql          | SQL query              | parametrizedString   |
+|              | (required)             |                      |
++--------------+------------------------+----------------------+
+
+
+.. code:: python
 
    {
      "name": "dangerous",
@@ -359,7 +406,7 @@ Creating queries
 To create a query, use the POST method on the ``v1/queries`` endpoint.
 The request’s body is expected to be a complete definition of a query.
 
-.. code:: json
+.. code:: python
 
    {
      "name": "dangerous",
@@ -455,8 +502,8 @@ response.
 Endpoints
 ---------
 
-GET ``v1/queries``
-~~~~~~~~~~~~~~~~~~
+GET ``/v1/queries``
+~~~~~~~~~~~~~~~~~~~
 
 Retrieves all queries.
 
@@ -468,7 +515,7 @@ Returns:
 
 -  On success - status code 200, body:
 
-.. code:: json
+.. code:: python
 
    {
      "queries": [
@@ -479,14 +526,14 @@ Returns:
 
 -  On failure - status code 500, body:
 
-.. code:: json
+.. code:: python
 
    {
      "description": "..."
    }
 
-GET ``v1/queries/{name}``
-~~~~~~~~~~~~~~~~~~~~~~~~~
+GET ``/v1/queries/{name}``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Retrieves the query with ``name``.
 
@@ -500,7 +547,7 @@ Returns:
 
 -  On success - status code 200, body:
 
-.. code:: json
+.. code:: python
 
    {
      "query": {
@@ -510,7 +557,7 @@ Returns:
 
 -  If query does not exist - status code 404, body:
 
-.. code:: json
+.. code:: python
 
    {
      "description: "..."
@@ -518,14 +565,14 @@ Returns:
 
 -  On failure - status code 500, body:
 
-.. code:: json
+.. code:: python
 
    {
      "description": "..."
    }
 
-POST ``v1/queries``
-~~~~~~~~~~~~~~~~~~~
+POST ``/v1/queries``
+~~~~~~~~~~~~~~~~~~~~
 
 Creates a query.
 
@@ -539,7 +586,7 @@ Returns:
 
 -  On success - status code 201, body:
 
-.. code:: json
+.. code:: python
 
    {
      "info": "...",
@@ -550,14 +597,14 @@ Returns:
 
 -  On error - status code 400, body:
 
-.. code:: json
+.. code:: python
 
    {
      "description: "..."
    }
 
-PUT ``v1/queries/{name}``
-~~~~~~~~~~~~~~~~~~~~~~~~~
+PUT ``/v1/queries/{name}``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Updates the query with ``name``.
 
@@ -573,7 +620,7 @@ Returns:
 
 -  On success - status code 200, body:
 
-.. code:: json
+.. code:: python
 
    {
      "info": "...",
@@ -584,14 +631,14 @@ Returns:
 
 -  On error - status code 400, body:
 
-.. code:: json
+.. code:: python
 
    {
      "description: "..."
    }
 
-DELETE ``v1/queries/{name}``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+DELETE ``/v1/queries/{name}``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Deletes the query with ``name``.
 
@@ -605,7 +652,7 @@ Returns:
 
 -  On success - status code 200, body:
 
-.. code:: json
+.. code:: python
 
    {
      "info": "...",
@@ -614,11 +661,50 @@ Returns:
 
 -  On failure - status code 400, body:
 
-.. code:: json
+.. code:: python
 
    {
      "description": "..."
    }
+
+POST ``/v1/queries/{name}/input?topic={topic}``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Runs the query with ``name``. The ``topic`` parameters is optional.
+Later, it can be one can refer to it as the input topic. If the input
+topic is not specified the default one will be used – “http”.
+
+Parameters:
+
+-  ``name``: query name
+-  ``topic``: input topic name (optional)
+
+Body: JSON data to be inserted.
+
+Returns:
+
+-  On success - status code 200, body:
+
+.. code:: python
+
+   {
+     "..."
+   }
+
+The returned body can be any output specified in the query settings.
+
+-  On failure - status code 500, body:
+
+.. code:: python
+
+   {
+     "description": "..."
+   }
+
+GET ``/metrics``
+~~~~~~~~~~~~~~~~
+
+Returns the metrics of the enabler in the Prometheus format.
 
 
 
@@ -632,40 +718,49 @@ available. Output MQTT topics have access to input and output data.
 Input data
 ~~~~~~~~~~
 
--  ``input`` JSON data
--  ``strInput`` JSON data in string format
+-  ``input`` input payload as a parsed JSON
+-  ``inputTopic`` MQTT topic on which the data arrived, as string
+-  ``strInput`` input payload as string
 
 Output data
 ~~~~~~~~~~~
 
--  ``output`` JSON data
--  ``strOutput`` JSON data in string format
+-  ``output`` output payload as a parsed JSON
+-  ``strOutput`` output payload as string
 
-To access JSON data (``input`` or ``output``) one may use
+All expressions must be inside curly braces ``{...}``.
+
+To access JSON data (``input`` or ``output``) use
 `JSONPath <https://support.smartbear.com/alertsite/docs/monitors/api/endpoint/jsonpath.html>`__
-syntax.
+syntax. - JSON strings will yield SQL string literals. - JSON integers
+will yield SQL integer literals. - JSON nulls will yield SQL NULL. -
+Unmatched paths will yield SQL NULL.
 
-A valid expression must be inside curly braces ``{...}``.
+Matching other types of JSON values will result in an error.
 
-*Examples:*
+*Example – accessing the input value in PostgreSQL*
 
 ``"select {strInput}::json->>2;"``
 
+*Example – JSON Path queries*
+
 ``"topic/{output..temperature.max()}"``
 
-***************
+
+
 Prerequisites
-***************
+=============
+
 -  `Docker <https://www.docker.com/>`__
 -  `Docker Compose <https://docs.docker.com/compose/>`__
 
 
-***************
-Installation
-***************
 
-Development environment
-^^^^^^^^^^^^^^^^^^^^^^^
+Installation
+============
+
+Development environment (docker-compose)
+----------------------------------------
 
 For development, run the following scripts:
 
@@ -692,8 +787,8 @@ start a QGIS instance to visualize the geolocation data.
 The ``dev-app.sh`` script starts the application. The application is
 accessible at ``localhost:8080``.
 
-Production environment
-----------------------
+Production environment (docker-compose)
+---------------------------------------
 
 To simulate the production environment, run the following scripts:
 
@@ -714,39 +809,58 @@ The ``prod-env.sh`` script starts the Postgres database.
 The ``prod-app.sh`` script starts the application. The application is
 accessible at ``localhost:8080``.
 
+Production environment (helm)
+-----------------------------
 
-***************
+Use the provided helm charts in the ``helm`` directory.
+
+.. code:: bash
+
+   helm install lp helm
+
+
+
 Configuration
-***************
+=============
 
 Application
-^^^^^^^^^^^
+-----------
 
 The app can be configured via environment variables. - ``HTTP_PORT``:
-port at which the API is accessible, i.e. \ *8080* -
-``DB_QUERIES_SERVER_NAME``: i.e. \ *postgres* - ``DB_QUERIES_PORT``:
-i.e. \ *5432* - ``DB_QUERIES_NAME``: i.e. \ *queries* -
-``DB_QUERIES_USER``: i.e. \ *queries_user* - ``DB_QUERIES_PASSWORD``:
-i.e. \ *postgres123* - ``DB_GEOLOCATION_SERVER_NAME``: i.e. \ *postgres*
-- ``DB_GEOLOCATION_PORT``: i.e. \ *5432* - ``DB_GEOLOCATION_NAME``:
+port at which the API is accessible, i.e. \ *8080* - ``DB_ADMIN_PORT``:
+i.e. \ *5432* - ``DB_ADMIN_NAME``: i.e. \ *postgres* -
+``DB_ADMIN_USER``: i.e. \ *postgres* - ``DB_ADMIN_PASSWORD``:
+i.e. \ *postgres* - ``DB_QUERIES_SERVER_NAME``: i.e. \ *postgres* -
+``DB_QUERIES_PORT``: i.e. \ *5432* - ``DB_QUERIES_NAME``:
+i.e. \ *queries* - ``DB_QUERIES_USER``: i.e. \ *queries_user* -
+``DB_QUERIES_PASSWORD``: i.e. \ *postgres123* -
+``DB_GEOLOCATION_SERVER_NAME``: i.e. \ *postgres* -
+``DB_GEOLOCATION_PORT``: i.e. \ *5432* - ``DB_GEOLOCATION_NAME``:
 i.e. \ *geolocation* - ``DB_GEOLOCATION_USER``:
 i.e. \ *geolocation_user* - ``DB_GEOLOCATION_PASSWORD``:
 i.e. \ *postgres123*
 
+Database
+--------
 
-***************
+The database can be configured via environment variables. -
+``POSTGRES_DB``: i.e. \ *postgres* - ``POSTGRES_USER``:
+i.e. \ *postgres* - ``POSTGRES_PASSWORD``: i.e. \ *postgres*
+
+
+
 Developer guide
-***************
+===============
 
 Environment
-^^^^^^^^^^^
+-----------
 
 Refer to the `installation
 guide <https://magnetic-fields.ibspan.waw.pl/assist-iot/wp5/location-processing/-/wikis/installation>`__
 to setup the environment.
 
 Scripts
-^^^^^^^
+-------
 
 The development scripts are located in ``scripts`` directory. -
 ``check.sh`` runs linter (in check mode) and tests - ``clean.sh`` cleans
@@ -765,28 +879,29 @@ Configs for ``scalafmt``, ``scalafix``, and ``scalastyle`` can be found
 in the ``configs`` directory.
 
 
-***************************
-Version control and release
-***************************
 
-*The enabler is under development.*
+Version control and releases
+============================
+
+The latest version is 1.0.0.
 
 
 
-***************
 License
-***************
+=======
+
 The Location Processing is licensed under the **Apache License, Version
 2.0** (the “License”).
 
 One may obtain a copy of the License at
 http://www.apache.org/licenses/LICENSE-2.0
 
-********************
-Notice(dependencies)
-********************
-Dependency list and licensing information will be provided before the
-first major release.
+
+
+Notice (dependencies)
+=====================
+
+The enabler can run as a standalone application.
 
 
 

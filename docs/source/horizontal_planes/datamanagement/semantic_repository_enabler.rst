@@ -8,11 +8,8 @@ Semantic Repository enabler
   :local:
   :depth: 1
 
-Semantic Repository enabler of ASSIST-IoT.
-
-***************
 Introduction
-***************
+============
 
 This enabler offers a “nexus” for data models, ontologies, and other
 files, that can be uploaded in different file formats, and served to
@@ -30,12 +27,12 @@ scalability, and resiliency. It should be able to scale up and down to
 meet the needs of a specific use case.
 
 
-***************
+
 Features
-***************
+========
 
 Implemented features
-********************
+~~~~~~~~~~~~~~~~~~~~
 
 -  Storage of any type of data model, both textual and binary.
 -  Ability to provide multiple formats of one data model, depending on
@@ -50,9 +47,9 @@ Implemented features
    repository (via webhooks).
 
 
-*********************
+
 Place in architecture
-*********************
+=====================
 
 The Semantic Repository is located in the Data management plane of the
 ASSIST-IoT architecture. It serves as a versioned and namespaced central
@@ -61,9 +58,9 @@ regard to the content that it can store, thus it can be used for diverse
 data storage-related scenarios.
 
 
-**********
+
 User guide
-**********
+==========
 
 The Semantic Repository enabler exposes a single REST API endpoint for
 both manipulating the repository’s contents, as well as for retrieving
@@ -71,7 +68,7 @@ stored data models. There is also a graphical user interface for
 performing most of the same tasks.
 
 Basic concepts
-**************
+~~~~~~~~~~~~~~
 
 -  **Namespace** – a top-level “group” in the repository, which can host
    any number of models.
@@ -91,7 +88,7 @@ user or a group. A **model** would be a repository, and a **model
 version** would be a branch or tag. This is just an example, of course.
 
 Model versions
-**************
+~~~~~~~~~~~~~~
 
 The Semantic Repository does not force a specific versioning scheme on
 your models. You can use for example Git branches and tags, plain
@@ -107,7 +104,7 @@ The benefit of the ``latest`` tag is that it allows clients to easily
 retrieve the most recent version of the model (see the API user guide).
 
 Content
-*******
+~~~~~~~
 
 One model version can have multiple content files attached, each in a
 different format. The format is recommended to correspond to the `Media
@@ -128,7 +125,7 @@ when no preferences were specified. See the API guide below for more
 details.
 
 Metadata
-********
+~~~~~~~~
 
 You can attach arbitrary metadata to namespaces, models, and model
 versions. This metadata can serve a multitude of applications such as
@@ -140,8 +137,14 @@ number of metadata keys. Each key can have either a single textual value
 or several values (an array).
 
 For example, if you want to indicate the authorship of a model version
-and its source Git branch, its metadata could look like: - author: -
-``Rob`` - ``Bob`` - branch: ``rob-bob-branch``
+and its source Git branch, its metadata could look like:
+
+-  author:
+
+   -  ``Rob``
+   -  ``Bob``
+
+-  branch: ``rob-bob-branch``
 
 Or, in JSON:
 
@@ -162,12 +165,15 @@ Limits
 
 By default, the Semantic Repository limits the amount of metadata that
 can be stored per entity. These default limits can be changed (see:
-Configuration). - Maximum number of keys per entity: **64** - Maximum
-number of values per one metadata key: **32** - Maximum length in
-characters of an individual metadata value: **1024**
+Configuration).
+
+-  Maximum number of keys per entity: **64**
+-  Maximum number of values per one metadata key: **32**
+-  Maximum length in characters of an individual metadata value:
+   **1024**
 
 Documentation
-*************
+~~~~~~~~~~~~~
 
 To each model version you can attach documentation pages that, for
 example, help explain users how to use the various fields in your data
@@ -177,13 +183,17 @@ images to the documentation pages.
 
 The documentation pages are generated from a given markup format with
 the use of a *documentation plugin*. Currently, Semantic Repository
-offers the following plugins: - ``markdown`` for text formatted in
-`vanilla Markdown <https://daringfireball.net/projects/markdown/>`__;
-accepted file extensions: ``.md``, ``.markdown`` - ``gfm`` for text in
-`GitHub-flavored Markdown <https://github.github.com/gfm/>`__; accepted
-file extensions: ``.md``, ``.markdown`` - ``rst`` for text in the
-`reStructuredText <https://docutils.sourceforge.io/rst.html>`__ format;
-accepted file extensions: ``.rst``
+offers the following plugins:
+
+-  ``markdown`` for text formatted in `vanilla
+   Markdown <https://daringfireball.net/projects/markdown/>`__; accepted
+   file extensions: ``.md``, ``.markdown``
+-  ``gfm`` for text in `GitHub-flavored
+   Markdown <https://github.github.com/gfm/>`__; accepted file
+   extensions: ``.md``, ``.markdown``
+-  ``rst`` for text in the
+   `reStructuredText <https://docutils.sourceforge.io/rst.html>`__
+   format; accepted file extensions: ``.rst``
 
 The documentation can be attached to a model version, but it is also
 possible to test the behavior of the documentation generator in the
@@ -257,7 +267,7 @@ documentation in the sandbox expires and cannot be accessed anymore:
 **24 hours**
 
 Webhooks
-********
+~~~~~~~~
 
 You may want to trigger some action automatically, for example after a
 model is changed in the Repository. There is a feature called *webhooks*
@@ -272,29 +282,22 @@ a different format, once a new version is uploaded.
 
 A webhook’s body is a JSON file that looks like this:
 
-.. code:: json
+.. code-block:: javascript
 
-   {
-     "action": "...",
-     "body": {
-       ...
-     },
-     "context": {
-       "model": "sosa",
-       "namespace": "w3c",
-       "version": "1.0.0"
-     },
-     "hookId": "638f62056d64d41f7c3578ae",
-     "timestamp": "2022-12-06T15:39:02"
-   }
+    {
+      "action": "...",
+      "body": {
+        ...
+      },
+      "context": {
+        "model": "sosa",
+        "namespace": "w3c",
+        "version": "1.0.0"
+      },
+      "hookId": "638f62056d64d41f7c3578ae",
+      "timestamp": "2022-12-06T15:39:02"
+    }
 
--  ``action`` indicates the type of action that triggered the webhook
--  the content of the ``body`` field depends on the specific type of
-   webhook
--  ``context`` indicates the path to the object that the action was
-   performed on (namespace, model, version)
--  ``hook_id`` is the unique identifier of the hook
--  ``timestamp`` is the time at which the action occurred
 
 See the API guide for more information on how to define and manage
 webhooks.
@@ -352,7 +355,7 @@ The full specification of the REST API can be found in the `REST API
 reference <#rest-api-reference>`__ section.
 
 General information
-*******************
+~~~~~~~~~~~~~~~~~~~
 
 The API follows a very simple structure of
 /v1/m/{namespace}/{model}/{model_version}. In general, ``POST`` creates
@@ -367,9 +370,10 @@ reference <#rest-api-reference>`__ section.
 It generally does not matter whether a URL ends with a slash or not.
 
 Creating and retrieving models
-******************************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Step 1: create a namespace**
+Step 1: create a namespace
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 First, we will need to create a namespace for your models. We will name
 it ``w3c``.
@@ -427,13 +431,15 @@ A collection of namespaces is returned. Browsing such collections is
 described in detail in the `Browsing
 collections <#browsing-collections>`__ section below.
 
-**Note:** namespace name must meet the following criteria: - be at least
-1 and at most 100 characters long - only contain lower or upper letters
-of the latin alphabet, digits, dashes (``-``), and underscores (``_``) -
-not start with one of the following characters: ``_-``
+**Note:** namespace name must meet the following criteria:
 
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), and underscores (``_``)
+-  not start with one of the following characters: ``_-``
 
-**Step 2: create models**
+Step 2: create models
+^^^^^^^^^^^^^^^^^^^^^
 
 In this example we will create two models: ``sosa`` and ``ssn``,
 corresponding to `two well-known IoT
@@ -509,13 +515,15 @@ Some additional information is also returned, such as ``page`` and
 ``totalCount``. These are described in detail in the `Browsing
 collections section <#browsing-collections>`__.
 
-**Note:** model names must meet the following criteria: - be at least 1
-and at most 100 characters long - only contain lower or upper letters of
-the latin alphabet, digits, dashes (``-``), and underscores (``_``) -
-not start with one of the following characters: ``_-``
+**Note:** model names must meet the following criteria:
 
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), and underscores (``_``)
+-  not start with one of the following characters: ``_-``
 
-**Step 3: create versions**
+Step 3: create versions
+^^^^^^^^^^^^^^^^^^^^^^^
 
 You cannot upload content to a model directly. First, you must
 explicitly create a specific version of the model and work with that.
@@ -576,15 +584,17 @@ You can also retrieve a list of versions for the model (again,
      }
    }
 
-**Note:** version tags must meet the following criteria: - be at least 1
-and at most 100 characters long - only contain lower or upper letters of
-the latin alphabet, digits, dashes (``-``), underscores (``_``), dots
-(``.``), and plus signs (``+``) - not start with one of the following
-characters: ``._-+`` - not be ``latest``, which is a reserved tag (see
-below)
+**Note:** version tags must meet the following criteria:
 
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), underscores (``_``), dots (``.``), and plus signs
+   (``+``)
+-  not start with one of the following characters: ``._-+``
+-  not be ``latest``, which is a reserved tag (see below)
 
-``latest`` **pointer**
+``latest`` pointer
+~~~~~~~~~~~~~~~~~~
 
 The ``latest`` version pointer can be set on a given model using a PATCH
 request:
@@ -640,7 +650,7 @@ Response code Body
 ============= ============================================
 
 Uploading content
-*****************
+~~~~~~~~~~~~~~~~~
 
 In the following examples we will focus on uploading and retrieving
 content for the ``/w3c/sosa/1.0`` model version we have created in the
@@ -693,20 +703,26 @@ To see the available formats, make a ``GET /v1/m/w3c/sosa/1.0`` request:
      "version": "1.0"
    }
 
-In the response notice that: - ``defaultFormat`` has been set to
-“text/turtle”. You can change that later. - ``formats`` is keyed by
-format name. - ``contentType`` displays the content type of the uploaded
-file, which in this case is the same as format. - ``md5`` is the MD5
-checksum of the entire file. - ``size`` is the file’s size in bytes.
+In the response notice that:
 
-**Note:** format names must meet the following criteria: - be at least 1
-and at most 100 characters long - only contain lower or upper letters of
-the latin alphabet, digits, dashes (``-``), underscores (``_``), dots
-(``.``), and plus signs (``+``) - not start with one of the following
-characters: ``._-+``
+-  ``defaultFormat`` has been set to “text/turtle”. You can change that
+   later.
+-  ``formats`` is keyed by format name.
+-  ``contentType`` displays the content type of the uploaded file, which
+   in this case is the same as format.
+-  ``md5`` is the MD5 checksum of the entire file.
+-  ``size`` is the file’s size in bytes.
+
+**Note:** format names must meet the following criteria:
+
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), underscores (``_``), dots (``.``), and plus signs
+   (``+``)
+-  not start with one of the following characters: ``._-+``
 
 Overwriting content
-*******************
+^^^^^^^^^^^^^^^^^^^
 
 As noted in the `User guide <#user-guide>`__, the content for a specific
 version of a model *should* be immutable. So, if you try to repeat the
@@ -740,7 +756,7 @@ Response:
    }
 
 Changing the default format
-***************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The ``defaultFormat`` field of a model version indicates which content
 format will be used, if no other preferences are specified. It is set
@@ -804,7 +820,7 @@ Response code Body
 ============= ========================================================
 
 Downloading the content
-***********************
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Downloading the models is very straightforward. The most explicit way is
 to specify the namespace, model, version, and the desired format:
@@ -839,7 +855,7 @@ In all cases the response will be simply the stored file, with the
 appropriate Content-Type header.
 
 Attaching metadata
-******************
+~~~~~~~~~~~~~~~~~~
 
 As described in the User guide, you can attach arbitrary metadata to any
 entity (namespace, model, model version). The API is identical for each
@@ -877,7 +893,7 @@ Request                Body
 
 Response:
 
-.. code:: json
+.. code:: python
 
    {
      "metadata": {
@@ -894,9 +910,11 @@ Response:
      (...)
    }
 
-**Note:** metadata keys must meet the following criteria: - be at least
-1 and at most 100 characters long - only contain lower or upper letters
-of the latin alphabet, digits, dashes (``-``), and underscores (``_``)
+**Note:** metadata keys must meet the following criteria:
+
+-  be at least 1 and at most 100 characters long
+-  only contain lower or upper letters of the latin alphabet, digits,
+   dashes (``-``), and underscores (``_``)
 
 Values of the keys can be any strings (as long as they fit into the
 length limit, 1024 characters by default) or arrays of such strings.
@@ -907,15 +925,18 @@ keyword. No other types of values (e.g., numeric, null…) are supported.
 versions is identical and the same limitations apply.
 
 Modifying metadata
-******************
+~~~~~~~~~~~~~~~~~~
 
 The metadata can be modified using PATCH requests with a very similar
 syntax to the POST requests described above. There are three possible
 operations that can be performed with each individual key in a request:
-- Keep it unchanged. To do that, simply don’t include the key in the
-request. - Set it to a new value. For that, just specify it along with
-its new value, just like in a POST request. - Remove the key. This is
-done by setting it to the reserved ``@unset`` keyword.
+
+-  Keep it unchanged. To do that, simply don’t include the key in the
+   request.
+-  Set it to a new value. For that, just specify it along with its new
+   value, just like in a POST request.
+-  Remove the key. This is done by setting it to the reserved ``@unset``
+   keyword.
 
 **Note:** individual array elements cannot be modified. You can only
 change or remove entire keys.
@@ -950,7 +971,7 @@ Request                Body
 
 Response:
 
-.. code:: json
+.. code:: python
 
    {
      "metadata": {
@@ -970,16 +991,19 @@ Response:
 versions is identical and the same limitations apply.
 
 Deleting models and other objects
-*********************************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Namespaces, models, model versions, and contents can be permanently
 deleted from the repository. The rules and the interface are identical
-on all cases: - The entity must be “empty”, that is, must have no child
-entities. For example, to delete a namespace, all its models must be
-deleted beforehand. - To delete the entity, simply use the URL path you
-would for a GET request, but use the DELETE method instead. -
-Additionally, you must provide the ``force=1`` query parameter to the
-request. This is to avoid accidental deletions.
+on all cases:
+
+-  The entity must be “empty”, that is, must have no child entities. For
+   example, to delete a namespace, all its models must be deleted
+   beforehand.
+-  To delete the entity, simply use the URL path you would for a GET
+   request, but use the DELETE method instead.
+-  Additionally, you must provide the ``force=1`` query parameter to the
+   request. This is to avoid accidental deletions.
 
 For example, to delete a (previously emptied of any versions) model
 ``w3c/dcat``:
@@ -1013,15 +1037,16 @@ references. Make sure to set the version pointer and the default format
 to a valid value afterwards.
 
 Browsing collections
-********************
-
+~~~~~~~~~~~~~~~~~~~~
 
 The API supports browsing through long lists of namespaces, models, and
 model versions. The mechanism is identical in all three cases and is
-based on two query parameters: - ``page`` – 1-based number of the page
-to display. - ``page_size`` – (optional) number of items to display per
-page, 20 by default. This parameter is subject to a configurable limit,
-set to 50 by default.
+based on two query parameters:
+
+-  ``page`` – 1-based number of the page to display.
+-  ``page_size`` – (optional) number of items to display per page, 20 by
+   default. This parameter is subject to a configurable limit, set to 50
+   by default.
 
 In the following example, let’s assume that we have namespace
 ``example`` with 20 models named from ``01`` to ``20``. To display the
@@ -1036,7 +1061,7 @@ Request                                  Body
 
 Response:
 
-.. code:: json
+.. code:: python
 
    {
      "models": {
@@ -1066,12 +1091,16 @@ Response:
      "namespace": "example"
    }
 
-The ``models`` key provides the following information: - ``items`` –
-list of models on this page. - ``inViewCount`` – number of items
-currently displayed. Always lower or equal to ``pageSize``. -
-``totalCount`` – number of all items in this collection, given the
-currently set filters. - ``pageSize`` – maximum number of items that can
-be displayed on the page. - ``page`` – current page number (1-based).
+The ``models`` key provides the following information:
+
+-  ``items`` – list of models on this page.
+-  ``inViewCount`` – number of items currently displayed. Always lower
+   or equal to ``pageSize``.
+-  ``totalCount`` – number of all items in this collection, given the
+   currently set filters.
+-  ``pageSize`` – maximum number of items that can be displayed on the
+   page.
+-  ``page`` – current page number (1-based).
 
 **Note:** if you request a page number for which there are no results,
 an empty set will be returned.
@@ -1080,7 +1109,7 @@ Browsing collections of namespaces and model versions is performed
 identically.
 
 Filtering and sorting collections
-*********************************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All collections that support paging (as described above) can be sorted
 and filtered. There is support for filtering by one field at a time
@@ -1088,11 +1117,13 @@ and filtered. There is support for filtering by one field at a time
 all will be joined with the AND operator. The sort & filter parameters
 can be freely combined with paging parameters.
 
-The following fields can be sorted and filtered: - Namespace collection
-(``/v1/m``): ``namespace``, ``metadata.*`` - Model collection
-(``/v1/m/{ns}``): ``model``, ``latestVersion``, ``metadata.*`` - Model
-version collection (``/v1/m/{ns}/{model}``): ``version``,
-``defaultFormat``, ``metadata.*``
+The following fields can be sorted and filtered:
+
+-  Namespace collection (``/v1/m``): ``namespace``, ``metadata.*``
+-  Model collection (``/v1/m/{ns}``): ``model``, ``latestVersion``,
+   ``metadata.*``
+-  Model version collection (``/v1/m/{ns}/{model}``): ``version``,
+   ``defaultFormat``, ``metadata.*``
 
 The ``metadata.*`` field indicates it is possible to sort or filter by
 any of the metadata properties. For example, to sort by metadata field
@@ -1146,14 +1177,16 @@ sorted field. This is especially relevant for sorting with metadata
 fields.
 
 Documentation
-*************
+~~~~~~~~~~~~~
 
 The Semantic Repository can store and serve generated documentation
 pages – see the user guide for details on the available formats and
 modes of operation. This functionality can be accessed via two
-endpoints: - Documentation per model version:
-``/v1/m/{namespace}/{model}/{version}/doc`` - Documentation sandbox:
-``/v1/doc_gen``
+endpoints:
+
+-  Documentation per model version:
+   ``/v1/m/{namespace}/{model}/{version}/doc``
+-  Documentation sandbox: ``/v1/doc_gen``
 
 In the following sections, it is explained how to upload new
 documentation jobs, monitor their status, and retrieve the generated
@@ -1207,19 +1240,24 @@ The status of the job will be returned:
    }
 
 A documentation job can be in one of three states (the ``status``
-field): - ``Started`` – the job has been enqueued and is either waiting
-in line, or being processed. - ``Success`` – the job has finished
-successfully, and the generated documentation can be accessed. -
-``Failed`` – the job has ended with an error. The ``error`` field
-provides additional detail as to the cause of the problem.
+field):
+
+-  ``Started`` – the job has been enqueued and is either waiting in
+   line, or being processed.
+-  ``Success`` – the job has finished successfully, and the generated
+   documentation can be accessed.
+-  ``Failed`` – the job has ended with an error. The ``error`` field
+   provides additional detail as to the cause of the problem.
 
 After the job has been finished successfully, you can access the
-generated files at ``/v1/doc_gen/{job_id/doc/`` -
-``GET /v1/doc_gen/{job_id}/doc`` redirects to
-``GET /v1/doc_gen/{job_id}/doc/`` - ``GET /v1/doc_gen/{job_id}/doc/``
-returns the content of the home page of the documentation
-(``index.html``) - ``GET /v1/doc_gen/{job_id}/doc/{file_path}`` returns
-the content of the file under the given path.
+generated files at ``/v1/doc_gen/{job_id/doc/``
+
+-  ``GET /v1/doc_gen/{job_id}/doc`` redirects to
+   ``GET /v1/doc_gen/{job_id}/doc/``
+-  ``GET /v1/doc_gen/{job_id}/doc/`` returns the content of the home
+   page of the documentation (``index.html``)
+-  ``GET /v1/doc_gen/{job_id}/doc/{file_path}`` returns the content of
+   the file under the given path.
 
 Documentation for model versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1331,7 +1369,7 @@ Response:
    }
 
 Webhooks
-********
+~~~~~~~~
 
 See the `user guide <user-guide>`__ for an explanation of what webhooks
 are and their available types.
@@ -1447,24 +1485,22 @@ Response:
    }
 
 Meta endpoints
-**************
+~~~~~~~~~~~~~~
 
 Will be implemented in the next release. TODO: health, doc plugins,
 version, Swagger.
 
 
-******************
-REST API reference
-******************
 
+REST API reference
+==================
 
 .. raw:: html
    :file: semantic_repository_enabler/api.html
 
 
-*************
 Prerequisites
-*************
+=============
 
 The enabler requires only the base Kubernetes environment with Helm to
 function.
@@ -1473,23 +1509,24 @@ Machines with at least 8 GB of RAM are recommended for running the
 enabler efficiently. Fast and plentiful storage will also be useful for
 large installations.
 
-************
+
+
 Installation
-************
+============
 
 The primary way of installing this enabler is with Kubernetes and Helm.
 However, it can also be installed with docker-compose, which is
 especially useful for development purposes.
 
 Kubernetes installation
-***********************
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Install the provided Helm chart on your Kubernetes cluster. Take into
 account the persistent volume claims for the MongoDB database and
 storage – you may want to modify their parameters.
 
 Development docker-compose stack
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To simplify development and integration with the Semantic Repository, a
 simple docker-compose stack is provided. To use it, you will have to
@@ -1507,14 +1544,16 @@ To deploy the stack, simply run:
 You can also deploy only the services in the stack (MongoDB and minIO)
 and run the Semantic Repository on localhost. This is especially useful
 when you want to debug the application, or quickly iterate on it. To do
-this: - In the ``docker-compose.yml`` file uncomment the line
-``# MONGODB_ADVERTISED_HOSTNAME: localhost`` - Run
-``docker-compose up -d mongo-primary minio`` - Run the Semantic
-Repository on localhost. It should connect to the containerized
-services.
+this:
+
+-  In the ``docker-compose.yml`` file uncomment the line
+   ``# MONGODB_ADVERTISED_HOSTNAME: localhost``
+-  Run ``docker-compose up -d mongo-primary minio``
+-  Run the Semantic Repository on localhost. It should connect to the
+   containerized services.
 
 Local Docker image build
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 In general, it is easier to just pull the ready image from the container
 registry, but if you need to build the container by yourself, it is also
@@ -1532,7 +1571,7 @@ that in your commands as needed.
    docker build -t assistiot/semantic-repository .
 
 Demo database
-^^^^^^^^^^^^^
+~~~~~~~~~~~~~
 
 The Semantic Repository comes with a script that can set up an example
 database for you to get started. This is especially useful if you want
@@ -1540,19 +1579,20 @@ to try out the Repository’s features or integrate it with another
 service. You will find the script and an appropriate ``README`` file in
 the ``demo`` directory.
 
-*************
+
+
 Configuration
-*************
+=============
 
 Helm chart
-***********
+~~~~~~~~~~
 
 The provided Helm chart exposes several configurable values, such as
 ports, interfaces, RAM and CPU limits, etc. You can find them in the
 ``values.yaml`` file of the chart.
 
 Main application (API server)
-*****************************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The main JVM application has the most important settings that control
 the Semantic Repository’s behavior (listed below). You can set these
@@ -1577,7 +1617,7 @@ In other Docker-based deployments, you can use the ``REPO_EXTRA_CONFIG``
 environment variable in the same way.
 
 Settings
-********
+^^^^^^^^
 
 +-----------------+-----------------+-----------------+-----------------+
 | Config key      | Type            | Description     | Default value   |
@@ -1672,23 +1712,24 @@ Settings
 +-----------------+-----------------+-----------------+-----------------+
 
 Settings of dependencies (advanced)
-***********************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the file, you can configure the libraries that Semantic Repository
 uses, such as Akka. This way you can for example modify the size of the
 thread pool. **These settings are generally only meant for advanced
 users**, so proceed with caution. Please refer to the documentation of:
--
-`Akka <https://doc.akka.io/docs/akka/current/general/configuration.html>`__
-- `Akka
-HTTP <https://doc.akka.io/docs/akka-http/current/configuration.html>`__
-- `Akka
-Streams <https://doc.akka.io/docs/akka/current/general/stream/stream-configuration.html>`__
+
+-  `Akka <https://doc.akka.io/docs/akka/current/general/configuration.html>`__
+-  `Akka
+   HTTP <https://doc.akka.io/docs/akka-http/current/configuration.html>`__
+-  `Akka
+   Streams <https://doc.akka.io/docs/akka/current/general/stream/stream-configuration.html>`__
 
 
 
 Developer guide
-***************
+===============
+
 The Semantic Repository is written in `Scala
 3 <https://www.scala-lang.org/>`__, using the `Akka
 framework <https://akka.io/>`__. The information about the managed
@@ -1703,24 +1744,29 @@ Semantic Repository’s architecture:
    Enabler architecture
 
 Running a dev deployment
-
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 See the page `Installation <installation>`__, section *Development
 docker-compose stack* for details on how to deploy the Semantic
 Repository locally for development purposes.
 
-***************************
-Version control and release
-***************************
-The enabler’s code is in ASSIST-IoT GitLab.
-
-Versioning and packaging is not finalized yet – this will be resolved in
-a future release.
 
 
-*******
+Version control and releases
+============================
+
+The enabler’s code is `published on
+GitHub <https://github.com/assist-iot/semantic_repository>`__.
+
+Semantic Repository follows the `Semantic Versioning 2.0
+scheme <https://semver.org/>`__. The current version is 1.0.0, which is
+the final version delivered in the ASSIST-IoT project.
+
+
+
 License
-*******
+=======
+
 The Semantic Repository is licensed under the **Apache License, Version
 2.0** (the “License”).
 
@@ -1728,12 +1774,12 @@ You may obtain a copy of the License at:
 http://www.apache.org/licenses/LICENSE-2.0
 
 
-*********************
+
 Notice (dependencies)
-*********************
+=====================
 
 Components
-**********
+~~~~~~~~~~
 
 -  MongoDB – `Server Side Public License (SSPL
    1.0) <https://www.mongodb.com/licensing/server-side-public-license>`__
@@ -1741,7 +1787,7 @@ Components
    v3.0 <https://github.com/minio/minio/blob/master/LICENSE>`__
 
 Main application (API server) dependencies
-******************************************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Note that `Akka changed its
 license <https://www.lightbend.com/akka/license-faq>`__ to a restrictive
@@ -1750,107 +1796,541 @@ the 2.6.X version (still under the Apache License), it remains
 unaffected. Future versions of the Semantic Repository are expected to
 use `Apache Pekko <https://pekko.apache.org/>`__, the free fork of Akka.
 
-.. list-table:: Dependencies
-   :widths: 25 25 50
-   :header-rows: 1
-
-   * - Category
-     - License
-     - Dependency
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `ch.megard # akka-http-cors_2.13#1.1.3 <https://github.com/lomigmegard/akka-http-cors>`_ 
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     -  `io.spray # spray-json_2.13 #1.3.6 <https://github.com/spray/spray-json>`_  
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.planet42 # laika-core_3 # 0.19.0 <https://planet42.github.io/Laika/>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `com.typesafe.scala-logging # scala-logging_3 #3.9.5 <https://github.com/lightbend/scala-logging>`_  
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `io.projectreactor # reactor-co re #3.2.22.RELEASE <https://github.com/reactor/reactor-core>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.yaml # snakeyaml #1.31 <https://bitbucket.org/snakeyaml/snakeyaml>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `software.amazon.awssdk # 2.11.14 <https://aws.amazon.com/sdkforjava>`_   
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `software.amazon.eventstream #eventstream # 1.0.1 <https://github.com/awslabs/aws-eventstream-java>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `com.comcast # ip4s-core_3 #  3.1.3 <https://github.com/Comcast/ip4s>`_   
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `com.lightbend.akka #akka-stream-alpakka-file_2.13 #3.0.4 <https://doc.akka.io/docs/alpakka/current>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `com.typesafe # config # 1.4.2 <https://github.com/lightbend/config>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `com.typesafe # ssl-config-core_2.13#0.4.3 <https://github.com/lightbend/ssl-config>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `com.typesafe.akka # akka-actor_2.13 <https://akka.io/>`_          
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.scala-lang # scala-library #2.13.8 <https://www.scala-lang.org/>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.scala-lang # scala3-library_3 #3.1.3 <https://github.com/lampepfl/dotty>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.scala-lang.modules #scala-java8-compat_2.13 #  1.0.0 <http://www.scala-lang.org/>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.scala-lang.modules #scala-xml_3 # 2.1.0 <http://www.scala-lang.org/>`_                 
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     -  `org.typelevel #cats-effect-kernel_3 # 3.3.14 <https://github.com/typelevel/cats-effect>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.typelevel # cats-effect-std_3 #3.3.14 <https://github.com/typelevel/cats-effect>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.typelevel # literally_3 # 1.0.2 <https://github.com/typelevel/ literally>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.mongodb # bson # 4.7.1 <https://bsonspec.org>`_          
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.mongodb # bson-record-codec #4.7.1 <https://www.mongodb.com/>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.mongodb # mongodb-driver-core # mongodb-driver-reactivestreams  # mongo-scala-bson_2.13 # mongo-scala-driver_2.13 # 4.7.1 <https://www.mongodb.com/>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `com.fasterxml.jackson.core #jackson-annotations # jackson-core # jackson-databind #  2.13.4 <http://github.com/FasterXML/jackson>`_
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `com.fasterxml.jackson.dataformat # jackson-dataformat-yaml # 2.13.4 <https://github.com/FasterXML/jackson-dataformats-text>`_  
-   * - Apache
-     - `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>`_
-     - `org.scalactic # scalactic_3 # scalatest-compatible # scalatest-core_3 # scalatest-diagrams_3 # scalatest-featurespec_3 # scalatest-featurespec_3 # scalatest-funspec_3 # scalatest-funsuite_3 # scalatest-matchers-core_3 # scalatest-mustmatchers_3 # scalatest-propspec_3  # scalatest-refspec_3 # scalatest-shouldmatchers_3 #scalatest-wordspec_3 # scalatest_3 # 3.2.12 <http://www.scalatest.org>`_       
-   * - BSD
-     - `BSD-3-Clause <https://github.com/scodec/scodec-bits/blob/main/LICENSE>`_
-     - `org.scodec # scodec-bits_3 #1.1.34 <https://github.com/scodec/scodec-bits>`_
-   * - CCO
-     - `CC0 <http://creativecommons.org/publicdomain/zero/1.0/>`_
-     - `org.reactivestreams # reactive-streams # 1.0.3 <http://www.reactive-streams.org/>`_      
-   * - MIT
-     - `MIT <http://opensource.org/licenses/MIT>`_
-     - `co.fs2 # fs2-core_3 # fs2-io_3 # 3.2.14 <https://typelevel.org/fs2>`_
-   * - MIT
-     - `MIT <http://opensource.org/licenses/MIT>`_
-     - `org.typelevel # cats-core_3 # cats-kernel_3 # 2.8.0 <https://typelevel.org/cats>`_       
-   * - MIT
-     - `MIT <http://opensource.org/licenses/MIT>`_
-     - `org.slf4j # slf4j-api # slf4j-simple # 1.7.36 <http://www.slf4j.org>`_       
- 
++---+----------------------------+--------------------------------------+
+| C | License                    | Dependency                           |
+| a |                            |                                      |
+| t |                            |                                      |
+| e |                            |                                      |
+| g |                            |                                      |
+| o |                            |                                      |
+| r |                            |                                      |
+| y |                            |                                      |
++===+============================+======================================+
+| A | `Apache                    | `ch.megard # akka-http-cors_2.13 #   |
+| p | 2 <https://www.apache.org/ | 1.1.3 <https://github.com/lomigmegar |
+| a | licenses/LICENSE-2.0.txt>` | d/akka-http-cors>`__                 |
+| c | __                         |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache                    | `io.spray # spray-json_2.13 #        |
+| p | 2 <http://www.apache.org/l | 1.3.6 <https://github.com/spray/spra |
+| a | icenses/LICENSE-2.0.txt>`_ | y-json>`__                           |
+| c | _                          |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache                    | `org.planet42 # laika-core_3 #       |
+| p | 2.0 <http://www.apache.    | 0.19.0 <https://planet42.github.io/L |
+| a | org/licenses/LICENSE-2.    | aika/>`__                            |
+| c | 0.txt>`__                  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache                    | `org.planet42 # laika-io_3 #         |
+| p | 2.0 <http://www.apache.    | 0.19.0 <https://planet42.github.io/L |
+| a | org/licenses/LICENSE-2.0.  | aika/>`__                            |
+| c | txt>`__                    |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache 2.0                | `com.typesafe.scala-logging #        |
+| p | License <http://www.apache | scala-logging_3 #                    |
+| a | .org/licenses/LICENSE-2.0. | 3.9.5 <https://github.com/lightbend/ |
+| c | html>`__                   | scala-logging>`__                    |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `io.projectreactor # reactor-core #  |
+| p | 2.0 <https://www.apache.or | 3.2.22.RELEASE <https://github.com/r |
+| a | g/licenses/LICENSE-2.0.txt | eactor/reactor-core>`__              |
+| c | >`__                       |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `org.yaml # snakeyaml #              |
+| p | 2.0 <http://www.apache.org | 1.31 <https://bitbucket.org/snakeyam |
+| a | /licenses/LICENSE-2.0.     | l/snakeyaml>`__                      |
+| c | txt>`__                    |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | software.amazon.awssdk # annotations |
+| p | 2.0 <https://aws.amazon.co | # 2.11.14                            |
+| a | m/apache2.0>`__            |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `software.amazon.awssdk # auth #     |
+| p | 2.0 <https://aws.amazon.co | 2.11.14 <https://aws.amazon.com/sdkf |
+| a | m/apache2.0>`__            | orjava>`__                           |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | software.amazon.awssdk #             |
+| p | 2.0 <https://aws.amazon.co | http-client-spi # 2.11.14            |
+| a | m/apache2.0>`__            |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `software.amazon.awssdk # profiles # |
+| p | 2.0 <https://aws.amazon.co | 2.11.14 <https://aws.amazon.com/sdkf |
+| a | m/apache2.0>`__            | orjava>`__                           |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | software.amazon.awssdk # regions #   |
+| p | 2.0 <https://aws.amazon.co | 2.11.14                              |
+| a | m/apache2.0>`__            |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `software.amazon.awssdk # sdk-core # |
+| p | 2.0 <https://aws.amazon.co | 2.11.14 <https://aws.amazon.com/sdkf |
+| a | m/apache2.0>`__            | orjava>`__                           |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | software.amazon.awssdk # utils #     |
+| p | 2.0 <https://aws.amazon.co | 2.11.14                              |
+| a | m/apache2.0>`__            |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache License, Version   | `software.amazon.eventstream #       |
+| p | 2.0 <https://aws.amazon.co | eventstream #                        |
+| a | m/apache2.0>`__            | 1.0.1 <https://github.com/awslabs/aw |
+| c |                            | s-eventstream-java>`__               |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.comcast # ip4s-core_3 #         |
+| p | pache.org/licenses/LICENSE | 3.1.3 <https://github.com/Comcast/ip |
+| a | -2.0.txt>`__               | 4s>`__                               |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.lightbend.akka #                |
+| p | pache.org/licenses/LICENSE | akka-stream-alpakka-file_2.13 #      |
+| a | -2.0>`__                   | 3.0.4 <https://doc.akka.io/docs/alpa |
+| c |                            | kka/current>`__                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.lightbend.akka #                |
+| p | pache.org/licenses/LICENSE | akka-stream-alpakka-s3_2.13 #        |
+| a | -2.0>`__                   | 3.0.4 <https://doc.akka.io/docs/alpa |
+| c |                            | kka/current>`__                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe # config #             |
+| p | pache.org/licenses/LICENSE | 1.4.2 <https://github.com/lightbend/ |
+| a | -2.0>`__                   | config>`__                           |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe # ssl-config-core_2.13 |
+| p | pache.org/licenses/LICENSE | #                                    |
+| a | -2.0.txt>`__               | 0.4.3 <https://github.com/lightbend/ |
+| c |                            | ssl-config>`__                       |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-actor-typed_2.13 #              |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka # akka-actor_2.13 |
+| p | pache.org/licenses/LICENSE | # 2.6.19 <https://akka.io/>`__       |
+| a | -2.0.html>`__              |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-http-core_2.13 #                |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-http-spray-json_2.13 #          |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-http-testkit_2.13 #             |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-http-xml_2.13 #                 |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka # akka-http_2.13  |
+| p | ource.org/licenses/Apache- | # 10.2.9 <https://akka.io>`__        |
+| a | 2.0>`__                    |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://opens | `com.typesafe.akka #                 |
+| p | ource.org/licenses/Apache- | akka-parsing_2.13 #                  |
+| a | 2.0>`__                    | 10.2.9 <https://akka.io>`__          |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-protobuf-v3_2.13 #              |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka # akka-slf4j_2.13 |
+| p | pache.org/licenses/LICENSE | # 2.6.19 <https://akka.io/>`__       |
+| a | -2.0.html>`__              |                                      |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-stream-testkit_2.13 #           |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-stream-typed_2.13 #             |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-stream_2.13 #                   |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `com.typesafe.akka #                 |
+| p | pache.org/licenses/LICENSE | akka-testkit_2.13 #                  |
+| a | -2.0.html>`__              | 2.6.19 <https://akka.io/>`__         |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang # scala-library #    |
+| p | pache.org/licenses/LICEN   | 2.13.8 <https://www.scala-lang.      |
+| a | SE-2.0>`__                 | org/>`__                             |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang # scala-reflect #    |
+| p | pache.org/licenses/LICEN   | 2.13.6 <https://www.scala-lang.      |
+| a | SE-2.0>`__                 | org/>`__                             |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang # scala3-library_3 # |
+| p | pache.org/licenses/LICENSE | 3.1.3 <https://github.com/lampepfl/d |
+| a | -2.0>`__                   | otty>`__                             |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang.modules #            |
+| p | pache.org/licenses/LICENSE | scala-java8-compat_2.13 #            |
+| a | -2.0>`__                   | 1.0.0 <http://www.scala-lang.org/>`_ |
+| c |                            | _                                    |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang.modules #            |
+| p | pache.org/licenses/LICENSE | scala-parser-combinators_2.13 #      |
+| a | -2.0>`__                   | 1.1.2 <http://www.scala-lang.org/>`_ |
+| c |                            | _                                    |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.scala-lang.modules #            |
+| p | pache.org/licenses/LICENSE | scala-xml_3 #                        |
+| a | -2.0>`__                   | 2.1.0 <http://www.scala-lang.org/>`_ |
+| c |                            | _                                    |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.typelevel #                     |
+| p | pache.org/licenses/LICENSE | cats-effect-kernel_3 #               |
+| a | -2.0.txt>`__               | 3.3.14 <https://github.com/typelevel |
+| c |                            | /cats-effect>`__                     |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.typelevel # cats-effect-std_3 # |
+| p | pache.org/licenses/LICENSE | 3.3.14 <https://github.com/typelevel |
+| a | -2.0.txt>`__               | /cats-effect>`__                     |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <https://www.a | `org.typelevel # cats-effect_3 #     |
+| p | pache.org/licenses/LICENSE | 3.3.14 <https://github.com/typelevel |
+| a | -2.0.txt>`__               | /cats-effect>`__                     |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `Apache-2.0 <http://www.ap | `org.typelevel # literally_3 #       |
+| p | ache.org/licenses/LICENSE- | 1.0.2 <https://github.com/typelevel/ |
+| a | 2.0>`__                    | literally>`__                        |
+| c |                            |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb # bson #                |
+| p | Version                    | 4.7.1 <https://bsonspec.org>`__      |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0.     |                                      |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb # bson-record-codec #   |
+| p | Version                    | 4.7.1 <https://www.mongodb.com/>`__  |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0.     |                                      |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb # mongodb-driver-core # |
+| p | Version                    | 4.7.1 <https://www.mongodb.com/>`__  |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0.     |                                      |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb #                       |
+| p | Version                    | mongodb-driver-reactivestreams #     |
+| a | 2.0 <http://www.apache.org | 4.7.1 <https://www.mongodb.com/>`__  |
+| c | /licenses/LICENSE-2.0.     |                                      |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb.scala #                 |
+| p | Version                    | mongo-scala-bson_2.13 #              |
+| a | 2.0 <http://www.apache.org | 4.7.1 <https://www.mongodb.com/>`__  |
+| c | /licenses/LICENSE-2.0.     |                                      |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache License,       | `org.mongodb.scala #                 |
+| p | Version                    | mongo-scala-driver_2.13 #            |
+| a | 2.0 <http://www.apache.org | 4.7.1 <https://www.mongodb.com/>`__  |
+| c | /licenses/LICENSE-2.0.     |                                      |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache Software       | `com.fasterxml.jackson.core #        |
+| p | License, Version           | jackson-annotations #                |
+| a | 2.0 <http://www.apache.org | 2.13.4 <http://github.com/FasterXML/ |
+| c | /licenses/LICENSE-2.0.     | jackson>`__                          |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache Software       | `com.fasterxml.jackson.core #        |
+| p | License, Version           | jackson-core #                       |
+| a | 2.0 <http://www.apache.org | 2.13.4 <https://github.com/FasterXML |
+| c | /licenses/LICENSE-2.0.     | /jackson-core>`__                    |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache Software       | `com.fasterxml.jackson.core #        |
+| p | License, Version           | jackson-databind #                   |
+| a | 2.0 <http://www.apache.org | 2.13.4 <http://github.com/FasterXML/ |
+| c | /licenses/LICENSE-2.0.     | jackson>`__                          |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `The Apache Software       | `com.fasterxml.jackson.dataformat #  |
+| p | License, Version           | jackson-dataformat-yaml #            |
+| a | 2.0 <http://www.apache.org | 2.13.4 <https://github.com/FasterXML |
+| c | /licenses/LICENSE-2.0.     | /jackson-dataformats-text>`__        |
+| h | txt>`__                    |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalactic # scalactic_3 #       |
+| p | Version                    | 3.2.12 <http://www.scalatest.org>`__ |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-compatible #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest # scalatest-core_3 #  |
+| p | Version                    | 3.2.12 <http://www.scalatest.org>`__ |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-diagrams_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-featurespec_3 #            |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-flatspec_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-freespec_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest # scalatest-funspec_3 |
+| p | Version                    | #                                    |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-funsuite_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-matchers-core_3 #          |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-mustmatchers_3 #           |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-propspec_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest # scalatest-refspec_3 |
+| p | Version                    | #                                    |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-shouldmatchers_3 #         |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest #                     |
+| p | Version                    | scalatest-wordspec_3 #               |
+| a | 2.0 <http://www.apache.org | 3.2.12 <http://www.scalatest.org>`__ |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| A | `the Apache License, ASL   | `org.scalatest # scalatest_3 #       |
+| p | Version                    | 3.2.12 <http://www.scalatest.org>`__ |
+| a | 2.0 <http://www.apache.org |                                      |
+| c | /licenses/LICENSE-2.0>`__  |                                      |
+| h |                            |                                      |
+| e |                            |                                      |
++---+----------------------------+--------------------------------------+
+| B | `BSD-3-Clause <https://git | `org.scodec # scodec-bits_3 #        |
+| S | hub.com/scodec/scodec-bits | 1.1.34 <https://github.com/scodec/sc |
+| D | /blob/main/LICENSE>`__     | odec-bits>`__                        |
++---+----------------------------+--------------------------------------+
+| C | `CC0 <http://creativecommo | `org.reactivestreams #               |
+| C | ns.org/publicdomain/zero/1 | reactive-streams #                   |
+| 0 | .0/>`__                    | 1.0.3 <http://www.reactive-streams.o |
+|   |                            | rg/>`__                              |
++---+----------------------------+--------------------------------------+
+| M | `MIT <http://opensource.or | `co.fs2 # fs2-core_3 #               |
+| I | g/licenses/MIT>`__         | 3.2.14 <https://typelevel.org/fs2>`_ |
+| T |                            | _                                    |
++---+----------------------------+--------------------------------------+
+| M | `MIT <http://opensource.or | `co.fs2 # fs2-io_3 #                 |
+| I | g/licenses/MIT>`__         | 3.2.14 <https://typelevel.org/fs2>`_ |
+| T |                            | _                                    |
++---+----------------------------+--------------------------------------+
+| M | `MIT <https://opensource.o | `org.typelevel # cats-core_3 #       |
+| I | rg/licenses/MIT>`__        | 2.8.0 <https://typelevel.org/cats>`_ |
+| T |                            | _                                    |
++---+----------------------------+--------------------------------------+
+| M | `MIT <https://opensource.o | `org.typelevel # cats-kernel_3 #     |
+| I | rg/licenses/MIT>`__        | 2.8.0 <https://typelevel.org/cats>`_ |
+| T |                            | _                                    |
++---+----------------------------+--------------------------------------+
+| M | `MIT                       | `org.slf4j # slf4j-api #             |
+| I | License <http://www.openso | 1.7.36 <http://www.slf4j.org>`__     |
+| T | urce.org/licenses/mit-lice |                                      |
+|   | nse.php>`__                |                                      |
++---+----------------------------+--------------------------------------+
+| M | `MIT                       | `org.slf4j # slf4j-simple #          |
+| I | License <http://www.openso | 1.7.36 <http://www.slf4j.org>`__     |
+| T | urce.org/licenses/mit-lice |                                      |
+|   | nse.php>`__                |                                      |
++---+----------------------------+--------------------------------------+
 
 
 

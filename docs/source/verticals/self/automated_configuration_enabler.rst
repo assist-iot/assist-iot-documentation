@@ -8,22 +8,20 @@ Automated Configuration enabler
   :local:
   :depth: 1
 
-Automated configuration_enabler
+Automated configuration enabler
 ===============================
 
-***************
 Introduction
-***************
+------------
 
 Automated Configuration Enabler keeps heterogenous devices and services
 synchronised with their configurations. User can update configuration
 and define fallback configurations in case of errors. Self-\* component
 will be responsible for reacting to changing environment and updating
-configura-tion as necessary
+configuration as necessary
 
-***************
 Features
-***************
+--------
 
 Automated configuration
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,20 +40,11 @@ Connection of heterogenous devices
 -  Various devices, groups of devices, services and other enablers will
    have uniform API to communicate with the Enabler.
 
-
-
-***************
-User guide
-***************
-
 What this Enabler is all about?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Detailed explanation of the Enabler is available within this document -
 `self_config.pdf <uploads/e60e6c6fc2604348f691824fe7543df5/self_config.pdf>`__
-
-HTTP interface - administration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Requirements
 ^^^^^^^^^^^^
@@ -346,49 +335,75 @@ Kafka message will have following format:
 
    "NoAction"
 
-   ###### `ReactionModel`
-
-{ “reactionId”: String, “filterExpression”: FilterExpression, “action”:
-ReactionAction }
+``ReactionModel``
+                 
 
 ::
 
+   {
+     "reactionId": String,
+     "filterExpression": FilterExpression,
+     "action": ReactionAction
+   }
 
-   ### Kafka interface - interaction
+Kafka interface - interaction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Kafka interface is able to consumes three types of message. 
+Kafka interface is able to consumes three types of message.
 
-   #### `RegisterResource`
-
-{ “messageType”: “RegisterResource”, “resource”: { “id”: String,
-“labels”: LabelMap } }
-
-::
-
-
-   #### `RegisterResource`
-
-{ “messageType”: “RegisterResource”, “resource”: { “id”: String,
-“labels”: LabelMap } }
+``RegisterResource``
+^^^^^^^^^^^^^^^^^^^^
 
 ::
 
+   {
+       "messageType": "RegisterResource",
+       "resource": {
+           "id": String,
+           "labels": LabelMap
+       }
+   }
 
-   #### `DeregisterResource`
+.. _registerresource-1:
 
-{ “messageType”: “DeregisterResource”, “resource”: { “id”: String,
-“labels”: LabelMap } }
+``RegisterResource``
+^^^^^^^^^^^^^^^^^^^^
 
 ::
 
+   {
+       "messageType": "RegisterResource",
+       "resource": {
+           "id": String,
+           "labels": LabelMap
+       }
+   }
 
-   #### `CustomMessage`
+``DeregisterResource``
+^^^^^^^^^^^^^^^^^^^^^^
 
-| { “messageType”: “CustomMessage”, “content”: String }
-| \``\`
+::
+
+   {
+     "messageType": "DeregisterResource",
+     "resource": {
+       "id": String,
+       "labels": LabelMap
+     }
+   }  
+
+``CustomMessage``
+^^^^^^^^^^^^^^^^^
+
+::
+
+   {
+     "messageType": "CustomMessage",
+     "content": String
+   }  
 
 Prerequisites
-***************
+-------------
 
 Scala
 ~~~~~
@@ -440,22 +455,19 @@ Testament <https://www.hivemq.com/blog/mqtt-essentials-part-9-last-will-and-test
 `PAHO <https://www.eclipse.org/paho/>`__ provides a broad range of MQTT
 clients.
 
-REST (Enabler’s API)
-~~~~~~~~~~~~~~~~~~~~
-
-Currently it is decided as project-wide standard. REST is overall a web
-standard.
-
-***************************
 Version control and release
-***************************
+---------------------------
 
-We will use gitlab as version control and release tooling.
+The latest version is 1.0.0.
 
-***************
 License
-***************
-Will be determined after the release of the enabler.
+-------
+
+The enabler is licensed under the **Apache License, Version 2.0** (the
+“License”).
+
+One may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
 
 
 

@@ -23,11 +23,12 @@ federation of systems.
 **Semantic Translation Enabler (STE)** enables alignments-based semantic
 translation of RDF data (messages). At its core STE builds on a
 considerably enhanced version of the Inter Platform Semantic Mediator
-(IPSM) component, developed by the INTER-IoT project.
+(IPSM) component, developed by the
+`INTER-IoT <https://inter-iot.github.io/>`__ project.
 
 The translation performed by STE is based on alignments and uses a
 deployment-specific modularized `central
-ontology <IPSM/Central-ontology>`__. For IoT domain, the core modules
+ontology <STE/Central-ontology>`__. For IoT domain, the core modules
 describing, e.g. devices, observations are (usually) based on `GOIoTP
 (Generic Ontology of IoT
 Platforms) <https://inter-iot.github.io/ontology>`__ that is a meta-data
@@ -88,7 +89,7 @@ ecosystem needs to be proposed.
 
 When the message arrives at STE, the RDF named graph *payload* is
 translated with respect to configuration of the semantic translation
-channel (see `Architecture <IPSM/Architecture>`__). Usually two
+channel (see `Architecture <STE/Architecture>`__). Usually two
 alignments are applied, however STE can be configured with special
 predefined IDENTITY alignment that does not change the graph. Another
 remark here, is that STE follows the rule: translate only what can be
@@ -108,8 +109,8 @@ syntactic translation is not necessary.
 
 
 
-IPSM Architecture
-=================
+STE Architecture
+================
 
 STE is a component for performing semantic translation that can be use
 in a standalone mode or in combination with other ASSIST-IoT enablers
@@ -177,8 +178,8 @@ configured with two alignments that are applied sequentially.
 
 
 
-IPSM Central ontology
-=====================
+STE Central ontology
+====================
 
 Central ontology is not directly used by STE, but it needs to be
 established for a given STE deployment, to enable construction of
@@ -605,11 +606,93 @@ Input and output RDF
 
 
 
-Deployment Installation
-=======================
+Deployment Configuration
+========================
 
-The installation procedure documentation for the Semantic Translation
-Enabler is under development.
+Configuration parameters for the STE can be provided by setting the
+appropriate environment variables. For example, to change the port for
+the REST interface from the default ``8080`` to ``8888``
+
+.. code:: sh
+
+   export IPSM_REST_PORT="8888"
+
+By default STE is configured to handle MQTT-MQTT channels only, which in
+terms of environment variable can be expressed as:
+
+.. code:: sh
+
+   export IPSM_BROKER_TYPES.0="MM"
+
+To add Kafka-Kafka type channels handling the above configuration should
+be augmented as follows:
+
+.. code:: sh
+
+   export IPSM_BROKER_TYPES.0="MM"
+   export IPSM_BROKER_TYPES.1="KK"
+
+In order to configure a locally running MQTT server as the source and
+sink for the messages the following set of environment variables can be
+used:
+
+.. code:: sh
+
+   export IPSM_MQTT_SRC_HOST="host.docker.internal"
+   export IPSM_MQTT_SRC_PORT="1883"
+   export IPSM_MQTT_TRG_HOST="host.docker.internal"
+   export IPSM_MQTT_TRG_PORT="1883"
+
+To configure Kafka (streaming) message broker for the STE
+
+.. code:: sh
+
+   export IPSM_KAFKA_HOST="host.decker.internal"
+   export IPSM_KAFKA_PORT="29092"
+
+The configuration parameters can also be set directly by editing the
+``application.conf`` configuration file.
+
+.. code:: yaml
+
+   ipsm = {
+     supported-channel-types = ["MM"] // MQTT-MQTT only – the default
+     //  supported-channel-types = ["KK"] // Kafka-Kafka only
+     //  supported-channel-types = ["MM", "KK"] // Both MQTT-MQTT and Kafka-Kafka
+     supported-channel-types = ${?IPSM_BROKER_TYPES}
+     db-sqlite {
+       driverClassName = org.sqlite.JDBC
+       jdbcUrl = "jdbc:sqlite:/data/ipsm.sqlite"
+     }
+     http {
+       port = "8080"
+       port = ${?IPSM_REST_PORT}
+       host = "0.0.0.0"
+       host = ${?IPSM_REST_HOST}
+     }
+     mqtt {
+       messageSizeLimitInKB = 256
+       messageSizeLimitInKB = ${?IPSM_MQTT_MSG_SIZE}
+       source {
+         host = "host.docker.internal"
+         host = ${?IPSM_MQTT_SRC_HOST}
+         port = 1883
+         port = ${?IPSM_MQTT_SRC_PORT}
+       }
+       target {
+         host = "host.docker.internal"
+         host = ${?IPSM_MQTT_TRG_HOST}
+         port = 1883
+         port = ${?IPSM_MQTT_TRG_PORT}
+       }
+     }
+     kafka = {
+       host = "host.docker.internal"
+       host = ${?IPSM_KAFKA_HOST}
+       port = 29092
+       port = ${?IPSM_KAFKA_PORT}
+     }
+   }
 
 
 
@@ -780,6 +863,11 @@ Name                     Description       Schema
 +-----------------------+-----------------------+-----------------------+
 | Name                  | Description           | Schema                |
 +=======================+=======================+=======================+
+| **chanType**          | Channel input/output  | string                |
+| \ *required*          | type (“MM” for        |                       |
+|                       | MQTT-MQTT, “KK” for   |                       |
+|                       | Kafka-Kafka)          |                       |
++-----------------------+-----------------------+-----------------------+
 | **inpAlignmentName**  | Name of the input     | string                |
 | \ *required*          | alignment, used for   |                       |
 |                       | translating the       |                       |
@@ -953,7 +1041,7 @@ Developers guide REST API Paths
    POST /alignments
 
 Parameters
-~~~~~~~~~~
+''''''''''
 
 ======== ===================== ======================= ========================================
 Type     Name                  Description             Schema
@@ -962,7 +1050,7 @@ Type     Name                  Description             Schema
 ======== ===================== ======================= ========================================
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ========================================================== ======================================
 HTTP Code Description                                                Schema
@@ -974,12 +1062,12 @@ HTTP Code Description                                                Schema
 ========= ========================================================== ======================================
 
 Consumes
-~~~~~~~~~~
+''''''''
 
 -  ``application/xml``
 
 Produces
-~~~~~~~~~~
+''''''''
 
 -  ``application/json``
 
@@ -990,14 +1078,14 @@ Produces
    GET /alignments
 
 Description
-~~~~~~~~~~~
+'''''''''''
 
 Lists alignments uploaded to the STE.
 
 .. _responses-1:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ========================= ==========================================================
 HTTP Code Description               Schema
@@ -1014,7 +1102,7 @@ HTTP Code Description               Schema
 .. _parameters-1:
 
 Parameters
-~~~~~~~~~~
+''''''''''
 
 ======== ======================== ======================================== ======
 Type     Name                     Description                              Schema
@@ -1026,7 +1114,7 @@ Type     Name                     Description                              Schem
 .. _responses-2:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ============================== ================================
 HTTP Code Description                    Schema
@@ -1039,14 +1127,14 @@ HTTP Code Description                    Schema
 .. _consumes-1:
 
 Consumes
-~~~~~~~~~~
+''''''''
 
 -  ``application/json``
 
 .. _produces-1:
 
 Produces
-~~~~~~~~~~
+''''''''
 
 -  ``application/xml``
 
@@ -1059,7 +1147,7 @@ Produces
 .. _parameters-2:
 
 Parameters
-~~~~~~~~~~
+''''''''''
 
 ======== ======================== ================================== =======
 Type     Name                     Description                        Schema
@@ -1071,7 +1159,7 @@ Type     Name                     Description                        Schema
 .. _responses-3:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ========================= ================================
 HTTP Code Description               Schema
@@ -1090,7 +1178,7 @@ HTTP Code Description               Schema
 .. _parameters-3:
 
 Parameters
-~~~~~~~~~~
+''''''''''
 
 ======== ===================== ================ ======
 Type     Name                  Description      Schema
@@ -1101,7 +1189,7 @@ Type     Name                  Description      Schema
 .. _responses-4:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ================================ ================================
 HTTP Code Description                      Schema
@@ -1113,14 +1201,14 @@ HTTP Code Description                      Schema
 .. _consumes-2:
 
 Consumes
-~~~~~~~~~~
+''''''''
 
 -  ``application/xml``
 
 .. _produces-2:
 
 Produces
-~~~~~~~~~~
+''''''''
 
 -  ``application/xml``
 
@@ -1133,7 +1221,7 @@ Produces
 .. _parameters-4:
 
 Parameters
-~~~~~~~~~~
+''''''''''
 
 ======== ===================== ================ ======
 Type     Name                  Description      Schema
@@ -1144,7 +1232,7 @@ Type     Name                  Description      Schema
 .. _responses-5:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ====================================== ================================
 HTTP Code Description                            Schema
@@ -1156,14 +1244,14 @@ HTTP Code Description                            Schema
 .. _consumes-3:
 
 Consumes
-~~~~~~~~~~
+''''''''
 
 -  ``application/xml``
 
 .. _produces-3:
 
 Produces
-~~~~~~~~~~
+''''''''
 
 -  ``application/xml``
 
@@ -1178,7 +1266,7 @@ Produces
 .. _parameters-5:
 
 Parameters
-~~~~~~~~~~
+''''''''''
 
 ======== ===================== ===================== ================================================
 Type     Name                  Description           Schema
@@ -1189,7 +1277,7 @@ Type     Name                  Description           Schema
 .. _responses-6:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ========================================= ======================================
 HTTP Code Description                               Schema
@@ -1201,14 +1289,14 @@ HTTP Code Description                               Schema
 .. _consumes-4:
 
 Consumes
-~~~~~~~~~~
+''''''''
 
 -  ``application/json``
 
 .. _produces-4:
 
 Produces
-~~~~~~~~~~
+''''''''
 
 -  ``application/json``
 
@@ -1221,7 +1309,7 @@ Produces
 .. _description-1:
 
 Description
-~~~~~~~~~~~
+'''''''''''
 
 The endpoint returns the list of all STE channels which are currently
 active.
@@ -1229,7 +1317,7 @@ active.
 .. _responses-7:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ==================================== ======================================================
 HTTP Code Description                          Schema
@@ -1246,7 +1334,7 @@ HTTP Code Description                          Schema
 .. _parameters-6:
 
 Parameters
-~~~~~~~~~~
+''''''''''
 
 ======== ========================== ======================= =======
 Type     Name                       Description             Schema
@@ -1257,7 +1345,7 @@ Type     Name                       Description             Schema
 .. _responses-8:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ====================== ================================
 HTTP Code Description            Schema
@@ -1278,7 +1366,7 @@ HTTP Code Description            Schema
 .. _responses-9:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ========================================== ====================================================
 HTTP Code Description                                Schema
@@ -1289,7 +1377,7 @@ HTTP Code Description                                Schema
 .. _produces-5:
 
 Produces
-~~~~~~~~~~
+''''''''
 
 -  ``application/json``
 
@@ -1302,7 +1390,7 @@ Produces
 .. _parameters-7:
 
 Parameters
-~~~~~~~~~~
+''''''''''
 
 +-----------------+-----------------+-----------------+-----------------+
 | Type            | Name            | Description     | Schema          |
@@ -1316,7 +1404,7 @@ Parameters
 .. _responses-10:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ============================== ====================================================
 HTTP Code Description                    Schema
@@ -1327,7 +1415,7 @@ HTTP Code Description                    Schema
 .. _produces-6:
 
 Produces
-~~~~~~~~~~
+''''''''
 
 -  ``application/json``
 
@@ -1342,7 +1430,7 @@ Produces
 .. _parameters-8:
 
 Parameters
-~~~~~~~~~~
+''''''''''
 
 ======== ===================== ======================== ==========================================================
 Type     Name                  Description              Schema
@@ -1353,7 +1441,7 @@ Type     Name                  Description              Schema
 .. _responses-11:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ======================== ======================================================================
 HTTP Code Description              Schema
@@ -1365,7 +1453,7 @@ HTTP Code Description              Schema
 .. _produces-7:
 
 Produces
-~~~~~~~~~~
+''''''''
 
 -  ``application/json``
 
@@ -1380,7 +1468,7 @@ Produces
 .. _responses-12:
 
 Responses
-~~~~~~~~~~
+'''''''''
 
 ========= ===================================== ====================================================
 HTTP Code Description                           Schema
@@ -1391,11 +1479,20 @@ HTTP Code Description                           Schema
 .. _produces-8:
 
 Produces
-~~~~~~~~~~
+''''''''
 
 -  ``application/json``
 
 
+
+Version control and releases
+============================
+
+The Semantic Translation Enabler source code is available from the
+`ASSIST-IoT
+Github <https://github.com/assist-iot/semantic_translation/>`__
+repository. Currently, the repository contains the code for the initial
+version (1.0.0) of the enabler.
 
 
 
