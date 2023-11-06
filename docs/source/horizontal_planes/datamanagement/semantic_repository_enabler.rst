@@ -316,7 +316,8 @@ webhooks.
 Webhook types (available actions)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Currently there is only one available action for webhooks.
+There a few available actions for webhooks, for detecting content
+uploads and deletes.
 
 ``content_upload``
 ''''''''''''''''''
@@ -352,6 +353,91 @@ Example webhook body:
 -  ``overwrite`` – whether the upload overwrote previously uploaded
    content for this model version
 -  ``size`` – size of the upload in bytes
+
+``namespace_delete``
+^^^^^^^^^^^^^^^^^^^^
+
+Triggered whenever a namespace is deleted.
+
+Example webhook body:
+
+.. code:: json
+
+   {
+     "action": "namespace_delete",
+     "body": {},
+     "context": {
+       "namespace": "w3c"
+     },
+     "hookId": "638f62056d64d41f7c3578ae",
+     "timestamp": "2022-12-06T16:04:10"
+   }
+
+``model_delete``
+^^^^^^^^^^^^^^^^
+
+Triggered whenever a model is deleted.
+
+Example webhook body:
+
+.. code:: json
+
+   {
+     "action": "model_version_delete",
+     "body": {},
+     "context": {
+       "model": "sosa",
+       "namespace": "w3c"
+     },
+     "hookId": "638f62056d64d41f7c3578ae",
+     "timestamp": "2022-12-06T16:04:10"
+   }
+
+``model_version_delete``
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Triggered whenever a model version is deleted.
+
+Example webhook body:
+
+.. code:: json
+
+   {
+     "action": "model_version_delete",
+     "body": {},
+     "context": {
+       "model": "sosa",
+       "namespace": "w3c",
+       "version": "1.0.0"
+     },
+     "hookId": "638f62056d64d41f7c3578ae",
+     "timestamp": "2022-12-06T16:04:10"
+   }
+
+``content_delete``
+^^^^^^^^^^^^^^^^^^
+
+Triggered whenever content is deleted.
+
+Example webhook body:
+
+.. code:: json
+
+   {
+     "action": "content_delete",
+     "body": {
+       "format": "json"
+     },
+     "context": {
+       "model": "sosa",
+       "namespace": "w3c",
+       "version": "1.0.0"
+     },
+     "hookId": "638f62056d64d41f7c3578ae",
+     "timestamp": "2022-12-06T16:04:10"
+   }
+
+-  ``format`` – user-specified format of the upload
 
 
 
