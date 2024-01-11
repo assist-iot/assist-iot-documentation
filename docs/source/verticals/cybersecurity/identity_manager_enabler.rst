@@ -54,17 +54,18 @@ The identification server will offer two interfaces, OAuth2 for identity managem
 
 The API for management has the following specification:
 
-+--------+-------------+----------------------------------------------------+----------------+
++--------+-------------+----------------------------+---------------------+------------------+
 | Method | Endpoint    | Description                | Payload (if needed) | Response format  |
 +========+=============+============================+=====================+==================+
-|  GET   | /health     | Health check API endpoint  |                     | JSON             |
+| GET    | /health     | Health check API endpoint  |                     | JSON             |
 +--------+-------------+----------------------------+---------------------+------------------+
-|  GET   | /api-export | Data import / export       |                     | JSON             |
+| GET    | /api-export | Data import / export       |                     | JSON             |
 +--------+-------------+----------------------------+---------------------+------------------+
-|  GET   | /version​    | Current version            |                     | JSON             |
+| GET    | /version    | Current version            |                     | JSON             |
 +--------+-------------+----------------------------+---------------------+------------------+
-|  GET   | /metrics​    | Metric retrieval           |                     | JSON             |
+| GET    | /metrics    | Metric retrieval           |                     | JSON             |
 +--------+-------------+----------------------------+---------------------+------------------+
+
 
 The OAuth2 interface is provided based on the standard.
 

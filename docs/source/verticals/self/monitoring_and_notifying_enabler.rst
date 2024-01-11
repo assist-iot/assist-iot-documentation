@@ -83,6 +83,7 @@ Assuming we have an IoT or Edge device outside the k8s cluster we create a virtu
 Assuming that we can create the consumer in the form of a "dashboard" that exists in the cluster, so we can constantly watch the temperatures generated, as well as the warnings, we run the following commands:
 
 .. code:: bash
+
   cd consumer
 
   helm install myconsumer .
