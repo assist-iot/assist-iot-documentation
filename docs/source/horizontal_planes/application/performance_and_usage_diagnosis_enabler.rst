@@ -11,23 +11,38 @@ Performance and Usage Diagnosis enabler
 ***************
 Introduction
 ***************
-Performance and Usage Diagnosis (PUD) enabler aims at collecting performance metrics from monitored targets by scraping metrics HTTP endpoints on them and highlighting potential problems in the ASSIST-IoT platform, so that it could autonomously act in accordance or to notify to the platform administrator to fine tuning machine resources. For this purpose we use **Prometheus**, an open-source software that collects metrics from targets by "scraping" metrics HTTP endpoints. Supported "targets" include infrastructure platforms (e.g. Kubernetes), applications, and services (e.g. database management systems). Together with its companion Alertmanager service, Prometheus is a flexible metrics collection and alerting tool.
+**Performance and Usage Diagnosis** (PUD) enabler aims at collecting performance metrics from monitored targets by scraping metrics HTTP endpoints on them and highlighting potential problems in the ASSIST-IoT platform, so that it could notify platform administrator to fine tuning architecture's resources. For this purpose we use **Prometheus**, an open-source software that collects metrics from targets by "scraping" metrics HTTP endpoints. Supported "targets" include kube-state-metrics for monitoring every kubernetes cluster used in the project, node-exporter metrics for monitoring hardware, OS metrics exposed by *NIX kernels, as well as other important metrics for the rest of the enablers used in the architecture. Below is a high-level architecture of Performance and Usage Diagnosis enabler.
+
+.. image:: https://github.com/assist-iot/assist-iot-documentation/assets/100563908/608873fb-09d4-4e1e-81ae-93c92f61dd53
 
 ***************
 Features
 ***************
-Prometheus is an open-source monitoring framework. It provides out-of-the-box monitoring capabilities for the Kubernetes container orchestration platform. Its main features are:
+
+Performance and Usage Diagnosis (PUD) enabler's features
+--------------------------------------------------------
+- **Prometheus Server** is an open-source monitoring framework. It provides out-of-the-box monitoring capabilities for the Kubernetes container orchestration platform. Its main features are:
 
 
-- **Metric Collection**: Prometheus uses the pull model to retrieve metrics over HTTP. There is an option to push metrics to Prometheus using Pushgateway for use cases where Prometheus cannot Scrape the metrics.
+  1. **Metric Collection**: Prometheus uses the pull model to retrieve metrics over HTTP. There is an option to push metrics to Prometheus using Pushgateway for use cases where Prometheus cannot Scrape the metrics.
 
-- **Metric Endpoint**: The systems that you want to monitor using Prometheus should expose the metrics on an /metrics endpoint. Prometheus uses this endpoint to pull the metrics in regular intervals.
+  2. **Metric Endpoint**: The systems that you want to monitor using Prometheus should expose the metrics on an /metrics endpoint. Prometheus uses this endpoint to pull the metrics in regular intervals.
 
-- **PromQL**: Prometheus comes with PromQL, a very flexible query language that can be used to query the metrics in the Prometheus dashboard. Also, the PromQL query will be used by Prometheus UI and Grafana to visualize metrics.
+  3. **PromQL**: Prometheus comes with PromQL, a very flexible query language that can be used to query the metrics in the Prometheus dashboard. Also, the PromQL query will be used by Prometheus UI and Grafana to visualize metrics.
 
-- **Prometheus Exporters**: Exporters are libraries which converts existing metric from third-party apps to Prometheus metrics format. There are many official and community Prometheus exporters. One example is, Kube State metrics, a service which talks to Kubernetes API server to get all the details about all the API objects like deployments, pods, daemonsets etc.
+  4. **Prometheus Exporters**: Exporters are libraries which converts existing metric from third-party apps to Prometheus metrics format. There are many official and community Prometheus exporters. One example is, Kube State metrics, a service which talks to Kubernetes API server to get all the details about all the API objects like deployments, pods, daemonsets etc.
 
-- **TSDB** (time-series database): Prometheus uses TSDB for storing all the data. By default, all the data gets stored locally. However, there are options to integrate remote storage for Prometheus TSDB.
+  5. **TSDB** (time-series database): Prometheus uses TSDB for storing all the data. By default, all the data gets stored locally. However, there are options to integrate remote storage for Prometheus TSDB.
+
+- **Prometheus-es-adapter** is a read and write adapter for integrading LTSE's elastic search as prometheus' persistent storage.
+
+- **Prom-target-api** is an API for dynamically add, update and delete monitored targets.
+
+- **Grafana** is a multi-platform open source analytics and interactive visualization web application. It's used for creating and visualizing dashboads with graphs generated by prometheus metrics for more user friendly monitoring experience.
+ 
+- **Kube-state-metrics** is a listening service that generates metrics about the state of Kubernetes objects through leveraging the Kubernetes API.
+
+- **Node_exporter** is a Prometheus exporter for hardware and OS metrics exposed by *NIX kernels, written in Go is installed seperately in every GWEN and Ubuntu device. The node_exporter is designed to monitor the host system and it requires access to the host system so it's not recommended to get deployed as a Docker container.
 
 *********************
 Place in architecture
@@ -36,33 +51,27 @@ Performance and Usage Diagnosis (PUD) enabler is located in the Application and 
 
 .. image:: https://user-images.githubusercontent.com/100563908/156375733-78f4f855-139f-4c55-8241-d6052d15f783.PNG
 
-**Here is the high-level architecture of Prometheus.**
-
-.. image:: https://prometheus.io/assets/architecture.png
-
-Prometheus scrapes metrics from instrumented jobs. It stores all scraped samples locally and runs rules over this data to either aggregate and record new time series from existing data or generate alerts.
-
-Prometheus works well for recording any purely numeric time series. It fits both machine-centric monitoring as well as monitoring of highly dynamic service-oriented architectures. In a world of microservices, its support for multi-dimensional data collection and querying is a particular strength.
-
-Prometheus is designed for reliability, to be the system you go to during an outage to allow you to quickly diagnose problems. Each Prometheus server is standalone, not depending on network storage or other remote services. You can rely on it when other parts of your infrastructure are broken, and you do not need to setup extensive infrastructure to use it.
+PUD's Prometheus scrapes metrics from instrumented jobs. It stores all scraped samples locally and runs rules over this data to either aggregate and record new time series from existing data.
+It works well for recording any purely numeric time series. It fits both machine-centric monitoring as well as monitoring of highly dynamic service-oriented architectures. In a world of microservices, its support for multi-dimensional data collection and querying is a particular strength.
+PUD's Prometheus is designed for reliability, to be the system you go to during an outage to allow you to quickly diagnose problems. Each Prometheus server is standalone, not depending on network storage or other remote services. You can rely on it when other parts of your infrastructure are broken, and you do not need to setup extensive infrastructure to use it.
 
 ***************
 User guide
 ***************
-Prometheus provides a web UI for running basic queries located at `http://<your_server_IP>:9090/`. This is how it looks like in a web browser:
+PUD's **Prometheus server** provides a web UI for running basic queries located at ``http://<IP>:<NodePort>/``. This is how it looks like in a web browser:
 
-.. image:: https://user-images.githubusercontent.com/100563908/156012977-574cd9f1-5c65-4ae2-bfdf-90c492967e85.PNG
+.. image:: https://user-images.githubusercontent.com/100563908/222110319-fa6212cb-6eaf-460b-8a09-1ba310f69eeb.PNG
 The “Table” tab is used to view the results of a query, while the “Graph” tab is used to create graphs based on a query.
 
 .. image:: https://user-images.githubusercontent.com/100563908/156175560-b75810c9-ae49-45f6-80ff-6b5a59504f35.PNG
 
-If you want to see a list of metrics sources, go to the Status → Targets page. Here, you will find a list of all services that are being monitored, including the path at which the metrics are available. In this case, the default path /metrics is used.
+If you want to see a list of metrics sources, go to the ``Status > Targets page``. Here, you will find a list of all services that are being monitored, including the path at which the metrics are available. In this case, the default path /metrics is used.
 
-.. image:: https://user-images.githubusercontent.com/100563908/156013055-80bf10cb-1be4-4b80-9e45-ee31d4ef14c8.PNG
+.. image:: https://user-images.githubusercontent.com/100563908/222110555-a19fd69e-a58b-4c5c-ba4e-8e734498d043.PNG
 
 If you’re curious to see how the metrics page looks like, head over to one of them by clicking one of the endpoint URLs.
 
-.. image:: https://user-images.githubusercontent.com/100563908/156013117-33257cdf-2d1d-443b-86c9-37fe6f42d3e4.PNG
+.. image:: https://user-images.githubusercontent.com/100563908/222110668-aa978e2c-db76-4595-b288-c92c59b39ec2.PNG
 
 The Prometheus server collects metrics and stores them in a time series database. Individual metrics are identified with names such as kube_pod_container_resource_requests. A metric may have a number of “labels” attached to it, to distinguish it from other similar sources of metrics. As an example, suppose kube_pod_container_resource_requests refers to the number of requested request resource by a container. It may have a label such as resource, which helps you inspect individual system resources by mentioning them.
  
@@ -77,6 +86,82 @@ In PromQL, an expression or subexpression should always evaluate to one of the f
 
 For more about Querying please refer to Prometheus' `documentation <https://prometheus.io/docs/prometheus/latest/querying/basics/>`_ to get started.
 
+To dynamically add, update and delete scraping targets access PUD's **Prom-target-api** swagger page ``http://<IP>:<NodePort>/docs``. The updated targets can be seen in Prometheus' server targets page.
+
+.. image:: https://github.com/assist-iot/pud/assets/100563908/0cdde15d-a6d8-4667-a483-b290c0f994b6
+
+PUD's **Grafana** provides a powerful and flexible platform for creating visually appealing and informative dashboards to help you gain insights and monitor the whole system/architecture. 
+
+First the user needs to get logged in:
+
+.. image:: https://user-images.githubusercontent.com/100563908/222115506-ec86a444-5528-45bf-9f88-eb379157573a.PNG
+
+**To access PUD's Grafana Dashboard UI:**
+
+Port forward grafana's pod to port 3000:
+
+.. code:: cmd
+
+  kubectl port-forward pude-grafana-6986754ffd-7gr62 3000
+
+In PUD's Grafana login page use:
+
+Username: ``admin``
+
+To find the current password enter: 
+
+.. code:: cmd
+
+  kubectl get secret pude-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+To get kubernetes secrets and grafana's secret name witch in our case is `pude-grafana` enter:
+
+.. code:: cmd
+
+  kubectl get secrets
+
+To change your grafanas password enter:
+
+.. code:: cmd
+
+  kubectl exec -it <grafanas pod name> grafana-cli admin reset-admin-password <your reset password>
+
+After login user should choose and **add Prometheus data sourse in PUD's Grafana**.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222114194-991a1898-34bd-4868-bdb3-bbdb6c11bc51.PNG
+
+By going to ``Settings > Add Data Source > Prometheus``.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222114686-98433e40-8bb5-4285-8810-787b33fed86c.PNG
+
+To set Prometheus' URL under HTTP settings first find performanceandusagediagnosis-server clusterIP:
+
+.. code:: cmd
+
+  kubectl get services
+
+- Copy and Paste the IP in the URL field.
+
+- ``Save & Test``
+
+After choosing data source user should **import new Dashboards for PUD's Grafana**.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222116609-cb3aebe3-d4e7-4d46-a234-1f2f85b3fa8b.PNG
+
+- Go to ``Dashboards > + Import``.
+
+- Upload Dashboard's json file or choose one from grafana.com.
+
+- ``Load``
+
+Dashboards regarding *Kube state metrics* and *Node_exporter* can be found in PUD's `repository <https://gitlab.assist-iot.eu/wp4/applications/pud-enabler>`_ in ``grafana-dashboards`` directory.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222117715-e297f520-15bc-4ac7-8d25-54b1fac71270.PNG
+
+By going to ``Dashboards`` user can access and manage all of his dashboards.
+
+.. image:: https://user-images.githubusercontent.com/100563908/222118360-a47c1f43-c8d8-4031-a520-9b1b674c2862.PNG
+
 ***************
 Prerequisites
 ***************
@@ -86,41 +171,102 @@ Prerequisites
 ***************
 Installation
 ***************
-**PUD Helm Chart**
 
-**Helm** must be installed to use the charts. Please refer to Helm's `documentation <https://helm.sh/docs/>`_ to get started.
+Performance and Usage Diagnosis (PUD) Enabler Installation
+----------------------------------------------------------
 
-- Once Helm is set up properly, add the repo as follows:
+**To install the chart with the release name pude for Ubuntu Architectures:**
 
-  ``helm repo add --username <<Username>> --password <<Token>> PUD https://gitlab.assist-iot.eu/api/v4/projects/60/packages/helm/stable``
+.. code:: cmd
 
-To obtain an Access Token:
-    
-  1. Go to Settings > Access Tokens.
-    
-  2. Insert a Token name.
-    
-  3. Insert an Expiration date (Optional).
-    
-  4. Select api scope.
-    
+  helm repo add assist-public-repo https://gitlab.assist-iot.eu/api/v4/projects/85/packages/helm/stable
+  helm install pude assist-public-repo assist-public-repo/performanceandusagediagnosis
 
-- Update Helm's repositories.
+**Else you can also clone https://github.com/assist-iot/pud repo to your machine and install Performance and Usage Diagnosis Enabler.**
 
-  ``helm repo update``
+Install Performance and Usage Diagnosis Enabler
 
-- Install PUD's Prometheus to your Kubernetes system using the following command:
+.. code:: cmd
 
-  ``helm install PUD/prometheus --name my-release``
+  helm install pude ./performanceandusagediagnosis
 
-- Install PUD's Prometheus-elastic-adapter, Prometheus' remote storage adapter for Elasticsearch to your Kubernetes system using the following command:
 
-  ``helm install PUD/prometheus-elastic-adapter --name my-release``
+To check if the installation was successful run:
 
-- Install Elasticsearch and Kibana to your Kubernetes system using the following command:
+.. code:: cmd
 
-  ``helm install PUD/elasticsearch-kibana --name my-release``
+  kubectl get pods
 
+
+The result should show something like:
+
+.. code::
+
+  NAME                                                              READY   STATUS    RESTARTS          AGE
+  pude-grafana-6769c95d99-gz8q7                                     1/1     Running   0                 119s
+  pude-kube-state-metrics-5d764bf9d9-2p6r7                          1/1     Running   0                 119s
+  pude-performanceandusagediagnosis-prometheusesadapter-6d87pgkwt   1/1     Running   0                 119s
+  pude-performanceandusagediagnosis-server-579b59c787-6zngr         2/2     Running   0                 119s
+  pude-performanceandusagediagnosis-targetapi-68b74bb646-qhtnr      1/1     Running   0                 119s
+  pude-prometheus-node-exporter-fjr2k                               1/1     Running   0                 119s
+
+
+**Node_exporter Installation**
+
+Node_exporter is a Prometheus exporter for hardware and OS metrics exposed by *NIX kernels. It's part of PUD's helm chart but because is designed to monitor the host system it's not recommended to deploy it as a Docker container because it requires access to the host system.
+
+Node_exporter could also be installed separately on edge nodes and other devices in order to monitor their hardware and OS.
+Below is the installation process of Node_exporter as system service.
+
+- Create a node_exporter user to run the node exporter service.
+
+.. code:: cmd
+  
+  sudo useradd -rs /bin/false node_exporter
+  
+- Create a node_exporter service file under systemd.
+
+.. code:: cmd
+
+  sudo vi /etc/systemd/system/node_exporter.service
+  
+- Add the following service file content to the service file and save it.
+
+.. code:: cmd
+
+  [Unit]
+  Description=Node Exporter
+  After=network.target
+  
+  [Service]
+  User=node_exporter
+  Group=node_exporter
+  Type=simple
+  ExecStart=/usr/local/bin/node_exporter
+  
+  [Install]
+  WantedBy=multi-user.target
+
+- Reload the system daemon and star the node exporter service.
+
+.. code:: cmd
+
+  sudo systemctl daemon-reload
+  sudo systemctl start node_exporter
+  
+- Check the node exporter status to make sure it is running in the active state.
+
+.. code:: cmd
+
+  sudo systemctl status node_exporter
+  
+- Enable the node exporter service to the system startup.
+
+.. code:: cmd
+
+  sudo systemctl enable node_exporter
+
+Now, node exporter would be exporting metrics on port ``9100``. 
 
 *********************
 Configuration options
@@ -128,629 +274,333 @@ Configuration options
 The following table lists the configurable parameters of the **Prometheus** chart and their default values.
 
 .. list-table::
-   :widths: 25 50 20
+   :widths: 50 10 25
    :header-rows: 1
    
    * - Parameter
      - Description
      - Default
-   * - alertmanager.enabled
-     - If true, create alertmanager
-     - ``true``
-   * - alertmanager.name
-     - alertmanager container name
-     - ``alertmanager``
-   * - alertmanager.useClusterRole
-     - Use a ClusterRole (and ClusterRoleBinding). If set to false - we define a Role and RoleBinding in the defined namespaces ONLY. This makes alertmanager work - for users who do not have ClusterAdmin privs, but wants alertmanager to operate on their own namespaces, instead of clusterwide.
-     - ``alertmanager``
-   * - alertmanager.useExistingRole
-     - Set to a rolename to use existing role - skipping role creating - but still doing serviceaccount and rolebinding to the rolename set here.
-     - ``alertmanager``
-   * - alertmanager.image.repository
-     - alertmanager container image repository
-     - ``prom/alertmanager``
-   * - alertmanager.image.tag
-     - alertmanager container image tag
-     - ``v0.21.0``
-   * - alertmanager.image.pullPolicy
-     - alertmanager container image pull policy
-     - ``IfNotPresent``
-   * - alertmanager.prefixURL
-     - The prefix slug at which the server can be accessed
-     - ``
-   * - alertmanager.baseURL
-     - The external url at which the server can be accessed
-     - ``"http://localhost:9093"``
-   * - alertmanager.extraArgs
-     - Additional alertmanager container arguments
+   * - nameOverride
+     - string to partially override enabler.fullname template
+     - ``""``
+   * - fullnameOverride
+     - string to fully override enabler.fullname template
+     - ``""``
+   * - enablerNodeSelector
+     - Deploy all the components in specific K8s node(s)
      - ``{}``
-   * - alertmanager.extraSecretMounts
-     - Additional alertmanager Secret mounts
-     - ``[]``
-   * - alertmanager.configMapOverrideName
-     - Prometheus alertmanager ConfigMap override where full-name is {{.Release.Name}}-{{.Values.alertmanager.configMapOverrideName}} and setting this value will prevent the default alertmanager ConfigMap from being generated
-     - ``""``
-   * - alertmanager.configFromSecret
-     - The name of a secret in the same kubernetes namespace which contains the Alertmanager config, setting this value will prevent the default alertmanager ConfigMap from being generated
-     - ``""``
-   * - alertmanager.configFileName
-     - The configuration file name to be loaded to alertmanager. Must match the key within configuration loaded from ConfigMap/Secret.
-     - ``alertmanager.yml``
-   * - alertmanager.ingress.enabled
-     - If true, alertmanager Ingress will be created
+   * - globalService
+     - Cilium Multi-cluster global service.
      - ``false``
-   * - alertmanager.ingress.annotations
-     - alertmanager Ingress annotations
-     - ``{}``
-   * - alertmanager.ingress.extraLabels
-     - alertmanager Ingress additional labels
-     - ``{}``
-   * - alertmanager.ingress.hosts
-     - alertmanager Ingress hostnamesv
-     - ``[]``
-   * - alertmanager.ingress.extraPaths
-     - Ingress extra paths to prepend to every alertmanager host configuration. Useful when configuring custom actions with AWS ALB Ingress Controller
-     - ``[]``
-   * - alertmanager.ingress.tls
-     - alertmanager Ingress TLS configuration (YAML)
-     - ``[]``
-   * - alertmanager.nodeSelector
-     - node labels for alertmanager pod assignment
-     - ``{}``
-   * - alertmanager.tolerations
-     - node taints to tolerate (requires Kubernetes >=1.6)
-     - ``[]``
-   * - alertmanager.affinity
-     - pod affinity
-     - ``{}``
-   * - alertmanager.podDisruptionBudget.enabled
-     - If true, create a PodDisruptionBudget
-     - ``false``
-   * - alertmanager.podDisruptionBudget.maxUnavailable
-     - Maximum unavailable instances in PDB
-     - ``1``
-   * - alertmanager.schedulerName
-     - alertmanager alternate scheduler name
-     - ``nil``
-   * - alertmanager.persistentVolume.enabled
-     - If true, alertmanager will create a Persistent Volume Claim
-     - ``true``
-   * - alertmanager.persistentVolume.accessModes
-     - alertmanager data Persistent Volume access modes
-     - ``[ReadWriteOnce]``
-   * - alertmanager.persistentVolume.annotations
-     - Annotations for alertmanager Persistent Volume Claim
-     - ``{}``
-   * - alertmanager.persistentVolume.existingClaim
-     - alertmanager data Persistent Volume existing claim name
-     - ``""``
-   * - alertmanager.persistentVolume.mountPath
-     - alertmanager data Persistent Volume mount root path
-     - ``/data``
-   * - alertmanager.persistentVolume.size
-     - alertmanager data Persistent Volume size
-     - ``2Gi``
-   * - alertmanager.persistentVolume.storageClass
-     - alertmanager data Persistent Volume Storage Class
-     - ``unset``
-   * - alertmanager.persistentVolume.volumeBindingMode
-     - alertmanager data Persistent Volume Binding Mode
-     - ``unset``
-   * - alertmanager.persistentVolume.subPath
-     - Subdirectory of alertmanager data Persistent Volume to mount
-     - ``""``
-   * - alertmanager.podAnnotations
-     - annotations to be added to alertmanager pods
-     - ``{}``
-   * - alertmanager.podLabels
-     - labels to be added to Prometheus AlertManager pods
-     - ``{}``
-   * - alertmanager.podSecurityPolicy.annotations
-     - Specify pod annotations in the pod security policy
-     - ``{}``
-   * - alertmanager.replicaCount
-     - desired number of alertmanager pods
-     - ``1``
-   * - alertmanager.statefulSet.enabled
-     - If true, use a statefulset instead of a deployment for pod management
-     - ``false``
-   * - alertmanager.statefulSet.podManagementPolicy
-     - podManagementPolicy of alertmanager pods
-     - ``OrderedReady``
-   * - alertmanager.statefulSet.headless.annotations
-     - annotations for alertmanager headless service
-     - ``{}``
-   * - alertmanager.statefulSet.headless.labels
-     - labels for alertmanager headless service
-     - ``{}``
-   * - alertmanager.statefulSet.headless.enableMeshPeer
-     - If true, enable the mesh peer endpoint for the headless service
-     - ``false``
-   * - alertmanager.statefulSet.headless.servicePort
-     - alertmanager headless service port
-     - ``80``
-   * - alertmanager.priorityClassName
-     - alertmanager priorityClassName
-     - ``nil``
-   * - alertmanager.resources
-     - alertmanager pod resource requests & limits
-     - ``{}``
-   * - alertmanager.securityContext
-     - Custom security context for Alert Manager containers
-     - ``{}``
-   * - alertmanager.service.annotations
-     - annotations for alertmanager service
-     - ``{}``
-   * - alertmanager.service.clusterIP
-     - internal alertmanager cluster service IP
-     - ``""``
-   * - alertmanager.service.externalIPs
-     - alertmanager service external IP addresses
-     - ``[]``
-   * - alertmanager.service.loadBalancerIP
-     - IP address to assign to load balancer (if supported)
-     - ``""``
-   * - alertmanager.service.loadBalancerSourceRanges
-     - list of IP CIDRs allowed access to load balancer (if supported)
-     - ``[]``
-   * - alertmanager.service.servicePort
-     - alertmanager service port
-     - ``80``
-   * - alertmanager.service.sessionAffinity
-     - Session Affinity for alertmanager service, can be None or ClientIP
-     - ``None``
-   * - alertmanager.service.type
-     - type of alertmanager service to create
-     - ``ClusterIP``
-   * - alertmanager.strategy
-     - Deployment strategy
-     - ``{ "type": "RollingUpdate" }``
-   * - alertmanagerFiles.alertmanager.yml
-     - Prometheus alertmanager configuration
-     - ``example configuration``
-   * - configmapReload.prometheus.enabled
-     - If false, the configmap-reload container for Prometheus will not be deployed
-     - ``true``
-   * - configmapReload.prometheus.name
-     - configmap-reload container name
-     - ``configmap-reload``
-   * - configmapReload.prometheus.image.repository
-     - configmap-reload container image repository
-     - ``jimmidyson/configmap-reload``
-   * - configmapReload.prometheus.image.tag
-     - configmap-reload container image tag
-     - ``v0.4.0``
-   * - configmapReload.prometheus.image.pullPolicy
-     - configmap-reload container image pull policy
-     - ``IfNotPresent``
-   * - configmapReload.prometheus.extraArgs
-     - Additional configmap-reload container arguments
-     - ``{}``
-   * - configmapReload.prometheus.extraVolumeDirs
-     - Additional configmap-reload volume directories
-     - ``{}``
-   * - configmapReload.prometheus.extraConfigmapMounts
-     - Additional configmap-reload configMap mounts
-     - ``[]``
-   * - configmapReload.prometheus.resources
-     - configmap-reload pod resource requests & limits
-     - ``{}``
-   * - configmapReload.alertmanager.enabled
-     - If false, the configmap-reload container for AlertManager will not be deployed
-     - ``true``
-   * - configmapReload.alertmanager.name
-     - configmap-reload container name
-     - ``configmap-reload``
-   * - configmapReload.alertmanager.image.repository
-     - configmap-reload container image repository
-     - ``jimmidyson/configmap-reload``
-   * - configmapReload.alertmanager.image.repository
-     - configmap-reload container image repository
-     - ``jimmidyson/configmap-reload``
-   * - configmapReload.alertmanager.image.tag
-     - configmap-reload container image tag
-     - ``v0.4.0``
-   * - configmapReload.alertmanager.image.pullPolicy
-     - configmap-reload container image pull policy
-     - ``IfNotPresent``
-   * - configmapReload.alertmanager.extraArgs
-     - Additional configmap-reload container arguments
-     - ``{}``
-   * - configmapReload.alertmanager.extraVolumeDirs
-     - Additional configmap-reload volume directories
-     - ``{}``
-   * - configmapReload.alertmanager.extraConfigmapMounts
-     - Additional configmap-reload configMap mounts
-     - ``[]``
-   * - configmapReload.alertmanager.resources
-     - configmap-reload pod resource requests & limits
-     - ``{}``
-   * - initChownData.enabled
-     - If false, don't reset data ownership at startup
-     - ``true``
-   * - initChownData.name
-     - init-chown-data container name
-     - ``init-chown-data``
-   * - initChownData.image.repository
-     - init-chown-data container image repository
-     - ``busybox``
-   * - initChownData.image.tag
-     - init-chown-data container image tag
-     - ``latest``
-   * - initChownData.image.pullPolicy
-     - init-chown-data container image pull policy
-     - ``IfNotPresent``
-   * - initChownData.resources
-     - init-chown-data pod resource requests & limits
-     - ``{}``
-   * - kubeStateMetrics.enabled
-     - If true, create kube-state-metrics sub-chart
-     - ``true``
-   * - kube-state-metrics
-     - kube-state-metrics configuration options
-     - ``Same as sub-chart's``
-   * - rbac.create
-     - If true, create & use RBAC resources
-     - ``true``
    * - server.enabled
-     - If false, Prometheus server will not be created
+     - whether prometheus server component is enabled
      - ``true``
-   * - server.name
-     - Prometheus server container name
-     - ``server``
+   * - server.tier
+     - prometheus server's tier
+     - ``external``
+   * - server.replicaCount
+     - prometheus server's number of replicas
+     - ``1``
+   * - server.imagePullSecrets
+     - prometheus server's image pull secrets
+     - ``[]``
    * - server.image.repository
-     - Prometheus server container image repository
-     - ``prom/prometheus``
+     - prometheus server's image repository
+     - ``quay.io/prometheus/prometheus``
    * - server.image.tag
-     - Prometheus server container image tag
-     - ``v2.20.1``
+     - prometheus server's image tag
+     - ``"v2.36.2"``
    * - server.image.pullPolicy
-     - Prometheus server container image pull policy
+     - prometheus server's image pull policy
      - ``IfNotPresent``
+   * - server.service.type
+     - prometheus server's service type
+     - ``NodePort``
+   * - server.service.ports.server.enabled
+     - whether prometheus server's port is enabled
+     - ``true``
+   * - server.service.ports.server.port
+     - prometheus server's port
+     - ``9090``
+   * - server.service.ports.server.targetPort
+     - prometheus server's targetPort
+     - ``9090``
+   * - server.service.ports.server.containerPort
+     - prometheus server's containerPort
+     - ``9090``
+   * - server.service.ports.server.nodePort
+     - prometheus server's nodePort
+     - ``""``
+   * - server.service.ports.server.protocol
+     - prometheus server's port protocol
+     - ``TCP``
+   * - server.resources
+     - resource requests and limits
+     - ``{}``
+   * - server.autoscaling.enabled
+     - whether prometheus server's autoscaling is enabled
+     - ``true``
+   * - server.podSecurityContext
+     - prometheus server's pod security context
+     - ``{}``
+   * - server.securityContext
+     - prometheus server's security context
+     - ``{}``
+   * - server.envVars
+     - prometheus server's environmental variables
+     - see values.yaml
    * - server.configPath
-     - Path to a prometheus server config file on the container FS
+     - prometheus server's configPath
      - ``/etc/config/prometheus.yml``
    * - server.global.scrape_interval
-     - How frequently to scrape targets by default
+     - how frequently prometheus server scrape targets by default
      - ``1m``
-   * - server.global.scrape_timeout
-     - How long until a scrape request times out
+   * - server.global.scrape_interval
+     - how long until a scrape request times out
      - ``10s``
    * - server.global.evaluation_interval
-     - How frequently to evaluate rules
+     - how frequently prometheus server evaluate rules
      - ``1m``
    * - server.remoteWrite
-     - The remote write feature of Prometheus allow transparently sending samples.
-     - ``[]``
-   * - server.remoteRead
-     - The remote read feature of Prometheus allow transparently receiving samples.
-     - ``[]``
-   * - server.extraArgs
-     - Additional Prometheus server container arguments
-     - ``{}``
-   * - server.extraFlags
-     - Additional Prometheus server container flags
-     - ``["web.enable-lifecycle"]``
-   * - server.extraInitContainers
-     - Init containers to launch alongside the server
-     - ``[]``
-   * - server.prefixURL
-     - The prefix slug at which the server can be accessed
-     - ``
-   * - server.baseURL
-     - The external url at which the server can be accessed
-     - ``
-   * - server.env
-     - Prometheus server environment variables
-     - ``[]``
-   * - server.extraHostPathMounts
-     - Additional Prometheus server hostPath mounts
-     - ``[]``
-   * - server.extraConfigmapMounts
-     - Additional Prometheus server configMap mounts
-     - ``[]``
-   * - server.extraSecretMounts
-     - Additional Prometheus server Secret mounts
-     - ``[]``
-   * - server.extraVolumeMounts
-     - Additional Prometheus server Volume mounts
-     - ``[]``
-   * - server.extraVolumes
-     - Additional Prometheus server Volumes
-     - ``[]``
-   * - server.configMapOverrideName
-     - Prometheus server ConfigMap override where full-name is {{.Release.Name}}-{{.Values.server.configMapOverrideName}} and setting this value will prevent the default server ConfigMap from being generated
+     - prometheus server remote write configuration
      - ``""``
-   * - server.ingress.enabled
-     - If true, Prometheus server Ingress will be created
-     - ``false``
-   * - server.ingress.annotations
-     - Prometheus server Ingress annotations
-     - ``[]``
-   * - server.ingress.extraLabels
-     - Prometheus server Ingress additional labels
-     - ``{}``
-   * - server.ingress.hosts
-     - Prometheus server Ingress hostnames
-     - ``[]``
-   * - server.ingress.extraPaths
-     - Ingress extra paths to prepend to every Prometheus server host configuration. Useful when configuring custom actions with AWS ALB Ingress Controller
-     - ``[]``
-   * - server.ingress.tls
-     - Prometheus server Ingress TLS configuration (YAML)
-     - ``[]``
+   * - server.remoteRead
+     - prometheus server remote read configuration
+     - ``""``
    * - server.nodeSelector
-     - node labels for Prometheus server pod assignment
+     - prometheus server's node selector
      - ``{}``
    * - server.tolerations
-     - node taints to tolerate (requires Kubernetes >=1.6)
+     - prometheus server's tolerations
      - ``[]``
    * - server.affinity
-     - pod affinity
+     - prometheus server's affinity
      - ``{}``
-   * - server.podDisruptionBudget.enabled
-     - If true, create a PodDisruptionBudget
+   * - alertmanager.enabled
+     - whether alertmanager component is enabled
      - ``false``
-   * - server.podDisruptionBudget.maxUnavailable
-     - Maximum unavailable instances in PDB
+   * - alertmanager.tier
+     - alertmanager's tier
+     - ``external``
+   * - alertmanager.replicaCount
+     - alertmanager's number of replicas
      - ``1``
-   * - server.priorityClassName
-     - Prometheus server priorityClassName
-     - ``nil``
-   * - server.enableServiceLinks
-     - Set service environment variables in Prometheus server pods
-     - ``true``
-   * - server.schedulerName
-     - Prometheus server alternate scheduler name
-     - ``nil``
-   * - server.persistentVolume.enabled
-     - If true, Prometheus server will create a Persistent Volume Claim
-     - ``true``
-   * - server.persistentVolume.accessModes
-     - Prometheus server data Persistent Volume access modes
-     - ``[ReadWriteOnce]``
-   * - server.persistentVolume.annotations
-     - Prometheus server data Persistent Volume annotations
-     - ``{}``
-   * - server.persistentVolume.existingClaim
-     - Prometheus server data Persistent Volume existing claim name
-     - ``""``
-   * - server.persistentVolume.mountPath
-     - Prometheus server data Persistent Volume mount root path
-     - ``/data``
-   * - server.persistentVolume.size
-     - Prometheus server data Persistent Volume size
-     - ``8Gi``
-   * - server.persistentVolume.storageClass
-     - Prometheus server data Persistent Volume Storage Class
-     - ``unset``
-   * - server.persistentVolume.volumeBindingMode
-     - Prometheus server data Persistent Volume Binding Mode
-     - ``unset``
-   * - server.persistentVolume.subPath
-     - Subdirectory of Prometheus server data Persistent Volume to mount
-     - ``""``
-   * - server.emptyDir.sizeLimit
-     - emptyDir sizeLimit if a Persistent Volume is not used
-     - ``""``
-   * - server.podAnnotations
-     - annotations to be added to Prometheus server pods
-     - ``{}``
-   * - server.podLabels
-     - labels to be added to Prometheus server pods
-     - ``{}``
-   * - server.alertmanagers
-     - Prometheus AlertManager configuration for the Prometheus server
-     - ``{}``
-   * - server.deploymentAnnotations
-     - annotations to be added to Prometheus server deployment
-     - ``{}``
-   * - server.podSecurityPolicy.annotations
-     - Specify pod annotations in the pod security policy
-     - ``{}``
-   * - server.replicaCount
-     - desired number of Prometheus server pods
-     - ``1``
-   * - server.statefulSet.enabled
-     - If true, use a statefulset instead of a deployment for pod management
-     - ``false``
-   * - server.statefulSet.annotations
-     - annotations to be added to Prometheus server stateful set
-     - ``{}``
-   * - server.statefulSet.labels
-     - labels to be added to Prometheus server stateful set
-     - ``{}``
-   * - server.statefulSet.podManagementPolicy
-     - podManagementPolicy of server pods
-     - ``OrderedReady``
-   * - server.podLabels
-     - labels to be added to Prometheus server pods
-     - ``{}``
-   * - server.alertmanagers
-     - Prometheus AlertManager configuration for the Prometheus server
-     - ``{}``
-   * - server.deploymentAnnotations
-     - annotations to be added to Prometheus server deployment
-     - ``{}``
-   * - server.podSecurityPolicy.annotations
-     - Specify pod annotations in the pod security policy
-     - ``{}``
-   * - server.replicaCount
-     - desired number of Prometheus server pods
-     - ``1``
-   * - server.statefulSet.enabled
-     - If true, use a statefulset instead of a deployment for pod management
-     - ``false``
-   * - server.statefulSet.annotations
-     - annotations to be added to Prometheus server stateful set
-     - ``{}``
-   * - server.statefulSet.labels
-     - labels to be added to Prometheus server stateful set
-     - ``{}``
-   * - server.statefulSet.podManagementPolicy
-     - podManagementPolicy of server pods
-     - ``OrderedReady``
-   * - server.statefulSet.headless.annotations
-     - annotations for Prometheus server headless service
-     - ``{}``
-   * - server.statefulSet.headless.labels
-     - labels for Prometheus server headless service
-     - ``{}``
-   * - server.statefulSet.headless.servicePort
-     - Prometheus server headless service port
-     - ``80``
-   * - server.statefulSet.headless.gRPC.enabled
-     - If true, open a second port on the service for gRPC
-     - ``false``
-   * - server.statefulSet.headless.gRPC.servicePort
-     - Prometheus service gRPC port, (ignored if server.service.gRPC.enabled is not true)
-     - ``10901``
-   * - server.statefulSet.headless.gRPC.nodePort
-     - Port to be used as gRPC nodePort in the prometheus service
-     - ``0``
-   * - server.readinessProbeInitialDelay
-     - the initial delay for the Prometheus server readiness probe
-     - ``30``
-   * - server.readinessProbePeriodSeconds
-     - how often (in seconds) to perform the Prometheus server readiness probe
-     - ``5``
-   * - server.readinessProbeTimeout
-     - the timeout for the Prometheus server readiness probe
-     - ``30``
-   * - server.readinessProbeFailureThreshold
-     - the failure threshold for the Prometheus server readiness probe
-     - ``3``
-   * - server.readinessProbeSuccessThreshold
-     - the success threshold for the Prometheus server readiness probe
-     - ``1``
-   * - server.livenessProbeInitialDelay
-     - the initial delay for the Prometheus server liveness probe
-     - ``30``
-   * - server.livenessProbePeriodSeconds
-     - how often (in seconds) to perform the Prometheus server liveness probe
-     - ``15``
-   * - server.livenessProbeTimeout
-     - the timeout for the Prometheus server liveness probe
-     - ``30``
-   * - server.livenessProbeFailureThreshold
-     - the failure threshold for the Prometheus server liveness probe
-     - ``3``
-   * - server.livenessProbeSuccessThreshold
-     - the success threshold for the Prometheus server liveness probe
-     - ``1``
-   * - server.resources
-     - Prometheus server resource requests and limits
-     - ``{}``
-   * - server.verticalAutoscaler.enabled
-     - If true a VPA object will be created for the controller (either StatefulSet or Deployemnt, based on above configs)
-     - ``false``
-   * - server.securityContext
-     - Custom security context for server containers
-     - ``{}``
-   * - server.service.annotations
-     - annotations for Prometheus server service
-     - ``{}``
-   * - server.service.clusterIP
-     - internal Prometheus server cluster service IP
-     - ``""``
-   * - server.service.externalIPs
-     - Prometheus server service external IP addresses
+   * - alertmanager.imagePullSecrets
+     - alertmanager's image pull secrets
      - ``[]``
-   * - server.service.loadBalancerIP
-     - IP address to assign to load balancer (if supported)
-     - ``""``
-   * - server.service.loadBalancerSourceRanges
-     - list of IP CIDRs allowed access to load balancer (if supported)
-     - ``[]``
-   * - server.service.nodePort
-     - Port to be used as the service NodePort (ignored if server.service.type is not NodePort)
-     - ``0``
-   * - server.service.servicePort
-     - Prometheus server service port
-     - ``80``
-   * - server.service.sessionAffinity
-     - Session Affinity for server service, can be None or ClientIP
-     - ``None``
-   * - server.service.type
-     - type of Prometheus server service to create
+   * - alertmanager.image.repository
+     - alertmanager's image repository
+     - ``quay.io/prometheus/alertmanager``
+   * - alertmanager.image.tag
+     - alertmanager's image tag
+     - ``"v0.24.0"``
+   * - alertmanager.image.pullPolicy
+     - alertmanager's image pull policy
+     - ``IfNotPresent``
+   * - alertmanager.service.type
+     - alertmanager's service type
      - ``ClusterIP``
-   * - server.service.gRPC.enabled
-     - If true, open a second port on the service for gRPC
-     - ``false``
-   * - server.service.gRPC.servicePort
-     - Prometheus service gRPC port, (ignored if server.service.gRPC.enabled is not true)
-     - ``10901``
-   * - server.service.gRPC.nodePort
-     - Port to be used as gRPC nodePort in the prometheus service
-     - ``0``
-   * - server.service.statefulsetReplica.enabled
-     - If true, send the traffic from the service to only one replica of the replicaset
-     - ``false``
-   * - server.service.statefulsetReplica.replica
-     - Which replica to send the traffice to
-     - ``0``
-   * - server.hostAliases
-     - /etc/hosts-entries in container(s)
+   * - alertmanager.service.ports.alertmanager.port
+     - alertmanager's port
+     - ``80``
+   * - alertmanager.service.ports.alertmanager.targetPort
+     - alertmanager's targetPort
+     - ``80``
+   * - alertmanager.service.ports.alertmanager.containerPort
+     - alertmanager's containerPort
+     - ``80``
+   * - alertmanager.service.ports.alertmanager.nodePort
+     - alertmanager's nodePort
+     - ``""``
+   * - alertmanager.service.ports.alertmanager.protocol
+     - alertmanager's protocol
+     - ``TCP``
+   * - alertmanager.resources
+     - resource requests and limits
+     - ``{}``
+   * - alertmanager.autoscaling.enabled
+     - whether alertmanager's autoscaling is enabled
+     - ``true``
+   * - alertmanager.podSecurityContext
+     - alertmanager's pod security context
+     - ``{}``
+   * - alertmanager.securityContext
+     - alertmanager's security context
+     - ``{}``
+   * - alertmanager.certificates
+     - alertmanager's sertificates
+     - ``{}``
+   * - alertmanager.envVars
+     - alertmanager's environmental variables
+     - see values.yaml
+   * - alertmanager.nodeSelector
+     - alertmanager's node selector
+     - ``{}``
+   * - alertmanager.tolerations
+     - alertmanager's tolerations
      - ``[]``
-   * - server.sidecarContainers
-     - array of snippets with your sidecar containers for prometheus server
-     - ``""``
-   * - server.strategy
-     - Deployment strategy
-     - ``{ "type": "RollingUpdate" }``
-   * - serviceAccounts.alertmanager.create
-     - If true, create the alertmanager service account
+   * - alertmanager.affinity
+     - alertmanager's affinity
+     - ``{}``
+   * - prometheusesadapter.enabled
+     - whether prometheus-es-adapter component is enabled
      - ``true``
-   * - serviceAccounts.alertmanager.name
-     - name of the alertmanager service account to use or create
-     - ``{{ prometheus.alertmanager.fullname }}``
-   * - serviceAccounts.alertmanager.annotations
-     - annotations for the alertmanager service account
+   * - prometheusesadapter.tier
+     - prometheus-es-adapter's tier
+     - ``external``
+   * - prometheusesadapter.replicaCount
+     - prometheus-es-adapter's number of replicas
+     - ``1``
+   * - prometheusesadapter.imagePullSecrets
+     - prometheus-es-adapter's image pull secrets
+     - ``[]``
+   * - prometheusesadapter.image.repository
+     - prometheus-es-adapter's image repository
+     - ``gitlab.assist-iot.eu:5050/enablers-registry/public/pud/prometheus-es-adapter``
+   * - prometheusesadapter.image.tag
+     - prometheus-es-adapter's image tag
+     - ``"latest"``
+   * - prometheusesadapter.image.pullPolicy
+     - prometheus-es-adapter's image pull policy
+     - ``IfNotPresent``
+   * - prometheusesadapter.service.type
+     - prometheus-es-adapter's service type
+     - ``ClusterIP``
+   * - prometheusesadapter.service.ports.pea8000.port
+     - prometheus-es-adapter's port
+     - ``8000``
+   * - prometheusesadapter.service.ports.pea8000.targetPort
+     - prometheus-es-adapter's targetPort
+     - ``8000``
+   * - prometheusesadapter.service.ports.pea8000.containerPort
+     - prometheus-es-adapter's containerPort
+     - ``8000``
+   * - prometheusesadapter.service.ports.pea8000.nodePort
+     - prometheus-es-adapter's nodePort
+     - ``""``
+   * - prometheusesadapter.service.ports.pea8000.protocol
+     - prometheus-es-adapter's protocol
+     - ``TCP``
+   * - prometheusesadapter.service.ports.pea8001.port
+     - prometheus-es-adapter's port
+     - ``8001``
+   * - prometheusesadapter.service.ports.pea8001.targetPort
+     - prometheus-es-adapter's targetPort
+     - ``8001``
+   * - prometheusesadapter.service.ports.pea8001.containerPort
+     - prometheus-es-adapter's containerPort
+     - ``8001``
+   * - prometheusesadapter.service.ports.pea8001.nodePort
+     - prometheus-es-adapter's nodePort
+     - ``""``
+   * - prometheusesadapter.service.ports.pea8001.protocol
+     - prometheus-es-adapter's protocol
+     - ``TCP``
+   * - prometheusesadapter.resources
+     - resource requests and limits
      - ``{}``
-   * - serviceAccounts.server.create
-     - If true, create the server service account
+   * - prometheusesadapter.autoscaling.enabled
+     - whether prometheus-es-adapter's autoscaling is enabled
      - ``true``
-   * - serviceAccounts.server.name
-     - name of the server service account to use or create
-     - ``{{ prometheus.server.fullname }}``
-   * - serviceAccounts.server.annotations
-     - annotations for the server service account
+   * - prometheusesadapter.podSecurityContext
+     - prometheus-es-adapter's pod security context
      - ``{}``
-   * - server.terminationGracePeriodSeconds
-     - Prometheus server Pod termination grace period
-     - ``300``
-   * - server.retention
-     - (optional) Prometheus data retention
-     - ``"15d"``
-   * - serverFiles.alerting_rules.yml
-     - Prometheus server alerts configuration
+   * - prometheusesadapter.securityContext
+     - prometheus-es-adapter's security context
      - ``{}``
-   * - serverFiles.recording_rules.yml
-     - Prometheus server rules configuration
+   * - prometheusesadapter.certificates
+     - prometheus-es-adapter's sertificates
      - ``{}``
-   * - serverFiles.prometheus.yml
-     - Prometheus server scrape configuration
-     - ``example configuration``
-   * - extraScrapeConfigs
-     - Prometheus server additional scrape configuration
+   * - prometheusesadapter.envVars
+     - prometheus-es-adapter's environmental variables
+     - see values.yaml
+   * - prometheusesadapter.nodeSelector
+     - prometheus-es-adapter's node selector
+     - ``{}``
+   * - prometheusesadapter.tolerations
+     - prometheus-es-adapter's tolerations
+     - ``[]``
+   * - prometheusesadapter.affinity
+     - prometheus-es-adapter's affinity
+     - ``{}``
+   * - targetapi.enabled
+     - whether prom-target-api component is enabled
+     - ``true``
+   * - targetapi.tier
+     - prom-target-api's tier
+     - ``external``
+   * - targetapi.replicaCount
+     - prom-target-api's number of replicas
+     - ``1``
+   * - targetapi.imagePullSecrets
+     - prom-target-api's image pull secrets
+     - ``[]``
+   * - targetapi.image.repository
+     - prom-target-api's image repository
+     - ``gitlab.assist-iot.eu:5050/enablers-registry/public/pud/prom-target-api``
+   * - targetapi.image.tag
+     - prom-target-api's image tag
+     - ``"latest"``
+   * - targetapi.image.pullPolicy
+     - prom-target-api's image pull policy
+     - ``IfNotPresent``
+   * - targetapi.service.type
+     - prom-target-api's service type
+     - ``NodePort``
+   * - targetapi.service.ports.targetapi.port
+     - prom-target-api's port
+     - ``5000``
+   * - targetapi.service.ports.targetapi.targetPort
+     - prom-target-api's targetPort
+     - ``5000``
+   * - targetapi.service.ports.targetapi.containerPort
+     - prom-target-api's containerPort
+     - ``5000``
+   * - targetapi.service.ports.targetapi.nodePort
+     - prom-target-api's nodePort
      - ``""``
-   * - alertRelabelConfigs
-     - Prometheus server alert relabeling configs for H/A prometheus
-     - ``""``
-   * - networkPolicy.enabled
-     - Enable NetworkPolicy
-     - ``false``
-   * - forceNamespace
-     - Force resources to be namespaced
-     - ``null``
-
-Specify each parameter using the ``--set key=value[,key=value]`` argument to ``helm install``. For example:
-
-``helm install PUD/prometheus --name my-release --set server.terminationGracePeriodSeconds=360``
-
-Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example:
-
-``helm install PUD/prometheus --name my-release -f values.yaml``
+   * - targetapi.service.ports.pea8000.protocol
+     - prom-target-api's protocol
+     - ``TCP``
+   * - targetapi.resources
+     - resource requests and limits
+     - ``{}``
+   * - targetapi.autoscaling.enabled
+     - whether prom-target-api's autoscaling is enabled
+     - ``true``
+   * - targetapi.podSecurityContext
+     - prom-target-api's pod security context
+     - ``{}``
+   * - targetapi.securityContext
+     - prom-target-api's security context
+     - ``{}``
+   * - targetapi.certificates
+     - prom-target-api's sertificates
+     - ``{}``
+   * - targetapi.envVars
+     - prom-target-api's environmental variables
+     - see values.yaml
+   * - targetapi.nodeSelector
+     - prom-target-api's node selector
+     - ``{}``
+   * - targetapi.tolerations
+     - prom-target-api's tolerations
+     - ``[]``
+   * - targetapi.affinity
+     - prom-target-api's affinity
+     - ``{}``
+   * - configmapReload.prometheus.name
+     - configmapReload's name
+     - ``configmap-reload``
+   * - configmapReload.prometheus.image.repository
+     - configmapReload's image repository
+     - ``jimmidyson/configmap-reload``
+   * - configmapReload.prometheus.image.tag
+     - configmapReload's image tag
+     - ``v0.5.0``
+   * - configmapReload.prometheus.image.pullPolicy
+     - configmapReload's image pullPolicy
+     - ``IfNotPresent``
 
 The following table lists the configurable parameters of the **Prometheus-elasticsearch-adapter** chart and their default values.
 
@@ -788,55 +638,169 @@ The following table lists the configurable parameters of the **Prometheus-elasti
    * - ES_INDEX_DAILY
      - Create daily indexes and disable index rollover
      - ``false``
-   * - ES_INDEX_SHARDS
-     - Number of Elasticsearch shards to create per index
-     - ``5``
-   * - ES_INDEX_REPLICAS
-     - Number of Elasticsearch replicas to create per index
-     - ``1``
-   * - ES_INDEX_MAX_AGE
-     - Max age of Elasticsearch index before rollover
-     - ``7d``
-   * - ES_INDEX_MAX_DOCS
-     - Max number of docs in Elasticsearch index before rollover
-     - ``1000000``
-   * - ES_INDEX_MAX_SIZE
-     - Max size of index before rollover eg 5gb
-     - 
-   * - ES_SEARCH_MAX_DOCS
-     - Max number of docs returned for Elasticsearch search operation
-     - ``1000``
-   * - ES_SNIFF
-     - Enable Elasticsearch sniffing
-     - ``false``
-   * - STATS
-     - Expose Prometheus metrics endpoint
-     - ``true``
-   * - DEBUG
-     - Display extra debug logs
-     - ``false``
+
+See installation and configuration proccess in `video`_.
+
+.. _video: https://www.youtube.com/watch?v=fe4j-m1BY2A
 
 ***************
 Developer guide
 ***************
-**Prometheus Exporter**
 
-**Prometheus** follows an HTTP pull model: It scrapes Prometheus metrics from endpoints routinely. Typically the abstraction layer between the application and Prometheus is an **exporter**, which takes application-formatted metrics and converts them to Prometheus metrics for consumption. Because Prometheus is an HTTP pull model, the exporter typically provides an endpoint where the Prometheus metrics can be scraped.
+PUD’s Prometheus Metrics & Exporters
+------------------------------------
+
+**Performance and Usage Diagnosis** (PUD) Enabler follows an HTTP pull model: It scrapes performance metrics from endpoints routinely. Typically the abstraction layer between the application and PUD is an **exporter**, which takes application-formatted metrics and converts them to Prometheus metrics for consumption. Because PUD uses an HTTP pull model, the exporter typically provides an endpoint ``/metrics`` where the performance metrics can be scraped. 
 
 The relationship between Prometheus, the exporter, and the application in a Kubernetes environment can be visualized like this:
 
 .. image:: https://trstringer.com/images/prometheus-exporter.png
 
-There are a number of `exporters <https://prometheus.io/docs/instrumenting/exporters/>`_ that are maintained as part of the official `Prometheus GitHub <https://github.com/prometheus>`_
+Metrics are served as plaintext. They are designed to be consumed either by PUD itself or by a scraper that is compatible with scraping a Prometheus client endpoint. The raw metrics can also be visualized in a browser by opening /metrics endpoint. Note that the metrics exposed on the ``/metrics`` endpoint reflect the current state of the application monitored.
 
-You might need to write your own exporter if:
+The Prometheus metrics format is so widely adopted that it became an independent project: OpenMetrics, striving to make this metric format specification an industry standard.
 
-- You're using 3rd party software that doesn't have an existing exporter already.
-- You want to generate Prometheus metrics from software that you have written.
+Prometheus metrics naming
+-------------------------
 
-If you decide that you need to write your exporter, there are a handful of available languages and client libraries that you can use: Python, Go, Java, and `others <https://prometheus.io/docs/instrumenting/clientlibs/>`_.
+Generally metric names should allow someone who is familiar with Prometheus but not a particular system to make a good guess as to what a metric means. A metric named http_requests_total is not extremely useful - are these being measured as they come in, in some filter or when they get to the user’s code? And requests_total is even worse, what type of requests?
 
-Please refer to Prometheus' `documentation <https://prometheus.io/docs/instrumenting/writing_exporters/>`_ to get started.
+Metric names for applications should generally be prefixed by the exporter name, e.g. haproxy_up.
+
+Metrics must use base units (e.g. seconds, bytes) and leave converting them to something more readable to graphing tools. No matter what units you end up using, the units in the metric name must match the units in use.
+
+Prometheus metrics and label names are written in snake_case.
+Only [a-zA-Z0-9:_] are valid in metric names.
+
+The _sum, _count, _bucket and _total suffixes are used by Summaries, Histograms and Counters. Unless you’re producing one of those, avoid these suffixes.
+_total is a convention for counters, you should use it if you’re using the COUNTER type.
+Prometheus metric format has a name combined with a series of labels or tags.
+
+``<metric name>{<label name>=<label value>, ...}``
+
+A time series with the metric name http_requests_total and the labels service="service", server="pod50" and env="production" could be written like this:
+
+``http_requests_total{service="service", server="pod50", env="production"}``
+
+You can associate any number of context-specific labels to every metric you submit.
+Imagine a typical metric like http_requests_per_second, every one of your web servers is emitting these metrics. You can then bundle the labels (or dimensions):
+-	Web Server software (Nginx, Apache)
+-	Environment (production, staging)
+-	HTTP method (POST, GET)
+-	Error code (404, 503) 
+-	HTTP response code (number) 
+-	Endpoint (/webapp1, /webapp2) 
+-	Datacenter zone (east, west)
+
+Prometheus metrics text-based format is line oriented. Lines are separated by a line feed character (n). The last line must end with a line feed character. Empty lines are ignored. A metric is composed by several fields:
+-	Metric name
+-	Any number of labels (can be 0), represented as a key-value array
+-	Current metric value 
+-	Optional metric timestamp
+
+A Prometheus metric can be as simple as:
+``http_requests 2``
+
+Or, including all the mentioned components:
+``http_requests_total{method="post",code="400"}  3   1395066363000``
+
+Metric output is typically preceded with ``# HELP`` and ``# TYPE`` metadata lines.
+
+The HELP string identifies the metric name and a brief description of it. The TYPE string identifies the type of metric. If there’s no TYPE before a metric, the metric is set to untyped. Everything else that starts with a # is parsed as a comment.
+
+.. code::
+
+  # HELP metric_name Description of the metric
+  # TYPE metric_name type
+  # Comment that's not parsed by prometheus
+  http_requests_total{method="post",code="400"}  3   1395066363000
+  
+Prometheus metrics client libraries
+-----------------------------------
+ 
+The Prometheus project maintains 4 official Prometheus metrics libraries written in Go, Java / Scala, Python, and Ruby.
+The Prometheus community has created many third-party libraries that you can use to instrument other languages (or just alternative implementations for the same language): 
+
+-	Bash 
+-	C++ 
+-	Common Lisp 
+-	Elixir 
+-	Erlang 
+-	Haskell 
+-	Lua for Nginx
+-	Lua for Tarantool 
+-	.NET / C# 
+-	Node.js 
+-	Perl 
+-	PHP 
+-	Rust
+
+Prometheus metrics / OpenMetrics types
+--------------------------------------
+
+Depending on what kind of information you want to collect and expose, you’ll have to use a different metric type. Here are your four choices available on the OpenMetrics specification:
+
+**Counter**
+
+This represents a cumulative metric that only increases over time, like the number of requests to an endpoint. Note: instead of using Counter to instrument decreasing values, use Gauges.
+
+.. code::
+
+  # HELP go_memstats_alloc_bytes_total Total number of bytes allocated, even if freed.
+  # TYPE go_memstats_alloc_bytes_total counter
+  go_memstats_alloc_bytes_total 3.7156890216e+10
+
+**Gauge**
+
+Gauges are instantaneous measurements of a value. They can be arbitrary values which will be recorded. Gauges represent a random value that can increase and decrease randomly such as the load of your system.
+
+.. code::
+
+  # HELP go_goroutines Number of goroutines that currently exist.
+  # TYPE go_goroutines gauge
+  go_goroutines 73
+  
+**Histogram**
+
+A histogram samples observations (usually things like request durations or response sizes) and counts them in configurable buckets. It also provides a sum of all observed values. A histogram with a base metric name of exposes multiple time series during a scrape:
+
+.. code::
+
+  # HELP http_request_duration_seconds request duration histogram
+  # TYPE http_request_duration_seconds histogram
+  http_request_duration_seconds_bucket{le="0.5"} 0
+  http_request_duration_seconds_bucket{le="1"} 1
+  http_request_duration_seconds_bucket{le="2"} 2
+  http_request_duration_seconds_bucket{le="3"} 3
+  http_request_duration_seconds_bucket{le="5"} 3
+  http_request_duration_seconds_bucket{le="+Inf"} 3
+  http_request_duration_seconds_sum 6
+  http_request_duration_seconds_count 3
+
+**Summary**
+
+Similar to a histogram, a summary samples observations (usually things like request durations and response sizes). While it also provides a total count of observations and a sum of all observed values, it calculates configurable quantiles over a sliding time window. A summary with a base metric name of also exposes multiple time series during a scrape:
+
+More regarding `OpenMetrics types <https://prometheus.io/docs/concepts/metric_types/>`_
+
+Prometheus exporters
+--------------------
+
+Many popular server applications like Nginx or PostgreSQL are much older than the Prometheus metrics / OpenMetrics popularization. They usually have their own metrics formats and exposition methods. To work around this hurdle, the Prometheus community is creating and maintaining a vast collection of Prometheus exporters. An exporter is a “translator” or “adapter” program able to collect the server native metrics and re-publishing these metrics using the Prometheus metrics format and HTTP protocol transports. These small binaries can be co-located in the same container or pod executing the main server that is being monitored, or isolated in their own sidecar container and then you can collect the service metrics scraping the exporter that exposes and transforms them into Prometheus metrics.
+
+There are a number of `exporters <https://prometheus.io/docs/instrumenting/exporters/>`_ that are maintained as part of the official `Prometheus GitHub <https://github.com/prometheus>`_.
+
+
+You might need to write your own exporter if…
+
+- You’re using 3rd party software that doesn’t have an existing exporter already
+
+- You want to generate Prometheus metrics from software that you have written
+
+Example
+-------
+
+Building a generic HTTP server metrics exporter in Python. By Nancy Chauhan: https://levelup.gitconnected.com/building-a-prometheus-exporter-8a4bbc3825f5
 
 ***************************
 Version control and release
@@ -846,16 +810,28 @@ Prometheus v2.31.1
 
 Prometheus-es-adapter v3.3
 
-ElasticSearch v6.4.2
+Prom-target-api v1.0
 
-Kibana v6.4.2
+Grafana v9.1.1
+
+kube-state-metrics v2.8.1
+
+node_exporter v0.18.1
 
 ***************
 License
 ***************
 
-**Apache License 2.0**
+Copyright 2023 ICCS
 
-********************
-Notice(dependencies)
-********************
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
