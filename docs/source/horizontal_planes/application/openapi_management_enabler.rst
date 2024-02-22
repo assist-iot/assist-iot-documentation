@@ -371,13 +371,13 @@ The developer guide will be determined after the release of the enabler.
 Version control and release
 ***************************
 
-Gitlab will be used as version control and release tool.
+Version 0.2.0. Fully functional and able to retrieve all data even if the cluster fails.
 
 ***************
 License
 ***************
 
-Licensing information will be provided after the release of the enabler.
+OpenAPI management enabler is under BSD 3-Clause "New" or "Revised" License.
 
 ********************
 Notice(dependencies)
