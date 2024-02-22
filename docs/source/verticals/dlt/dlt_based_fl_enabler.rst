@@ -31,7 +31,7 @@ The DLT-based FL enabler is part of the vertical plane DLT enablers.
 ***************
 User guide
 ***************
-The user guide will be determined after the release of the enabler.
+The enabler has the following API endpoints.
 
 +--------+--------------------------+------------------------------------------------------+---------------------+-----------------------------------+
 | Method | Endpoint                 | Description                                          | Payload (if needed) | Response format                   |
