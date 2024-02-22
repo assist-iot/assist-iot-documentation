@@ -122,12 +122,14 @@ Important note, you need to deploy the pod inside the same node, so in dltinspec
 Inside the logging_auditing fodler:
 
 .. code:: bash
+
   kubectl apply -f dltinspectionpod.yaml
   kubectl exec -it inspect  -- sh
 
 Inside the container:
 
 .. code:: bash
+
   rm -r data
   exit
 
@@ -135,6 +137,7 @@ It returns resource is busy, but it gets cleaned.
 Back to the logging_auditing fodler:
 
 .. code:: bash
+  
   kubectl delete pod inspect
 
 ***************************
