@@ -204,7 +204,7 @@ Where <POD_NAME> is the name of the pod created. Copy it from the first command.
 
 ------------
 
-In order to create the custom temperature producer outside the cluster we need to have java installed. In a new terminal we type:
+In order to create the custom temperature producer outside the cluster we need to have java installed. In a new terminal type:
 
 .. code:: bash
 
@@ -216,7 +216,7 @@ Verify the installation:
 
   java -version
 
-Then we run:
+Then run:
 
 .. code:: bash
 
