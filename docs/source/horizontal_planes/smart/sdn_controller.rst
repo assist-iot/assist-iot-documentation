@@ -12,6 +12,7 @@ SDN Controller
 Introduction
 ***************
 The SDN Controller is the key element of an SDN-enabled network, where the main functionalities are re-lated to network management, operation and maintenance, allowing topology management, network config-uration, network control and network operations, among other features. Two solutions are investigated based on open source implementation: µONOS and Tungsten.
+The implemented controller is at TRL 6 level.
 
 ***************
 Features
@@ -343,7 +344,7 @@ Version 1.0 Final
 ***************
 License
 ***************
-Open source.
+Apache 2.0 licence.
 
 ********************
 Notice(dependencies)
