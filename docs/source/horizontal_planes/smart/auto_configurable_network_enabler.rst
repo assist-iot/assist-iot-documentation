@@ -18,6 +18,8 @@ Enabler consist of two components:
 
 2. Monitoring module - to monitor selected parameters in the SDN network.
 
+Implemented enabler is at TRL 6 level.
+
 ***************
 Features
 ***************
@@ -97,12 +99,12 @@ For developers command to start and stop the optimisation enabler is avaialable.
 ***************************
 Version control and release
 ***************************
-Version 1.0.0. First release.
+Final version.
 
 ***************
 License
 ***************
-open source.
+Apache 2.0.
 
 ********************
 Notice(dependencies)
